@@ -2,6 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 
+import com.example.backendnourpfe.classes.StatusPrestataire;
 import com.example.backendnourpfe.classes.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,14 +27,16 @@ public class RegisterRequest implements Serializable {
     private UserRole role;
     private Date createdAt = new Date();
 
-    // Champs spécifiques pour Prestataire
+
     private String competence;
     private float tarifs;
     private String disponibilite;
     private String description;
     private float solde;
+    private  String doucument_CIN;
+    private  String doucument_cv;
+    private StatusPrestataire status;
 
-    // Champs spécifiques pour Entreprise
     private String about;
     private String nomEntreprise;
     private String siret;

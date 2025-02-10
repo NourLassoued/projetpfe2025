@@ -1,0 +1,14 @@
+package com.example.backendnourpfe.interfacee;
+
+import com.example.backendnourpfe.classes.Servicee;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+public interface Serviceinterface {
+    public List<Servicee> getAllServices() ;
+    public Servicee createService(Servicee service) ;
+    public Servicee updateService(Long id, Servicee service) ;
+    public void deleteService(Long id);
+    public Servicee ajouterServiceAuCategorie(Long categorieId, Servicee service);
+    }

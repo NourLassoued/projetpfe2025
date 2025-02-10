@@ -1,0 +1,10 @@
+package com.example.backendnourpfe.Controlleur;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/demandes")
+public class DemandeController {
+    
+}

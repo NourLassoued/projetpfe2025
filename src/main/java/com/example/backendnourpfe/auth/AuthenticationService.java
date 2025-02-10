@@ -6,19 +6,18 @@ import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.Token.Token;
 import com.example.backendnourpfe.Token.TokenRepository;
 import com.example.backendnourpfe.Token.TokenType;
-import com.example.backendnourpfe.classes.Entreprise;
-import com.example.backendnourpfe.classes.Prestataire;
-import com.example.backendnourpfe.classes.UserRole;
-import com.example.backendnourpfe.classes.Utilisateur;
+import com.example.backendnourpfe.classes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Date;
@@ -36,61 +35,42 @@ public class AuthenticationService {
 
 public AuthenticationReponse register(RegisterRequest request) {
     UserRole role = request.getRole();
-    if (role == null) {
-        role = UserRole.getDefaultRole();
-    }
-
-    Utilisateur utilisateur;
-
-    if (role == UserRole.ENTREPRISE) {
-        utilisateur = Entreprise.builder()
-                .nom(request.getNom())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .telephoneNumber(request.getTelephoneNumber())
-                .role(role)
-                .image(request.getImage())
-                .solde(request.getSolde())
-                .about(request.getAbout())
-                .nomEntreprise(request.getNomEntreprise())
-                .siret(request.getSiret())
-                .siteWeb(request.getSiteWeb())
-                .images(request.getImages())
-                .createdAt(new Date())
-
-                .build();
-    } else if (role == UserRole.PRESTATAIRE) {
-        utilisateur = Prestataire.builder()
-                .nom(request.getNom())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .telephoneNumber(request.getTelephoneNumber())
-                .role(role)
-                .image(request.getImage())
-                .competence(request.getCompetence())
-                .tarifs(request.getTarifs())
-                .disponibilite(request.getDisponibilite())
-                .description(request.getDescription())
-                .about(request.getAbout())
-                .solde(request.getSolde())
-                .createdAt(new Date())
-                .build();
+    StatusPrestataire status;
+    if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
+        status = StatusPrestataire.ATTENTE; // Si prestataire ou entreprise, statut "attente"
     } else {
-        utilisateur = new Utilisateur(
-                request.getNom(),
-                request.getEmail(),
-                passwordEncoder.encode(request.getPassword()),
-                request.getImage(),
-                request.getTelephoneNumber(),
-                role,
-                new Date()
-        );
-
+        status = StatusPrestataire.ACCEPTE; // Si particulier, statut "accepté"
     }
 
-    var saveUser = repository.save(utilisateur);
-    var jwtToken = jwtService.generateToken(utilisateur);
-    var refreshToken = jwtService.gererateRefershToken(utilisateur);
+    Utilisateur utilisateur = new Utilisateur();
+    utilisateur.setNom(request.getNom());
+    utilisateur.setEmail(request.getEmail());
+    utilisateur.setPassword(passwordEncoder.encode(request.getPassword()));
+    utilisateur.setImage(request.getImage());
+    utilisateur.setTelephoneNumber(request.getTelephoneNumber());
+    utilisateur.setRole(role);
+    utilisateur.setCreatedAt(new Date());
+    utilisateur.setCompetence(request.getCompetence());
+    utilisateur.setTarifs(request.getTarifs());
+    utilisateur.setDisponibilite(request.getDisponibilite());
+    utilisateur.setDescription(request.getDescription());
+    utilisateur.setSolde(request.getSolde());
+    utilisateur.setDoucument_CIN(request.getDoucument_CIN());
+    utilisateur.setDoucument_cv(request.getDoucument_cv());
+    utilisateur.setStatus(status); // Assignation du status
+    utilisateur.setAbout(request.getAbout());
+    utilisateur.setNomEntreprise(request.getNomEntreprise());
+    utilisateur.setSiret(request.getSiret());
+    utilisateur.setSiteWeb(request.getSiteWeb());
+
+
+    Utilisateur saveUser = repository.save(utilisateur);
+
+    // Génération des tokens JWT
+    String jwtToken = jwtService.generateToken(utilisateur);
+    String refreshToken = jwtService.generateToken(utilisateur);
+
+    // Sauvegarde du token
     saveUserToken(saveUser, jwtToken);
 
     return AuthenticationReponse.builder()
@@ -98,8 +78,6 @@ public AuthenticationReponse register(RegisterRequest request) {
             .refershToken(refreshToken)
             .build();
 }
-
-
     private  void  revokeAllUserToken(Utilisateur user){
         var valideToken=tokenRepository.findAllValidTokensByUtlisateur(user.getIdUtilisateur());
         if(valideToken.isEmpty())
@@ -128,7 +106,12 @@ public AuthenticationReponse register(RegisterRequest request) {
                         request.getPassword()
                 )
         );
+
         var user=repository.findByEmail(request.getEmail()).orElseThrow();
+        if (user.getStatus() == StatusPrestataire.ATTENTE) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Votre compte est en attente de validation.");
+        }
+
         var jwtToken=jwtService.generateToken(user);
         var refershToken=jwtService.gererateRefershToken(user);
         System.out.println("Role of logged user : " + user.getRole());

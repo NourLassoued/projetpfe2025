@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req -> req.requestMatchers("/**")
                         .permitAll()
                         .requestMatchers("/api/v1/auth/authenticate/","/forgetPassword/**").permitAll()
-                        .requestMatchers(WHITE_LIST_URL).hasAnyRole("MEMBRE")
+                        .requestMatchers(WHITE_LIST_URL).hasAnyRole("PARTICULIER")
                         .anyRequest().authenticated()
 
                 )

@@ -5,6 +5,7 @@ package com.example.backendnourpfe.classes;
 import com.example.backendnourpfe.Token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -12,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@SuperBuilder
-@Inheritance(strategy = InheritanceType.JOINED)
+
 public class Utilisateur  implements UserDetails  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,20 +39,84 @@ public class Utilisateur  implements UserDetails  {
     private String image;
     @JsonProperty("telephoneNumber")
     private int telephoneNumber;
+    @JsonProperty("adresse")
+    private  String adresse;
 
     @Enumerated(EnumType.STRING)
     @JsonProperty("role")
     private UserRole role;
+
+    @Enumerated(EnumType.STRING)
+    private StatusPrestataire status;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("createdAt")
     private Date createdAt = new Date();
     @JsonProperty("enabled")
     private boolean enabled ;
+    @Nullable
+    @JsonProperty("competence")
+    private String competence;
+    @Nullable
+    @JsonProperty("tarifs")
+    private float tarifs;
+    @Nullable
+    @JsonProperty("disponibilite")
+
+    private String disponibilite;
+    @Nullable
+    @JsonProperty("description")
+
+    private String description;
+    @JsonProperty("solde")
+    @Nullable
+    private float solde;
+    @JsonProperty("about")
+
+    private String about;
+    @JsonProperty("nomEntreprise")
+    @Nullable
+    private String nomEntreprise;
+    @JsonProperty("siret")
+    private String siret;
+    @Nullable
+    @JsonProperty("siteWeb")
+    private String siteWeb;
+    @Nullable
+    @JsonProperty("doucument_cv")
+    private  String doucument_cv;
+    @Nullable
+    @JsonProperty("doucument_CIN")
+    private  String doucument_CIN;
+
+@JsonIgnore
     @OneToOne(mappedBy = "user")
     private ForgotPassword forgotPassword;
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private  List<Token> tokens;
+    @OneToMany(mappedBy = "utilisateur")
+    @JsonIgnore
+    private List<Demande> demandes;
+    @OneToMany(mappedBy = "utilisateur")
+    @JsonIgnore
+    private List<Avis> avisDonnes ;
+    @JsonIgnore
+
+    @OneToMany(mappedBy = "avisUtilisateur")
+    private List<Avis> avisRecus ;
+    @JsonIgnore
+
+    @OneToMany(mappedBy = "particulier", cascade = CascadeType.ALL)
+    private List<Reservation> reservationsEffectuees;
+    @JsonIgnore
+
+
+    @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL)
+    private List<Reservation> reservationsRecues;
+
+    @ManyToOne
+
+    private Servicee serviceeutilisateurs;
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
         this.email = email;
@@ -59,7 +124,7 @@ public class Utilisateur  implements UserDetails  {
         this.image = image;
         this.telephoneNumber = telephoneNumber;
         this.role = role;
-        this.createdAt = (createdAt != null) ? createdAt : new Date(); // Si `createdAt` est null, mettre la date actuelle
+        this.createdAt = (createdAt != null) ? createdAt : new Date();
     }
 
 
