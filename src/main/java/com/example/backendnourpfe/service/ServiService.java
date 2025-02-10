@@ -44,4 +44,7 @@ public class ServiService implements Serviceinterface {
         service.setCategorie(categorie);
         return serviceRepository.save(service);
     }
+    public List<Servicee> getAllServicesByCategorie(Long categorieId) {
+        return serviceRepository.findByCategorieId(categorieId);
+    }
 }

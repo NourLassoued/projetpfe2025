@@ -19,12 +19,12 @@ import java.util.List;
     private CategorieService categorieService;
 
 
-    @GetMapping
+    @GetMapping("/getAllCategories")
     public List<Categorie> getAllCategories() {
         return categorieService.getAll();
     }
 
-    @PostMapping
+    @PostMapping("/createCategorie")
     public Categorie createCategorie(@RequestBody Categorie categorie) {
         return categorieService.create(categorie);
     }

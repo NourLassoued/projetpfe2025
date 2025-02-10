@@ -32,5 +32,9 @@ class ServiceController {
     public Servicee addServiceToCategory(@PathVariable Long categorieId, @RequestBody Servicee service) {
         return serviceService.ajouterServiceAuCategorie(categorieId, service);
     }
+    @GetMapping("/categorie/{categorieId}")
+    public List<Servicee> getAllServicesByCategorie(@PathVariable Long categorieId) {
+        return serviceService.getAllServicesByCategorie(categorieId);
+    }
 
 }

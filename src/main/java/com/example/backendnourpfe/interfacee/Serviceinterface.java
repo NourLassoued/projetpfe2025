@@ -11,4 +11,5 @@ public interface Serviceinterface {
     public Servicee updateService(Long id, Servicee service) ;
     public void deleteService(Long id);
     public Servicee ajouterServiceAuCategorie(Long categorieId, Servicee service);
+    public List<Servicee> getAllServicesByCategorie(Long categorieId);
     }

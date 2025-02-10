@@ -1,5 +1,6 @@
 package com.example.backendnourpfe.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,12 +21,14 @@ public class Servicee {
     private String nomservice;
     private String imageService;
     private String description;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "categorie_id")
     private Categorie categorie;
+    @JsonIgnore
     @OneToMany(mappedBy = "servicee")
     private List<Demande> demandes;
-
+@JsonIgnore
     @OneToMany(mappedBy = "serviceeutilisateurs")
     private List<Utilisateur> utilisateurs;
 
