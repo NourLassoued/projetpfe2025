@@ -1,10 +1,8 @@
 package com.example.backendnourpfe.Controlleur;
 
 
-import com.example.backendnourpfe.classes.Avis;
-import com.example.backendnourpfe.classes.Demande;
-import com.example.backendnourpfe.classes.Reservation;
-import com.example.backendnourpfe.classes.Utilisateur;
+import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/utilisateurss")
@@ -19,6 +18,8 @@ public class UtilisateurController {
 
     @Autowired
     private UtilisateurService utilisateurService;
+    @Autowired
+    private  UtilisateurRepository utilisateurRepository;
 
 
     @PostMapping("/ajouter")
@@ -77,6 +78,28 @@ public class UtilisateurController {
             @RequestBody Reservation reservation) {
         return utilisateurService.creerReservation(idParticulier, idPrestataire, reservation);
     }
+    @GetMapping("/activation/{email}")
+    public String activateAccount(@PathVariable String email) {
+        // Trouver l'utilisateur en fonction de l'email
+        Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmail(email);
+
+        if (utilisateurOpt.isPresent()) {
+            Utilisateur utilisateur = utilisateurOpt.get();
+
+            // Vérifier si le statut est ATTENTE avant de le mettre à jour
+            if (utilisateur.getStatus() == StatusPrestataire.ATTENTE) {
+                utilisateur.setStatus(StatusPrestataire.ACCEPTE);  // Mettre à jour le statut à "ACCEPTE"
+                utilisateurRepository.save(utilisateur); // Sauvegarder les modifications
+
+                // Rediriger vers une page de succès
+                return "redirect:/activation-success";  // Rediriger vers une page de succès
+            }
+        }
+
+        // Si l'email est invalide ou l'utilisateur est déjà activé
+        return "redirect:/activation-failed";  // Rediriger vers une page d'échec
+    }
+
 }
 
 

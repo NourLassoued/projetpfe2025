@@ -7,10 +7,12 @@ import com.example.backendnourpfe.Token.Token;
 import com.example.backendnourpfe.Token.TokenRepository;
 import com.example.backendnourpfe.Token.TokenType;
 import com.example.backendnourpfe.classes.*;
+import com.example.backendnourpfe.service.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +32,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    private EmailService emailService;
 
 
 
@@ -37,9 +41,10 @@ public AuthenticationReponse register(RegisterRequest request) {
     UserRole role = request.getRole();
     StatusPrestataire status;
     if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
+
         status = StatusPrestataire.ATTENTE; // Si prestataire ou entreprise, statut "attente"
     } else {
-        status = StatusPrestataire.ACCEPTE; // Si particulier, statut "accepté"
+        status = StatusPrestataire.ATTENTE; // Si particulier, statut "accepté"
     }
 
     Utilisateur utilisateur = new Utilisateur();
@@ -63,14 +68,20 @@ public AuthenticationReponse register(RegisterRequest request) {
     utilisateur.setSiret(request.getSiret());
     utilisateur.setSiteWeb(request.getSiteWeb());
 
+    if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
+        emailService.sendVerificationEmailToprestatire(utilisateur.getEmail(), utilisateur.getNom());
+    }
+    if (role == UserRole.PARTICULIER) {
 
+        emailService.sendActivationEmail(utilisateur.getEmail(), utilisateur.getNom());
+    }
     Utilisateur saveUser = repository.save(utilisateur);
 
-    // Génération des tokens JWT
+
     String jwtToken = jwtService.generateToken(utilisateur);
     String refreshToken = jwtService.generateToken(utilisateur);
 
-    // Sauvegarde du token
+
     saveUserToken(saveUser, jwtToken);
 
     return AuthenticationReponse.builder()

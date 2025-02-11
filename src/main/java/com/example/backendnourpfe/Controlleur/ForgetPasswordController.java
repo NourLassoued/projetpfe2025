@@ -70,24 +70,6 @@ public ResponseEntity<String> verifyEmail(@PathVariable String email) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email: " + ex.getMessage());
     }
 }
-/*
-    @PostMapping("/verifyOtp/{otp}/{email}")
-    public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable String email) {
-        Utlisateur user = utlisateurRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Please provide a valid email"));
-
-        ForgotPassword fp = forgetPasswordRepository.findByOtpAndUtlisateur(otp, user)
-                .orElseThrow(() -> new RuntimeException("Invalid OTP for email"));
-
-        if (fp.getExpirationTime().before(Date.from(Instant.now()))) {
-            forgetPasswordRepository.deleteById(fp.getFpid());
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Otp has expired!");
-        }
-
-        return ResponseEntity.ok("OTP verified!");
-    }
-
-*/
 @PostMapping("/verifyOtp/{otp}/{email}")
 public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable String email) {
     try {
