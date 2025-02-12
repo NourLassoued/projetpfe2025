@@ -1,15 +1,20 @@
 package com.example.backendnourpfe.Controlleur;
 
 
+import com.example.backendnourpfe.Respository.ServiceRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
+import com.example.backendnourpfe.service.ServiService;
 import com.example.backendnourpfe.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.ServiceNotFoundException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +25,10 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
     @Autowired
     private  UtilisateurRepository utilisateurRepository;
-
+@Autowired
+private ServiService serviService;
+@Autowired
+private ServiceRepository serviceRepository;
 
     @PostMapping("/ajouter")
     public ResponseEntity<Utilisateur> ajouterUtilisateur(@RequestBody Utilisateur utilisateur) {
@@ -39,7 +47,7 @@ public class UtilisateurController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             // Retourne une réponse 500 en cas d'erreur interne
         }
-    }
+    }/*
 
     @PostMapping("/{utilisateurId}/creerDemande/{serviceId}")
     public ResponseEntity<Demande> creerDemande(@PathVariable Long utilisateurId, @PathVariable Long serviceId,@RequestBody Demande demande) {
@@ -49,7 +57,17 @@ public class UtilisateurController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // 400 Bad Request en cas d'erreur
         }
+    }*/
+    @PostMapping("/creer/{idUtilisateur}/{idservice}")
+    public ResponseEntity<Map<String, Object>> creerDemande(
+            @PathVariable Long idUtilisateur,
+            @PathVariable Long idservice,
+            @RequestBody Demande demande) {
+
+        Map<String, Object> response = utilisateurService.creerDemande(idUtilisateur, idservice, demande);
+        return ResponseEntity.ok(response);
     }
+
     @PostMapping("/{idUtilisateur}/avis/{idAvisUtilisateur}")
     public ResponseEntity<Avis> donnerAvis(
             @PathVariable Long idUtilisateur,
@@ -87,8 +105,8 @@ public class UtilisateurController {
             Utilisateur utilisateur = utilisateurOpt.get();
 
             // Vérifier si le statut est ATTENTE avant de le mettre à jour
-            if (utilisateur.getStatus() == StatusPrestataire.ATTENTE) {
-                utilisateur.setStatus(StatusPrestataire.ACCEPTE);  // Mettre à jour le statut à "ACCEPTE"
+            if (utilisateur.getStatus() == StatusUtilisateur.ATTENTE) {
+                utilisateur.setStatus(StatusUtilisateur.ACCEPTE);  // Mettre à jour le statut à "ACCEPTE"
                 utilisateurRepository.save(utilisateur); // Sauvegarder les modifications
 
                 // Rediriger vers une page de succès

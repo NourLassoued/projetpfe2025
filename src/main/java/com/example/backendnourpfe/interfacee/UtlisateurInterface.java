@@ -1,20 +1,19 @@
 package com.example.backendnourpfe.interfacee;
 
 
-import com.example.backendnourpfe.classes.Avis;
-import com.example.backendnourpfe.classes.Demande;
-import com.example.backendnourpfe.classes.Reservation;
-import com.example.backendnourpfe.classes.Utilisateur;
+import com.example.backendnourpfe.classes.*;
 
+import javax.management.ServiceNotFoundException;
 import java.util.List;
+import java.util.Map;
 
 public interface UtlisateurInterface {
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur);
     void deleteUser(Long id);
-    public Demande creerDemande(Long idUtilisateur, Long idservice,Demande demande);
+   // public Demande creerDemande(Long idUtilisateur, Long idservice,Demande demande) throws ServiceNotFoundException;
     public Avis donnerAvis(Long idUtilisateur, Long idAvisUtilisateur, Avis avis);
     public List<Object> getAvisByAvisUtilisateur(Long idAvisUtilisateur);
     public Reservation creerReservation(Long idParticulier, Long idPrestataire, Reservation reservation);
 
-
+    public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande);
 }

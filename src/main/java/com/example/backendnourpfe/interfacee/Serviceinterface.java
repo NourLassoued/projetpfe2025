@@ -1,6 +1,7 @@
 package com.example.backendnourpfe.interfacee;
 
 import com.example.backendnourpfe.classes.Servicee;
+import com.example.backendnourpfe.classes.Utilisateur;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface Serviceinterface {
     public void deleteService(Long id);
     public Servicee ajouterServiceAuCategorie(Long categorieId, Servicee service);
     public List<Servicee> getAllServicesByCategorie(Long categorieId);
+    public List<Utilisateur> getUtilisateursByService(Long serviceId);
     }

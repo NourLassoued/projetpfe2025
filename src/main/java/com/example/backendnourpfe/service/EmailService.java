@@ -29,6 +29,7 @@ public class EmailService {
     public void sendVerificationEmailToprestatire(String to, String nom) {
         try {
             String subject = "Activation de votre compte SOS Job Tunisie";
+
             String message =
                     "<html>" +
                     "<head>" +
@@ -63,31 +64,40 @@ public class EmailService {
             e.printStackTrace(); // Gérer l'exception selon vos besoins
         }
     }
-    public void sendActivationEmail(String to, String nom) {
+    public void sendActivationEmailParticulier(String to, String nom) {
         try {
             String subject = "Activation de votre compte SOS Job Tunisie";
+            String activationLink = "http://localhost:8088/nour/api/utilisateurss/activation/" + to;
+
             String message =
                     "<html>" +
                             "<head>" +
                             "<style>" +
                             "body { font-family: Arial, sans-serif; }" +
                             "h2 { color: #000000; }" +
-                            "p { font-size: 16px; }" +
-                            "strong { font-weight: bold; }" +
+                            "p { font-size: 16px, color:#000000;}" +
+                            ".button {" +
+                            "   display: inline-block;" +
+                            "   padding: 10px 20px;" +
+                            "   font-size: 18px;" +
+                            "   color: white;" +
+                            "   background-color: #28a745;" +
+                            "   text-decoration: none;" +
+                            "   border-radius: 5px;" +
+                            "}" +
                             "</style>" +
                             "</head>" +
                             "<body>" +
                             "<h2>Bonjour " + nom + ",</h2>" +
-                            "<p>Bienvenue sur notre plateforme <strong>SOS Job Tunisie</strong> !</p>" +
-                            "<p>Merci de vous être inscrit. Afin de finaliser votre inscription et activer votre compte, veuillez cliquer sur le bouton ci-dessous :</p>" +
-                            "<p><a href='https://votre-site.com/api/utilisateurss/activation?email=" + to + "' class='button'>Activer mon compte</a></p>" +
-                            "<p>Une fois votre compte activé, vous pourrez accéder à toutes les fonctionnalités de notre plateforme et profiter de nos services de manière instantanée.</p>" +
+                            "<p>Merci de vous être inscrit sur <strong>SOS Job Tunisie</strong> !</p>" +
+                            "<p>Pour activer votre compte, cliquez sur le bouton ci-dessous :</p>" +
+                            "<p><a href='" + activationLink + "' class='button'>Activer mon compte</a></p>" +
                             "<br>" +
+                           "<p> Une fois votre compte activé, vous pourrez accéder à toutes les fonctionnalités de notre plateforme et profiter de nos services de manière instantanée.</p>"+
                             "<p>Cordialement,</p>" +
                             "<p><strong>L'équipe SOS Job Tunisie</strong></p>" +
                             "</body>" +
                             "</html>";
-
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 

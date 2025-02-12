@@ -1,6 +1,6 @@
 package com.example.backendnourpfe.classes;
 
-public enum StatusPrestataire {
+public enum StatusUtilisateur {
     ACCEPTE, REFUSE, ATTENTE
 
 }

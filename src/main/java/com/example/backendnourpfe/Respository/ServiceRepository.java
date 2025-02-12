@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface ServiceRepository extends JpaRepository<Servicee, Long> {
     List<Servicee> findByCategorieId(Long categorieId);
+    List<Servicee> findByNomserviceIn(List<String> nomservices);
 
 
 

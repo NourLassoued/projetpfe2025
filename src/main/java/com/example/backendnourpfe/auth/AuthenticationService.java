@@ -2,6 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 import com.example.backendnourpfe.Config.JwtService;
+import com.example.backendnourpfe.Respository.ServiceRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.Token.Token;
 import com.example.backendnourpfe.Token.TokenRepository;
@@ -23,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,19 +36,14 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
 
 
 public AuthenticationReponse register(RegisterRequest request) {
     UserRole role = request.getRole();
-    StatusPrestataire status;
-    if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
-
-        status = StatusPrestataire.ATTENTE; // Si prestataire ou entreprise, statut "attente"
-    } else {
-        status = StatusPrestataire.ATTENTE; // Si particulier, statut "accepté"
-    }
-
+ StatusUtilisateur status=request.getStatus();
     Utilisateur utilisateur = new Utilisateur();
     utilisateur.setNom(request.getNom());
     utilisateur.setEmail(request.getEmail());
@@ -55,7 +52,7 @@ public AuthenticationReponse register(RegisterRequest request) {
     utilisateur.setTelephoneNumber(request.getTelephoneNumber());
     utilisateur.setRole(role);
     utilisateur.setCreatedAt(new Date());
-    utilisateur.setCompetence(request.getCompetence());
+    utilisateur.setCertification(request.getCertification());
     utilisateur.setTarifs(request.getTarifs());
     utilisateur.setDisponibilite(request.getDisponibilite());
     utilisateur.setDescription(request.getDescription());
@@ -63,17 +60,24 @@ public AuthenticationReponse register(RegisterRequest request) {
     utilisateur.setDoucument_CIN(request.getDoucument_CIN());
     utilisateur.setDoucument_cv(request.getDoucument_cv());
     utilisateur.setStatus(status); // Assignation du status
-    utilisateur.setAbout(request.getAbout());
+    utilisateur.setWorkExperience(request.getWorkExperience());
     utilisateur.setNomEntreprise(request.getNomEntreprise());
     utilisateur.setSiret(request.getSiret());
     utilisateur.setSiteWeb(request.getSiteWeb());
+    if (utilisateur.getStatus() == null) {
+        utilisateur.setStatus(StatusUtilisateur.ATTENTE);
+    }
+    if (request.getServicesNoms() != null && !request.getServicesNoms().isEmpty()) {
+        List<Servicee> services = serviceRepository.findByNomserviceIn(request.getServicesNoms());
+        utilisateur.setServicesOfferts(services);
+    }
 
     if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
         emailService.sendVerificationEmailToprestatire(utilisateur.getEmail(), utilisateur.getNom());
     }
     if (role == UserRole.PARTICULIER) {
 
-        emailService.sendActivationEmail(utilisateur.getEmail(), utilisateur.getNom());
+        emailService.sendActivationEmailParticulier(utilisateur.getEmail(), utilisateur.getNom());
     }
     Utilisateur saveUser = repository.save(utilisateur);
 
@@ -119,7 +123,7 @@ public AuthenticationReponse register(RegisterRequest request) {
         );
 
         var user=repository.findByEmail(request.getEmail()).orElseThrow();
-        if (user.getStatus() == StatusPrestataire.ATTENTE) {
+        if (user.getStatus() == StatusUtilisateur.ATTENTE) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Votre compte est en attente de validation.");
         }
 

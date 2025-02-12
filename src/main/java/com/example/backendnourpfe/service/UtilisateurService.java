@@ -7,8 +7,8 @@ import com.example.backendnourpfe.interfacee.UtlisateurInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import javax.management.ServiceNotFoundException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +27,7 @@ public class UtilisateurService implements UtlisateurInterface {
     private ReservationRepository reservationRepository;
 
 
+
     @Override
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur) {
         return utilisateurRepository.save(utilisateur);
@@ -39,8 +40,9 @@ public class UtilisateurService implements UtlisateurInterface {
         utilisateurRepository.deleteById(id);
     }
 
+/*
     @Override
-    public Demande creerDemande(Long idUtilisateur, Long idservice,Demande demande) {
+    public Demande creerDemande(Long idUtilisateur, Long idservice,Demande demande)  {
         Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
@@ -52,13 +54,50 @@ public class UtilisateurService implements UtlisateurInterface {
         // Vérification que le service existe
         Servicee service = serviceRepository.findById(idservice)
                 .orElseThrow(() -> new RuntimeException("Service non trouvé"));
+
         demande.setUtilisateur(utilisateur);
         demande.setServicee(service);
-        demande.setStatusDemande(StatusDemande.EN_COURS);  // ou autre statut par défaut
+        demande.setStatusDemande(StatusDemande.EN_COURS);
 
-        // Sauvegarder la demande dans la base de données
-        return demandeRepository.save(demande);
+
+
+
+        Demande savedDemande = demandeRepository.save(demande);
+
+
+
+        return savedDemande;
+    }*/
+@Override
+public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande) {
+    Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
+            .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+    if (utilisateur.getRole() != UserRole.PARTICULIER) {
+        throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
     }
+
+    // Vérification que le service existe
+    Servicee service = serviceRepository.findById(idservice)
+            .orElseThrow(() -> new RuntimeException("Service non trouvé"));
+
+    // Création de la demande
+    demande.setUtilisateur(utilisateur);
+    demande.setServicee(service);
+    demande.setStatusDemande(StatusDemande.EN_COURS);
+    Demande savedDemande = demandeRepository.save(demande);
+
+    // 🔥 Récupérer les prestataires du service triés par note
+    List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idservice);
+
+    // Retourner la demande créée + les prestataires triés
+    Map<String, Object> response = new HashMap<>();
+    response.put("demande", savedDemande);
+    response.put("prestataires", prestataires);
+
+    return response;
+}
+
 
     @Override
     public Avis donnerAvis(Long idUtilisateur, Long idAvisUtilisateur, Avis avis) {

@@ -29,7 +29,7 @@ public class Servicee {
     @OneToMany(mappedBy = "servicee")
     private List<Demande> demandes;
 @JsonIgnore
-    @OneToMany(mappedBy = "serviceeutilisateurs")
-    private List<Utilisateur> utilisateurs;
+@ManyToMany(mappedBy = "servicesOfferts")
+private List<Utilisateur> prestataires;
 
 }

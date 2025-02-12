@@ -2,7 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 
-import com.example.backendnourpfe.classes.StatusPrestataire;
+import com.example.backendnourpfe.classes.StatusUtilisateur;
 import com.example.backendnourpfe.classes.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -32,5 +32,5 @@ public class AuthenticationReponse {
     private float tarifs;
     private String disponibilite;
     private String description;
-    private StatusPrestataire status;
+    private StatusUtilisateur status;
 }

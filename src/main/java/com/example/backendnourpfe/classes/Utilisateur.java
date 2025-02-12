@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -47,15 +45,14 @@ public class Utilisateur  implements UserDetails  {
     private UserRole role;
 
     @Enumerated(EnumType.STRING)
-    private StatusPrestataire status;
+    private StatusUtilisateur status=StatusUtilisateur.ATTENTE;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("createdAt")
     private Date createdAt = new Date();
-    @JsonProperty("enabled")
-    private boolean enabled ;
+
     @Nullable
-    @JsonProperty("competence")
-    private String competence;
+    @JsonProperty("Certification")
+    private String Certification;
     @Nullable
     @JsonProperty("tarifs")
     private float tarifs;
@@ -70,9 +67,9 @@ public class Utilisateur  implements UserDetails  {
     @JsonProperty("solde")
     @Nullable
     private float solde;
-    @JsonProperty("about")
+    @JsonProperty("WorkExperience ")
 
-    private String about;
+    private String WorkExperience ;
     @JsonProperty("nomEntreprise")
     @Nullable
     private String nomEntreprise;
@@ -113,10 +110,14 @@ public class Utilisateur  implements UserDetails  {
 
     @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL)
     private List<Reservation> reservationsRecues;
-
-    @ManyToOne
-
-    private Servicee serviceeutilisateurs;
+@JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "prestataire_service",
+            joinColumns = @JoinColumn(name = "utilisateur_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private List<Servicee> servicesOfferts;
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
         this.email = email;
