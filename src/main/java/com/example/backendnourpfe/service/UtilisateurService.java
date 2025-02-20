@@ -5,6 +5,7 @@ import com.example.backendnourpfe.Respository.*;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.management.ServiceNotFoundException;
@@ -40,34 +41,7 @@ public class UtilisateurService implements UtlisateurInterface {
         utilisateurRepository.deleteById(id);
     }
 
-/*
-    @Override
-    public Demande creerDemande(Long idUtilisateur, Long idservice,Demande demande)  {
-        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-
-        if (utilisateur.getRole() != UserRole.PARTICULIER) {
-            throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
-        }
-
-        // Vérification que le service existe
-        Servicee service = serviceRepository.findById(idservice)
-                .orElseThrow(() -> new RuntimeException("Service non trouvé"));
-
-        demande.setUtilisateur(utilisateur);
-        demande.setServicee(service);
-        demande.setStatusDemande(StatusDemande.EN_COURS);
-
-
-
-
-        Demande savedDemande = demandeRepository.save(demande);
-
-
-
-        return savedDemande;
-    }*/
 @Override
 public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande) {
     Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
@@ -77,20 +51,20 @@ public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Dema
         throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
     }
 
-    // Vérification que le service existe
+
     Servicee service = serviceRepository.findById(idservice)
             .orElseThrow(() -> new RuntimeException("Service non trouvé"));
 
-    // Création de la demande
+
     demande.setUtilisateur(utilisateur);
     demande.setServicee(service);
     demande.setStatusDemande(StatusDemande.EN_COURS);
     Demande savedDemande = demandeRepository.save(demande);
 
-    // 🔥 Récupérer les prestataires du service triés par note
+
     List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idservice);
 
-    // Retourner la demande créée + les prestataires triés
+
     Map<String, Object> response = new HashMap<>();
     response.put("demande", savedDemande);
     response.put("prestataires", prestataires);
@@ -167,8 +141,57 @@ public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Dema
 
         return reservationRepository.save(reservation);
     }
+    public Utilisateur updateProfil(Long idUtilisateur, Utilisateur utilisateurDetails) {
 
+        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+
+        if (utilisateurDetails.getNom() != null) {
+            utilisateur.setNom(utilisateurDetails.getNom());
+        }
+        if (utilisateurDetails.getEmail() != null) {
+            utilisateur.setEmail(utilisateurDetails.getEmail());
+        }
+        if (utilisateurDetails.getTelephoneNumber() != 0) {
+            utilisateur.setTelephoneNumber(utilisateurDetails.getTelephoneNumber());
+        }
+        if (utilisateurDetails.getAdresse() != null) {
+            utilisateur.setAdresse(utilisateurDetails.getAdresse());
+        }
+        if (utilisateurDetails.getImage() != null) {
+            utilisateur.setImage(utilisateurDetails.getImage());
+        }
+        if (utilisateurDetails.getDescription() != null) {
+            utilisateur.setDescription(utilisateurDetails.getDescription());
+        }
+        if (utilisateurDetails.getSolde() != 0) {
+            utilisateur.setSolde(utilisateurDetails.getSolde());
+        }
+        if (utilisateurDetails.getWorkExperience() != 0) {
+            utilisateur.setWorkExperience(utilisateurDetails.getWorkExperience());
+        }
+        if (utilisateurDetails.getNomEntreprise() != null) {
+            utilisateur.setNomEntreprise(utilisateurDetails.getNomEntreprise());
+        }
+        if (utilisateurDetails.getSiteWeb() != null) {
+            utilisateur.setSiteWeb(utilisateurDetails.getSiteWeb());
+        }
+        if (utilisateurDetails.getSiret() != null) {
+            utilisateur.setSiret(utilisateurDetails.getSiret());
+        }/*
+        if (utilisateurDetails.getPassword() != null && !utilisateurDetails.getPassword().isEmpty()) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(utilisateurDetails.getPassword());
+            utilisateur.setPassword(encodedPassword);       }*/
+
+
+
+        return utilisateurRepository.save(utilisateur);
+    }
 }
+
+
 
 
 

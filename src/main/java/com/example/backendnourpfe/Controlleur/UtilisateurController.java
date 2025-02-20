@@ -47,18 +47,16 @@ private ServiceRepository serviceRepository;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             // Retourne une réponse 500 en cas d'erreur interne
         }
-    }/*
+    }
+    @PutMapping("updateProfil/{idUtilisateur}")
+    public ResponseEntity<Utilisateur> updateProfil(@PathVariable Long idUtilisateur, @RequestBody Utilisateur utilisateurDetails) {
 
-    @PostMapping("/{utilisateurId}/creerDemande/{serviceId}")
-    public ResponseEntity<Demande> creerDemande(@PathVariable Long utilisateurId, @PathVariable Long serviceId,@RequestBody Demande demande) {
-        try {
-            Demande nouvelleDemande = utilisateurService.creerDemande(utilisateurId, serviceId, demande);
-            return new ResponseEntity<>(nouvelleDemande, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // 400 Bad Request en cas d'erreur
-        }
-    }*/
-    @PostMapping("/creer/{idUtilisateur}/{idservice}")
+        Utilisateur updatedUtilisateur = utilisateurService.updateProfil(idUtilisateur, utilisateurDetails);
+
+
+        return ResponseEntity.ok(updatedUtilisateur);
+    }
+    @PostMapping("/creerDemande/{idUtilisateur}/{idservice}")
     public ResponseEntity<Map<String, Object>> creerDemande(
             @PathVariable Long idUtilisateur,
             @PathVariable Long idservice,

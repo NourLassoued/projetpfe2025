@@ -33,4 +33,5 @@ public class AuthenticationReponse {
     private String disponibilite;
     private String description;
     private StatusUtilisateur status;
+    private int workExperience;
 }

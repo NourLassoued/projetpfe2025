@@ -13,8 +13,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 @RestController
-@RequestMapping("/api/v1/auth")
+
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/v1/auth")
+
 public class FileControlleur {
 
     private static final String UPLOAD_DIR = "C:/xampppidev/htdocs/img/";

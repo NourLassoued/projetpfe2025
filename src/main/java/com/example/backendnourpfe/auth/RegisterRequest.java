@@ -37,11 +37,11 @@ public class RegisterRequest implements Serializable {
     private  String doucument_cv;
     private StatusUtilisateur status;
 
-    private String WorkExperience;
+    private int workExperience;
     private String nomEntreprise;
     private String siret;
     private String siteWeb;
-    private List<String> servicesNoms;
-
+    private List<String> servicesOfferts;
+    private List<String> competence;
     private List<byte[]> images;
 }

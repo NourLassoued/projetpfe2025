@@ -63,13 +63,19 @@ public class Utilisateur  implements UserDetails  {
     @Nullable
     @JsonProperty("description")
 
+
     private String description;
+    @Nullable
+    @JsonProperty("competence")
+    @ElementCollection
+
+    private List<String> competence;
     @JsonProperty("solde")
     @Nullable
     private float solde;
-    @JsonProperty("WorkExperience ")
-
-    private String WorkExperience ;
+    @Nullable
+    @JsonProperty("workExperience")
+    private int workExperience;
     @JsonProperty("nomEntreprise")
     @Nullable
     private String nomEntreprise;

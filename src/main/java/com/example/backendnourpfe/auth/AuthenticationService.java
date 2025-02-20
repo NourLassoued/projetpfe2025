@@ -42,6 +42,8 @@ public class AuthenticationService {
 
 
 public AuthenticationReponse register(RegisterRequest request) {
+
+
     UserRole role = request.getRole();
  StatusUtilisateur status=request.getStatus();
     Utilisateur utilisateur = new Utilisateur();
@@ -50,6 +52,8 @@ public AuthenticationReponse register(RegisterRequest request) {
     utilisateur.setPassword(passwordEncoder.encode(request.getPassword()));
     utilisateur.setImage(request.getImage());
     utilisateur.setTelephoneNumber(request.getTelephoneNumber());
+
+
     utilisateur.setRole(role);
     utilisateur.setCreatedAt(new Date());
     utilisateur.setCertification(request.getCertification());
@@ -61,16 +65,18 @@ public AuthenticationReponse register(RegisterRequest request) {
     utilisateur.setDoucument_cv(request.getDoucument_cv());
     utilisateur.setStatus(status); // Assignation du status
     utilisateur.setWorkExperience(request.getWorkExperience());
+    utilisateur.setCompetence(request.getCompetence());
     utilisateur.setNomEntreprise(request.getNomEntreprise());
     utilisateur.setSiret(request.getSiret());
     utilisateur.setSiteWeb(request.getSiteWeb());
     if (utilisateur.getStatus() == null) {
         utilisateur.setStatus(StatusUtilisateur.ATTENTE);
     }
-    if (request.getServicesNoms() != null && !request.getServicesNoms().isEmpty()) {
-        List<Servicee> services = serviceRepository.findByNomserviceIn(request.getServicesNoms());
+    if (request.getCompetence() != null && !request.getCompetence().isEmpty()) {
+        List<Servicee> services = serviceRepository.findByNomserviceIn(request.getCompetence());
         utilisateur.setServicesOfferts(services);
     }
+
 
     if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
         emailService.sendVerificationEmailToprestatire(utilisateur.getEmail(), utilisateur.getNom());
@@ -79,6 +85,8 @@ public AuthenticationReponse register(RegisterRequest request) {
 
         emailService.sendActivationEmailParticulier(utilisateur.getEmail(), utilisateur.getNom());
     }
+
+
     Utilisateur saveUser = repository.save(utilisateur);
 
 
