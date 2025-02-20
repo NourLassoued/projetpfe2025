@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gagnez de l'argent avec vos compétences</title>
+
+</head>
+<app-navbar></app-navbar>
+<body>
+    <div class="container">
+        <div class="text-section">
+            <h1><span class="highlight">Gagnez de l'argent</span> grâce à vos compétences</h1>
+            <p>Plus de <strong>4.000 jobs</strong> chaque semaine, que vous soyez un <strong>particulier</strong> ou <strong>professionnel</strong>, dans plus de <a href="#">120 catégories</a>.</p>
+            <button class="btn" (click)="openModal()">S'inscrire</button>
+        </div>
+
+        <div class="phone-section">
+            <div class="phone">
+              
+                <div class="service-container">
+                    <div class="service">
+                        <img src="assets/img/pelouse.png" alt="Tonte de pelouse">
+                        <div>
+                            <h3>Tonte de pelouse</h3>
+                            <p>Prix moyen : <strong>40dt - 60dt</strong></p>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <img src="assets/img/presatitre.png" alt="Entretien chaudière">
+                        <div>
+                            <h3>Entretien chaudière <span class="tag">RÉSERVÉ AUX PROS</span></h3>
+                            <p>Prix moyen : <strong>50dt - 80dt</strong></p>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <img src="assets/img/Transpore.png" alt="Transport meuble">
+                        <div>
+                            <h3>Transporter un meuble</h3>
+                            <p>Prix moyen : <strong>80dt - 130dt</strong></p>
+                        </div>
+                    </div>
+                    <div class="service">
+                        <img src="assets/img/babySitter.png" alt="Baby-Sitters">
+                        <div>
+                            <h3>Baby-Sitters</h3>
+                            <p>Prix moyen : <strong>40dt - 60dt</strong></p>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="modal" *ngIf="showModal">
+        <div class="modal-content">
+            <span class="close" (click)="closeModal()">&times;</span>
+            <h2>Quel type de prestataire êtes-vous ?</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="icon">
+                        <i class="fas fa-user-tie"></i> 
+                    </div>
+                    <h2>Professionnel</h2>
+                    <p>Employé, étudiant, chercheur d’emploi, pensionné.</p>
+                    <ul class="list">
+                        <li><i class="fas fa-check"></i> Inscription gratuite</li>
+                        
+                        <li><i class="fas fa-check"></i>  Une app super facile</li>
+                        <li><i class="fas fa-check"></i>Revenus illimités</li>
+                        <li><i class="fas fa-check"></i> travailler à votre rythme</li>
+                    </ul>
+                    <button class="btn btn-green" [routerLink]="['/InscriptionProfessionnel']">S'inscrire maintenant</button>
+                </div>
+    
+                <div class="or">ou</div>
+    
+                <div class="card">
+                    <div class="icon">
+                     
+                       <i class="fas fa-building"></i>
+
+                    </div>
+                    <h2>Entreprise</h2>
+                    <p>Développez votre activité facilement</p>
+                    <ul class="list">
+                        <li><i class="fas fa-check"></i> Accès à plus de clients</li>
+                        <li><i class="fas fa-check"></i>  Plus de visibilité</li>
+                        <li><i class="fas fa-check"></i> Une app super facile</li>
+                        <li><i class="fas fa-check"></i>  Maximisation des profits</li>
+                        <li><i class="fas fa-check"></i> travailler à votre rythme</li>
+                    </ul>
+                    <button class="btn btn-blue">S'inscrire maintenant</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<app-footer></app-footer>
+</html>

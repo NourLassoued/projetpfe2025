@@ -1,0 +1,103 @@
+<app-navbar></app-navbar>
+
+
+
+<body>
+
+  <div class="container">
+    <div class="title-container" *ngIf="step === 1">
+      <h2>Devenez prestataire</h2>
+      <i class="next-icon" (click)="nextStep()"></i>
+     
+    </div>
+   
+
+    <p *ngIf="step === 1">Inscrivez-vous dès maintenant et accédez à plus de 4 000 jobs chaque semaine, dans plus de 120 catégories.</p>
+    <form [formGroup]="form1" *ngIf="step === 1">
+     
+     
+      <input formControlName="nom" placeholder="👤Nom">
+
+      <input formControlName="email" type="email" placeholder="📧Email">
+      <input formControlName="password" type="password" placeholder="🔒Mot de passe">
+      <input formControlName="telephoneNumber" placeholder=" 📞Téléphone">
+      
+      <input   formControlName="competence" type="text" placeholder="🔍💼Sélectionnez votre domaine de spécialisation ?" class="search-bar" (click)="showSkillModal()">
+      
+      <input formControlName="workExperience" type="number" placeholder="⏳Années d'expérience" step="1" min="0">
+
+      
+    </form>
+    
+    <div class="title-container" *ngIf="step === 2">
+      <i class="back-icon" (click)="previousStep()"></i>
+      <h2>Devenez prestataire</h2>
+     
+     
+    </div>
+    <form [formGroup]="form2" *ngIf="step === 2">
+      <label>📄Télécharger votre CV</label>
+      <input type="file" (change)="onFileSelected($event,'doucument_cv')">
+    
+      <label>🆔Télécharger votre CIN</label>
+      <input type="file" (change)="onFileSelected($event,'doucument_CIN')">
+    
+      <label>🖼️Télécharger une image</label>
+      <input type="file" accept="image/*" (change)="onFileSelected($event,'image')">
+    
+      <button (click)="onSubmit()" [disabled]="form2.invalid">Soumettre</button>
+    </form>
+
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="showModal = false">&times;</span>
+        <h2>Demander un service</h2>
+    
+        <!-- Barre de recherche -->
+        <input type="text" placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
+    
+        <!-- Affichage des catégories en grille -->
+        <div class="grid-container">
+          <div class="category-card" *ngFor="let category of categories  let i = index" (click)="selectCategory(category.nom) ">
+            <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
+            <span>{{ category.nom }}</span>
+            <span class="icon">➜</span>
+          </div>
+        
+        </div>
+      </div>
+     
+    </div>
+    <div class="modal" *ngIf="showServiceModal">
+      <div class="modal-content">
+        <span class="close" (click)="showServiceModal = false">&times;</span>
+        <h2>Services disponibles pour la catégorie : {{ selectedCategory?.nom }}</h2>
+        <input type="text" placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
+     <div class="grid-container">
+          <div class="category-card" *ngFor="let service of services let i = index"  >
+            <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+            <label for="service-{{ service.id }}">{{ service.nomservice }}</label>
+
+            <input class="iconn" type="checkbox" id="service-{{ service.id }}" (change)="selectService(service)" >
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+ 
+
+</body>
+
+<app-footer></app-footer>
+
+
+
+
+
+
+
+
+
+

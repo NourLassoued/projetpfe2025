@@ -1,0 +1,91 @@
+
+
+<app-navbar></app-navbar>
+<div class="containeree">
+    <h2>Bienvenue chez Yoojo</h2>
+    <div class="optionss" >
+        <div class="options" (click)="openModal()">
+            <i class="fas fa-bell-concierge"></i>
+            <h3>J'ai besoin d'un service</h3>
+            <p>Réservez le prestataire idéal pour vos services du quotidien</p>
+        </div>
+        
+        <span class="ou">OU</span>
+        <div class="options"[routerLink]="['/prestataire']">
+            <i class="fas fa-briefcase"></i>
+            <h3>Devenir prestataire</h3>
+            <p>Augmentez vos revenus en rendant service près de chez vous</p>
+        </div>
+    </div>
+    <p class="login-text">Vous avez déjà un compte ? <a href="#">Connectez-vous</a></p>
+</div>
+<div class="modal" [class.show]="showModal">
+    
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Créer un compte</h2>
+      <p>Profitez de votre temps libre grâce à nos jobbers</p>
+  
+      <!-- Bouton Facebook -->
+      <button class="fb-button">📘 Continuer avec Facebook</button>
+      <span class="ou">OU</span>
+  
+      <!-- Formulaire d'inscription -->
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Nom -->
+        <input type="text" formControlName="nom" placeholder="👤 Nom">
+        <div *ngIf="registerForm.get('nom')?.invalid && registerForm.get('nom')?.touched">
+          ⚠️ Le nom est obligatoire.
+        </div>
+  
+        <!-- Email -->
+        <input type="email" formControlName="email" placeholder="📧 Adresse e-mail">
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          ⚠️ Veuillez entrer une adresse email valide (@gmail.com uniquement).
+        </div>
+  
+        <!-- Numéro de téléphone -->
+        <input type="text" formControlName="telephoneNumber" placeholder="📞 Numéro de téléphone">
+        <div *ngIf="registerForm.get('telephoneNumber')?.invalid && registerForm.get('telephoneNumber')?.touched">
+          ⚠️ Veuillez entrer un numéro valide (8-15 chiffres).
+        </div>
+  
+        <!-- Mot de passe -->
+        <input type="password" formControlName="password" placeholder="🔑 Mot de passe">
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          ⚠️ Le mot de passe doit contenir au moins 8 caractères.
+        </div>
+  
+        <!-- Upload de fichier -->
+        <input type="file" (change)="onFileSelected($event)" accept="image/*">
+        
+        <!-- Affichage de l'image sélectionnée -->
+       
+        <!-- Checkbox pour accepter les conditions -->
+     
+        <div class="checkbox-container">
+            <label class="checkbox-label">
+                <input type="checkbox" formControlName="newsletter">
+                Je souhaite être informé des nouveautés bons plans
+            </label>
+        
+            <label class="checkbox-label">
+                <input type="checkbox" formControlName="partnerDeals">
+                Je souhaite recevoir les bons plans des partenaires
+            </label>
+        </div>
+      
+        <button type="submit" class="register-btn"  >
+          Je m'inscris
+        </button>
+        
+        
+  
+      </form>
+    </div>
+  </div>
+  
+  <!-- Pied de page -->
+  <app-footer></app-footer>
+  
