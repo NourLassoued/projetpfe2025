@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+
 import { AllTemplateFrontComponent } from './all-template-front/all-template-front.component';
 import { FooterComponent } from './footer/footer.component';
 import { InscriptionComponent } from './inscription/inscription.component';
@@ -10,7 +11,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InscriptionprestaitreComponent } from './inscriptionprestaitre/inscriptionprestaitre.component';
 import { InscriptionProfessionnelComponent } from './inscription-professionnel/inscription-professionnel.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { InscriptionEntrpriseComponent } from './inscription-entrprise/inscription-entrprise.component';
+import { LoginComponent } from './login/login.component';
+import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
+import { EditpasswordComponent } from './editpassword/editpassword.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +24,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     FooterComponent,
     InscriptionComponent,
     InscriptionprestaitreComponent,
-    InscriptionProfessionnelComponent
+    InscriptionProfessionnelComponent,
+    InscriptionEntrpriseComponent,
+    LoginComponent,
+    NewinstructionssendComponent,
+    EditpasswordComponent
+
   ],
   imports: [
     BrowserModule,
@@ -27,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+
+ 
   ],
   providers: [],
   bootstrap: [AppComponent]

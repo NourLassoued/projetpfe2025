@@ -1,0 +1,252 @@
+
+body {
+  background: linear-gradient(90deg, #feecf1, #ecd0a6);
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+
+}
+
+
+
+.container h2{
+  color: #247df0;
+  margin-top: 10px;
+} 
+.container {
+  max-width: 500px;
+  height: 500px;
+background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top:95px;
+
+
+}
+input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color:  #247df0;
+  cursor: pointer;
+  margin-top: 10px;
+}
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.next-icon {
+  position: absolute;
+  right: -10px; /* Ajuste la position */
+  font-size: 24px;
+  color: #247df0;
+  cursor: pointer;
+}
+
+.next-icon::before {
+  content: '➜'; /* Flèche droite */
+  font-weight: bold;
+}
+.back-icon {
+  position: absolute;
+  left: -10px; /* Ajuste la position */
+  font-size: 24px;
+  color: #247df0;
+  cursor: pointer;
+}
+
+
+
+.back-icon::before {
+  content: '⬅'; /* Left arrow */
+  font-weight: bold;
+}
+
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+
+.service-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.service-item {
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.service-item:hover {
+  background: #e0e0e0;
+}
+.modal {
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+background: white;
+padding: 20px;
+border-radius: 10px;
+width: 60%;
+height: 80%;
+max-height: 80%;
+overflow-y: auto;
+}
+
+.search-bar {
+width: 100%;
+padding: 10px;
+margin-bottom: 15px;
+border-radius: 5px;
+border: 1px solid #ddd;
+font-size: 16px;
+}
+
+.grid-container {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 15px;
+}
+.icon {
+font-size: 50px;
+font-weight: bold;
+color: #555;
+
+
+}
+.category-card {
+display: flex;
+justify-content: space-between; /* Alignement des éléments avec un espace entre */
+align-items: center;
+background: white;
+padding: 10px;
+border-radius: 8px;
+border: 2px solid  #ddd;
+cursor: pointer;
+transition: background 0.3s;
+}
+
+.category-card:hover {
+background: #e9ecef;
+}
+
+.category-card img {
+width: 40px;
+height: 40px;
+margin-right: 10px;
+border-radius: 5px;
+}
+
+.category-card span {
+font-size: 18px;
+font-weight: bold;
+}
+.service-form {
+display: flex;
+flex-direction: column;
+}
+
+.service-form label {
+margin-bottom: 10px;
+}
+.iconn {
+appearance: none; /* Enlève l'apparence par défaut du navigateur */
+-webkit-appearance: none; /* Enlève l'apparence par défaut sur Safari */
+-moz-appearance: none; /* Enlève l'apparence par défaut sur Firefox */
+width: 20px; /* Largeur de la case à cocher */
+height: 20px; /* Hauteur de la case à cocher */
+border: 2px solid #247df0; /* Bordure verte pour la case à cocher */
+border-radius: 4px; /* Coins arrondis */
+background-color: white; /* Fond blanc de la case */
+cursor: pointer; /* Change le curseur pour indiquer que l'élément est interactif */
+position: relative;
+transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation pour la couleur de fond et de bordure */
+}
+
+.iconn:checked {
+
+border-color: #4CAF50; /* Bordure verte lorsqu'il est coché */
+}
+
+.iconn:checked::before {
+content: ''; /* Création du checkmark */
+position: absolute;
+top: 4px;
+left: 7px;
+width: 6px;
+height: 12px;
+border: solid  #247df0;
+border-width: 0 3px 3px 0; /* Style du checkmark */
+transform: rotate(45deg); /* Rotation du checkmark */
+}
+
+.iconn:hover {
+background-color: #f1f1f1; /* Changement de fond au survol */
+border-color: #247df0; /* Changement de bordure au survol */
+}
+.error {
+color: rgb(14, 13, 13);
+font-size: 12px;
+margin-top: 5px;
+}

@@ -14,10 +14,7 @@ export class ForgetPasswordService {
     return this.http.post(`${this.apiUrl}/verifyMail/${email}`, {}, { responseType: 'text' });
   }
 
-  // Vérifier l'OTP
-  verifyOtp(email: string, otp: number): Observable<string> {
-    return this.http.post(`${this.apiUrl}/verifyOtp/${otp}/${email}`, {}, { responseType: 'text' });
-  }
+ 
 
   // Changer le mot de passe
   changePassword(email: string, password: string, repeatPassword: string): Observable<string> {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceeService } from '../service/servicee.service';
 import { CategorieService } from '../service/categorie.service';
 import { FileService } from '../service/file.service';
@@ -22,21 +22,21 @@ export class InscriptionProfessionnelComponent {
   imageUrls: string[] = [];
   showServiceModal = false; 
   selectedFile!: File;
-  selectedCategory: any = null;  // Variable pour la catégorie sélectionnée
+  selectedCategory: any = null;  
   services: any[] = [];   
-  selectedFiles: { [key: string]: File } = {};      // Liste des services pour la catégorie sélectionnée
-  selectedServices: any[] = []; // Liste des services sélectionnés
+  selectedFiles: { [key: string]: File } = {};     
+  selectedServices: any[] = [];
   constructor(private fb: FormBuilder,private http:HttpClient,private categorieService:CategorieService,private file:FileService,private service:ServiceeService,private authService: AuthServiceService,) {
     this.form1 = this.fb.group({
       nom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], // Numéro entre 8 et 15 chiffres
+      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], 
      
       role: [UserRole.PRESTATAIRE],
      
-      competence: this.fb.array([]),
-      workExperience: [null, [Validators.required, Validators.min(0)]],  // Initialisé avec null
+      competence: [[]], 
+      workExperience: [null, [Validators.required, Validators.min(0)]],  
     
     
     
@@ -124,7 +124,6 @@ selectCategory(categoryName: string) {
     }
   );
 }
-
 selectService(service: any) {
   if (this.selectedServices.includes(service)) {
     this.selectedServices = this.selectedServices.filter(s => s !== service);
@@ -132,9 +131,12 @@ selectService(service: any) {
     this.selectedServices.push(service);
   }
 
-  // Mise à jour du champ skills avec le nom du service sélectionné
-  this.form1.controls['competence'].setValue(service.nomservice);
+  console.log("Compétences sélectionnées : ", this.selectedServices); // Vérifier dans la console
+
+  // Mise à jour du champ 'competence' avec la liste des services sélectionnés
+  this.form1.controls['competence'].setValue(this.selectedServices.map(s => s.nomservice));
 }
+
 
 onFileSelected(event: any, fileType: string): void {
   const file = event.target.files[0];

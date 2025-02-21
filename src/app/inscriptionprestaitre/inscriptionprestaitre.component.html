@@ -6,9 +6,10 @@
     <title>Gagnez de l'argent avec vos compétences</title>
 
 </head>
-<app-navbar></app-navbar>
+
 <body>
     <div class="container">
+        <app-navbar></app-navbar>
         <div class="text-section">
             <h1><span class="highlight">Gagnez de l'argent</span> grâce à vos compétences</h1>
             <p>Plus de <strong>4.000 jobs</strong> chaque semaine, que vous soyez un <strong>particulier</strong> ou <strong>professionnel</strong>, dans plus de <a href="#">120 catégories</a>.</p>
@@ -90,7 +91,7 @@
                         <li><i class="fas fa-check"></i>  Maximisation des profits</li>
                         <li><i class="fas fa-check"></i> travailler à votre rythme</li>
                     </ul>
-                    <button class="btn btn-blue">S'inscrire maintenant</button>
+                    <button class="btn btn-blue" [routerLink]="['/InscriptionEntrprise']">S'inscrire maintenant</button>
                 </div>
             </div>
         </div>

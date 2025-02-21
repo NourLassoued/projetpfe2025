@@ -1,0 +1,113 @@
+
+<body>
+  <app-navbar></app-navbar>
+  <div class="container">
+    <div class="title-container" *ngIf="step === 1">
+      <h2>Devenez prestataire</h2>
+      <i class="next-icon" (click)="nextStep()"></i>
+    </div>
+
+    <p *ngIf="step === 1">Rejoignez notre réseau de plus de 50 entreprises, développez votre clientèle et boostez la visibilité de votre société</p>
+
+    <form [formGroup]="form1" *ngIf="step === 1">
+      <!-- Formulaire 1 -->
+      <div >
+        <input formControlName="nom" placeholder="👤 Nom du fondateur">
+        <div class="error" *ngIf="form1.get('nom')?.invalid && form1.get('nom')?.touched">
+          <span *ngIf="form1.get('nom')?.errors?.['required']">⚠️ Le nom est requis.</span>
+        </div>
+
+        <input formControlName="email" type="email" placeholder="📧 EmailEntreprise">
+        <div class="error" *ngIf="form1.get('email')?.invalid && form1.get('email')?.touched">
+          <span *ngIf="form1.get('email')?.errors?.['required']">⚠️ L'email est requis.</span>
+          <span *ngIf="form1.get('email')?.errors?.['email']">⚠️ Entrez un email valide.</span>
+        </div>
+
+        <input formControlName="password" type="password" placeholder="🔒 Mot de passe">
+        <div class="error" *ngIf="form1.get('password')?.invalid && form1.get('password')?.touched">
+          <span *ngIf="form1.get('password')?.errors?.['required']">⚠️ Le mot de passe est requis.</span>
+          <span *ngIf="form1.get('password')?.errors?.['minlength']">⚠️ Le mot de passe doit contenir au moins 8 caractères.</span>
+        </div>
+
+        <input formControlName="telephoneNumber" placeholder="📞 TélephoneEntreprise">
+        <div class="error" *ngIf="form1.get('telephoneNumber')?.invalid && form1.get('telephoneNumber')?.touched">
+          <span *ngIf="form1.get('telephoneNumber')?.errors?.['required']">⚠️ Le numéro de téléphone est requis.</span>
+          <span *ngIf="form1.get('telephoneNumber')?.errors?.['pattern']">⚠️ Entrez un numéro valide.</span>
+        </div>
+
+        <input formControlName="competence" type="text" placeholder="🔍💼 Sélectionnez votre domaine de spécialisation ?" (click)="showSkillModal()">
+        <div class="error" *ngIf="form1.get('competence')?.invalid && form1.get('competence')?.touched">
+          <span>⚠️ La compétence est requise.</span>
+        </div>
+      </div>
+    </form>
+
+      <div class="title-container" *ngIf="step === 2">
+        <i class="back-icon" (click)="previousStep()"></i>
+        <h2>Devenez prestataire</h2>
+       
+       
+      </div>
+      <form [formGroup]="form2" *ngIf="step === 2">
+        <input formControlName="nomEntreprise" placeholder="🏢 Nom de l'entreprise">
+        <div class="error" *ngIf="form2.get('nomEntreprise')?.invalid && form2.get('nomEntreprise')?.touched">
+          <span>⚠️ Le nom de l'entreprise est requis.</span>
+        </div>
+
+        <input formControlName="siret" placeholder="🔢 Numéro SIRET">
+        <div class="error" *ngIf="form2.get('siret')?.invalid && form2.get('siret')?.touched">
+          <span *ngIf="form2.get('siret')?.errors?.['required']">⚠️ Le numéro SIRET est requis.</span>
+          <span *ngIf="form2.get('siret')?.errors?.['pattern']">⚠️ Le numéro SIRET doit contenir exactement 14 chiffres.</span>
+        </div>
+
+        <input type="file" accept="image/*" (change)="onFileSelected($event, 'image')" placeholder="📷 Logo de l'entreprise">
+      
+
+      <button (click)="onSubmit()" >Soumettre</button>
+    </form>
+
+    <!-- Modal des catégories -->
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="showModal = false">&times;</span>
+        <h2>Choisissez les services que vous souhaitez proposer</h2>
+
+        <!-- Barre de recherche -->
+        <input type="text" placeholder="🔍  Recherchez votre domaine de service" class="search-bar">
+
+        <!-- Affichage des catégories en grille -->
+        <div class="grid-container">
+          <div class="category-card" *ngFor="let category of categories; let i = index" (click)="selectCategory(category.nom)">
+            <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
+            <span>{{ category.nom }}</span>
+            <span class="icon">➜</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal des services -->
+    <div class="modal" *ngIf="showServiceModal">
+      <div class="modal-content">
+        <span class="close" (click)="showServiceModal = false">&times;</span>
+        <h2>Services disponibles pour la catégorie : {{ selectedCategory?.nom }}</h2>
+        <input type="text" placeholder="🔍 Recherchez un service" class="search-bar">
+        <div class="grid-container">
+          <div class="category-card" *ngFor="let service of services; let i = index">
+            <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+            <label for="service-{{ service.id }}">{{ service.nomservice }}</label>
+            <input 
+              class="iconn" 
+              type="checkbox" 
+              id="service-{{ service.id }}" 
+              [checked]="selectedServices.includes(service)" 
+              (change)="selectService(service)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+<app-footer></app-footer>

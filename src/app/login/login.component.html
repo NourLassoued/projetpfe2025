@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<body>
+    <app-navbar></app-navbar>
+    <div class="container">
+        <!-- Bloc Formulaire -->
+        <div class="login-form">
+            <h2>Connectez-vous</h2>
+            <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+                
+                <label for="email">E-mail</label>
+                <div class="input-field">
+                    <span class="icon">📧</span>
+                    <input formControlName="email" type="email" id="email" placeholder="hello@gmail.com" required>
+                </div>
+                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+                    L'email est requis.
+                </div>
+    
+                <label for="password">Mot de passe</label>
+                <div class="input-field">
+                    <span class="icon">🔒</span>
+                    <input formControlName="password" type="password" id="password" placeholder="••••••••••••" required>
+                </div>
+                <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+                    Le mot de passe est requis.
+                </div>
+    
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Se rappeler de moi</label>
+                </div>
+    
+                <button class="btn-login" [disabled]="loginForm.invalid">Connexion</button>
+    
+                <a href="#" (click)="openModal()" class="forgot-password">Mot de passe oublié ?</a>
+    
+                <div class="divider">
+                    <hr> <span>ou</span> <hr>
+                </div>
+    
+                <p>Se connecter avec</p>
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="fab fa-google"></i> 
+                    </button>
+                </div>
+            </form>
+        </div>
+    
+        <!-- Bloc Inscription -->
+        <div class="register-box">
+            <h1>Vous êtes nouveau ici ?</h1>
+            <button class="btn-register">Rejoindre Ring Twice</button>
+        </div>
+    </div>
+    <div class="modal" *ngIf="showModal">
+        <div class="modal-content">
+          <span class="close" (click)="closeModal()">&times;</span>
+          <h2>Mot de passe oublié ?</h2>
+          <form [formGroup]="resetPasswordForm" (ngSubmit)="verifyAndSendEmail()">
+            <label for="reset-email"></label>
+            <input formControlName="email" type="email" id="reset-email" placeholder="📧Votre adresse e-mail" required>
+      
+            <button  type="submit" class="btn-submit">Envoyez-moi les instructions</button>
+          </form>
+        </div>
+      </div>
+    
+</body>
+<app-footer></app-footer>
