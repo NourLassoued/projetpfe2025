@@ -1,13 +1,23 @@
 
 body {
-  background: linear-gradient(90deg, #feecf1, #ecd0a6);
+  background-color: #fdf8f6;
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0;
+  width:1350px;
+  height: 1350px;
+
+ 
 
 
+}
+app-footer {
+ width:1350px;
 
 }
 
@@ -18,15 +28,16 @@ body {
   margin-top: 10px;
 } 
 .container {
-  max-width: 500px;
-  height: 500px;
+  width: 600px;
+height: 900px;
 background: white;
+flex: 1;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-top:95px;
+  margin-top:100px;
 
-
+  
 }
 input {
   display: block;
@@ -68,19 +79,19 @@ label {
 
 .next-icon {
   position: absolute;
-  right: -10px; /* Ajuste la position */
+  right: -10px;
   font-size: 24px;
   color: #247df0;
   cursor: pointer;
 }
 
 .next-icon::before {
-  content: '➜'; /* Flèche droite */
+  content: '➜'; 
   font-weight: bold;
 }
 .back-icon {
   position: absolute;
-  left: -10px; /* Ajuste la position */
+  left: -10px; 
   font-size: 24px;
   color: #247df0;
   cursor: pointer;

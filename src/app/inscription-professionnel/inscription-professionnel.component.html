@@ -8,73 +8,68 @@
 
   <div class="container">
     
-    <div class="title-container" *ngIf="step === 1">
+    <div class="title-container" >
       <h2>Devenez prestataire</h2>
-      <i class="next-icon" (click)="nextStep()"></i>
+    
      
     </div>
    
 
-    <p *ngIf="step === 1">Inscrivez-vous dès maintenant et accédez à plus de 4 000 jobs chaque semaine, dans plus de 120 catégories.</p>
-    <form [formGroup]="form1" *ngIf="step === 1">
-      <input formControlName="nom" placeholder="👤 Nom">
+    <p>Inscrivez-vous dès maintenant et accédez à plus de 4 000 jobs chaque semaine, dans plus de 120 catégories.</p>
+    <form [formGroup]="form1">
+     
+    <label>nom</label>
+        <input formControlName="nom" placeholder="&#xf007;" class="input-fa">
+
+     
       <div class="error" *ngIf="form1.get('nom')?.invalid && form1.get('nom')?.touched">
         <span *ngIf="form1.get('nom')?.errors?.['required']">⚠️ Le nom est requis.</span>
-        
       </div>
     
-      <input formControlName="email" type="email" placeholder="📧 Email">
+    
+      
+      <label>Email</label>
+      <input formControlName="email" type="email" placeholder="&#xf0e0;" class="input-fa">
+      
       <div class="error" *ngIf="form1.get('email')?.invalid && form1.get('email')?.touched">
         <span *ngIf="form1.get('email')?.errors?.['required']">⚠️ L'email est requis.</span>
-<span *ngIf="form1.get('email')?.errors?.['email']">⚠️ Entrez un email valide.</span>
-
+        <span *ngIf="form1.get('email')?.errors?.['email']">⚠️ Entrez un email valide.</span>
       </div>
     
-      <input formControlName="password" type="password" placeholder="🔒 Mot de passe">
+      
+        <label>Mot de passe</label>
+        <input formControlName="password" type="password" placeholder="&#xf023;" class="input-fa">
+     
       <div class="error" *ngIf="form1.get('password')?.invalid && form1.get('password')?.touched">
         <span *ngIf="form1.get('password')?.errors?.['required']">⚠️ Le mot de passe est requis.</span>
         <span *ngIf="form1.get('password')?.errors?.['minlength']">⚠️ Le mot de passe doit contenir au moins 6 caractères.</span>
-        
       </div>
     
-      <input formControlName="telephoneNumber" placeholder="📞 Téléphone">
+      <label>Téléphone</label>
+      <input formControlName="telephoneNumber" placeholder="&#xf095;" class="input-fa">
       <div class="error" *ngIf="form1.get('telephoneNumber')?.invalid && form1.get('telephoneNumber')?.touched">
         <span *ngIf="form1.get('telephoneNumber')?.errors?.['required']">⚠️ Le numéro de téléphone est requis.</span>
         <span *ngIf="form1.get('telephoneNumber')?.errors?.['pattern']">⚠️ Entrez un numéro valide.</span>
       </div>
     
-      <input formControlName="competence" type="text" placeholder="🔍💼 Sélectionnez votre domaine de spécialisation ?" (click)="showSkillModal()">
-      <div class="error" *ngIf="form1.get('competence')?.invalid && form1.get('competence')?.touched">
-        <span>⚠️ La compétence est requise.</span>
-      </div>
+      <label>Domaine de spécialisation</label>
+      <input formControlName="competence" type="text" placeholder="&#xf0b1;" class="input-fa" (click)="showSkillModal()">
+      <label>Années d'expérience</label>
+<input formControlName="workExperience" type="number" placeholder="&#xf254;" class="input-fa" min="0">
     
-      <input formControlName="workExperience" type="number" placeholder="⏳ Années d'expérience" min="0">
-      <div class="error" *ngIf="form1.get('workExperience')?.invalid && form1.get('workExperience')?.touched">
-        <span>⚠️ Ce champ est requis.</span>
-      </div>
-    
-      
-    </form>
-   
-    
-    <div class="title-container" *ngIf="step === 2">
-      <i class="back-icon" (click)="previousStep()"></i>
-      <h2>Devenez prestataire</h2>
-     
-     
-    </div>
-    <form [formGroup]="form2" *ngIf="step === 2">
-      <label>📄Télécharger votre CV</label>
+      <label><i class="fas fa-file-upload"></i> Télécharger votre CV</label>
       <input type="file" (change)="onFileSelected($event,'doucument_cv')">
     
-      <label>🆔Télécharger votre CIN</label>
+      <label><i class="fas fa-id-card"></i> Télécharger votre CIN</label>
       <input type="file" (change)="onFileSelected($event,'doucument_CIN')">
     
-      <label>🖼️Télécharger une image</label>
+      <label><i class="fas fa-image"></i> Télécharger votre image</label>
       <input type="file" accept="image/*" (change)="onFileSelected($event,'image')">
     
-      <button (click)="onSubmit()" >Soumettre</button>
+      <button (click)="onSubmit()">Soumettre</button>
     </form>
+    
+   
   
     <div class="modal" *ngIf="showModal">
       <div class="modal-content">
@@ -120,7 +115,7 @@
   </div>
   <div class="image-container">
     <img src="assets/img/ahmed.png" alt="Image 1">
-    <img src="assets/img/asma.png" alt="Image 2">
+    <img src="assets/img/asma123.png" alt="nour">
     <img src="assets/img/imag1.png" alt="Image 3">
   </div>
     </div>
@@ -129,8 +124,9 @@
   
 
 </body>
-
+<div>
 <app-footer></app-footer>
+</div>
 
 
 

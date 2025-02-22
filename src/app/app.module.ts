@@ -15,6 +15,7 @@ import { InscriptionEntrpriseComponent } from './inscription-entrprise/inscripti
 import { LoginComponent } from './login/login.component';
 import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
 import { EditpasswordComponent } from './editpassword/editpassword.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EditpasswordComponent } from './editpassword/editpassword.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FontAwesomeModule
 
  
   ],

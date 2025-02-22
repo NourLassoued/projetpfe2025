@@ -1,54 +1,83 @@
 
 body {
-    background: linear-gradient(90deg, #feecf1, #ecd0a6);
+  background-color: #fdf8f6;
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0;
+    width:1350px;
+    height:950px;
+    
+}
+    .input-fa {
+      font-family: "Font Awesome 5 Free", Arial, sans-serif;
+      font-weight: 900; /* Pour afficher les icônes */
+    }
+    
+    
+
+
+
+.container label{
+color: rgb(145, 141, 141);
+font-size: 13px
+}
+
+
+ app-footer {
+  width:1350px;
  
-  
-  
-  }
+ }
+ 
 
   .body-container {
     display: flex;
-    justify-content: space-between; /* Espace entre le formulaire et l'image */
-    align-items: center; /* Centrer verticalement */
-    height: 100vh; /* Occuper toute la hauteur de l'écran */
+    justify-content: space-between; 
+    align-items: center; 
+    height: 1000px;
     padding: 20px;
-    margin-top:100px;
+    
+    margin-top:185px;
+    background-color: #fdf8f6;
+   
   }
   
-  .container {
-    flex: 1; /* Le formulaire prend l'espace restant */
-    max-width: 50%; /* Ajuste la largeur du formulaire */
-  }
+  
   
   .image-container {
     display: flex;
-    justify-content: space-between; /* Espace entre les images */
-    align-items: flex-start; /* Alignement en haut */
+    justify-content: space-between; 
+    align-items: flex-start;
     width: 40%;
     padding: 20px;
+    height: 800px;
+    margin: top 20px;
   }
   
   .image-container img:nth-child(1) {
-    margin-top: 70px; /* Marge différente pour la 1ère image */
+  margin-bottom: 200px;
+    height: 400px;
+    
   }
   
   .image-container img:nth-child(2) {
-    margin-top: 0px; /* Marge différente pour la 2ème image */
+    margin-top: 0px; 
+    height: 400px;
   }
   
   .image-container img:nth-child(3) {
-    margin-top: 70px; /* Marge différente pour la 3ème image */
+    margin-top: 90px; 
+    height: 400px;
   }
   
   .image-container img {
-    width: 30%; /* Ajuste la largeur des images */
+    width: 30%; 
     height: auto;
-    border-radius: 10px;
+    border-radius: 20px;
   }
   
 
@@ -58,23 +87,25 @@ body {
 } 
 .container {
     max-width: 800px;
-    height: 490px;
+    height:920px;
  background: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-top:80x;
+    margin: top 20px;
  
  
   }
-  input {
+  .container input {
     display: block;
-    width: 100%;
+    width: 80%;
+    height: 44px;
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 15px;
+    
   }
   button {
     width: 100%;
@@ -216,7 +247,7 @@ h2 {
 }
 .category-card {
   display: flex;
-  justify-content: space-between; /* Alignement des éléments avec un espace entre */
+  justify-content: space-between; 
   align-items: center;
   background: white;
   padding: 10px;
@@ -250,39 +281,39 @@ h2 {
   margin-bottom: 10px;
 }
 .iconn {
-  appearance: none; /* Enlève l'apparence par défaut du navigateur */
-  -webkit-appearance: none; /* Enlève l'apparence par défaut sur Safari */
-  -moz-appearance: none; /* Enlève l'apparence par défaut sur Firefox */
-  width: 20px; /* Largeur de la case à cocher */
-  height: 20px; /* Hauteur de la case à cocher */
-  border: 2px solid #247df0; /* Bordure verte pour la case à cocher */
-  border-radius: 4px; /* Coins arrondis */
-  background-color: white; /* Fond blanc de la case */
-  cursor: pointer; /* Change le curseur pour indiquer que l'élément est interactif */
+  appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  width: 20px; 
+  height: 20px; 
+  border: 2px solid #247df0; 
+  border-radius: 4px; 
+  background-color: white; 
+  cursor: pointer; 
   position: relative;
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* Animation pour la couleur de fond et de bordure */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .iconn:checked {
   
-  border-color: #4CAF50; /* Bordure verte lorsqu'il est coché */
+  border-color: #4CAF50; 
 }
 
 .iconn:checked::before {
-  content: ''; /* Création du checkmark */
+  content: ''; 
   position: absolute;
   top: 4px;
   left: 7px;
   width: 6px;
   height: 12px;
   border: solid  #247df0;
-  border-width: 0 3px 3px 0; /* Style du checkmark */
-  transform: rotate(45deg); /* Rotation du checkmark */
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); 
 }
 
 .iconn:hover {
-  background-color: #f1f1f1; /* Changement de fond au survol */
-  border-color: #247df0; /* Changement de bordure au survol */
+  background-color: #f1f1f1; 
+  border-color: #247df0; 
 }
 .error {
   color: rgb(14, 13, 13);

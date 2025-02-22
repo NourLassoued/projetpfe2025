@@ -15,7 +15,7 @@ import { Servicee } from 'src/models/Servicee';
 })
 export class InscriptionEntrpriseComponent {
   form1: FormGroup; // Formulaire 1
-  form2: FormGroup; // Formulaire 2
+
   step = 1;
   categories: any[] = [];
   showModal = false;
@@ -43,11 +43,7 @@ export class InscriptionEntrpriseComponent {
       email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]],
-      competence: [[]]
-    });
-
-    // Initialisation de form2
-    this.form2 = this.fb.group({
+      competence: [[]],
       nomEntreprise: ['', Validators.required],
       siret: ['', [Validators.required, Validators.pattern("^[0-9]{14}$")]],
       siteWeb: [''],
@@ -55,7 +51,6 @@ export class InscriptionEntrpriseComponent {
       role: [UserRole.ENTREPRISE]
     });
   }
-  
   nextStep() {
     if (this.form1.valid) {
       this.step = 2;
@@ -148,8 +143,8 @@ export class InscriptionEntrpriseComponent {
   }
 
   onSubmit(): void {
-    if (this.form1.valid && this.form2.valid) {
-      const formData = { ...this.form1.value, ...this.form2.value };
+    if (this.form1.valid) {
+      const formData = { ...this.form1.value };
 
       const fileUploadPromises = Object.keys(this.selectedFiles).map((fileType) =>
         this.file.uploadFile(this.selectedFiles[fileType]).toPromise()

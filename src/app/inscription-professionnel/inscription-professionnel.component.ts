@@ -16,7 +16,7 @@ import { AuthServiceService } from '../service/auth-service.service';
 export class InscriptionProfessionnelComponent {
   step = 1;
   form1: FormGroup;
-  form2: FormGroup;
+  
   categories: any[] = [];
   showModal = false;
   imageUrls: string[] = [];
@@ -37,29 +37,14 @@ export class InscriptionProfessionnelComponent {
      
       competence: [[]], 
       workExperience: [null, [Validators.required, Validators.min(0)]],  
-    
-    
-    
-    });
-
-    this.form2 = this.fb.group({
       image: [''],
       doucument_cv:[''],
       doucument_CIN:[''],
+    
+    
     });
-  }
 
-  nextStep() {
-    if (this.form1.valid) {
-      this.step = 2;
-    }
   }
-
-  previousStep() {
-    this.step = 1;
-  }
-   
-
  
  
 
@@ -146,10 +131,10 @@ onFileSelected(event: any, fileType: string): void {
 }
 
 onSubmit(): void {
-  if (this.form1.valid && this.form2.valid) {
+  if (this.form1.valid ) {
     const formData = {
       ...this.form1.value,
-      ...this.form2.value,
+    
     };
   
     // Liste des fichiers à uploader

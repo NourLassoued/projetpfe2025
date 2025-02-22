@@ -2,14 +2,14 @@
 <body>
   <app-navbar></app-navbar>
   <div class="container">
-    <div class="title-container" *ngIf="step === 1">
+    <div class="title-container" >
       <h2>Devenez prestataire</h2>
-      <i class="next-icon" (click)="nextStep()"></i>
+    
     </div>
 
-    <p *ngIf="step === 1">Rejoignez notre réseau de plus de 50 entreprises, développez votre clientèle et boostez la visibilité de votre société</p>
+    <p>Rejoignez notre réseau de plus de 50 entreprises, développez votre clientèle et boostez la visibilité de votre société</p>
 
-    <form [formGroup]="form1" *ngIf="step === 1">
+    <form [formGroup]="form1">
       <!-- Formulaire 1 -->
       <div >
         <input formControlName="nom" placeholder="👤 Nom du fondateur">
@@ -39,32 +39,24 @@
         <div class="error" *ngIf="form1.get('competence')?.invalid && form1.get('competence')?.touched">
           <span>⚠️ La compétence est requise.</span>
         </div>
-      </div>
-    </form>
-
-      <div class="title-container" *ngIf="step === 2">
-        <i class="back-icon" (click)="previousStep()"></i>
-        <h2>Devenez prestataire</h2>
-       
-       
-      </div>
-      <form [formGroup]="form2" *ngIf="step === 2">
         <input formControlName="nomEntreprise" placeholder="🏢 Nom de l'entreprise">
-        <div class="error" *ngIf="form2.get('nomEntreprise')?.invalid && form2.get('nomEntreprise')?.touched">
+        <div class="error" *ngIf="form1.get('nomEntreprise')?.invalid && form1.get('nomEntreprise')?.touched">
           <span>⚠️ Le nom de l'entreprise est requis.</span>
         </div>
 
         <input formControlName="siret" placeholder="🔢 Numéro SIRET">
-        <div class="error" *ngIf="form2.get('siret')?.invalid && form2.get('siret')?.touched">
-          <span *ngIf="form2.get('siret')?.errors?.['required']">⚠️ Le numéro SIRET est requis.</span>
-          <span *ngIf="form2.get('siret')?.errors?.['pattern']">⚠️ Le numéro SIRET doit contenir exactement 14 chiffres.</span>
+        <div class="error" *ngIf="form1.get('siret')?.invalid && form1.get('siret')?.touched">
+          <span *ngIf="form1.get('siret')?.errors?.['required']">⚠️ Le numéro SIRET est requis.</span>
+          <span *ngIf="form1.get('siret')?.errors?.['pattern']">⚠️ Le numéro SIRET doit contenir exactement 14 chiffres.</span>
         </div>
 
         <input type="file" accept="image/*" (change)="onFileSelected($event, 'image')" placeholder="📷 Logo de l'entreprise">
-      
-
+      </div>
       <button (click)="onSubmit()" >Soumettre</button>
     </form>
+
+      
+      
 
     <!-- Modal des catégories -->
     <div class="modal" *ngIf="showModal">
@@ -107,7 +99,10 @@
       </div>
     </div>
   </div>
+  
 
-
+  <app-footer></app-footer>
 </body>
-<app-footer></app-footer>
+
+
+
