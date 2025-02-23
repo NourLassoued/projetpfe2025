@@ -20,18 +20,32 @@ public class AuthenticationReponse {
 
     @JsonProperty("refersh_token")
     private String refershToken;
+    @JsonProperty("role")
     private UserRole role;
+    @JsonProperty("telephoneNumber")
     private int telephoneNumber;
+    @JsonProperty("image")
     private String image;
+    @JsonProperty("solde")
     private float solde;
+    @JsonProperty("about")
     private String about;
+    @JsonProperty("nomEntreprise")
     private String nomEntreprise;
+    @JsonProperty("siret")
     private String siret;
+    @JsonProperty("siteWeb")
     private String siteWeb;
+    @JsonProperty("competence")
     private String competence;
+    @JsonProperty("tarifs")
     private float tarifs;
+    @JsonProperty("disponibilite")
     private String disponibilite;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("status")
     private StatusUtilisateur status;
+    @JsonProperty("workExperience")
     private int workExperience;
 }

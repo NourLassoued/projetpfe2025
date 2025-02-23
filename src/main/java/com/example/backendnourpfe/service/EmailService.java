@@ -16,16 +16,36 @@ public class EmailService {
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
-    public void setJavaMailSender(MailBody mailBody){
-        SimpleMailMessage message=new SimpleMailMessage();
+    public void setJavaMailSender(MailBody mailBody) {
+        SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailBody.to());
         message.setFrom("nourlass50@gmail.com");
         message.setSubject(mailBody.subject());
         message.setText(mailBody.text());
 
-
         javaMailSender.send(message);
     }
+
+    // ✅ Méthode pour créer un MimeMessage
+    public MimeMessage createMimeMessage() {
+        return javaMailSender.createMimeMessage();
+    }
+    public void sendHtmlEmail(String to, String subject, String htmlContent) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
+            helper.setFrom("nourlass50@gmail.com");
+
+            javaMailSender.send(mimeMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendVerificationEmailToprestatire(String to, String nom) {
         try {
             String subject = "Activation de votre compte SOS Job Tunisie";

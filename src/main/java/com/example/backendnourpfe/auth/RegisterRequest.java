@@ -37,6 +37,7 @@ public class RegisterRequest implements Serializable {
     private  String doucument_cv;
     private StatusUtilisateur status;
 
+
     private int workExperience;
     private String nomEntreprise;
     private String siret;

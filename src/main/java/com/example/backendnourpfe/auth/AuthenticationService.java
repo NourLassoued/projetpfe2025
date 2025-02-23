@@ -118,6 +118,7 @@ public AuthenticationReponse register(RegisterRequest request) {
                 .tokenType(TokenType.BEARER)
                 .revoked(false)
                 .expired(false)
+
                 .build();
         tokenRepository.save(token);
     }
@@ -137,14 +138,17 @@ public AuthenticationReponse register(RegisterRequest request) {
 
         var jwtToken=jwtService.generateToken(user);
         var refershToken=jwtService.gererateRefershToken(user);
-        System.out.println("Role of logged user : " + user.getRole());
-        System.out.println("token of logged user : " + jwtToken);
+
+
         revokeAllUserToken(user);
 
         saveUserToken(user,refershToken);
         return  AuthenticationReponse.builder()
                 .accesToken(jwtToken)
                 .role(user.getRole())
+
+                .status(user.getStatus())
+
                 .build();
     }
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -14,6 +14,7 @@ public class ForgotPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer fpid;
+    @Column(nullable = false)
     private Integer otp;
     private Date expirationTime;
     @OneToOne

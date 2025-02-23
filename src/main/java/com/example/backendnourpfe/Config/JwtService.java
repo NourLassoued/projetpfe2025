@@ -1,10 +1,12 @@
 package com.example.backendnourpfe.Config;
 
+import com.example.backendnourpfe.classes.Utilisateur;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,7 @@ public class JwtService {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
-    }
+    }/*
 
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
@@ -43,7 +45,36 @@ public class JwtService {
             UserDetails userDetails
     ) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
+    }*/
+
+
+
+    public String generateToken(Utilisateur user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", user.getRole());
+        claims.put("status", user.getStatus());
+        claims.put("telephoneNumber", user.getTelephoneNumber());
+        claims.put("nomEntreprise", user.getNomEntreprise());
+        claims.put("siret", user.getSiret());
+        claims.put("siteWeb", user.getSiteWeb());
+        claims.put("id", user.getIdUtilisateur());
+        claims.put("email", user.getEmail());
+        claims.put("role", user.getRole());
+        claims.put("status", user.getStatus());
+        claims.put("nom", user.getNom());
+
+        claims.put("telephoneNumber", user.getTelephoneNumber());
+        claims.put("adresse", user.getAdresse());
+        claims.put("ville", user.getAdresse());
+
+        claims.put("nomEntreprise", user.getNomEntreprise());
+        claims.put("siret", user.getSiret());
+        claims.put("siteWeb", user.getSiteWeb());
+        claims.put("image", user.getImage());
+        System.out.println("🖼 Image ajoutée au token: " + user.getImage());
+        return buildToken(claims, user, jwtExpiration);
     }
+
     public String gererateRefershToken(
            UserDetails userDetails
     ) {
