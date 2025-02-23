@@ -16,6 +16,9 @@ import { LoginComponent } from './login/login.component';
 import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
 import { EditpasswordComponent } from './editpassword/editpassword.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
+import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
+import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     InscriptionEntrpriseComponent,
     LoginComponent,
     NewinstructionssendComponent,
-    EditpasswordComponent
+    EditpasswordComponent,
+    CompteprestaitreComponent,
+    UpdateprofileprestaitreComponent,
+    NavbarcompteComponent
 
   ],
   imports: [

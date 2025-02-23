@@ -63,20 +63,20 @@ authenticate(email: string, password: string): Observable<any> {
       tap(response => {
         
         localStorage.setItem('access_token', response.access_token);
-        console.log('Token d\'accès stocké dans localStorage :', response.access_token);
+       
       })
-    ); // Ajout de la parenthèse fermante pour le pipe()
+    ); 
 }
     
 
-// Autres méthodes du service
+
 
   refreshToken(refreshToken: string): Observable<any> {
     const body = { refreshToken };
     return this.http.post<any>(`${this.baseUrl}/refreshToken`, body);
   }
   getUserRole(): string | null {
-    // Exemple: récupération du rôle depuis le token ou toute autre source
+
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
       // Parsez le token et extrayez le rôle, ou utilisez une méthode appropriée pour le récupérer

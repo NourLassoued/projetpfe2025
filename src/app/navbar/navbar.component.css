@@ -1,4 +1,4 @@
-/* Styles généraux */
+
 body {
     margin: 0;
     padding: 0;
@@ -6,10 +6,10 @@ body {
     background-color: #ffffff;
 }
 
-/* Navbar */
+
 .navbar {
-    background-color: #ffffff; /* Bleu vif */
-    padding: 20px 0;
+    background-color: #ffffff;
+    padding: 15px 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -18,7 +18,7 @@ body {
     z-index: 1000;
 }
 
-/* Conteneur de la navbar */
+
 .container {
     width: 90%;
     max-width: 1200px;
@@ -28,7 +28,7 @@ body {
     align-items: center;
 }
 
-/* Logo */
+
 .logo {
     font-size: 24px;
     font-weight: bold;
@@ -36,34 +36,17 @@ body {
     text-decoration: none;
 }
 
-/* Menu */
-.nav-links {
-    list-style: none;
+
+.nav-buttons {
     display: flex;
-    gap: 20px;
-    padding: 0;
+    align-items: center;
+    gap: 20px; 
 }
 
-.nav-links li {
-    display: inline;
-}
 
-.nav-links a {
-    text-decoration: none;
-    color: rgb(11, 11, 11);
-    font-size: 16px;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: #ffcc00;
-}
-
-/* Bouton Free Trial */
-.btn {
+.btn-prestataire {
     background-color: #007bff;
-    color: #f4f4f5;
+    color: #ffffff;
     padding: 10px 20px;
     border-radius: 20px;
     font-weight: bold;
@@ -71,7 +54,21 @@ body {
     transition: all 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #ffcc00;
+.btn-prestataire:hover {
+    background-color: #007bff;
     color: white;
+}
+
+
+.nav-link {
+    text-decoration: none;
+    color: #1d1d1d;
+    font-size: 20px;
+    font-weight: 500;
+    
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
 }

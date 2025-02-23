@@ -16,6 +16,9 @@ import { InscriptionEntrpriseComponent } from './inscription-entrprise/inscripti
 import { LoginComponent } from './login/login.component';
 import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
 import { EditpasswordComponent } from './editpassword/editpassword.component';
+import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
+import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
+import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
 
 
 const routes: Routes = [
@@ -60,8 +63,20 @@ const routes: Routes = [
   {
     path: 'editpassword',
     component:EditpasswordComponent
+  },
+  {
+    path: 'Compteprestaitre',
+    component:CompteprestaitreComponent
+  },
+  
+  {
+    path: 'updateprestaitre',
+    component:UpdateprofileprestaitreComponent
+  },
+  {
+    path: 'navbarcompte',
+    component:NavbarcompteComponent
   }
- 
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

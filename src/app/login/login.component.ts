@@ -4,6 +4,7 @@ import { AuthServiceService } from '../service/auth-service.service';
 import { Router } from '@angular/router';
 import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
 import { ForgetPasswordService } from '../service/forget-password.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -71,7 +72,7 @@ export class LoginComponent {
     });
   }
   
-
+/*
  authenticate(): void {
     this.authService.authenticate(this.loginForm.value.email, this.loginForm.value.password).subscribe(
 
@@ -122,7 +123,33 @@ navigateToHome() {
         console.error('Refresh token error', error);
       }
     );
-  }
+  }*/authenticate(): void {
+    this.authService.authenticate(this.loginForm.value.email, this.loginForm.value.password).subscribe(
+      response => {
+          if (response && response.access_token) {
+            localStorage.setItem("accessToken", response.access_token);
+
+           
+              const decodedToken: any = jwtDecode(response.access_token);
+              
+          
+
+          
+              if (decodedToken.role === 'PRESTATAIRE') {
+                  this.router.navigate(['/Compteprestaitre']);
+              } else {
+                  this.router.navigate(['/Front']);
+              }
+          } else {
+              console.error('❌ La réponse ne contient pas de token valide.');
+          }
+      },
+      error => {
+          console.error('🚨 Erreur lors de l\'authentification :', error);
+      }
+  );
+}
+    
   getImageUrl(filename: string): string {
     return `http://localhost:8087/nour/api/v1/auth/get-image/${filename}`;
   }}

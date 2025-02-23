@@ -1,0 +1,25 @@
+<nav class="navbar">
+    <div class="logo">PrestatairePro</div>
+    <div class="nav-icons">
+        <a href="#"><i class="fas fa-envelope"></i></a>
+        <a href="#"><i class="fas fa-bell"></i></a>
+        <div id="profile-container">
+            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+            <i *ngIf="!profileImageUrl" class="fas fa-user-circle" id="profile-icon"></i>
+          </div>
+        <i class="fas fa-bars" id="menu-icon"></i>
+    </div>
+
+    
+    <div class="profile-menu" id="profile-menu">
+        <ul>
+            
+            <li routerLink="/updateprestaitre" > 👤 Voir mon profil</li>
+            <li>✉️ Mes messages</li>
+           
+            <li>⚙️ Mon compte</li>
+            <li>❓ Besoin d'aide ?</li>
+            <li>🚪 Se déconnecter</li>
+        </ul>
+    </div>
+</nav>
