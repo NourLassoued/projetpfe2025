@@ -3,45 +3,43 @@ body {
     background-color: #fcf9f4;
     margin: 0;
     padding: 0;
+    height: 1500px;
 }
 .container {
     display: flex;
     max-width: 1000px;
-    margin: 20px auto;
+    margin: 20px ;
     gap: 20px;
+   
 }
 .sidebar {
     background: white;
-    padding: 20px;
-    width: 250px;
-    border-radius: 10px;
+    padding: 18px;
+    width: 600px;
+margin-left: 20px;
+    border-radius: px;
     text-align: center;
+    height: 500px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-.sidebar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: #ddd;
-    display: block;
-    margin: 0 auto;
-}
-.sidebar h2 {
+.section label {
     font-size: 20px;
     margin: 10px 0;
+    font-weight: bold;
 }
 .sidebar p {
     color: #ff9800;
     font-weight: bold;
 }
 .sidebar button {
-    background: #e0e0e0;
+    background: #218c64; 
     border: none;
     padding: 10px;
-    width: 100%;
+    width: 200px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    color: white;
 }
 .content {
     flex-grow: 1;
@@ -49,15 +47,15 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 35px;
+    width: 800px;
+    margin-left: 40px;
+    
 }
 .section {
     margin-bottom: 20px;
 }
-.section h3 {
-    font-size: 18px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
-}
+
 .competence {
     background: #f8f8f8;
     padding: 15px;
@@ -81,3 +79,74 @@ body {
     cursor: pointer;
     margin-top: 10px;
 }
+
+
+ h3 {
+    font-size: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    color: #555;
+    margin-left: 40px;
+  
+}
+
+
+#profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    margin: auto;
+  }
+  
+  #profile-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    cursor: pointer;
+   
+ 
+  }
+.profile-menu.active {
+    display: block;
+}
+#profile-container i {
+    font-size: 40px;
+    color: rgb(140, 137, 137);
+}
+.price-badge {
+    background-color:  rgb(189, 185, 185);
+    color: rgb(50, 49, 49);
+    border-radius: 15px;
+    width: 55px;
+    margin-left: 70px;
+    height: 25px;
+}
+.edit-container textarea {
+    width: 700px;
+    height: 100px; 
+    
+    font-size: 15px;
+  border: 1px solid #adabab;
+  border-radius: 7px;
+  resize: vertical;
+  }
+  .save-btn {
+    background-color: #dbe0dc; /* Vert pour valider */
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  .save-btn:hover {
+    background-color: #949494; /* Effet au survol */
+  }

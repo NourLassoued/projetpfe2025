@@ -1,34 +1,11 @@
-<nav class="navbar">
-    <div class="logo">PrestatairePro</div>
-    <div class="nav-icons">
-        <a href="#"><i class="fas fa-envelope"></i></a>
-        <a href="#"><i class="fas fa-bell"></i></a>
-        <div id="profile-container">
-            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
-            <i *ngIf="!profileImageUrl" class="fas fa-user-circle" id="profile-icon"></i>
-          </div>
-        <i class="fas fa-bars" id="menu-icon"></i>
-    </div>
-
-    
-    <div class="profile-menu" id="profile-menu">
-        <ul>
-            
-            <li routerLink="/updateprestaitre" > 👤 Voir mon profil</li>
-            <li>✉️ Mes messages</li>
-           
-            <li>⚙️ Mon compte</li>
-            <li>❓ Besoin d'aide ?</li>
-            <li>🚪 Se déconnecter</li>
-        </ul>
-    </div>
-</nav>
+<body>
+<app-navbarcompte></app-navbarcompte>
 
 <div class="container">
     <aside class="sidebar">
         <ul>
             <ul>
-                <li>📌 Tableau de bord</li>
+                <li>📌Tableau de bord</li>
                <li>📋 Mes demandes</li>
                 <li>📋 Mes jobs</li>
                 <li>📅 Mes réservations</li>
@@ -40,9 +17,26 @@
     </aside>
     
     <main class="content">
-        <div class="profile-alert">
-            <p>⚠️ Complétez votre profil pour postuler aux jobs</p>
-            <button class="profile-btn">Compléter mon profil</button>
+        <div class="profile-wrapper">
+            <label class="user-name">Bonjour {{ user?.nom }}</label> <!-- Affichage dynamique du nom -->
+
+            <div class="profile-alert">
+                <div class="job-content">
+                    <div id="profile-container">
+                        <ng-container *ngIf="profileImageUrl; else defaultIcon">
+                            <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+                        </ng-container>
+                        <ng-template #defaultIcon>
+                            <i class="fas fa-user default-icon"></i> <!-- Icône utilisateur par défaut -->
+                        </ng-template>
+                    </div>
+                    <div class="job-text">
+                        <strong>Vous souhaitez postuler à un Job ?</strong>
+                        <p>Alors complétez ces quelques informations</p>
+                    </div>
+                </div>
+                <button class="profile-btn">Compléter mon profil</button>
+            </div>
         </div>
         
         <section class="requests">
@@ -50,5 +44,8 @@
             <p>Créez votre demande gratuitement et recevez des offres rapidement !</p>
         </section>
     </main>
+    
 </div>
+
+</body>
 <app-footer></app-footer>

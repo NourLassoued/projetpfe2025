@@ -2,26 +2,128 @@
    <app-navbarcompte></app-navbarcompte>
     <div class="container">
         <div class="sidebar">
-            <img src="placeholder.jpg" alt="Profil">
-            <h2>Nour</h2>
+            
+            <div id="profile-container">
+                <ng-container *ngIf="profileImageUrl; else defaultIcon">
+                    <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+                </ng-container>
+                <ng-template #defaultIcon>
+                    <i class="fas fa-user default-icon"></i> 
+                </ng-template>
+            </div>
+            
+            <h2>{{ user?.nom }}</h2>
+            <div class="price-badge">
+                {{ user?.tarif }} dt/h
+            </div>
             <p>⭐ Pas d'évaluation</p>
             <button>Contacter</button>
             <button>Partager mon profil</button>
         </div>
-        <div class="content">
-            <div class="section">
+        <div>
+          
                 <h3>A propos de moi</h3>
-                <p>Motivée à contribuer à des projets innovants...</p>
-            </div>
+           
+                <div class="content">
+                    <div class="section">
+                      <label>Description</label>
+                      <div class="competence">
+                        <ng-container *ngIf="!isEditing['description']; else editDescription">
+                          <p (click)="startEditing('description', user?.description)">
+                            {{ user?.description || 'Aucune description disponible.' }}
+                          </p>
+                          <button class="edit-btn" (click)="startEditing('description', user?.description)">✏️</button>
+                        </ng-container>
+                  
+                        <ng-template #editDescription>
+                          <div class="edit-container">
+                            <textarea [(ngModel)]="editedValues['description']"></textarea>
+                            <button class="save-btn" (click)="saveChanges('description')">✔️</button>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                  
+            <div class="content">
             <div class="section">
-                <h3>Mes compétences</h3>
-                <div class="competence">
-                    <span>🍽️ Traiteur</span>
-                    <button class="edit-btn">✏️</button>
+                <label>💼Mes compétences</label>
+                <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
+                    <p *ngIf="servicee?.nomservice">
+                       {{ servicee.nomservice }}
+                    </p>
                 </div>
-                <button>Ajouter une compétence ➕</button>
+                
             </div>
+            </div>
+            <div class="content">
+                <div class="section">
+                    <label>📞 Téléphone</label>
+                    <div class="competence">
+                        <ng-container *ngIf="!isEditing['telephoneNumber']; else editTelephone">
+                            <p (click)="startEditing('telephoneNumber', user?.telephoneNumber)">
+                                {{ user?.telephoneNumber || 'Aucun numéro disponible.' }}
+                            </p>
+                            <button class="edit-btn" (click)="startEditing('telephoneNumber', user?.telephoneNumber)">✏️</button>
+                        </ng-container>
+                    
+                        <ng-template #editTelephone>
+                            <div class="edit-container">
+                                <input type="text" [(ngModel)]="editedValues['telephoneNumber']">
+                                <button class="save-btn" (click)="saveChanges('telephoneNumber')">✔️</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <div class="content">
+                <div class="section">
+                  <label>📍Adresse</label>
+                  <div class="competence">
+                    <ng-container *ngIf="!isEditing['adresse']; else editAdresse">
+                      <p (click)="startEditing('adresse', user?.adresse)">
+                        {{ user?.adresse || 'Adresse non renseignée.' }}
+                      </p>
+                      <button class="edit-btn" (click)="startEditing('adresse', user?.adresse)">✏️</button>
+                    </ng-container>
+              
+                    <ng-template #editAdresse>
+                      <div class="edit-container">
+                        <input type="text" [(ngModel)]="editedValues['adresse']">
+                        <button class="save-btn" (click)="saveChanges('adresse')">✔️</button>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              
+            <div class="content">
+                <!-- Disponibilité -->
+                <div class="section">
+                    <label>📆Disponibilité</label>
+                    <div class="competence">
+                        <p *ngIf="user?.disponibilite">{{ user?.disponibilite }}</p>
+                        <p *ngIf="!user?.disponibilite">Disponibilité non précisée.</p>
+                        <button class="edit-btn">✏️</button>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+
+                <div class="section">
+                    <label>🔒 Changer de mot de passe</label>
+                    <div class="competence">
+                        <input type="password" placeholder="Nouveau mot de passe" />
+                        <button class="edit-btn">✏️</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
         </div>
-    </div>
+        
+
 </body>
 <app-footer></app-footer>

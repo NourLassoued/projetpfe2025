@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbarcompte',
@@ -10,9 +11,9 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class NavbarcompteComponent {
    user: any = null;
-    profileImageUrl: SafeUrl | null = null; // Pas d'image par défaut
+    profileImageUrl: SafeUrl | null = null; 
   
-    constructor(private fileService: FileService, private sanitizer: DomSanitizer) {}
+    constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router) {}
     ngOnInit(): void {
       this.loadUserData();
       this.setupMenuToggle();
@@ -49,16 +50,32 @@ export class NavbarcompteComponent {
         },
         error: (err) => {
           console.error('❌ Erreur de chargement de l\'image', err);
-          this.profileImageUrl = null; // Si erreur, ne pas afficher d'image
+          this.profileImageUrl = null; 
         }
       });
     }
   
-    setupMenuToggle(): void {
-      document.getElementById('menu-icon')?.addEventListener('click', () => {
-        document.getElementById('profile-menu')?.classList.toggle('active');
+   
+  setupMenuToggle(): void {
+    const menuIcon = document.getElementById('menu-icon');
+    const profileMenu = document.getElementById('profile-menu');
+    const logoutButton = document.getElementById('logout-btn'); 
+
+    if (menuIcon && profileMenu) {
+      menuIcon.addEventListener('click', () => {
+        profileMenu.classList.toggle('active');
       });
+    }
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', () => this.logout()); 
     }
   }
 
+  logout(): void {
+  
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']); 
+  }
+}
 

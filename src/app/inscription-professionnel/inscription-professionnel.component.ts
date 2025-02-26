@@ -70,7 +70,7 @@ export class InscriptionProfessionnelComponent {
     );
   }
 
-  // Charger l'image et la convertir en URL utilisable
+  
   getImage(filename: string, index: number) {
     this.file.getImage(filename).subscribe(
       (imageBlob) => {

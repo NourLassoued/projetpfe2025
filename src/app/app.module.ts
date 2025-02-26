@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AllTemplateFrontComponent } from './all-template-front/all-template-front.component';
 import { FooterComponent } from './footer/footer.component';
 import { InscriptionComponent } from './inscription/inscription.component';
@@ -44,7 +45,9 @@ import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+   
+    BsDatepickerModule.forRoot() 
 
  
   ],

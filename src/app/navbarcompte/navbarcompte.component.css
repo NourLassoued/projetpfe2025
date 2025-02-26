@@ -45,17 +45,27 @@
 #profile-container {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    overflow: hidden;
   }
   
   #profile-icon {
     width: 50px;
     height: 50px;
-    border-radius: 50%; /* Rend l'image ronde */
-    object-fit: cover; /* Évite la déformation */
+    border-radius: 50%; 
+    object-fit: cover; 
     cursor: pointer;
   }
 .profile-menu.active {
     display: block;
+}
+#profile-container i {
+    font-size: 40px;
+    color: rgb(140, 137, 137);
 }
 .profile-menu ul {
     list-style: none;

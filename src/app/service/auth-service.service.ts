@@ -33,36 +33,30 @@ export class AuthServiceService {
 
   logout(): void {
   
-    localStorage.removeItem('email'); // Supprimer l'email stocké
-    localStorage.removeItem('password'); // Supprimer le mot de passe
-    this.router.navigate(['/login']); // Rediriger vers la page de connexion
+    localStorage.removeItem('email'); 
+    localStorage.removeItem('password'); 
+    this.router.navigate(['/login']); 
   }
  
 
  
  
   getAuthToken(): string {
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('accessToken');
     console.log('SERVICE token is' + token)
 
     return token || 'EMPTY';
   }
   getAccessToken(): string {
     return localStorage.getItem('accessToken')!;
-  }/*
-  authenticate(email: string, password: string): Observable<any> {
-    const body = { email, password };
-    console.log('AuthService: authenticate called with email', email);
-    return this.http.post<any>(`${this.baseUrl}/authenticate`, body);
   }
-*/
 authenticate(email: string, password: string): Observable<any> {
   const body = { email, password };
   return this.http.post<any>(`${this.baseUrl}/authenticate`, body)
     .pipe(
       tap(response => {
         
-        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('accessToken', response.access_token);
        
       })
     ); 
@@ -77,18 +71,17 @@ authenticate(email: string, password: string): Observable<any> {
   }
   getUserRole(): string | null {
 
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
-      // Parsez le token et extrayez le rôle, ou utilisez une méthode appropriée pour le récupérer
+    
       const decodedToken = this.decodeAccessToken(accessToken);
-      return decodedToken.role; // Suppose que le token contient le rôle de l'utilisateur
+      return decodedToken.role; 
     }
     return null;
   }
 
   private decodeAccessToken(token: string): any {
-    // Implémentez la logique pour décoder le token JWT ou autre format de token
-    // Exemple simplifié: vous pouvez utiliser jwt-decode ou une bibliothèque similaire
+    
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     return JSON.parse(atob(base64));
@@ -97,22 +90,22 @@ authenticate(email: string, password: string): Observable<any> {
 
 
   isLoggedIn(): boolean {
-    // Vérifiez ici si l'utilisateur est authentifié en vérifiant la présence du token
-    const token = localStorage.getItem('access_token');
-    return !!token; // Retourne true si le token existe, false sinon
+  
+    const token = localStorage.getItem('accessToken');
+    return !!token; 
   }
   getCurrentUser(): Observable<any> {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('accessToken');
 
     if (accessToken) {
-      // Envoyer une requête GET pour récupérer les détails de l'utilisateur
+    
       return this.http.get<any>(`${this.baseUrl}/current-user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
     } else {
-      // Gérer le cas où le token n'est pas trouvé dans localStorage
+    
       return new Observable(observer => {
         observer.error('Token d\'accès introuvable dans le localStorage.');
       });
