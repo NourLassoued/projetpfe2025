@@ -54,7 +54,7 @@ userId: number | null = null;
   
   
     events: this.disponibilites.map(d => ({
-      id: d.id ? d.id.toString() : '', 
+      id: d.id ? d.id.toString() : '',  // ✅ Vérification de l'ID
       publicId: d.id ? d.id.toString() : '', // ✅ Vérification de l'ID
       title: `Disponible ${d['heureDebut']} - ${d['heureFin']}`, // ✅ Accès avec ['clé']
       start: `${d['jour']}T${d['heureDebut']}`,
@@ -159,34 +159,7 @@ ngOnInit(): void {
   startEditing(field: string, currentValue: string) {
     this.isEditing[field] = true;
     this.editedValues[field] = currentValue;
-  }/*
-  saveChanges(field: string) {
-    if (!this.userId) {
-      console.error("⚠️ Impossible de mettre à jour : ID utilisateur introuvable !");
-      return;
-    }
-  
-    const updatedData = { [field]: this.editedValues[field] }; // Ne met à jour que le champ modifié
-  
-    this.utilisateurService.updateUser(this.userId, updatedData).subscribe({
-      next: (response) => {
-        console.log(`✅ ${field} mis à jour avec succès :`, response);
-  
-        if (response.token) {
-          localStorage.removeItem('accessToken'); // Supprime l'ancien token
-          localStorage.setItem('accessToken', response.token); // Stocke le nouveau token
-          console.log("🔄 Nouveau token enregistré !");
-        }
-  
-        this.user[field] = updatedData[field]; // Met à jour la valeur localement
-        this.isEditing[field] = false; // Désactive l'édition pour ce champ
-      },
-      error: (err) => {
-        console.error(`❌ Erreur lors de la mise à jour de ${field} :`, err);
-      }
-    });
   }
-  */
  saveChanges(field: string) {
   if (!this.userId) {
     console.error("⚠️ Impossible de mettre à jour : ID utilisateur introuvable !");
@@ -260,6 +233,8 @@ ngOnInit(): void {
     this.editionActive = false;
   }
 
+
+  
   loadDisponibilites() {
     const daysOfWeek: { [key: string]: number } = {
       'Dimanche': 0, 'Lundi': 1, 'Mardi': 2, 'Mercredi': 3, 'Jeudi': 4, 'Vendredi': 5, 'Samedi': 6
@@ -268,61 +243,46 @@ ngOnInit(): void {
     this.calendarOptions = {
       ...this.calendarOptions,
       events: this.user.disponibilites
-        .filter((dispo: any) => dispo.jour && daysOfWeek[dispo.jour] !== undefined)
+        .filter((dispo: any) => dispo.jour && daysOfWeek[dispo.jour] !== undefined) // Vérification supplémentaire
         .map((dispo: any) => ({
-          id: dispo.id ?? 'Non défini',
+          id: dispo.id ?? 'Non défini', // 🔹 Ajout de l'ID pour identifier les événements
           title: `Disponible ${dispo.heureDebut} - ${dispo.heureFin}`,
           daysOfWeek: [daysOfWeek[dispo.jour]],
           startTime: dispo.heureDebut,
           endTime: dispo.heureFin,
           color: '#98FB98'
-        })),
-      
-      // 🔹 Ajout du gestionnaire de clic sur un événement
-      eventClick: (info) => this.gererClickEvent(info)
+        }))
     };
   
     console.log("📌 Disponibilités mises à jour dans le calendrier :", this.calendarOptions.events);
-  }gererClickEvent(info: any) {
-    console.log("🔍 ID de l'événement cliqué :", info.event.id);
-    console.log("📌 Liste des disponibilités :", this.user.disponibilites);
-  
-    const dispo = this.user.disponibilites.find((d: Disponibilite) => Number(d.id) === Number(info.event.id));
-  
-    if (dispo) {
-      const confirmation = confirm(`Voulez-vous modifier cette disponibilité ?\n\n📅 ${dispo.jour} (${dispo.heureDebut} - ${dispo.heureFin})`);
-      
-      if (confirmation) {
-        // 🔹 Appel de la méthode pour modifier la disponibilité
-        this.disponibliteService.modifierDisponibilite(dispo.id, dispo).subscribe({
-          next: (updatedDispo) => {
-            alert("✅ Disponibilité mise à jour avec succès !");
-            console.log("📌 Disponibilité mise à jour :", updatedDispo);
-          },
-          error: (err) => {
-            alert("❌ Erreur lors de la mise à jour !");
-            console.error("⚠️ Erreur :", err);
-          }
-        });
-      }
-    } else {
-      alert("❌ Disponibilité introuvable !");
-      console.error("⚠️ Aucune correspondance trouvée avec l'ID :", info.event.id);
+  }updateDisponibilite() {
+    if (!this.disponibiliteSelectionnee || !this.disponibiliteSelectionnee.id) {
+      console.error("⚠️ Impossible de mettre à jour : Aucune disponibilité sélectionnée !");
+      return;
     }
-  }
-  sauvegarderModification() {
+
+    console.log("📌 Mise à jour de la disponibilité :", this.disponibiliteSelectionnee);
+
     this.disponibliteService.modifierDisponibilite(this.disponibiliteSelectionnee.id, this.disponibiliteSelectionnee)
       .subscribe({
-        next: (updatedDispo) => {
+        next: (response: any) => { // Assure-toi que le type de réponse permet d'accéder au token
+          console.log("✅ Disponibilité mise à jour avec succès :", response);
           alert("✅ Disponibilité mise à jour avec succès !");
-          this.editionActive = false; // Fermer la modal
-          this.loadDisponibilites(); // Rafraîchir le calendrier
+
+          // Mise à jour du token si présent
+          if (response.token) {
+            localStorage.removeItem('accessToken'); // Supprime l'ancien token
+            localStorage.setItem('accessToken', response.token); // Stocke le nouveau token
+            console.log("🔄 Nouveau token enregistré !");
+          }
+
+          this.editionActive = false; // Ferme la modal après la modification
+          this.loadDisponibilites(); // Recharge FullCalendar pour afficher les changements
         },
         error: (err) => {
-          alert("❌ Erreur lors de la mise à jour !");
-          console.error("⚠️ Erreur :", err);
+          console.error("❌ Erreur lors de la mise à jour de la disponibilité :", err);
+          alert("❌ Une erreur est survenue lors de la mise à jour !");
         }
       });
-  }
-  
-}  
+}
+}
