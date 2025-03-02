@@ -17,8 +17,8 @@ export class ForgetPasswordService {
  
 
   // Changer le mot de passe
-  changePassword(email: string, password: string, repeatPassword: string): Observable<string> {
-    return this.http.post(`${this.apiUrl}/changePassword/${email}`, { password, repeatPassword }, { responseType: 'text' });
+  changePassword(id: Number, password: string, repeatPassword: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/changePassword/${id}`, { password, repeatPassword }, { responseType: 'text' });
   }
 }
 

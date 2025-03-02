@@ -23,9 +23,12 @@ export class UtilisateurService {
     return this.http.delete<void>(`${this.apiUrl}/deleteUser/${id}`);
   }
 
-  
+  /*
   updateUser(id: number, utilisateur: Utilisateur): Observable<Utilisateur> {
     return this.http.put<Utilisateur>(`${this.apiUrl}/${id}`, utilisateur);
+  }*/
+  updateUser(id: number, utilisateur: Partial<Utilisateur>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, utilisateur);
   }
 
 

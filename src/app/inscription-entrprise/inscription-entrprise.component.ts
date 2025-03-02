@@ -7,6 +7,7 @@ import { ServiceeService } from '../service/servicee.service';
 import { AuthServiceService } from '../service/auth-service.service';
 import { UserRole } from 'src/models/UserRole';
 import { Servicee } from 'src/models/Servicee';
+import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
 
 @Component({
   selector: 'app-inscription-entrprise',
@@ -48,7 +49,9 @@ export class InscriptionEntrpriseComponent {
       siret: ['', [Validators.required, Validators.pattern("^[0-9]{14}$")]],
       siteWeb: [''],
       image: [''],
-      role: [UserRole.ENTREPRISE]
+      role: [UserRole.ENTREPRISE],
+       status:[StatusUtilisateur.ATTENTE]
+
     });
   }
   nextStep() {

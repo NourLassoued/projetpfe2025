@@ -13,7 +13,7 @@ export class EditpasswordComponent  implements OnInit {
   email: string | null = null;
   errorMessage: string = '';
   successMessage: string = '';
-
+  id: number = 0; 
   constructor(
     private route: ActivatedRoute,
     private forgetPasswordService: ForgetPasswordService,
@@ -21,12 +21,20 @@ export class EditpasswordComponent  implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.email = this.route.snapshot.queryParamMap.get('email');
+    this.route.queryParams.subscribe(params => {
+      this.id = +params['id'];  // Récupérer l'ID de l'URL et le convertir en nombre
+    });
+  
   }
+  changePassword(): void {
+    // Validation des champs
+    if (!this.id) {
+      this.errorMessage = "Erreur : Aucun ID utilisateur fourni.";
+      return;
+    }
 
-  changePassword() {
-    if (!this.email) {
-      this.errorMessage = "Erreur : Aucun email fourni.";
+    if (!this.password || !this.repeatPassword) {
+      this.errorMessage = "Erreur : Les mots de passe ne peuvent pas être vides.";
       return;
     }
 
@@ -40,16 +48,16 @@ export class EditpasswordComponent  implements OnInit {
       return;
     }
 
-    this.forgetPasswordService.changePassword(this.email, this.password, this.repeatPassword).subscribe({
+    // Appeler le service pour changer le mot de passe en passant l'ID et les mots de passe
+    this.forgetPasswordService.changePassword(this.id, this.password, this.repeatPassword).subscribe({
       next: () => {
         this.successMessage = "Mot de passe changé avec succès ! Redirection...";
-        setTimeout(() => this.router.navigate(['/login']), 3000); // Redirige vers login après 3s
+        setTimeout(() => this.router.navigate(['/login']), 3000);  // Redirection vers la page de login après 3 secondes
       },
-      error: () => {
+      error: (err) => {
         this.errorMessage = "Une erreur est survenue lors du changement du mot de passe.";
+        console.error(err);  // Affiche l'erreur pour aider à déboguer
       }
     });
   }
 }
-  
-

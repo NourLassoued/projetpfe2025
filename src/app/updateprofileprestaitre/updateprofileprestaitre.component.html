@@ -99,30 +99,73 @@
                 </div>
               </div>
               
-            <div class="content">
+              <div class="content">
                 <!-- Disponibilité -->
                 <div class="section">
-                    <label>📆Disponibilité</label>
-                    <div class="competence">
-                        <p *ngIf="user?.disponibilite">{{ user?.disponibilite }}</p>
-                        <p *ngIf="!user?.disponibilite">Disponibilité non précisée.</p>
-                        <button class="edit-btn">✏️</button>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
+                  <label>📆 Disponibilité</label>
+                  <div class="competence">
+                    <ng-container *ngIf="user?.disponibilites?.length > 0; else noDisponibilite">
+                      <ul>
+                        <li *ngFor="let dispo of user.disponibilites">
+                          {{ dispo.jour }} : {{ dispo.heureDebut }} - {{ dispo.heureFin }}
+                          <button class="edit-btn" (click)="ouvrirEdition(dispo)">✏️</button>
+                        </li>
+                      </ul>
+                    </ng-container>
+                    <ng-template #noDisponibilite>
+                      <p>Disponibilité non précisée.</p>
+                    </ng-template>
+                  
 
-                <div class="section">
-                    <label>🔒 Changer de mot de passe</label>
-                    <div class="competence">
-                        <input type="password" placeholder="Nouveau mot de passe" />
-                        <button class="edit-btn">✏️</button>
-                    </div>
+                  </div>
                 </div>
-            </div>
-            </div>
-            
+              </div>
         </div>
+    </div>
+              
+    <div class="modal-overlay" *ngIf="editionActive">
+        <div class="modal-content">
+         
+          <div class="modal">
+           
+            <div class="calendar-container">
+              <div class="calendar-wrapper">
+              
+              <button class="close-btn" (click)="fermerEdition()">❌</button>
+              <!-- Assurez-vous que FullCalendar reçoit correctement les options -->
+              <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+
+
+
+            </div>
+          </div>
+          </div>
+          
+        </div>
+      </div>
+      
+            
+        <!-- Fenêtre modale -->
+<div class="modal-overlay" *ngIf="editionActive">
+  <div class="modal-content">
+    <h3>Modifier la disponibilité</h3>
+
+    <label>Jour :</label>
+    <input type="text" [(ngModel)]="disponibiliteSelectionnee.jour" />
+
+    <label>Heure début :</label>
+    <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureDebut" />
+
+    <label>Heure fin :</label>
+    <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureFin" />
+
+    <div class="buttons">
+      <button class="save-btn" (click)="sauvegarderModification()">✅ Sauvegarder</button>
+      <button class="close-btn" (click)="fermerEdition()">❌ Annuler</button>
+    </div>
+  </div>
+</div>
+
         
 
 </body>

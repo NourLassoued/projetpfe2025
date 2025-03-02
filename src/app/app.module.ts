@@ -20,6 +20,24 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon'
+
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ToastrModule } from 'ngx-toastr';
+
+import timeGridWeek from '@fullcalendar/timegrid';
+
+
+
 
 @NgModule({
   declarations: [
@@ -46,9 +64,17 @@ import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+    FullCalendarModule,
    
-    BsDatepickerModule.forRoot() 
-
+    BsDatepickerModule.forRoot() ,
+    ToastrModule.forRoot() 
  
   ],
   providers: [],

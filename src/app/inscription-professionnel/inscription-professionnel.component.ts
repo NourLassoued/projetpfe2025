@@ -7,6 +7,7 @@ import { FileService } from '../service/file.service';
 import { Servicee } from 'src/models/Servicee';
 import { UserRole } from 'src/models/UserRole';
 import { AuthServiceService } from '../service/auth-service.service';
+import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
 
 @Component({
   selector: 'app-inscription-professionnel',
@@ -34,6 +35,7 @@ export class InscriptionProfessionnelComponent {
       telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], 
      
       role: [UserRole.PRESTATAIRE],
+       status:[StatusUtilisateur.ATTENTE],
      
       competence: [[]], 
       workExperience: [null, [Validators.required, Validators.min(0)]],  
@@ -49,7 +51,7 @@ export class InscriptionProfessionnelComponent {
  
 
   showSkillModal() {
-    console.log("Ouverture de la modale...");
+    
     this.getAllCategories();
 
     this.showModal = true;
@@ -58,8 +60,7 @@ export class InscriptionProfessionnelComponent {
     this.categorieService.getAllCategories().subscribe(
       (data) => {
         this.categories = data;
-        console.log('Catégories chargées:', this.categories);
-        // Charger les images après avoir récupéré les catégories
+       
         this.categories.forEach((category, index) => {
           this.getImage(category.imageCategorie, index);
         });
@@ -76,7 +77,7 @@ export class InscriptionProfessionnelComponent {
       (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-        console.log(`Image chargée pour la catégorie ${filename}`);
+       
       },
       (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
@@ -88,9 +89,9 @@ selectCategory(categoryName: string) {
   this.selectedCategory = this.categories.find(category => category.nom === categoryName) || null;
 
   if (this.selectedCategory) {
-    // Vérifie que l'id de la catégorie est valide
-    console.log('Categorie ID:', this.selectedCategory.id);
-    this.getAllServicesByCategorie(this.selectedCategory.id); // Vérifie si 'id' est bien défini
+   
+  
+    this.getAllServicesByCategorie(this.selectedCategory.id); 
     this.showServiceModal = true;
   } else {
     console.error('Catégorie non trouvée');
@@ -105,7 +106,7 @@ selectCategory(categoryName: string) {
     },
     (error) => {
       console.error('Erreur lors du chargement des services:', error);
-      alert('Une erreur est survenue lors du chargement des services.'); // Ajout d'un message d'alerte pour informer l'utilisateur
+      alert('Une erreur est survenue lors du chargement des services.'); 
     }
   );
 }
@@ -116,9 +117,9 @@ selectService(service: any) {
     this.selectedServices.push(service);
   }
 
-  console.log("Compétences sélectionnées : ", this.selectedServices); // Vérifier dans la console
+  console.log("Compétences sélectionnées : ", this.selectedServices); 
 
-  // Mise à jour du champ 'competence' avec la liste des services sélectionnés
+  
   this.form1.controls['competence'].setValue(this.selectedServices.map(s => s.nomservice));
 }
 
@@ -126,7 +127,7 @@ selectService(service: any) {
 onFileSelected(event: any, fileType: string): void {
   const file = event.target.files[0];
   if (file) {
-    this.selectedFiles[fileType] = file; // Associe le fichier au type correspondant
+    this.selectedFiles[fileType] = file; 
   }
 }
 
@@ -137,24 +138,24 @@ onSubmit(): void {
     
     };
   
-    // Liste des fichiers à uploader
+  
     const fileUploadPromises = Object.keys(this.selectedFiles).map((fileType) =>
       this.file.uploadFile(this.selectedFiles[fileType]).toPromise()
     );
 
-    // Upload des fichiers
+   
     Promise.all(fileUploadPromises)
       .then((responses: any[]) => {
         responses.forEach((response, index) => {
           const fileType = Object.keys(this.selectedFiles)[index];
-          const filename = response.split(': ')[1]; // Ajuste en fonction du format de réponse
-          formData[fileType] = filename; // Associe le nom du fichier à formData
+          const filename = response.split(': ')[1]; 
+          formData[fileType] = filename; 
         });
 
-        // Envoie des données avec les noms de fichiers
+      
         this.authService.register(formData).subscribe(
           (response: any) => {
-            console.log("Réponse d'inscription :", response);
+           
           },
           (error) => {
             console.error("Erreur lors de l'inscription :", error);

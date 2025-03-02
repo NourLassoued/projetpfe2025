@@ -9,12 +9,12 @@ export class InscriptionprestaitreComponent {
   showModal: boolean = false;
 
   openModal() {
-    console.log("✅ Modal ouverte !");
+   
     this.showModal = true;
   }
 
   closeModal() {
-    console.log("❌ Modal fermée !");
+   ;
     this.showModal = false;
   }
 }

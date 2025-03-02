@@ -1,3 +1,4 @@
+import { Disponibilite } from "./Disponibilite";
 import { Servicee } from "./Servicee";
 import { StatusUtilisateur } from "./StatusUtilisateur";
 import { UserRole } from "./UserRole";
@@ -19,7 +20,7 @@ export class Utilisateur {
     Certification?: string;
     competence?: string[];
     tarifs?: number;
-    disponibilite?: string;
+    disponibilite?: any; 
     description?: string;
     solde?: number;
     workExperience?: number;
@@ -29,5 +30,6 @@ export class Utilisateur {
     doucument_cv?: string;
     doucument_CIN?: string;
     servicesOfferts?: Servicee[];
+    disponibilites?: Disponibilite[];
   }
   
