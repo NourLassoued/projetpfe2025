@@ -2,6 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 
+import com.example.backendnourpfe.classes.Disponibilite;
 import com.example.backendnourpfe.classes.StatusUtilisateur;
 import com.example.backendnourpfe.classes.UserRole;
 import lombok.AllArgsConstructor;
@@ -22,27 +23,28 @@ public class RegisterRequest implements Serializable {
     private String nom;
     private String email;
     private String password;
-    private int telephoneNumber;
+    private Integer telephoneNumber;
     private String image;
     private UserRole role;
     private Date createdAt = new Date();
 
 
     private String Certification;
-    private float tarifs;
-    private String disponibilite;
+    private Float tarifs;
+
     private String description;
-    private float solde;
+    private Float solde;
     private  String doucument_CIN;
     private  String doucument_cv;
     private StatusUtilisateur status;
 
 
-    private int workExperience;
+    private Integer workExperience;
     private String nomEntreprise;
     private String siret;
     private String siteWeb;
     private List<String> servicesOfferts;
     private List<String> competence;
     private List<byte[]> images;
+    private List<Disponibilite> disponibilites;
 }

@@ -2,6 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 import com.example.backendnourpfe.Config.JwtService;
+import com.example.backendnourpfe.Respository.DisponibiliteRepository;
 import com.example.backendnourpfe.Respository.ServiceRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.Token.Token;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,69 +40,92 @@ public class AuthenticationService {
     private EmailService emailService;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private DisponibiliteRepository disponibiliteRepository;
+
 
 
 
 public AuthenticationReponse register(RegisterRequest request) {
 
 
-    UserRole role = request.getRole();
- StatusUtilisateur status=request.getStatus();
-    Utilisateur utilisateur = new Utilisateur();
-    utilisateur.setNom(request.getNom());
-    utilisateur.setEmail(request.getEmail());
-    utilisateur.setPassword(passwordEncoder.encode(request.getPassword()));
-    utilisateur.setImage(request.getImage());
-    utilisateur.setTelephoneNumber(request.getTelephoneNumber());
+
+        UserRole role = request.getRole();
+        StatusUtilisateur status = request.getStatus();
+
+        // 🔹 Création de l'utilisateur
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(request.getNom());
+        utilisateur.setEmail(request.getEmail());
+        utilisateur.setPassword(passwordEncoder.encode(request.getPassword()));
+        utilisateur.setImage(request.getImage());
+        utilisateur.setTelephoneNumber(request.getTelephoneNumber());
+        utilisateur.setRole(role);
+        utilisateur.setCreatedAt(new Date());
+        utilisateur.setCertification(request.getCertification());
+        utilisateur.setTarifs(request.getTarifs());
+        utilisateur.setDescription(request.getDescription());
+        utilisateur.setSolde(request.getSolde());
+        utilisateur.setDoucument_CIN(request.getDoucument_CIN());
+        utilisateur.setDoucument_cv(request.getDoucument_cv());
+        utilisateur.setStatus(status != null ? status : StatusUtilisateur.ATTENTE);
+        utilisateur.setWorkExperience(request.getWorkExperience());
+        utilisateur.setCompetence(request.getCompetence());
+        utilisateur.setNomEntreprise(request.getNomEntreprise());
+        utilisateur.setSiret(request.getSiret());
+        utilisateur.setSiteWeb(request.getSiteWeb());
 
 
-    utilisateur.setRole(role);
-    utilisateur.setCreatedAt(new Date());
-    utilisateur.setCertification(request.getCertification());
-    utilisateur.setTarifs(request.getTarifs());
-    utilisateur.setDisponibilite(request.getDisponibilite());
-    utilisateur.setDescription(request.getDescription());
-    utilisateur.setSolde(request.getSolde());
-    utilisateur.setDoucument_CIN(request.getDoucument_CIN());
-    utilisateur.setDoucument_cv(request.getDoucument_cv());
-    utilisateur.setStatus(status); // Assignation du status
-    utilisateur.setWorkExperience(request.getWorkExperience());
-    utilisateur.setCompetence(request.getCompetence());
-    utilisateur.setNomEntreprise(request.getNomEntreprise());
-    utilisateur.setSiret(request.getSiret());
-    utilisateur.setSiteWeb(request.getSiteWeb());
-    if (utilisateur.getStatus() == null) {
-        utilisateur.setStatus(StatusUtilisateur.ATTENTE);
+        if (request.getCompetence() != null && !request.getCompetence().isEmpty()) {
+            List<Servicee> services = serviceRepository.findByNomserviceIn(request.getCompetence());
+            utilisateur.setServicesOfferts(services);
+        }
+
+
+        if (request.getDisponibilites() != null && !request.getDisponibilites().isEmpty()) {
+            List<Disponibilite> disponibilites = new ArrayList<>();
+
+            for (Disponibilite dispoDTO : request.getDisponibilites()) {
+                Disponibilite disponibilite = new Disponibilite();
+                disponibilite.setJour(dispoDTO.getJour());
+                disponibilite.setHeureDebut(dispoDTO.getHeureDebut());
+                disponibilite.setHeureFin(dispoDTO.getHeureFin());
+                disponibilite.setPrestataire(utilisateur);
+                disponibilites.add(disponibilite);
+            }
+
+            utilisateur.setDisponibilites(disponibilites);
+        }
+
+
+        Utilisateur saveUser = repository.save(utilisateur);
+
+
+        if (saveUser.getDisponibilites() != null && !saveUser.getDisponibilites().isEmpty()) {
+            disponibiliteRepository.saveAll(saveUser.getDisponibilites());
+        }
+
+
+        if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
+            emailService.sendVerificationEmailToprestatire(utilisateur.getEmail(), utilisateur.getNom());
+        } else if (role == UserRole.PARTICULIER) {
+            emailService.sendActivationEmailParticulier(utilisateur.getEmail(), utilisateur.getNom());
+        }
+
+        // 🔹 Génération des tokens JWT
+        String jwtToken = jwtService.generateToken(utilisateur);
+        String refreshToken = jwtService.generateToken(utilisateur);
+
+        // 🔹 Sauvegarde du token
+        saveUserToken(saveUser, jwtToken);
+
+        // 🔹 Retourne la réponse d'authentification
+        return AuthenticationReponse.builder()
+                .accesToken(jwtToken)
+                .refershToken(refreshToken)
+                .build();
     }
-    if (request.getCompetence() != null && !request.getCompetence().isEmpty()) {
-        List<Servicee> services = serviceRepository.findByNomserviceIn(request.getCompetence());
-        utilisateur.setServicesOfferts(services);
-    }
 
-
-    if (role == UserRole.PRESTATAIRE || role == UserRole.ENTREPRISE) {
-        emailService.sendVerificationEmailToprestatire(utilisateur.getEmail(), utilisateur.getNom());
-    }
-    if (role == UserRole.PARTICULIER) {
-
-        emailService.sendActivationEmailParticulier(utilisateur.getEmail(), utilisateur.getNom());
-    }
-
-
-    Utilisateur saveUser = repository.save(utilisateur);
-
-
-    String jwtToken = jwtService.generateToken(utilisateur);
-    String refreshToken = jwtService.generateToken(utilisateur);
-
-
-    saveUserToken(saveUser, jwtToken);
-
-    return AuthenticationReponse.builder()
-            .accesToken(jwtToken)
-            .refershToken(refreshToken)
-            .build();
-}
     private  void  revokeAllUserToken(Utilisateur user){
         var valideToken=tokenRepository.findAllValidTokensByUtlisateur(user.getIdUtilisateur());
         if(valideToken.isEmpty())

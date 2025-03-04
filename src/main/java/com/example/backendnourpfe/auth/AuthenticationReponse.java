@@ -23,11 +23,11 @@ public class AuthenticationReponse {
     @JsonProperty("role")
     private UserRole role;
     @JsonProperty("telephoneNumber")
-    private int telephoneNumber;
+    private Integer telephoneNumber;
     @JsonProperty("image")
     private String image;
     @JsonProperty("solde")
-    private float solde;
+    private Float solde;
     @JsonProperty("about")
     private String about;
     @JsonProperty("nomEntreprise")
@@ -39,13 +39,13 @@ public class AuthenticationReponse {
     @JsonProperty("competence")
     private String competence;
     @JsonProperty("tarifs")
-    private float tarifs;
-    @JsonProperty("disponibilite")
-    private String disponibilite;
+    private Float tarifs;
+
     @JsonProperty("description")
     private String description;
     @JsonProperty("status")
     private StatusUtilisateur status;
     @JsonProperty("workExperience")
-    private int workExperience;
+    private Integer workExperience;
+
 }

@@ -149,8 +149,8 @@ public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable
     } catch (Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying OTP: " + ex.getMessage());
     }
-}
-    @PostMapping("/changePassword/{email}")
+}/*
+    @PostMapping("/changePassword/{id}")
     public ResponseEntity<String> changePasswordHandler(@RequestBody ChangePassword changePassword, @PathVariable String email) {
         try {
             if (!Objects.equals(changePassword.password(), changePassword.repeatPassword())) {
@@ -165,7 +165,33 @@ public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error changing password: " + ex.getMessage());
         }
+    }*/
+    @PostMapping("/changePassword/{id}")
+    public ResponseEntity<String> changePasswordHandler(@RequestBody ChangePassword changePassword, @PathVariable Long id) {
+        try {
+            // Vérification que les mots de passe correspondent
+            if (!Objects.equals(changePassword.password(), changePassword.repeatPassword())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Les mots de passe ne correspondent pas. Veuillez réessayer !");
+            }
+
+            // Récupérer l'utilisateur par ID
+            Utilisateur user = utlisateurRepo.findById(id)
+                    .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec cet ID"));
+
+            // Encoder le nouveau mot de passe
+            String encodedPassword = passwordEncoder.encode(changePassword.password());
+
+            // Mettre à jour le mot de passe de l'utilisateur
+            utlisateurRepo.updatePassword(user.getEmail(), encodedPassword);
+
+            return ResponseEntity.ok("Le mot de passe a été modifié avec succès !");
+        } catch (UsernameNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors du changement de mot de passe : " + ex.getMessage());
+        }
     }
+
     private Integer OtpGenrator(){
         Random random =new Random();
         return random.nextInt(100_000,999_999);

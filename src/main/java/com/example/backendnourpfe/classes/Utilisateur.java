@@ -4,6 +4,9 @@ package com.example.backendnourpfe.classes;
 
 import com.example.backendnourpfe.Token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -12,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +25,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-
 public class Utilisateur  implements UserDetails  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +38,7 @@ public class Utilisateur  implements UserDetails  {
     @JsonProperty("image")
     private String image;
     @JsonProperty("telephoneNumber")
-    private int telephoneNumber;
+    private Integer telephoneNumber;
     @JsonProperty("adresse")
     private  String adresse;
 
@@ -45,7 +47,7 @@ public class Utilisateur  implements UserDetails  {
     private UserRole role;
 
     @Enumerated(EnumType.STRING)
-    private StatusUtilisateur status=StatusUtilisateur.ATTENTE;
+    private StatusUtilisateur status;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("createdAt")
     private Date createdAt = new Date();
@@ -53,13 +55,10 @@ public class Utilisateur  implements UserDetails  {
     @Nullable
     @JsonProperty("Certification")
     private String Certification;
-    @Nullable
-    @JsonProperty("tarifs")
-    private float tarifs;
-    @Nullable
-    @JsonProperty("disponibilite")
 
-    private String disponibilite;
+    @JsonProperty("tarifs")
+    private Float tarifs;
+
     @Nullable
     @JsonProperty("description")
 
@@ -71,11 +70,11 @@ public class Utilisateur  implements UserDetails  {
 
     private List<String> competence;
     @JsonProperty("solde")
-    @Nullable
-    private float solde;
-    @Nullable
+
+    private Float solde;
+@Nullable
     @JsonProperty("workExperience")
-    private int workExperience;
+    private Integer workExperience;
     @JsonProperty("nomEntreprise")
     @Nullable
     private String nomEntreprise;
@@ -123,7 +122,13 @@ public class Utilisateur  implements UserDetails  {
             joinColumns = @JoinColumn(name = "utilisateur_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    private List<Servicee> servicesOfferts;
+    @JsonManagedReference
+    private List<Servicee> servicesOfferts =new ArrayList<>();
+
+@JsonIgnore
+@OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    private List<Disponibilite> disponibilites = new ArrayList<>();
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
         this.email = email;

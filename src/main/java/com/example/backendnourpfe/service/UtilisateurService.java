@@ -1,12 +1,18 @@
 package com.example.backendnourpfe.service;
 
 
+import com.example.backendnourpfe.Config.JwtService;
 import com.example.backendnourpfe.Respository.*;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.ServiceNotFoundException;
 import java.util.*;
@@ -21,12 +27,17 @@ public class UtilisateurService implements UtlisateurInterface {
     @Autowired
     private DemandeRepository demandeRepository;
     @Autowired
-        private ServiceRepository serviceRepository;
+    private ServiceRepository serviceRepository;
     @Autowired
     private AvisRepository avisRepository;
     @Autowired
     private ReservationRepository reservationRepository;
-
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private  DisponibiliteRepository disponibiliteRepository;
+    @Autowired
+    private DisponibiliteService disponibiliteService;
 
 
     @Override
@@ -42,35 +53,35 @@ public class UtilisateurService implements UtlisateurInterface {
     }
 
 
-@Override
-public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande) {
-    Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-            .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    @Override
+    public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande) {
+        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-    if (utilisateur.getRole() != UserRole.PARTICULIER) {
-        throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
+        if (utilisateur.getRole() != UserRole.PARTICULIER) {
+            throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
+        }
+
+
+        Servicee service = serviceRepository.findById(idservice)
+                .orElseThrow(() -> new RuntimeException("Service non trouvé"));
+
+
+        demande.setUtilisateur(utilisateur);
+        demande.setServicee(service);
+        demande.setStatusDemande(StatusDemande.EN_COURS);
+        Demande savedDemande = demandeRepository.save(demande);
+
+
+        List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idservice);
+
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("demande", savedDemande);
+        response.put("prestataires", prestataires);
+
+        return response;
     }
-
-
-    Servicee service = serviceRepository.findById(idservice)
-            .orElseThrow(() -> new RuntimeException("Service non trouvé"));
-
-
-    demande.setUtilisateur(utilisateur);
-    demande.setServicee(service);
-    demande.setStatusDemande(StatusDemande.EN_COURS);
-    Demande savedDemande = demandeRepository.save(demande);
-
-
-    List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idservice);
-
-
-    Map<String, Object> response = new HashMap<>();
-    response.put("demande", savedDemande);
-    response.put("prestataires", prestataires);
-
-    return response;
-}
 
 
     @Override
@@ -80,7 +91,7 @@ public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Dema
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
 
-        if  (utilisateur.getRole() != UserRole.PARTICULIER) {
+        if (utilisateur.getRole() != UserRole.PARTICULIER) {
             throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut donner un avis.");
         }
 
@@ -100,22 +111,23 @@ public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Dema
 
         return avisRepository.save(avis);
     }
+
     @Override
     public List<Object> getAvisByAvisUtilisateur(Long idAvisUtilisateur) {
 
-            return avisRepository.findAvisByAvisUtilisateurId(idAvisUtilisateur)
-                    .stream()
-                    .map(avis -> {
-                        return new Object() {
-                            public final Long idAvis = (Long) avis[0];
-                            public final int note = (int) avis[1];
-                            public final String commentaire = (String) avis[2];
-                            public final String dateAvis = avis[3].toString();
-                            public final String nomParticulier = (String) avis[4]; // Récupération du nom du particulier
-                        };
-                    })
-                    .collect(Collectors.toList());
-        }
+        return avisRepository.findAvisByAvisUtilisateurId(idAvisUtilisateur)
+                .stream()
+                .map(avis -> {
+                    return new Object() {
+                        public final Long idAvis = (Long) avis[0];
+                        public final int note = (int) avis[1];
+                        public final String commentaire = (String) avis[2];
+                        public final String dateAvis = avis[3].toString();
+                        public final String nomParticulier = (String) avis[4]; // Récupération du nom du particulier
+                    };
+                })
+                .collect(Collectors.toList());
+    }
 
     public Reservation creerReservation(Long idParticulier, Long idPrestataire, Reservation reservation) {
 
@@ -141,53 +153,88 @@ public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Dema
 
         return reservationRepository.save(reservation);
     }
-    public Utilisateur updateProfil(Long idUtilisateur, Utilisateur utilisateurDetails) {
 
-        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    @Transactional
+    public ResponseEntity<?> updateUser(Long id, Utilisateur utilisateurDetails) {
+        Utilisateur user = utilisateurRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé !"));
+
+        // 🔹 Met à jour les champs nécessaires
+        if (utilisateurDetails.getNom() != null) user.setNom(utilisateurDetails.getNom());
+        if (utilisateurDetails.getEmail() != null) user.setEmail(utilisateurDetails.getEmail());
+        if (utilisateurDetails.getPassword() != null) user.setPassword(utilisateurDetails.getPassword());
+        if (utilisateurDetails.getImage() != null) user.setImage(utilisateurDetails.getImage());
+        if (utilisateurDetails.getTelephoneNumber() != null) user.setTelephoneNumber(utilisateurDetails.getTelephoneNumber());
+        if (utilisateurDetails.getAdresse() != null) user.setAdresse(utilisateurDetails.getAdresse());
+        if (utilisateurDetails.getRole() != null) user.setRole(utilisateurDetails.getRole());
+        if (utilisateurDetails.getStatus() != null) user.setStatus(utilisateurDetails.getStatus());
+        if (utilisateurDetails.getCertification() != null) user.setCertification(utilisateurDetails.getCertification());
+        if (utilisateurDetails.getTarifs() != null) user.setTarifs(utilisateurDetails.getTarifs());
+        if (utilisateurDetails.getDescription() != null) user.setDescription(utilisateurDetails.getDescription());
+        if (utilisateurDetails.getCompetence() != null && !utilisateurDetails.getCompetence().isEmpty())
+            user.setCompetence(utilisateurDetails.getCompetence());
+        if (utilisateurDetails.getSolde() != null) user.setSolde(utilisateurDetails.getSolde());
+        if (utilisateurDetails.getWorkExperience() != null) user.setWorkExperience(utilisateurDetails.getWorkExperience());
+        if (utilisateurDetails.getNomEntreprise() != null) user.setNomEntreprise(utilisateurDetails.getNomEntreprise());
+        if (utilisateurDetails.getSiret() != null) user.setSiret(utilisateurDetails.getSiret());
+        if (utilisateurDetails.getSiteWeb() != null) user.setSiteWeb(utilisateurDetails.getSiteWeb());
+        if (utilisateurDetails.getDoucument_cv() != null) user.setDoucument_cv(utilisateurDetails.getDoucument_cv());
+        if (utilisateurDetails.getDoucument_CIN() != null) user.setDoucument_CIN(utilisateurDetails.getDoucument_CIN());
+        if (utilisateurDetails.getDisponibilites() != null) {
+            for (Disponibilite dispo : utilisateurDetails.getDisponibilites()) {
+                dispo.setPrestataire(user); // Associer à l'utilisateur
+
+                if (dispo.getId() != null) {
+                    // Vérifier si la disponibilité existe en base
+                    Optional<Disponibilite> existingDispo = disponibiliteRepository.findById(dispo.getId());
+                    if (existingDispo.isPresent()) {
+                        // Mise à jour de la disponibilité existante
+                        Disponibilite dispoToUpdate = existingDispo.get();
+                        dispoToUpdate.setJour(dispo.getJour());
+                        dispoToUpdate.setHeureDebut(dispo.getHeureDebut());
+                        dispoToUpdate.setHeureFin(dispo.getHeureFin());
+                        disponibiliteRepository.save(dispoToUpdate); // Enregistrer la mise à jour
+                    } else {
+                        // Si l'ID est donné mais qu'il n'existe pas en base, on l'ajoute comme une nouvelle
+                        disponibiliteRepository.save(dispo);
+                        user.getDisponibilites().add(dispo);
+                    }
+                } else {
+                    // Si pas d'ID, c'est une nouvelle disponibilité à ajouter
+                    disponibiliteRepository.save(dispo);
+                    user.getDisponibilites().add(dispo);
+                }
+            }
+        }
 
 
-        if (utilisateurDetails.getNom() != null) {
-            utilisateur.setNom(utilisateurDetails.getNom());
-        }
-        if (utilisateurDetails.getEmail() != null) {
-            utilisateur.setEmail(utilisateurDetails.getEmail());
-        }
-        if (utilisateurDetails.getTelephoneNumber() != 0) {
-            utilisateur.setTelephoneNumber(utilisateurDetails.getTelephoneNumber());
-        }
-        if (utilisateurDetails.getAdresse() != null) {
-            utilisateur.setAdresse(utilisateurDetails.getAdresse());
-        }
-        if (utilisateurDetails.getImage() != null) {
-            utilisateur.setImage(utilisateurDetails.getImage());
-        }
-        if (utilisateurDetails.getDescription() != null) {
-            utilisateur.setDescription(utilisateurDetails.getDescription());
-        }
-        if (utilisateurDetails.getSolde() != 0) {
-            utilisateur.setSolde(utilisateurDetails.getSolde());
-        }
-        if (utilisateurDetails.getWorkExperience() != 0) {
-            utilisateur.setWorkExperience(utilisateurDetails.getWorkExperience());
-        }
-        if (utilisateurDetails.getNomEntreprise() != null) {
-            utilisateur.setNomEntreprise(utilisateurDetails.getNomEntreprise());
-        }
-        if (utilisateurDetails.getSiteWeb() != null) {
-            utilisateur.setSiteWeb(utilisateurDetails.getSiteWeb());
-        }
-        if (utilisateurDetails.getSiret() != null) {
-            utilisateur.setSiret(utilisateurDetails.getSiret());
-        }/*
-        if (utilisateurDetails.getPassword() != null && !utilisateurDetails.getPassword().isEmpty()) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = passwordEncoder.encode(utilisateurDetails.getPassword());
-            utilisateur.setPassword(encodedPassword);       }*/
+
+        Utilisateur updatedUser = utilisateurRepository.save(user);
 
 
 
-        return utilisateurRepository.save(utilisateur);
+
+
+
+        System.out.println("Utilisateur mis à jour avec succès: " + updatedUser.getNom());
+        System.out.println("Total disponibilités après mise à jour: " + updatedUser.getDisponibilites().size())
+        ;
+
+        String newToken = jwtService.generateToken(updatedUser);
+        System.out.println(" Nouveau token généré : " + newToken);
+
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Utilisateur mis à jour avec succès",
+                "token", newToken,
+                "user", updatedUser
+        ));
+    }
+
+
+
+    public Optional<Utilisateur> getUtilisateurById(Long id) {
+        return utilisateurRepository.findById(id);
     }
 }
 
