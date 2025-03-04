@@ -3,7 +3,7 @@ body {
     background-color: #fcf9f4;
     margin: 0;
     padding: 0;
-    height: 1500px;
+    height: 1900px;
 }
 .container {
     display: flex;
@@ -66,11 +66,29 @@ margin-left: 20px;
     align-items: center;
     border: 1px solid #ddd;
 }
+.competence li {
+  display: flex;
+  justify-content: space-between; /* Espace entre le texte et le bouton */
+  align-items: center; /* Alignement vertical */
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Séparation des lignes */
+}
 .edit-btn {
     cursor: pointer;
     background: none;
     border: none;
-    font-size: 18px;
+    font-weight: bold;
+    font-size: 17px;
+}
+.delete-btn{
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 17px;
+  margin-left: 20px;
+    transition: all 0.3s ease-in-out;
+  
 }
 .add-skill {
     background: none;
@@ -137,7 +155,7 @@ margin-left: 20px;
   resize: vertical;
   }
   .save-btn {
-    background-color: #dbe0dc; /* Vert pour valider */
+ 
     color: white;
     border: none;
     padding: 6px 10px;
@@ -147,183 +165,465 @@ margin-left: 20px;
     margin-left: 10px;
   }
   
-  .save-btn:hover {
-    background-color: #218838; /* Effet au survol */
-  }
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    height: 1000px;
-    box-shadow: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.3); /* Assombrit légèrement */
-    backdrop-filter: blur(8px); /* Effet flou */
-  }
-  
  
- 
-  
-  .modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 600px;
-  
-    overflow: hidden;
-  }
-  
-  calendar-wrapper {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-  
-  /* 🛑 Bouton de fermeture à l'intérieur du calendrier */
-  .calendar-wrapper .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  
-   
-    border: none;
-    padding: 8px 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out;
-    z-index: 10; /* Assure que le bouton reste au-dessus */
-  }
-  
-  /* 🎨 Effet au survol */
-  .calendar-wrapper .close-btn:hover {
-   
-    transform: scale(1.1);
-  }
-  
-.calendar-container {
+  /* Styles pour l'arrière-plan de la modale */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Fond assombri */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 9;
+}
+
+/* Conteneur de la modale */
+.modal-content {
+  background: #fff;
+  width: 1000px;
+  z-index: 10; /* Calendrier en dessous du formulaire */
   height: 600px;
-  width:1000px;
-  margin: 20px auto;
-  background-color: #fbf5f5;
+  padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-bottom: 20px;
-}::ng-deep .fc-col-header-cell {
-  background: linear-gradient(to right, #877b93, #2575fc) !important; /* Dégradé violet-bleu */
-  color: white !important;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 12px;
-  border-radius: 8px 8px 0 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  margin-top: 70px; /* Ajoute un margin-top */
+  margin-bottom: 100px; /* Ajoute un margin-bottom */
 }
 
-/* 🟢 Couleur des jours de semaine avec un effet soft */
-::ng-deep .fc-daygrid-day {
-  background-color: #f8f9ff !important; /* Bleu très clair */
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  transition: background 0.3s ease-in-out;
-}
+/* Bouton de fermeture */
+.close-btn {
 
-/* 🎨 Week-ends avec un effet doux et élégant */
-::ng-deep .fc-day-sat, 
-::ng-deep .fc-day-sun {
-  background-color: #ffe6e6 !important; /* Rose pastel */
+  color: white;
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
   font-weight: bold;
-  transition: transform 0.3s ease-in-out;
-}
-
-::ng-deep .fc-day-sat:hover, 
-::ng-deep .fc-day-sun:hover {
-  transform: scale(1.02);
-}
-
-/* ✅ Ajout d'un effet au survol */
-::ng-deep .fc-daygrid-day:hover {
-  background-color: #e3eefe !important; /* Bleu doux */
   transition: all 0.3s ease-in-out;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 🌟 Style amélioré pour la date d’aujourd’hui */
-::ng-deep .fc-day-today {
-  background: radial-gradient(circle, #fffae6, #ffdd00) !important; /* Effet lumineux */
-  border: 2px solid #ffcc00 !important;
-  font-weight: bold;
-  box-shadow: 0 0 10px  #ffdd00;
+
+.close-btn:hover {
+  background: linear-gradient(to right, #b71c1c, #d32f2f);
+  transform: scale(1.05);
+}
+/* Conteneur du calendrier bien centré */
+.calendar-container {
+  width: 1000px;
+  height: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 250px;
+}/* 📅 FullCalendar - Dimension et animation */
+/* 🌟 Conteneur général du calendrier */
+/* 🌟 Conteneur principal du calendrier */
+full-calendar {
+  width: 950px;
+  
+  height: 500px;
+  margin: 20px auto;
+  font-family: 'Arial', sans-serif;
+}/* 🗓️ En-tête des jours de la semaine avec un effet premium */
+::ng-deep .fc-col-header-cell {
+  background: linear-gradient(to right, #0a3d62, #1e5799) !important; /* Bleu marine */
+  color: white !important;
+  font-weight: 900;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 15px;
+  border-bottom: 3px solid #07294d;
+  letter-spacing: 1px;
+}
+
+/* 📅 Style des jours dans la grille */
+::ng-deep .fc-daygrid-day-frame {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
   border-radius: 8px;
 }
 
-/* 🟢 Ajout de bordures plus subtiles et d’un effet en relief */
-::ng-deep .fc-daygrid-day-frame {
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-::ng-deep  .fc-event {
-  position: relative;
+::ng-deep .fc-daygrid-day-number {
+  font-weight: bold;
+  font-size: 18px;
+  color: #0a3d62;
   padding: 8px;
-  border-radius: 6px;
+}
+
+::ng-deep .fc-timegrid-slot-label {
+  font-size: 15px;
+  color: #0a3d62;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+::ng-deep .fc-event {
+  position: relative;
+  padding: 12px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: bold;
-  border: none;
-  background-color: #28a745 !important; /* Couleur verte pour disponibilité */
+  text-align: left;
   color: white !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInZoom 0.4s ease-in-out forwards;
 }
 
-::ng-deep  .fc-event .event-buttons {
+
+::ng-deep .fc-event:nth-child(1) { background: linear-gradient(to right, #0a3d62, #1e5799) !important; } /* Bleu marine */
+::ng-deep .fc-event:nth-child(2) { background: linear-gradient(to right, #1e5799, #4facfe) !important; } /* Bleu foncé */
+::ng-deep .fc-event:nth-child(3) { background: linear-gradient(to right, #4facfe, #90caf9) !important; } /* Bleu clair */
+::ng-deep .fc-event:nth-child(4) { background: linear-gradient(to right, #90caf9, #bbdefb) !important; color: #0a3d62 !important; } /* Bleu ciel */
+
+
+::ng-deep .fc-event:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+::ng-deep .fc-timegrid-slot {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+
+::ng-deep .fc-daygrid-event {
+  margin: 6px 0;
+  padding: 10px;
+  font-size: 15px;
+}
+
+
+::ng-deep .fc-view-harness {
+  background: #e3f2fd !important; 
+}
+
+
+::ng-deep .fc-daygrid-day {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+
+
+::ng-deep .fc-day-today {
+  background: radial-gradient(circle, #bbdefb, #4facfe) !important;
+  border: 2px solid #1e5799 !important;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(50, 50, 200, 0.3);
+}
+.modal-content h3 {
+  font-size: 30px;
+  color: #0a3d62;
+  margin-bottom: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.modal-content label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  text-align: left;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* 📝 Champs de formulaire */
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  background: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+/* 📌 Input readonly (Jour désactivé) */
+.modal-content input[readonly] {
+  background: #f1f1f1;
+  cursor: not-allowed;
+}
+
+/* 📅 Effet focus */
+.modal-content input:focus {
+  border-color: #1e5799;
+  box-shadow: 0 0 8px rgba(30, 87, 153, 0.3);
+}
+
+/* 🎨 Boutons */
+.buttons {
   display: flex;
-  gap: 5px;
-  margin-top: 5px;
-  justify-content: center;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
-::ng-deep  .fc-event button {
-  background-color: white;
-  border: none;
-  color: black;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-
-
-::ng-deep  .fc-event .delete-btn {
-  background-color:  #28a745 !important; /* Rouge pour supprimer */
+/* Bouton Sauvegarder */
+.save-btn {
+  
   color: white;
-}
-
-::ng-deep  .fc-event button:hover {
-  opacity: 0.8;
-}
-.event-buttons {
-  display: flex;
-  gap: 5px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-
-.event-buttons .edit-btn,
-.event-buttons .delete-btn {
-  background-color: transparent;
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.save-btn:hover {
+
+  transform: scale(1.07);
+
+}
+.calendar-blur {
+  filter: blur(5px);
+  pointer-events: none; /* Désactive les interactions */
+  transition: filter 0.3s ease-in-out;
+}.modal-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 12; /* 📌 Au-dessus de tout */
+}
+/*  Style général des inputs */
+.modal-form input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 2px solid #007bff; /* Bordure bleu */
+  border-radius: 8px;
   font-size: 16px;
+  color: #333;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease-in-out;
 }
 
-.event-buttons .edit-btn:hover,
-.event-buttons .delete-btn:hover {
-  color: #FF6347; /* Couleur de survol pour les boutons */
+/*  Effet au focus */
+.modal-form input:focus {
+  border-color: #0056b3; /* Bleu plus foncé */
+  background-color: #ffffff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Style pour les labels */
+.modal-form label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-top: 10px;
+}
+
+/*  Amélioration des champs de type time */
+.modal-form input[type="time"] {
+  appearance: none;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border: 2px solid #007bff;
+}
+
+/*  Effet survol */
+.modal-form input:hover {
+  border-color: #0056b3;
+}
+
+/* Style pour les boutons */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.save-btn {
+
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 
+
+.close-btn {
+  background: #dc3545; /* Rouge */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+  background: #c82333;
+}
+.close-calendar-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  margin-left: 975px;
+  
+  color: black; /* Tu peux changer la couleur si besoin */
+  transition: transform 0.2s ease-in-out;
+}
+
+.close-calendar-btn:hover {
+  transform: scale(1.2); /* Effet zoom au survol */
+}
+.add-disponibilite-btn {
+  position: absolute;
+
+  background: transparent;
+  color: rgb(30, 30, 30);
+  border: none;
+  top: 3px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  
+  transition: background 0.3s ease;
+}
+
+.add-disponibilite-btn:hover {
+  transform: scale(1.2); 
+}
+
+
+.error {
+  color: red;
+  font-weight: bold;
+  background: #ffe5e5;
+  border-left: 5px solid red;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #007bff; 
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+
+select:hover {
+  border-color: #0056b3; 
+}
+
+
+select:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 5px #0056b3;
+}
+
+select option {
+  padding: 10px;
+  font-size: 16px;
+  background: #fff;
+  color: #333;
+}
+
+select option[disabled] {
+  color: #999;
+}
+
+
+select::-ms-expand {
+  display: none;
+}
+
+/* Ajout d'une icône de flèche personnalisée */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='gray'><path fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px;
+}
+
+/* Conteneur des champs de saisie */
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Espacement entre les inputs */
+  width: 100%;
+  align-items: flex-start;
+}
+
+/* Style des champs de mot de passe */
+.edit-container input {
+  width: 100%; /* Prend toute la largeur disponible */
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px; /* Coins arrondis */
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* Effet au focus */
+.edit-container input:focus {
+  border-color: #007bff; /* Change la couleur au focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+/* 🌀 Animation des événements */
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+
+}

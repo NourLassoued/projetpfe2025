@@ -3,15 +3,19 @@
     <div class="container">
         <div class="sidebar">
             
-            <div id="profile-container">
-                <ng-container *ngIf="profileImageUrl; else defaultIcon">
-                    <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
-                </ng-container>
-                <ng-template #defaultIcon>
-                    <i class="fas fa-user default-icon"></i> 
-                </ng-template>
-            </div>
-            
+          <div id="profile-container">
+            <ng-container *ngIf="profileImageUrl; else defaultIcon">
+              <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon" (click)="triggerFileInput()"/>
+            </ng-container>
+            <ng-template #defaultIcon>
+              <i class="fas fa-user default-icon" (click)="triggerFileInput()"></i> 
+            </ng-template>
+      
+            <!-- Champ d'upload caché -->
+            <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+          </div>
+        
+      
             <h2>{{ user?.nom }}</h2>
             <div class="price-badge">
                 {{ user?.tarif }} dt/h
@@ -98,77 +102,123 @@
                   </div>
                 </div>
               </div>
-              
+              <div class="content">
+              <div class="section">
+                <label>🔒 Mot de passe</label>
+                <div class="competence">
+                  <ng-container *ngIf="!isEditing['password']; else editPassword">
+                    <p>********</p>
+                    <button class="edit-btn" (click)="startEditing('password', '')">✏️</button>
+                  </ng-container>
+            
+                  <ng-template #editPassword>
+                    <div class="edit-container">
+                      <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="editedValues['password']">
+                      <input type="password" placeholder="Confirmer mot de passe" [(ngModel)]="editedValues['confirmPassword']">
+                      <button class="save-btn" (click)="saveChanges('password')">✔️</button>
+                    </div>
+                    <div class="error" *ngIf="passwordError">
+                      <span>⚠️ {{ passwordError }}</span>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
               <div class="content">
                 <!-- Disponibilité -->
                 <div class="section">
-                  <label>📆 Disponibilité</label>
+                  <button class="edit-btn" (click)="toggleCalendarView()">📅 Voir calendrier</button>
+                  
+               
+              
                   <div class="competence">
                     <ng-container *ngIf="user?.disponibilites?.length > 0; else noDisponibilite">
                       <ul>
                         <li *ngFor="let dispo of user.disponibilites">
                           {{ dispo.jour }} : {{ dispo.heureDebut }} - {{ dispo.heureFin }}
-                          <button class="edit-btn" (click)="ouvrirEdition(dispo)">✏️</button>
+                          
+                          <button   class="delete-btn"  (click)="supprimerDisponibilite(dispo.id)">🗑️Supprimer</button>
+
                         </li>
                       </ul>
                     </ng-container>
                     <ng-template #noDisponibilite>
                       <p>Disponibilité non précisée.</p>
                     </ng-template>
-                  
-
                   </div>
                 </div>
               </div>
-        </div>
-    </div>
               
-    <div class="modal-overlay" *ngIf="editionActive">
-        <div class="modal-content">
-         
-          <div class="modal">
-           
-            <div class="calendar-container">
-              <div class="calendar-wrapper">
+              <!-- Fenêtre modale pour afficher le calendrier -->
+              <div class="modal-overlay" *ngIf="calendarVisible">
+                <div class="modal-content" [ngClass]="{'calendar-blur': editionActive}">
+                  <button class="close-calendar-btn" (click)="toggleCalendarView()">❌</button>
+                  <button class="add-disponibilite-btn" (click)="afficherFormulaireAjout()">
+                    ➕ Ajouter disponibilité
+                  </button>
+                  <full-calendar #calendarComponent [options]="calendarOptions"></full-calendar>
+                </div>
+              </div>
               
-              <button class="close-btn" (click)="fermerEdition()">❌</button>
-              <!-- Assurez-vous que FullCalendar reçoit correctement les options -->
-              <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+              
 
+<div class="modal-form" *ngIf="editionActive ">
+  <h3>Modifier la disponibilité</h3>
 
+  <label>Jour :</label>
+  <input type="text" [(ngModel)]="disponibiliteSelectionnee.jour" readonly />
 
-            </div>
-          </div>
-          </div>
-          
-        </div>
-      </div>
-      
-            
-        <!-- Fenêtre modale -->
-<div class="modal-overlay" *ngIf="editionActive">
-  <div class="modal-content">
-    <h3>Modifier la disponibilité</h3>
+  <label>Heure début :</label>
+  <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureDebut" />
 
-    <label>Jour :</label>
-    <input type="text" [(ngModel)]="disponibiliteSelectionnee.jour" />
+  <label>Heure fin :</label>
+  <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureFin" />
 
-    <label>Heure début :</label>
-    <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureDebut" />
-
-    <label>Heure fin :</label>
-    <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureFin" />
-
-    <div class="buttons">
-      <button class="save-btn" (click)="updateDisponibilite()">✅ Sauvegarder</button>
-
-
-      <button class="close-btn" (click)="fermerEdition()">❌ Annuler</button>
-    </div>
+  <div class="buttons">
+    <button class="save-btn" (click)="updateDisponibilite()">✅ Sauvegarder</button>
+    <button class="close-btn" (click)="fermerFormulaire()">❌ Annuler</button>
   </div>
 </div>
 
-        
+<div class="modal-form" *ngIf="ajoutMode">
+  <h3>Ajouter une disponibilité</h3>
+ 
+
+  <label>Jour :</label>
+  <select #jour (change)="nouvelleDisponibilite.jour = jour.value">
+    <option value="" disabled selected>Choisir un jour</option>
+    <option value="Lundi">Lundi</option>
+    <option value="Mardi">Mardi</option>
+    <option value="Mercredi">Mercredi</option>
+    <option value="Jeudi">Jeudi</option>
+    <option value="Vendredi">Vendredi</option>
+    <option value="Samedi">Samedi</option>
+    <option value="Dimanche">Dimanche</option>
+  </select>
+  <div class="error" *ngIf="erreurs.jour">
+    <span>⚠️ {{ erreurs.jour }}</span>
+  </div>
+  <label>Heure début :</label>
+  <input type="time" #heureDebut (input)="nouvelleDisponibilite.heureDebut = heureDebut.value"/>
+  <div class="error" *ngIf="erreurs.heureDebut">
+    <span>⚠️ {{ erreurs.heureDebut }}</span>
+  </div>
+  <label>Heure fin :</label>
+  <input type="time" #heureFin (input)="nouvelleDisponibilite.heureFin = heureFin.value"/>
+  <div class="error" *ngIf="erreurs.heureFin">
+    <span>⚠️ {{ erreurs.heureFin }}</span>
+  </div>
+  <div class="buttons">
+    <button class="save-btn" (click)="ajouterDisponibilite(nouvelleDisponibilite)">✅ Sauvegarder</button>
+    <button class="close-btn" (click)="fermerFormulaire()">❌ Annuler</button>
+  </div>
+</div>
+
+
+                
+           
+        </div>
+    </div>
 
 </body>
 <app-footer></app-footer>

@@ -10,16 +10,22 @@ export class FileService {
 
   constructor(private http: HttpClient) {}
 
-  // Upload de fichier
   uploadFile(file: File): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);
   
-    // Ne pas ajouter 'Content-Type' dans les en-têtes
+ 
     return this.http.post(`${this.apiUrl}/upload`, formData, { responseType: 'text' });
-  }
+}/*
+    uploadFile(file: File): Observable<string> {
+      const formData = new FormData();
+      formData.append('file', file);
+    
+      return this.http.post<string>(`${this.apiUrl}/upload`, formData);
+    }
+    */
 
-  // Récupérer une image
+
   getImage(filename: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/get-image/${filename}`, { responseType: 'blob' });
   }

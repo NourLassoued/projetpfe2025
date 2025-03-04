@@ -222,8 +222,8 @@ flex-direction: column;
 margin-bottom: 10px;
 }
 .iconn {
-appearance: none; /* Enlève l'apparence par défaut du navigateur */
--webkit-appearance: none; /* Enlève l'apparence par défaut sur Safari */
+appearance: none; 
+-webkit-appearance: none; 
 -moz-appearance: none; /* Enlève l'apparence par défaut sur Firefox */
 width: 20px; /* Largeur de la case à cocher */
 height: 20px; /* Hauteur de la case à cocher */

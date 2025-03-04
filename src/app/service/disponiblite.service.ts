@@ -7,18 +7,24 @@ import { Disponibilite } from 'src/models/Disponibilite';
   providedIn: 'root'
 })
 export class DisponibliteService {
-  private apiUrl = 'http://localhost:8088/nour/disponibilites'; // URL du backend
+  private apiUrl = 'http://localhost:8088/nour/disponibilites'; 
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Ajouter une disponibilité
-  ajouterDisponibilite(utilisateurId: number, disponibilite: Disponibilite): Observable<Disponibilite> {
-    return this.http.post<Disponibilite>(`${this.apiUrl}/ajouter/${utilisateurId}`, disponibilite);
+ 
+  ajouterDisponibilite(id: number, disponibilite: Disponibilite): Observable<Disponibilite> {
+    console.log("📡 Données envoyées :", disponibilite); 
+    return this.http.post<Disponibilite>(`${this.apiUrl}/${id}`, disponibilite);
   }
 
   modifierDisponibilite(id: number, disponibilite: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, disponibilite);
   }
+  supprimerDisponibilite(disponibiliteId: number): Observable<any> {
+    return this.http.delete<string>(`${this.apiUrl}/${disponibiliteId}`);
+  }  
+  getDisponibilitesByPrestataire(prestataireId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${prestataireId}`);
+  }
   
-
 }

@@ -9,14 +9,14 @@ export class ForgetPasswordService {
   private apiUrl = 'http://localhost:8088/nour/forgetPassword';
   constructor(private http: HttpClient) {}
 
-  // Vérifier l'email et envoyer l'OTP
+ 
   verifyEmail(email: string): Observable<string> {
     return this.http.post(`${this.apiUrl}/verifyMail/${email}`, {}, { responseType: 'text' });
   }
 
  
 
-  // Changer le mot de passe
+
   changePassword(id: Number, password: string, repeatPassword: string): Observable<string> {
     return this.http.post(`${this.apiUrl}/changePassword/${id}`, { password, repeatPassword }, { responseType: 'text' });
   }

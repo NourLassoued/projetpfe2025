@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/models/Utilisateur';
-import { Servicee } from 'src/models/Servicee';
+
 import { UtilisateurService } from '../service/utilisateur.service';
 import {  AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { Calendar, CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -17,6 +17,8 @@ import { Disponibilite } from 'src/models/Disponibilite';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DisponibliteService } from '../service/disponiblite.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ForgetPasswordService } from '../service/forget-password.service';
 
 @Component({
   selector: 'app-updateprofileprestaitre',
@@ -24,9 +26,28 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./updateprofileprestaitre.component.css']
   
 })
-export class UpdateprofileprestaitreComponent implements OnInit{
-  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+export class UpdateprofileprestaitreComponent implements OnInit ,AfterViewInit {
+  @ViewChild('calendarComponent') calendarComponent!: FullCalendarComponent;
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
+triggerFileInput() {
+  this.fileInput.nativeElement.click(); // Simule un clic sur l'input file
+}
+  calendarApi: any;
+  ngAfterViewInit() {
+    if (this.calendarComponent) {
+      this.calendarApi = this.calendarComponent.getApi();
+    } else {
+      console.error(" FullCalendar non trouvé !");
+    }
+  }
+  passwordData = {
+    oldPassword: '',
+    password: '',
+    repeatPassword: ''
+  };
+  passwordError = '';
+  selectedFile: File | null = null;
   isEditing: { [key: string]: boolean } = {};
 editedValues: { [key: string]: string } = {}; 
 userId: number | null = null;
@@ -36,10 +57,22 @@ userId: number | null = null;
   user3: any = { disponibilites: [] };
   disponibilites: EventInput[] = [];
   utilisateurId!: number;
-  nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' };
+  nouvelleDisponibilite: any = {
+    jour: '',
+    heureDebut: '',
+    heureFin: ''
+  };
+  erreurs: { general?: string; jour?: string; heureDebut?: string; heureFin?: string } = {};
+
+  soumis: boolean = false;
+
+
   editionActive = false;
+  isAddingNewDisponibilite: boolean = false;
+  calendarVisible: boolean = false;
+modificationMode = false; 
+  ajoutMode = false;
   disponibiliteSelectionnee: any = null;
- 
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     locales: [frLocale],
@@ -51,29 +84,31 @@ userId: number | null = null;
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     editable: true,
-  
-  
+ 
     events: this.disponibilites.map(d => ({
-      id: d.id ? d.id.toString() : '',  // ✅ Vérification de l'ID
-      publicId: d.id ? d.id.toString() : '', // ✅ Vérification de l'ID
-      title: `Disponible ${d['heureDebut']} - ${d['heureFin']}`, // ✅ Accès avec ['clé']
+      id: d.id ? d.id.toString() : '',  
+      publicId: d.id ? d.id.toString() : '', 
+      title: `Disponible ${d['heureDebut']} - ${d['heureFin']}`, 
       start: `${d['jour']}T${d['heureDebut']}`,
       end: `${d['jour']}T${d['heureFin']}`
-    }))
-  };
-  
-  
- 
+      
+    }))};
+   
+   
+constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,
+  private disponibliteService:DisponibliteService,
+  private toastr: ToastrService,private snackBar: MatSnackBar,private cdRef: ChangeDetectorRef,
+ private forgetPasswordService:ForgetPasswordService,
+private uploadService :FileService) {}
 
-  
- 
-
- 
-  constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,private disponibliteService:DisponibliteService,private toastr: ToastrService) {}
-  
 ngOnInit(): void {
+ 
+
     this.loadUserData();
-  
+    this.loadDisponibilites();
+   
+    this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' };
+   
 
     const token = localStorage.getItem('accessToken');
     if (token) {
@@ -91,7 +126,8 @@ ngOnInit(): void {
       }
     }
   }
- 
+  
+  
   loadProfileImage(filename: string): void {
     this.fileService.getImage(filename).subscribe({
       next: (imageBlob) => {
@@ -110,7 +146,7 @@ ngOnInit(): void {
     const token = localStorage.getItem('accessToken');
   
     if (!token) {
-      console.error("⚠️ Aucun token trouvé !");
+      console.error(" Aucun token trouvé !");
       return;
     }
   
@@ -124,10 +160,10 @@ ngOnInit(): void {
   
       this.user = decodedToken;
       this.userId = decodedToken.id;
-      console.log(" Données utilisateur récupérées :", this.user);
+    
       if (decodedToken.disponibilites && Array.isArray(decodedToken.disponibilites)) {
         this.user.disponibilites = decodedToken.disponibilites?.map((dispo: any, index: number) => ({
-          id: dispo.id ?? index, // ✅ Assigner un ID temporaire s'il est manquant
+          id: dispo.id ?? index, 
           jour: dispo.jour,
           heureDebut: dispo.heureDebut,
           heureFin: dispo.heureFin
@@ -160,129 +196,409 @@ ngOnInit(): void {
     this.isEditing[field] = true;
     this.editedValues[field] = currentValue;
   }
- saveChanges(field: string) {
+ saveChanges(field: string,value?: any) {
   if (!this.userId) {
-    console.error("⚠️ Impossible de mettre à jour : ID utilisateur introuvable !");
+    console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
     return;
   }
+  // 🔹 Si on met à jour l'image de profil
+  if (field === 'image' && value !== undefined) {
+    this.profileImageUrl = value;
+  
+  
+    return;
+  }
+  if (field === "password") {
+    const newPassword = this.editedValues['password'];
+    const confirmPassword = this.editedValues['confirmPassword'];
 
-  // 🔹 Si on met à jour une disponibilité, on appelle le bon service
+    if (!newPassword || !confirmPassword) {
+      this.passwordError = "Veuillez remplir tous les champs.";
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      this.passwordError = "Le mot de passe doit contenir au moins 6 caractères.";
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      this.passwordError = "Les mots de passe ne correspondent pas.";
+      return;
+    }
+
+   
+    this.forgetPasswordService.changePassword(this.userId, this.editedValues['password'], this.editedValues['confirmPassword'])
+      .subscribe({
+        next: (response) => {
+          alert("✅ Mot de passe mis à jour avec succès !");
+          this.isEditing[field] = false;
+          this.passwordError = "";
+        },
+        error: (err) => {
+          console.error("Erreur lors du changement de mot de passe :", err);
+          this.passwordError = err.error || "Une erreur est survenue.";
+        }
+      });
+
+    return;
+  }
+ 
   if (field === "disponibilites") {
-    console.log("📌 Mise à jour des disponibilités :", this.user.disponibilites);
+  
 
     this.utilisateurService.updateUser(this.userId, { disponibilites: this.user.disponibilites })
       .subscribe({
         next: (response) => {
-          console.log("✅ Disponibilités mises à jour avec succès :", response);
+        
 
-          // 🔹 Mettre à jour les disponibilités localement
-          this.user.disponibilites = response.disponibilites; // Mise à jour des nouvelles valeurs
-          this.loadDisponibilites(); // Recharge FullCalendar
+         
+          this.user.disponibilites = response.disponibilites; 
+          this.loadDisponibilites(); 
         },
         error: (err) => {
-          console.error("❌ Erreur lors de la mise à jour des disponibilités :", err);
+          console.error("Erreur lors de la mise à jour des disponibilités :", err);
         }
       });
 
     return;
   }
 
-  // 🔹 Mise à jour d'autres champs utilisateur
+  
   const updatedData = { [field]: this.editedValues[field] };
 
   this.utilisateurService.updateUser(this.userId, updatedData)
     .subscribe({
       next: (response) => {
-        console.log(`✅ ${field} mis à jour avec succès :`, response);
+        console.log(` ${field} mis à jour avec succès :`, response);
 
         if (response.token) {
-          localStorage.removeItem('accessToken'); // Supprime l'ancien token
-          localStorage.setItem('accessToken', response.token); // Stocke le nouveau token
-          console.log("🔄 Nouveau token enregistré !");
+          localStorage.removeItem('accessToken'); 
+          localStorage.setItem('accessToken', response.token); 
+     
         }
 
-        this.user[field] = updatedData[field]; // Met à jour la valeur localement
-        this.isEditing[field] = false; // Désactive l'édition pour ce champ
+        this.user[field] = updatedData[field]; 
+        this.isEditing[field] = false; 
       },
       error: (err) => {
-        console.error(`❌ Erreur lors de la mise à jour de ${field} :`, err);
+        console.error(`Erreur lors de la mise à jour de ${field} :`, err);
       }
     });
+}loadDisponibilites() {
+  const daysOfWeek: { [key: string]: number } = {
+    'Dimanche': 0, 'Lundi': 1, 'Mardi': 2, 'Mercredi': 3, 'Jeudi': 4, 'Vendredi': 5, 'Samedi': 6
+  };
+
+  this.calendarOptions = {
+    ...this.calendarOptions,
+    initialDate: new Date().toISOString().split("T")[0],
+    events: this.user?.disponibilites?.map((dispo: any) => ({
+      id: dispo.id?.toString() ?? '',
+      title: `Disponible ${dispo.heureDebut} - ${dispo.heureFin}`,
+      daysOfWeek: [daysOfWeek[dispo.jour]],
+      startTime: dispo.heureDebut,
+      endTime: dispo.heureFin,
+      color: '#98FB98',
+      extendedProps: { dispo } 
+    })) || [],
+    eventContent: function(arg: any) {
+      const editIcon = document.createElement("span");
+      editIcon.innerHTML = " ✏️";
+      editIcon.style.cursor = "pointer";
+      editIcon.style.marginLeft = "1px";
+      editIcon.onclick = () => {
+        
+      };
+
+      const titleElement = document.createElement("span");
+      titleElement.innerText = arg.event.title;
+      
+      const container = document.createElement("div");
+      container.appendChild(titleElement);
+      container.appendChild(editIcon);
+
+      return { domNodes: [container] };
+    },
+
+    eventClick: this.onEventClick.bind(this) 
+  };
+
+ 
+
+}ouvrirEdition(dispo?: any) {
+  this.editionActive = true;
+  this.disponibiliteSelectionnee = dispo ? { ...dispo } : null;
+}
+
+fermerEdition() {
+  this.editionActive = false;
+  this.disponibiliteSelectionnee = null;
+}
+
+updateDisponibilite() {
+  if (!this.disponibiliteSelectionnee || !this.disponibiliteSelectionnee.id) {
+   
+    return;
+  }
+
+   
+
+    this.disponibliteService.modifierDisponibilite(this.disponibiliteSelectionnee.id, this.disponibiliteSelectionnee)
+    .subscribe({
+      next: (response: any) => {
+       
+          if (response.token) {
+            localStorage.removeItem('accessToken'); 
+            localStorage.setItem('accessToken', response.token);
+           
+          }
+
+          this.editionActive = false;
+          const index = this.user.disponibilites.findIndex((d: any) => d.id === this.disponibiliteSelectionnee.id);
+
+        if (index !== -1) {
+          this.user.disponibilites[index] = { ...this.disponibiliteSelectionnee };
+        }
+
+        this.loadDisponibilites(); 
+        this.refreshCalendar(); 
+
+        },
+        error: (err) => {
+         
+        }
+      });
+
+
+}
+refreshCalendar() {
+  setTimeout(() => {
+    const calendarApi = this.calendarComponent.getApi();
+    calendarApi.removeAllEvents(); 
+    if (Array.isArray(this.calendarOptions.events)) {
+      this.calendarOptions.events.forEach((event: any) => calendarApi.addEvent(event)); // ✅ Ajoute les nouveaux événements
+    }
+  }, 300);
+}
+
+toggleCalendarView() {
+  this.loadDisponibilites(); 
+  this.calendarVisible = !this.calendarVisible;
 }
 
 
 
+onEventClick(info: any) {
+  const eventId = info.event.id;
+  const dispo = this.user?.disponibilites?.find((d: any) => d.id.toString() === eventId);
 
+  if (dispo) {
+    this.ouvrirEdition(dispo);
+  }
+}
+afficherFormulaireAjout() {
+  this.editionActive = true;
+  this.ajoutMode = true;
+  this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' }; 
+ 
+}
 
+afficherFormulaireModification(dispo: Disponibilite) {
+  this.editionActive = true;
+  this.ajoutMode = false;
+  this.disponibiliteSelectionnee = { ...dispo }; 
+}
+ajouterDisponibilite(nouvelleDispo: any) {
+ 
+  this.erreurs = {}; 
+ 
 
-  ouvrirEdition(dispo: any) {
-    this.disponibiliteSelectionnee = dispo;
-    this.editionActive = true;
+  if (!nouvelleDispo.jour) {
+    this.erreurs.jour = "⚠️ Veuillez sélectionner un jour.";
+  }
+  if (!nouvelleDispo.heureDebut) {
+    this.erreurs.heureDebut = "⚠️ Veuillez entrer une heure de début.";
+  }
+  if (!nouvelleDispo.heureFin) {
+    this.erreurs.heureFin = "⚠️ Veuillez entrer une heure de fin.";
+  }
+  if (nouvelleDispo.heureDebut >= nouvelleDispo.heureFin) {
+    this.erreurs.general = "❌ L'heure de début doit être avant l'heure de fin.";
+  }
+
+  if (Object.keys(this.erreurs).length > 0) {
   
-    setTimeout(() => {
-      if (this.calendarComponent) {
-        this.calendarComponent.getApi().render();
-        this.calendarComponent.getApi().refetchEvents();
+    return; 
+  }
+
+
+  if (this.verifierChevauchement(nouvelleDispo)) {
+    this.erreurs.general = "❌ Une autre disponibilité existe déjà sur cet horaire !";
+    return;
+  }
+  this.cdRef.detectChanges(); 
+
+  this.disponibliteService.ajouterDisponibilite(this.user.id, nouvelleDispo)
+    .subscribe((response: any) => {
+      if (!response || !response.disponibilite) {
+        this.erreurs.general = "❌ Erreur : Réponse invalide du serveur !";
+        this.cdRef.detectChanges();
+        return;
       }
+
+      const dispoAjoutee = response.disponibilite;
+      this.user.disponibilites.push(dispoAjoutee);
+
+      if (response.token) {
+        localStorage.removeItem('accessToken');
+        localStorage.setItem('accessToken', response.token);
+      }
+
+   
+      this.nouvelleDisponibilite = {};  
+      this.erreurs.general = "";
+      this.editionActive = false;
+      this.ajoutMode = false;  
+      this.cdRef.detectChanges();
+
       this.loadDisponibilites();
-      this.cdr.detectChanges();
-    }, 500);
-  }
+      this.refreshCalendar();
+    }, (error) => {
+      this.erreurs.general = "❌ Erreur lors de l'ajout : " + error.message;
+      this.cdRef.detectChanges();
+    });
+}
 
-  fermerEdition() {
-    this.editionActive = false;
-  }
+verifierChevauchement(nouvelleDispo: any): boolean {
+  const chevauchement = this.user.disponibilites.some((dispo: any) => {
+    const chevauche = (
+      dispo.jour === nouvelleDispo.jour &&
+      (
+        (nouvelleDispo.heureDebut >= dispo.heureDebut && nouvelleDispo.heureDebut < dispo.heureFin) ||
+        (nouvelleDispo.heureFin > dispo.heureDebut && nouvelleDispo.heureFin <= dispo.heureFin) ||
+        (nouvelleDispo.heureDebut <= dispo.heureDebut && nouvelleDispo.heureFin >= dispo.heureFin)
+      )
+    );
 
-
-  
-  loadDisponibilites() {
-    const daysOfWeek: { [key: string]: number } = {
-      'Dimanche': 0, 'Lundi': 1, 'Mardi': 2, 'Mercredi': 3, 'Jeudi': 4, 'Vendredi': 5, 'Samedi': 6
-    };
-  
-    this.calendarOptions = {
-      ...this.calendarOptions,
-      events: this.user.disponibilites
-        .filter((dispo: any) => dispo.jour && daysOfWeek[dispo.jour] !== undefined) // Vérification supplémentaire
-        .map((dispo: any) => ({
-          id: dispo.id ?? 'Non défini', // 🔹 Ajout de l'ID pour identifier les événements
-          title: `Disponible ${dispo.heureDebut} - ${dispo.heureFin}`,
-          daysOfWeek: [daysOfWeek[dispo.jour]],
-          startTime: dispo.heureDebut,
-          endTime: dispo.heureFin,
-          color: '#98FB98'
-        }))
-    };
-  
-    console.log("📌 Disponibilités mises à jour dans le calendrier :", this.calendarOptions.events);
-  }updateDisponibilite() {
-    if (!this.disponibiliteSelectionnee || !this.disponibiliteSelectionnee.id) {
-      console.error("⚠️ Impossible de mettre à jour : Aucune disponibilité sélectionnée !");
-      return;
+    if (chevauche) {
+      console.log("❌ Chevauchement détecté avec :", dispo);
     }
 
-    console.log("📌 Mise à jour de la disponibilité :", this.disponibiliteSelectionnee);
+    return chevauche;
+  });
 
-    this.disponibliteService.modifierDisponibilite(this.disponibiliteSelectionnee.id, this.disponibiliteSelectionnee)
-      .subscribe({
-        next: (response: any) => { // Assure-toi que le type de réponse permet d'accéder au token
-          console.log("✅ Disponibilité mise à jour avec succès :", response);
-          alert("✅ Disponibilité mise à jour avec succès !");
+  return chevauchement;
+}
 
-          // Mise à jour du token si présent
-          if (response.token) {
-            localStorage.removeItem('accessToken'); // Supprime l'ancien token
-            localStorage.setItem('accessToken', response.token); // Stocke le nouveau token
-            console.log("🔄 Nouveau token enregistré !");
-          }
 
-          this.editionActive = false; // Ferme la modal après la modification
-          this.loadDisponibilites(); // Recharge FullCalendar pour afficher les changements
-        },
-        error: (err) => {
-          console.error("❌ Erreur lors de la mise à jour de la disponibilité :", err);
-          alert("❌ Une erreur est survenue lors de la mise à jour !");
-        }
-      });
+
+ajouterEvenementAuCalendrier(dispo: any) {
+  if (!this.calendarApi) {
+   
+    return;
+  }
+
+  this.calendarApi.addEvent({
+    title: "Disponibilité",
+    start: dispo.jour + "T" + dispo.heureDebut,
+    end: dispo.jour + "T" + dispo.heureFin,
+    allDay: false
+  });
+
+  
+
+}
+
+
+fermerFormulaire() {
+  this.editionActive = false;
+  this.ajoutMode = false;
+  this.modificationMode = false;
+}
+supprimerDisponibilite(disponibiliteId: number): void {
+ 
+
+  this.disponibliteService.supprimerDisponibilite(disponibiliteId).subscribe({
+    next: (response) => {  
+   
+
+      this.user.disponibilites = this.user.disponibilites.filter((dispo: Disponibilite) => dispo.id !== disponibiliteId);
+
+      if (response.token) {
+        localStorage.removeItem('accessToken'); 
+        localStorage.setItem('accessToken', response.token); 
+     
+      }
+
+      this.loadDisponibilites();
+      this.refreshCalendar();  
+    },
+    error: (err) => {
+      console.error("Erreur lors de la suppression :", err);
+    }
+  });
+}
+chargerDisponibilites(dispo: any) {
+  if (!this.calendarApi) {
+    console.error("Impossible d'ajouter l'événement, calendrier non initialisé !");
+    return;
+  }
+
+  this.calendarApi.addEvent({
+    title: "Disponibilité",
+    start: dispo.heureDebut,
+    end: dispo.heureFin,
+    allDay: false
+  });
+
+ 
+}
+
+
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+
+  if (file) {
+    this.fileService.uploadFile(file).subscribe({
+      next: (imageUrl) => {
+        console.log("✅ Image uploadée avec succès :", imageUrl);
+        this.saveChanges('image', imageUrl); // ✅ Maintenant, ça fonctionne bien
+      },
+      error: (err) => {
+        console.error("❌ Erreur upload :", err);
+        alert("Erreur lors de l'upload de l'image.");
+      }
+    });
+  }
+}
+
+uploadImage() {
+  if (!this.selectedFile) return;
+
+  this.fileService.uploadFile(this.selectedFile).subscribe({
+    next: (imageUrl) => {
+      console.log("✅ Image uploadée :", imageUrl);
+      this.updateUserProfile(imageUrl);
+    },
+    error: (err) => {
+      console.error("❌ Erreur upload :", err);
+    }
+  });
+}
+
+// Mettre à jour l'image de profil dans la base de données
+updateUserProfile(imageUrl: string) {
+  const updatedData = { image: imageUrl };
+
+  this.utilisateurService.updateUser(this.utilisateurId, updatedData).subscribe({
+    next: (response) => {
+      console.log("✅ Image mise à jour :", response);
+      this.profileImageUrl = imageUrl; // Met à jour l'affichage immédiatement
+    },
+    error: (err) => {
+      console.error("❌ Erreur mise à jour :", err);
+    }
+  });
 }
 }

@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AllTemplateFrontComponent } from './all-template-front/all-template-front.component';
 import { FooterComponent } from './footer/footer.component';
@@ -27,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -72,7 +74,10 @@ import timeGridWeek from '@fullcalendar/timegrid';
     MatButtonModule,
     MatIconModule,
     FullCalendarModule,
-   
+    MatSelectModule,
+    MatOptionModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
     BsDatepickerModule.forRoot() ,
     ToastrModule.forRoot() 
  
