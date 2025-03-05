@@ -1,0 +1,360 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fcf9f4;
+    margin: 0;
+    padding: 0;
+    height: 1600px;
+    
+}
+.container {
+    display: flex;
+    width: 2500px;
+    margin: 20px ;
+    gap: 20px;
+    background-color:#fcf9f4;
+   
+}
+.sidebar {
+    background:  #fcf9f4;
+    padding: 18px;
+    width: 1500px;
+margin-left: 20px;
+    border-radius: px;
+    text-align: center;
+    height: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.section label {
+    font-size: 18px;
+    margin: 10px 0;
+    font-weight: bold;
+    color:  rgb(87, 83, 83);
+    margin-left:50px;
+}
+.sidebar p {
+    color: #ff9800;
+    font-weight: bold;
+}
+.sidebar button {
+    background: #218c64; 
+    border: none;
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: white;
+}
+.content {
+    flex-grow: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 35px;
+    width: 800px;
+    margin-left: 40px;
+    
+}
+
+
+.competence {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+}
+.competence li {
+  display: flex;
+  justify-content: space-between; /* Espace entre le texte et le bouton */
+  align-items: center; /* Alignement vertical */
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Séparation des lignes */
+}
+.profile-info {
+    margin-top: 10px;
+   
+}
+
+.rating p{
+    font-size: 15px;
+}
+
+.price {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color:  #f3f1f0 ;
+    color: rgb(87, 83, 83);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.comptencee {
+    position: absolute;
+   
+   margin-left: 50px;
+    background-color:  #d0ccca ;
+   color:  rgb(74, 71, 71);
+    padding: 5px 10px;
+    border-radius: 20px;
+   
+   }
+   .comptencee p{
+    margin-top: 10px;
+    text-align: center;
+   }
+   .competences-container {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px;
+    margin-left: 50px; 
+  }
+  
+  .comptence p {
+    background-color: #abaaaa; 
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    color: black;
+    white-space: nowrap; 
+  }
+
+  
+
+
+
+.rating-info {
+    position: absolute;
+    bottom: 0;
+    width:300px;
+    border-radius: 15px;
+    background:  #f3f1f0   ;
+    margin-left: 10px;
+ 
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 14px;
+}
+.rating-info div {
+    text-align: center;
+  
+}
+.rating {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+.rating-info strong {
+    font-size: 16px;
+    color: rgb(87, 83, 83);
+   
+}
+
+.rating-info span {
+    font-size: 18px;
+    font-weight: bold
+}
+
+ h3 {
+    font-size: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    color: #555;
+   
+  
+}
+
+
+#profile-container {
+    width: 320px;
+    height: 380px;
+    margin: auto;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  #profile-icon {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    cursor: pointer;
+   
+ 
+  }
+  
+.profile-menu.active {
+    display: block;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.profile-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.stars {
+    color: gold;
+    font-size: 20px;
+} .bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+}
+.bar-container span {
+    min-width: 30px;
+}
+.bar {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #EAEAEA;
+    margin: 0 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+.bar-fill {
+    height: 100%;
+    background-color: rgb(255, 248, 105);
+    width: 100%;
+}
+.reviews {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+.review-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+}
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+   
+}
+.review-text {
+    margin-top: 10px;
+}
+.rating {
+    font-size: 18px;
+    font-weight: bold;
+}
+.user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.section p{
+    font-size: 15px;
+    font-weight: bold;
+    color:  rgb(87, 83, 83);
+}
+.location-icon  {
+    font-size: 18px;
+    color: gray;
+    margin-left:50px;
+}
+.user-info-container {
+    display: flex;
+    gap: 496px; /* Espacement entre les éléments */
+    flex-wrap: wrap; /* Permet le retour à la ligne si l'espace est insuffisant */
+    align-items: center; /* Aligne les éléments verticalement */
+  }
+  
+  .user-info-container label {
+    
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    white-space: nowrap; /* Empêche les éléments d'être coupés */
+  }
+  .verification-container {
+    display: flex;
+    flex-direction: column; /* Affichage en colonne */
+    gap: 2px; /* Espacement entre les labels */
+  }
+  .verification-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #555; /* Couleur du texte */
+  }
+  
+  .verification-item i {
+    color: #39bf39; /* Couleur verte de l'icône */
+    font-size: 18px;
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+  }
+  .disponibilites-list {
+    list-style: none; /* Supprime les puces de la liste */
+    padding: 0;
+  }
+  
+  .disponibilites-list li {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #555; /* Couleur du texte */
+    padding: 5px 0;
+  }
+  
+  .disponibilites-list li i {
+    color: #39bf39; /* Couleur verte pour l'icône */
+    font-size: 18px;
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+  }
+  button i {
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+    font-size: 18px; /* Taille de l'icône */
+  }
+/* Personnalisation du Snackbar */
+.custom-snackbar {
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Fixe la position du Snackbar en haut à gauche */
+  .mat-snack-bar-container {
+    position: fixed;
+    top: 0;  /* Positionne le Snackbar en haut */
+    left: 0; /* Positionne le Snackbar à gauche */
+    z-index: 9999; /* Assure que le Snackbar soit au-dessus des autres éléments */
+  }
+  
+  /* Personnalisation du bouton 'Fermer' */
+  .mat-snack-bar-action {
+    color: #ff4081; /* Couleur du bouton Fermer */
+    font-weight: bold;
+  }
+  

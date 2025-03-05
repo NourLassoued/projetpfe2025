@@ -30,9 +30,11 @@ export class UtilisateurService {
   updateUser(id: number, utilisateur: Partial<Utilisateur>): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, utilisateur);
   }
+  affecterAdresse(utilisateurId: number, adresseId: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/affecter-adresse/${utilisateurId}/${adresseId}`, {});
+  }
 
 
-  // Créer une demande
   creerDemande(idUtilisateur: number, idService: number, demande: Demande): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/creerDemande/${idUtilisateur}/${idService}`, demande);
   }

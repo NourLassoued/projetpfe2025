@@ -3,13 +3,14 @@ body {
     background-color: #fcf9f4;
     margin: 0;
     padding: 0;
-    height: 1900px;
+    height: 1910px;
 }
 .container {
     display: flex;
     max-width: 1000px;
     margin: 20px ;
     gap: 20px;
+    background-color: #fcf9f4;
    
 }
 .sidebar {
@@ -224,16 +225,16 @@ margin-left: 20px;
   justify-content: center;
   align-items: center;
   margin-top: 250px;
-}/* 📅 FullCalendar - Dimension et animation */
-/* 🌟 Conteneur général du calendrier */
-/* 🌟 Conteneur principal du calendrier */
+}/* FullCalendar - Dimension et animation */
+/*  Conteneur général du calendrier */
+/*  Conteneur principal du calendrier */
 full-calendar {
   width: 950px;
   
   height: 500px;
   margin: 20px auto;
   font-family: 'Arial', sans-serif;
-}/* 🗓️ En-tête des jours de la semaine avec un effet premium */
+}/*  En-tête des jours de la semaine avec un effet premium */
 ::ng-deep .fc-col-header-cell {
   background: linear-gradient(to right, #0a3d62, #1e5799) !important; /* Bleu marine */
   color: white !important;
@@ -246,7 +247,7 @@ full-calendar {
   letter-spacing: 1px;
 }
 
-/* 📅 Style des jours dans la grille */
+/*  Style des jours dans la grille */
 ::ng-deep .fc-daygrid-day-frame {
   background: rgba(255, 255, 255, 0.9) !important;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
@@ -342,7 +343,7 @@ full-calendar {
   margin-top: 10px;
 }
 
-/* 📝 Champs de formulaire */
+/*  Champs de formulaire */
 .modal-content input {
   width: 100%;
   padding: 10px;
@@ -355,28 +356,38 @@ full-calendar {
   font-weight: 500;
 }
 
-/* 📌 Input readonly (Jour désactivé) */
+/*  Input readonly (Jour désactivé) */
 .modal-content input[readonly] {
   background: #f1f1f1;
   cursor: not-allowed;
 }
 
-/* 📅 Effet focus */
+/*  Effet focus */
 .modal-content input:focus {
   border-color: #1e5799;
   box-shadow: 0 0 8px rgba(30, 87, 153, 0.3);
 }
 
-/* 🎨 Boutons */
+/*  Boutons */
 .buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
 }
+.savee-btn{
+  
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.5s ease-in-out;
 
+}
 /* Bouton Sauvegarder */
 .save-btn {
-  
+  background: #1e5799;
   color: white;
   font-size: 14px;
   padding: 10px 15px;
@@ -408,7 +419,7 @@ full-calendar {
   padding: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   text-align: center;
-  z-index: 12; /* 📌 Au-dessus de tout */
+  z-index: 12; /*  Au-dessus de tout */
 }
 /*  Style général des inputs */
 .modal-form input {

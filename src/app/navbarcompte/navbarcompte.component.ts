@@ -17,6 +17,13 @@ export class NavbarcompteComponent {
     ngOnInit(): void {
       this.loadUserData();
       this.setupMenuToggle();
+      this.fileService.profileImage$.subscribe((newImageUrl) => {
+        if (newImageUrl) {
+          this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(newImageUrl);
+          console.log("🔄 Nouvelle image reçue dans la navbar :", newImageUrl);
+        }
+      });
+    
     }
     loadUserData(): void {
       const token = localStorage.getItem('accessToken');

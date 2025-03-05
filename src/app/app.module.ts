@@ -35,8 +35,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ToastrModule } from 'ngx-toastr';
-
+import { BehaviorSubject } from 'rxjs';
 import timeGridWeek from '@fullcalendar/timegrid';
+import { ProfileUtilisateurComponent } from './profile-utilisateur/profile-utilisateur.component';
+import { NotificationService } from './service/notification.service';
 
 
 
@@ -56,7 +58,8 @@ import timeGridWeek from '@fullcalendar/timegrid';
     EditpasswordComponent,
     CompteprestaitreComponent,
     UpdateprofileprestaitreComponent,
-    NavbarcompteComponent
+    NavbarcompteComponent,
+    ProfileUtilisateurComponent
 
   ],
   imports: [
@@ -78,11 +81,12 @@ import timeGridWeek from '@fullcalendar/timegrid';
     MatOptionModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    
     BsDatepickerModule.forRoot() ,
     ToastrModule.forRoot() 
  
   ],
-  providers: [],
+  providers: [NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

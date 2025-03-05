@@ -19,6 +19,7 @@ import { EditpasswordComponent } from './editpassword/editpassword.component';
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
+import { ProfileUtilisateurComponent } from './profile-utilisateur/profile-utilisateur.component';
 
 
 const routes: Routes = [
@@ -76,6 +77,10 @@ const routes: Routes = [
   {
     path: 'navbarcompte',
     component:NavbarcompteComponent
+  },
+  {
+    path: 'ProfileUtilisateur',
+    component:ProfileUtilisateurComponent
   }
 ];
 @NgModule({

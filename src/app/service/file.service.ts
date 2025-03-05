@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
 
-  private apiUrl = 'http://localhost:8088/nour/api/v1/auth'; // URL de ton backend
+  private profileImageSubject = new BehaviorSubject<string | null>(null);
+  profileImage$ = this.profileImageSubject.asObservable();
+  private apiUrl = 'http://localhost:8088/nour/api/v1/auth'; 
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +31,9 @@ export class FileService {
 
   getImage(filename: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/get-image/${filename}`, { responseType: 'blob' });
+  }
+  updateProfileImage(newImageUrl: string) {
+    this.profileImageSubject.next(newImageUrl);
   }
 
 }

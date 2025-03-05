@@ -1,3 +1,4 @@
+import { Adresse } from "./Adresse";
 import { Disponibilite } from "./Disponibilite";
 import { Servicee } from "./Servicee";
 import { StatusUtilisateur } from "./StatusUtilisateur";
@@ -13,7 +14,7 @@ export class Utilisateur {
     password?: string;
     image?: string;
     telephoneNumber?: number;
-    adresse?: string;
+    
     role?: UserRole;
     status?: StatusUtilisateur;
     createdAt?: Date;
@@ -31,5 +32,6 @@ export class Utilisateur {
     doucument_CIN?: string;
     servicesOfferts?: Servicee[];
     disponibilites?: Disponibilite[];
+    adresse?: Adresse;
   }
   

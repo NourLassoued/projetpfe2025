@@ -19,6 +19,8 @@ import { DisponibliteService } from '../service/disponiblite.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ForgetPasswordService } from '../service/forget-password.service';
+import { AdresseService } from '../service/adresse.service';
+import { Adresse } from 'src/models/Adresse';
 
 @Component({
   selector: 'app-updateprofileprestaitre',
@@ -46,12 +48,15 @@ triggerFileInput() {
     password: '',
     repeatPassword: ''
   };
+  selectedAdresse: any;  
+
   passwordError = '';
   selectedFile: File | null = null;
   isEditing: { [key: string]: boolean } = {};
 editedValues: { [key: string]: string } = {}; 
 userId: number | null = null;
   user: any = null;
+  adresses: Adresse[] = [];
   profileImageUrl: SafeUrl | null = null; 
   user1: Utilisateur = { servicesOfferts: [] };
   user3: any = { disponibilites: [] };
@@ -61,12 +66,12 @@ userId: number | null = null;
     jour: '',
     heureDebut: '',
     heureFin: ''
-  };
+  }; private apiUrl = 'http://localhost:8088/nour/api/v1/auth';
   erreurs: { general?: string; jour?: string; heureDebut?: string; heureFin?: string } = {};
 
   soumis: boolean = false;
-
-
+  selectedFiles: { [key: string]: File } = {};  
+  imageUrls: string[] = [];
   editionActive = false;
   isAddingNewDisponibilite: boolean = false;
   calendarVisible: boolean = false;
@@ -99,13 +104,14 @@ constructor(private fileService: FileService, private sanitizer: DomSanitizer, p
   private disponibliteService:DisponibliteService,
   private toastr: ToastrService,private snackBar: MatSnackBar,private cdRef: ChangeDetectorRef,
  private forgetPasswordService:ForgetPasswordService,
-private uploadService :FileService) {}
+private uploadService :FileService,private adreesse:AdresseService) {}
 
 ngOnInit(): void {
  
-
+  this.loadAdresses();
     this.loadUserData();
     this.loadDisponibilites();
+
    
     this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' };
    
@@ -127,7 +133,12 @@ ngOnInit(): void {
     }
   }
   
-  
+  loadAdresses(): void {
+    this.adreesse.getAllAdresses().subscribe((data) => {
+      this.adresses = data;
+    });
+  }
+
   loadProfileImage(filename: string): void {
     this.fileService.getImage(filename).subscribe({
       next: (imageBlob) => {
@@ -196,18 +207,16 @@ ngOnInit(): void {
     this.isEditing[field] = true;
     this.editedValues[field] = currentValue;
   }
- saveChanges(field: string,value?: any) {
+ saveChanges(field: string) {
   if (!this.userId) {
     console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
     return;
   }
-  // 🔹 Si on met à jour l'image de profil
-  if (field === 'image' && value !== undefined) {
-    this.profileImageUrl = value;
-  
-  
+  if (field === "profileImage" && this.selectedFile) {
+    this.updateProfileImage();
     return;
   }
+  
   if (field === "password") {
     const newPassword = this.editedValues['password'];
     const confirmPassword = this.editedValues['confirmPassword'];
@@ -231,7 +240,7 @@ ngOnInit(): void {
     this.forgetPasswordService.changePassword(this.userId, this.editedValues['password'], this.editedValues['confirmPassword'])
       .subscribe({
         next: (response) => {
-          alert("✅ Mot de passe mis à jour avec succès !");
+         
           this.isEditing[field] = false;
           this.passwordError = "";
         },
@@ -262,7 +271,45 @@ ngOnInit(): void {
       });
 
     return;
+    
   }
+  if (field === "adresse") {
+    if (!this.selectedAdresse) {
+      console.error("Aucune adresse sélectionnée !");
+      return;
+    }
+
+    // Vérifier si `selectedAdresse` est un objet ou une chaîne (nom de la ville)
+    let adresseObjet = typeof this.selectedAdresse === 'string'
+      ? this.adresses.find(a => a.governoate === this.selectedAdresse)
+      : this.selectedAdresse;
+
+    if (!adresseObjet || !adresseObjet.idAdresse) {
+      console.error(" Adresse introuvable !");
+      return;
+    }
+
+    this.utilisateurService.affecterAdresse(this.userId, adresseObjet.idAdresse)
+      .subscribe({
+        next: (response) => {
+          console.log(` ${field} mis à jour avec succès :`, response);
+  
+          if (response.token) {
+            localStorage.removeItem('accessToken'); 
+            localStorage.setItem('accessToken', response.token); 
+       
+          }
+          this.user.adresse = adresseObjet;
+          this.isEditing[field] = false;
+      
+          
+        },
+        error: (err) => {
+          console.error(" Erreur lors de la mise à jour de l'adresse :", err);
+        }
+      });
+  }
+
 
   
   const updatedData = { [field]: this.editedValues[field] };
@@ -285,7 +332,8 @@ ngOnInit(): void {
         console.error(`Erreur lors de la mise à jour de ${field} :`, err);
       }
     });
-}loadDisponibilites() {
+}
+loadDisponibilites() {
   const daysOfWeek: { [key: string]: number } = {
     'Dimanche': 0, 'Lundi': 1, 'Mardi': 2, 'Mercredi': 3, 'Jeudi': 4, 'Vendredi': 5, 'Samedi': 6
   };
@@ -557,47 +605,69 @@ chargerDisponibilites(dispo: any) {
 
 
 onFileSelected(event: any) {
-  const file: File = event.target.files[0];
-
+  const file = event.target.files[0];
   if (file) {
-    this.fileService.uploadFile(file).subscribe({
-      next: (imageUrl) => {
-        console.log("✅ Image uploadée avec succès :", imageUrl);
-        this.saveChanges('image', imageUrl); // ✅ Maintenant, ça fonctionne bien
-      },
-      error: (err) => {
-        console.error("❌ Erreur upload :", err);
-        alert("Erreur lors de l'upload de l'image.");
-      }
-    });
+    this.selectedFile = file;
+    this.updateProfileImage(); 
   }
 }
 
-uploadImage() {
-  if (!this.selectedFile) return;
-
-  this.fileService.uploadFile(this.selectedFile).subscribe({
-    next: (imageUrl) => {
-      console.log("✅ Image uploadée :", imageUrl);
-      this.updateUserProfile(imageUrl);
+  
+getImage(filename: string, index: number) {
+  this.fileService.getImage(filename).subscribe(
+    (imageBlob) => {
+      const imageUrl = URL.createObjectURL(imageBlob);
+      this.imageUrls[index] = imageUrl;
+     
     },
-    error: (err) => {
-      console.error("❌ Erreur upload :", err);
+    (error) => {
+      console.error('Erreur lors du chargement de l\'image', error);
     }
-  });
+  );
 }
+updateProfileImage() {
+  this.loadUserData(); 
+  if (!this.userId) {
+    console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
+    return;
+  }
 
-// Mettre à jour l'image de profil dans la base de données
-updateUserProfile(imageUrl: string) {
-  const updatedData = { image: imageUrl };
+  if (!this.selectedFile) {
+    console.error("Aucun fichier sélectionné !");
+    return;
+  }
 
-  this.utilisateurService.updateUser(this.utilisateurId, updatedData).subscribe({
-    next: (response) => {
-      console.log("✅ Image mise à jour :", response);
-      this.profileImageUrl = imageUrl; // Met à jour l'affichage immédiatement
+  this.uploadService.uploadFile(this.selectedFile).subscribe({
+    next: (imageUrl) => {
+     
+
+      this.utilisateurService.updateUser(Number(this.userId), { image: imageUrl })
+        .subscribe({
+          next: (response) => {
+          
+            this.profileImageUrl = imageUrl;
+        
+            this.isEditing['profileImage'] = false;
+            const updatedImageUrl = `http://localhost:8088/nour/api/v1/auth/get-image/${imageUrl}?t=${new Date().getTime()}`;
+            this.profileImageUrl = updatedImageUrl;
+
+          
+            this.fileService.updateProfileImage(updatedImageUrl);
+
+            if (response.token) {
+              localStorage.removeItem('accessToken');
+              localStorage.setItem('accessToken', response.token);
+            
+            }
+            this.loadUserData();
+          },
+          error: (err) => {
+            console.error(" Erreur lors de la mise à jour du profil :", err);
+          }
+        });
     },
     error: (err) => {
-      console.error("❌ Erreur mise à jour :", err);
+      console.error("Erreur lors de l'upload :", err);
     }
   });
 }

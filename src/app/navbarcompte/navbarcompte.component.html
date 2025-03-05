@@ -8,7 +8,7 @@
                 <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
             </ng-container>
             <ng-template #defaultIcon>
-                <i class="fas fa-user default-icon"></i> <!-- Icône utilisateur par défaut -->
+                <i class="fas fa-user default-icon"></i> 
             </ng-template>
         </div>
 
@@ -17,9 +17,9 @@
 
     <div class="profile-menu" id="profile-menu">
         <ul>
-            <li routerLink="/updateprestaitre">👤 Voir mon profil</li>
+            <li routerLink="/ProfileUtilisateur">👤 Voir mon profil</li>
             <li>✉️ Mes messages</li>
-            <li>⚙️ Mon compte</li>
+            <li routerLink="/updateprestaitre">⚙️ Mon compte</li>
             <li>❓ Besoin d'aide ?</li>
             <li id="logout-btn">🚪 Se déconnecter</li>
         </ul>

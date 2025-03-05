@@ -15,7 +15,7 @@ import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
   styleUrls: ['./inscription-entrprise.component.css']
 })
 export class InscriptionEntrpriseComponent {
-  form1: FormGroup; // Formulaire 1
+  form1: FormGroup;
 
   step = 1;
   categories: any[] = [];
