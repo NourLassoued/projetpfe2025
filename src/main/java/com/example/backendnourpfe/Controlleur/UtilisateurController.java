@@ -169,8 +169,19 @@ public class UtilisateurController {
             @Valid @RequestBody Utilisateur utilisateurDetails) {
 
         return utilisateurService.updateUser(id, utilisateurDetails);
+    }/*
+    @PutMapping("/affecter-adresse/{utilisateurId}/{adresseId}")
+    public ResponseEntity<Utilisateur> affecterAdresse(@PathVariable Long utilisateurId, @PathVariable Long adresseId) {
+        Utilisateur utilisateur = utilisateurService.affecterAdresse(utilisateurId, adresseId);
+        return ResponseEntity.ok(utilisateur);
     }
 
+*/
+@PutMapping("/affecter-adresse/{utilisateurId}/{adresseId}")
+public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long utilisateurId, @PathVariable Long adresseId) {
+    Map<String, Object> response = utilisateurService.affecterAdresse(utilisateurId, adresseId);
+    return ResponseEntity.ok(response);
+}
 
 }
 

@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface UtlisateurInterface {
+   // public Utilisateur affecterAdresse(Long utilisateurId, Long adresseId);
+   public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId);
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur);
     void deleteUser(Long id);
     public Optional<Utilisateur> getUtilisateurById(Long id);

@@ -38,6 +38,8 @@ public class UtilisateurService implements UtlisateurInterface {
     private  DisponibiliteRepository disponibiliteRepository;
     @Autowired
     private DisponibiliteService disponibiliteService;
+    @Autowired
+    private AdresseRepository adresseRepository;
 
 
     @Override
@@ -165,7 +167,7 @@ public class UtilisateurService implements UtlisateurInterface {
         if (utilisateurDetails.getPassword() != null) user.setPassword(utilisateurDetails.getPassword());
         if (utilisateurDetails.getImage() != null) user.setImage(utilisateurDetails.getImage());
         if (utilisateurDetails.getTelephoneNumber() != null) user.setTelephoneNumber(utilisateurDetails.getTelephoneNumber());
-        if (utilisateurDetails.getAdresse() != null) user.setAdresse(utilisateurDetails.getAdresse());
+      if(utilisateurDetails.getAdressee()!=null)user.setAdressee(utilisateurDetails.getAdressee());
         if (utilisateurDetails.getRole() != null) user.setRole(utilisateurDetails.getRole());
         if (utilisateurDetails.getStatus() != null) user.setStatus(utilisateurDetails.getStatus());
         if (utilisateurDetails.getCertification() != null) user.setCertification(utilisateurDetails.getCertification());
@@ -230,7 +232,40 @@ public class UtilisateurService implements UtlisateurInterface {
                 "user", updatedUser
         ));
     }
+/*
+    public Utilisateur affecterAdresse(Long utilisateurId, Long adresseId) {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
+        Adresse adressee = adresseRepository.findById(adresseId)
+                .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
+
+        utilisateur.setAdressee(adressee);
+        return utilisateurRepository.save(utilisateur);
+
+    }*/
+public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
+    Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+            .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+    Adresse adresse = adresseRepository.findById(adresseId)
+            .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
+
+    utilisateur.setAdressee(adresse);
+    Utilisateur updatedUser = utilisateurRepository.save(utilisateur);
+
+    // Générer un nouveau token après la mise à jour
+    String newToken = jwtService.generateToken(updatedUser);
+    System.out.println("🚀 Nouveau token généré : " + newToken);
+
+    // Retourner les informations sous forme de Map
+    Map<String, Object> response = new HashMap<>();
+    response.put("message", "Adresse affectée avec succès !");
+    response.put("token", newToken);
+    response.put("user", updatedUser);
+
+    return response;
+}
 
 
     public Optional<Utilisateur> getUtilisateurById(Long id) {

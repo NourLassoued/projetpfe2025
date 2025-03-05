@@ -39,8 +39,7 @@ public class Utilisateur  implements UserDetails  {
     private String image;
     @JsonProperty("telephoneNumber")
     private Integer telephoneNumber;
-    @JsonProperty("adresse")
-    private  String adresse;
+
 
     @Enumerated(EnumType.STRING)
     @JsonProperty("role")
@@ -57,7 +56,7 @@ public class Utilisateur  implements UserDetails  {
     private String Certification;
 
     @JsonProperty("tarifs")
-    private Float tarifs;
+    private Integer tarifs;
 
     @Nullable
     @JsonProperty("description")
@@ -129,6 +128,11 @@ public class Utilisateur  implements UserDetails  {
 @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL, orphanRemoval = true)
 
     private List<Disponibilite> disponibilites = new ArrayList<>();
+@JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "adresse_id")
+    private Adresse adressee;
+
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
         this.email = email;

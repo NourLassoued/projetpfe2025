@@ -56,12 +56,13 @@ public class JwtService {
         claims.put("status", user.getStatus());
         claims.put("telephoneNumber", user.getTelephoneNumber());
 claims.put("id",user.getIdUtilisateur());
+        claims.put("WorkExerience", user.getWorkExperience());
         claims.put("email", user.getEmail());
         claims.put("role", user.getRole());
-     claims.put("adresse",user.getAdresse());
+    claims.put("adresse",user.getAdressee());
         claims.put("nom", user.getNom());
-        claims.put("WorkExerience", user.getWorkExperience());
 
+        claims.put("tarifs", user.getTarifs());
         claims.put("telephoneNumber", user.getTelephoneNumber());
         claims.put("description", Optional.ofNullable(user.getDescription()).orElse("no"));
 
@@ -74,7 +75,7 @@ claims.put("id",user.getIdUtilisateur());
 
         claims.put("cin", Optional.ofNullable(user.getDoucument_CIN()).orElse("Non fourni"));
         claims.put("cv", Optional.ofNullable(user.getDoucument_cv()).orElse("Non fourni"));
-        claims.put("tarif", Optional.ofNullable(user.getTarifs()).orElse(0.0F));
+
         claims.put("solde",Optional.ofNullable(user.getSolde()).orElse(0.0F));
 
 

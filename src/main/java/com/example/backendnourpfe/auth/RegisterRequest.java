@@ -30,7 +30,7 @@ public class RegisterRequest implements Serializable {
 
 
     private String Certification;
-    private Float tarifs;
+    private Integer tarifs;
 
     private String description;
     private Float solde;

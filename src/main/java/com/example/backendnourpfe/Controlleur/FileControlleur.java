@@ -32,7 +32,7 @@ public class FileControlleur {
             Files.createDirectories(path.getParent());
             Files.write(path, bytes);
 
-            return new ResponseEntity<>("File uploaded successfully: " + file.getOriginalFilename(), HttpStatus.OK);
+            return new ResponseEntity<>( file.getOriginalFilename(), HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("Failed to upload file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

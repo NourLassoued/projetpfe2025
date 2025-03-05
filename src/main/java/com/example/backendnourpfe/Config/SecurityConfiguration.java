@@ -26,7 +26,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**", "/forgetPassword/**", "/categories/**",
-            "/services/**","/utilisateurss/**","/disponibilites/**"
+            "/services/**","/utilisateurss/**","/disponibilites/**" ,"/adresses/**"
     };
 
     private final JwtAuthenticat jwtAuthFilter;

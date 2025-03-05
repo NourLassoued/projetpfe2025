@@ -39,7 +39,7 @@ public class AuthenticationReponse {
     @JsonProperty("competence")
     private String competence;
     @JsonProperty("tarifs")
-    private Float tarifs;
+    private Integer tarifs;
 
     @JsonProperty("description")
     private String description;

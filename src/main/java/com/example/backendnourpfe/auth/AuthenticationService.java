@@ -53,7 +53,7 @@ public AuthenticationReponse register(RegisterRequest request) {
         UserRole role = request.getRole();
         StatusUtilisateur status = request.getStatus();
 
-        // 🔹 Création de l'utilisateur
+
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom(request.getNom());
         utilisateur.setEmail(request.getEmail());
@@ -74,6 +74,7 @@ public AuthenticationReponse register(RegisterRequest request) {
         utilisateur.setNomEntreprise(request.getNomEntreprise());
         utilisateur.setSiret(request.getSiret());
         utilisateur.setSiteWeb(request.getSiteWeb());
+
 
 
         if (request.getCompetence() != null && !request.getCompetence().isEmpty()) {
