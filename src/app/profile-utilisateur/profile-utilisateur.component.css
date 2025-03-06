@@ -329,32 +329,148 @@ margin-left: 20px;
   button i {
     margin-right: 8px; /* Espacement entre l'icône et le texte */
     font-size: 18px; /* Taille de l'icône */
-  }
-/* Personnalisation du Snackbar */
-.custom-snackbar {
-    background-color: #333;
-    color: #fff;
+  }.notification-box {
+    position: fixed;
+    top: 370px;
+
+    transform: translateX(-50%);
+    background: #ffffff;
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     font-size: 16px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 280px;
+    max-width: 400px;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Carte utilisateur */
+.user-card {
     display: flex;
     align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.profile-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.user-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Alignement des boutons */
+.contact-buttons {
+    display: flex;
     justify-content: space-between;
-  }
-  
-  /* Fixe la position du Snackbar en haut à gauche */
-  .mat-snack-bar-container {
-    position: fixed;
-    top: 0;  /* Positionne le Snackbar en haut */
-    left: 0; /* Positionne le Snackbar à gauche */
-    z-index: 9999; /* Assure que le Snackbar soit au-dessus des autres éléments */
-  }
-  
-  /* Personnalisation du bouton 'Fermer' */
-  .mat-snack-bar-action {
-    color: #ff4081; /* Couleur du bouton Fermer */
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+/* Boutons de contact (taille identique) */
+.contact-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
-  }
-  
+    border: none;
+}
+
+.contact-btn whatsapp-btn{
+    background: #a7edc1;
+    
+}
+
+
+
+/* Style du bouton Fermer */
+.notification-box button {
+
+    border: none;
+   
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+.message-btn {
+    background: #25db40;
+    border: none;
+ 
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Bouton téléphone */
+.phone-btn {
+    background: #0088cc; /* Bleu */
+    border: none;
+ 
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Icônes dans les boutons */
+.contact-btn i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+
+button.close-btn {
+    background: #ea3535;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    margin: 15px auto 0;
+    transition: background 0.2s;
+}
+

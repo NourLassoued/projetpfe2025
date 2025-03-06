@@ -11,7 +11,7 @@ import { NotificationService } from '../service/notification.service';
   styleUrls: ['./profile-utilisateur.component.css']
 })
 export class ProfileUtilisateurComponent implements OnInit{
- 
+  showNotification = false;
   profileImage: string | null = null; 
   user: any;
     profileImageUrl: SafeUrl | null = null; 
@@ -105,8 +105,11 @@ export class ProfileUtilisateurComponent implements OnInit{
     });
   }
   afficherNumero() {
-    const numeroUser = this.user?.telephoneNumber || 'Non disponible';
-    this.notificationService.showNotification(`📞 Numéro du user : ${numeroUser}`);
+    this.showNotification = true;
+  }
+  
+  closeNotification() {
+    this.showNotification = false;
   }
   
 }

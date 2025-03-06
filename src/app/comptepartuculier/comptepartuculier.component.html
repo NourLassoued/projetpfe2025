@@ -1,0 +1,56 @@
+<body>
+    <app-navbarcompte></app-navbarcompte>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <ul>
+                    <li> <i class="fa fa-home blue-icon"></i>  Acceuil</li>
+                   <li>📋 Mes demandes</li>
+                   
+                    <li>📅 Mes réservations</li>
+                    <li>📜 Mon historique</li>
+                   <li>🚪 Se déconnecter</li>
+                </ul>
+                
+            </ul>
+        </aside>
+        
+        <main class="content">
+            <div class="profile-wrapper">
+                <label class="user-name">Bonjour {{ user?.nom }}</label> <!-- Affichage dynamique du nom -->
+    
+                <div class="profile-alert">
+                    <div class="job-content">
+                        <div id="profile-container">
+                            <ng-container *ngIf="profileImageUrl; else defaultIcon">
+                                <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+                            </ng-container>
+                            <ng-template #defaultIcon>
+                                <i class="fas fa-user default-icon"></i> <!-- Icône utilisateur par défaut -->
+                            </ng-template>
+                        </div>
+                        
+                    </div>
+                  
+                </div>
+                <div class="services-container">
+                    <button (click)="prevCategory()" class="scroll-btn left" [disabled]="currentIndex === 0"> <i class="fa fa-angle-left"></i></button>
+                  
+                    <div class="services-list">
+                        <div class="category-card" *ngFor="let category of visibleCategories; let i = index">
+                            <img [src]="imageUrls[currentIndex + i]" alt="{{ category.nom }}">
+                            <span>{{ category.nom }}</span>
+                        </div>
+                    </div>
+                    <button (click)="nextCategory()" class="scroll-btnright" [disabled]="currentIndex + itemsPerPage >= categories.length"> <i class="fa fa-angle-right"></i></button>
+                   
+                </div>
+                
+            </div>
+        </main>
+        
+    </div>
+    
+    </body>
+    <app-footer></app-footer>

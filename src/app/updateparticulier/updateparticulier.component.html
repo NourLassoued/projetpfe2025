@@ -1,0 +1,26 @@
+<app-navbarcompte></app-navbarcompte>
+
+<div class="container">
+    <div class="profile-section">
+      <div id="profile-container">
+        <div class="image-wrapper" (click)="triggerFileInput()">
+          <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+          <ng-template #defaultIcon>
+            <i class="fas fa-user default-icon"></i>
+          </ng-template>
+        </div>
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none"/>
+      </div>
+  
+      <div class="info-section">
+        <h2>Informations personnelles</h2>
+        <p><strong>Prénom :</strong> Nourel El Houda <a href="#">Modifier</a></p>
+        <p><strong>Nom :</strong> Lassoued <a href="#">Modifier</a></p>
+        <p><strong>Adresse e-mail :</strong> nourelhoudalassoued98@gmail.com <span class="badge">Non vérifié</span> <a href="#">Modifier</a></p>
+        <button class="verify-button">Recevoir un e-mail de confirmation</button>
+        <p><strong>Mot de passe :</strong> •••••••• <a href="#">Modifier</a></p>
+        <p><strong>Sexe :</strong> Non renseigné(e) <a href="#">Modifier</a></p>
+      </div>
+    </div>
+  </div>
+<app-footer></app-footer>  

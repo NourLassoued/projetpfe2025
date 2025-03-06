@@ -1,30 +1,41 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { AuthServiceService } from '../service/auth-service.service';
+import { I } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-navbarcompte',
   templateUrl: './navbarcompte.component.html',
   styleUrls: ['./navbarcompte.component.css']
 })
-export class NavbarcompteComponent {
-   user: any = null;
+export class NavbarcompteComponent implements    AfterViewInit {
+  isMenuOpen: boolean = true;
+     user: any = null;
     profileImageUrl: SafeUrl | null = null; 
-  
-    constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router) {}
+    userRole: string | null = null;
+    constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private authServiceService:AuthServiceService) {}
+    
+    ngAfterViewInit(): void {
+    this.toggleMenu();
+      
+    }
     ngOnInit(): void {
+      this.userRole = this.authServiceService.getUserRole();
       this.loadUserData();
-      this.setupMenuToggle();
+   
+    
       this.fileService.profileImage$.subscribe((newImageUrl) => {
         if (newImageUrl) {
           this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(newImageUrl);
-          console.log("🔄 Nouvelle image reçue dans la navbar :", newImageUrl);
+          console.log(" Nouvelle image reçue dans la navbar :", newImageUrl);
         }
       });
     
     }
+   
     loadUserData(): void {
       const token = localStorage.getItem('accessToken');
     
@@ -62,27 +73,18 @@ export class NavbarcompteComponent {
       });
     }
   
-   
-  setupMenuToggle(): void {
-    const menuIcon = document.getElementById('menu-icon');
-    const profileMenu = document.getElementById('profile-menu');
-    const logoutButton = document.getElementById('logout-btn'); 
-
-    if (menuIcon && profileMenu) {
-      menuIcon.addEventListener('click', () => {
-        profileMenu.classList.toggle('active');
-      });
+    toggleMenu(): void {
+      this.isMenuOpen = !this.isMenuOpen; // Change l'état de isMenuOpen (affiché ou caché)
     }
 
-    if (logoutButton) {
-      logoutButton.addEventListener('click', () => this.logout()); 
-    }
-  }
 
   logout(): void {
   
     localStorage.removeItem('accessToken')
     this.router.navigate(['/Front']); 
   }
-}
+ }
+  
+  
+
 

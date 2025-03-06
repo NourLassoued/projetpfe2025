@@ -1,5 +1,6 @@
 <nav class="navbar">
     <div class="logo">PrestatairePro</div>
+    <button class="middle-btn" *ngIf="userRole === 'PARTICULIER'"><i class="fa fa-plus"></i> Demander un service</button>
     <div class="nav-icons">
         <a href="#"><i class="fas fa-envelope"></i></a>
         <a href="#"><i class="fas fa-bell"></i></a>
@@ -12,16 +13,16 @@
             </ng-template>
         </div>
 
-        <i class="fas fa-bars" id="menu-icon"></i> <!-- Icône du menu -->
+        <i class="fas fa-bars" id="menu-icon" (click)="toggleMenu()"></i> 
     </div>
 
-    <div class="profile-menu" id="profile-menu">
+    <div class="profile-menu" id="profile-menu"   [ngClass]="{'active': isMenuOpen}">
         <ul>
-            <li routerLink="/ProfileUtilisateur">👤 Voir mon profil</li>
+            <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : '/Profileparticulier'">👤 Voir mon profil</li>
             <li>✉️ Mes messages</li>
             <li routerLink="/updateprestaitre">⚙️ Mon compte</li>
-            <li>❓ Besoin d'aide ?</li>
-            <li id="logout-btn">🚪 Se déconnecter</li>
+            <li>❓Besoin d'aide?</li>
+            <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
         </ul>
     </div>
 </nav>

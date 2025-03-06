@@ -20,6 +20,9 @@ import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.c
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
 import { ProfileUtilisateurComponent } from './profile-utilisateur/profile-utilisateur.component';
+import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculier.component';
+import { ProfileparticulierComponent } from './profileparticulier/profileparticulier.component';
+import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
 
 
 const routes: Routes = [
@@ -81,7 +84,20 @@ const routes: Routes = [
   {
     path: 'ProfileUtilisateur',
     component:ProfileUtilisateurComponent
+  },
+  {
+    path: 'Compteparticulier',
+    component:ComptepartuculierComponent
+  },
+  {
+    path: 'Profileparticulier',
+    component:ProfileparticulierComponent
+  },
+  {
+    path: 'Updateparticulier',
+    component:UpdateparticulierComponent
   }
+
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

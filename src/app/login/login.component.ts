@@ -137,9 +137,12 @@ navigateToHome() {
           
               if (decodedToken.role === 'PRESTATAIRE') {
                   this.router.navigate(['/Compteprestaitre']);
-              } else {
+              } else if (decodedToken.role === 'PARTICULIER') { 
+                this.router.navigate(['/Compteparticulier']);
+               } else {
                   this.router.navigate(['/Front']);
               }
+              
           } else {
               console.error('❌ La réponse ne contient pas de token valide.');
           }

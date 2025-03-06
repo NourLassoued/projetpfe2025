@@ -17,7 +17,7 @@ import { InscriptionEntrpriseComponent } from './inscription-entrprise/inscripti
 import { LoginComponent } from './login/login.component';
 import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
 import { EditpasswordComponent } from './editpassword/editpassword.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
@@ -39,6 +39,9 @@ import { BehaviorSubject } from 'rxjs';
 import timeGridWeek from '@fullcalendar/timegrid';
 import { ProfileUtilisateurComponent } from './profile-utilisateur/profile-utilisateur.component';
 import { NotificationService } from './service/notification.service';
+import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculier.component';
+import { ProfileparticulierComponent } from './profileparticulier/profileparticulier.component';
+import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
 
 
 
@@ -59,7 +62,11 @@ import { NotificationService } from './service/notification.service';
     CompteprestaitreComponent,
     UpdateprofileprestaitreComponent,
     NavbarcompteComponent,
-    ProfileUtilisateurComponent
+    ProfileUtilisateurComponent,
+    ComptepartuculierComponent,
+    ProfileparticulierComponent,
+    UpdateparticulierComponent,
+   
 
   ],
   imports: [
@@ -68,7 +75,7 @@ import { NotificationService } from './service/notification.service';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FontAwesomeModule,
+
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
