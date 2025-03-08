@@ -13,6 +13,7 @@ public interface UtlisateurInterface {
    // public Utilisateur affecterAdresse(Long utilisateurId, Long adresseId);
    public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId);
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur);
+    public boolean checkEmailExists(String email);
     void deleteUser(Long id);
     public Optional<Utilisateur> getUtilisateurById(Long id);
     ResponseEntity<?> updateUser(Long id, Utilisateur utilisateurDetails);

@@ -182,7 +182,11 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
     Map<String, Object> response = utilisateurService.affecterAdresse(utilisateurId, adresseId);
     return ResponseEntity.ok(response);
 }
-
+    @GetMapping("/email-exists/{email}")
+    public ResponseEntity<Boolean> checkEmailExists(@PathVariable String email) {
+        boolean exists = utilisateurService.checkEmailExists(email);
+        return ResponseEntity.ok(exists);  // Retourne "true" si l'email existe, "false" sinon
+    }
 }
 
 

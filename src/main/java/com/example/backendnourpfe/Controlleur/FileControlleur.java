@@ -31,11 +31,11 @@ public class FileControlleur {
             Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
             Files.createDirectories(path.getParent());
             Files.write(path, bytes);
-
-            return new ResponseEntity<>( file.getOriginalFilename(), HttpStatus.OK);
+            return new ResponseEntity<>("File uploaded successfully: " + file.getOriginalFilename(), HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("Failed to upload file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
     @GetMapping("/get-image/{filename:.+}")

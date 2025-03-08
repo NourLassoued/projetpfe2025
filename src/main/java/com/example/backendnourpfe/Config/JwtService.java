@@ -52,15 +52,17 @@ public class JwtService {
 
     public String generateToken(Utilisateur user) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("email", user.getEmail());
+        claims.put("nom", user.getNom());
         claims.put("role", user.getRole());
         claims.put("status", user.getStatus());
         claims.put("telephoneNumber", user.getTelephoneNumber());
 claims.put("id",user.getIdUtilisateur());
         claims.put("WorkExerience", user.getWorkExperience());
-        claims.put("email", user.getEmail());
-        claims.put("role", user.getRole());
+
+
     claims.put("adresse",user.getAdressee());
-        claims.put("nom", user.getNom());
+
 
         claims.put("tarifs", user.getTarifs());
         claims.put("telephoneNumber", user.getTelephoneNumber());

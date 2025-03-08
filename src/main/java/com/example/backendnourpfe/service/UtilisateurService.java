@@ -156,6 +156,10 @@ public class UtilisateurService implements UtlisateurInterface {
         return reservationRepository.save(reservation);
     }
 
+    public boolean checkEmailExists(String email) {
+        return utilisateurRepository.existsByEmail(email);
+    }
+
     @Transactional
     public ResponseEntity<?> updateUser(Long id, Utilisateur utilisateurDetails) {
         Utilisateur user = utilisateurRepository.findById(id)
