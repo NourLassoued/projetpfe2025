@@ -45,11 +45,14 @@
         <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
           ⚠️ Veuillez entrer une adresse email valide (@gmail.com uniquement).
         </div>
+        <div *ngIf="registerForm.get('email')?.hasError('emailExists')">
+          <small class="text-danger">⚠️L'email existe déjà ! Veuillez en choisir un autre.</small>
+        </div>
   
         <!-- Numéro de téléphone -->
         <input type="text" formControlName="telephoneNumber" placeholder="📞 Numéro de téléphone">
         <div *ngIf="registerForm.get('telephoneNumber')?.invalid && registerForm.get('telephoneNumber')?.touched">
-          ⚠️ Veuillez entrer un numéro valide (8-15 chiffres).
+          ⚠️ Veuillez entrer un numéro valide (8 chiffres).
         </div>
   
         <!-- Mot de passe -->
@@ -81,7 +84,9 @@
           Je m'inscris
         </button>
         
-        
+        <div *ngIf="notificationMessage" class="alert alert-info mt-3">
+          {{ notificationMessage }}
+        </div>
   
       </form>
     </div>

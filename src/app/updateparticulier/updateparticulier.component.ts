@@ -36,12 +36,39 @@ selectedAdresse: any;
   adresses: Adresse[] = [];
   user: any = null;
   imageUrls: string[] = [];
-  
+  passwordError = '';
+  emailExists: boolean = false;
+  emailError: string | null = null; 
+  email: string = '';
 constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,
 
   private toastr: ToastrService,private snackBar: MatSnackBar,
  private forgetPasswordService:ForgetPasswordService,
 private uploadService :FileService,private adreesse:AdresseService) {}
+
+
+ngOnInit(): void {
+ 
+  this.loadAdresses();
+    this.loadUserData();
+ 
+
+   
+  
+   
+
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+     
+  
+      
+       
+      } else {
+        console.warn(" Aucun service trouvé dans le token !");
+      }
+  }
+  
 
    loadAdresses(): void {
      this.adreesse.getAllAdresses().subscribe((data) => {
@@ -127,41 +154,233 @@ updateProfileImage() {
     return;
   }
 
-  this.uploadService.uploadFile(this.selectedFile).subscribe({
-    next: (imageUrl) => {
+    this.uploadService.uploadFile(this.selectedFile).subscribe({
+      next: (response: string) => {
+        console.log("Réponse du backend :", response);
+  
+        // ✅ Extraire uniquement le nom du fichier de la réponse
+        const match = response.match(/File uploaded successfully: (.+)/);
+        const filename = match ? match[1] : null;
      
-
-      this.utilisateurService.updateUser(Number(this.userId), { image: imageUrl })
-        .subscribe({
-          next: (response) => {
-          
-            this.profileImageUrl = imageUrl;
-        
-            this.isEditing['profileImage'] = false;
-            const updatedImageUrl = `http://localhost:8088/nour/api/v1/auth/get-image/${imageUrl}?t=${new Date().getTime()}`;
-            this.profileImageUrl = updatedImageUrl;
-
-          
-            this.fileService.updateProfileImage(updatedImageUrl);
-
-            if (response.token) {
-              localStorage.removeItem('accessToken');
-              localStorage.setItem('accessToken', response.token);
-            
+        if (!filename) {
+          console.error("Nom de fichier invalide après l'upload !");
+          return;
+        }
+  
+        console.log("Nom de fichier extrait :", filename);
+  
+        this.utilisateurService.updateUser(Number(this.userId), { image: filename })
+          .subscribe({
+            next: (response) => {
+              console.log("Profil mis à jour avec succès :", response);
+  
+              // ✅ Générer l'URL correcte de l'image
+              const updatedImageUrl = `http://localhost:8088/nour/api/v1/auth/get-image/${filename}?t=${new Date().getTime()}`;
+              this.profileImageUrl = updatedImageUrl;
+  
+              // ✅ Mettre à jour l'image dans FileService
+              this.fileService.updateProfileImage(updatedImageUrl);
+  
+              // ✅ Mettre à jour le token s'il est renvoyé
+              if (response.token) {
+                localStorage.removeItem('accessToken');
+                localStorage.setItem('accessToken', response.token);
+              }
+  
+              this.loadUserData();
+            },
+            error: (err) => {
+              console.error("Erreur lors de la mise à jour du profil :", err);
             }
-            this.loadUserData();
-          },
-          error: (err) => {
-            console.error(" Erreur lors de la mise à jour du profil :", err);
-          }
-        });
+          });
+      },
+      error: (err) => {
+        console.error("Erreur lors de l'upload :", err);
+      }
+    });
+
+}
+startEditing(field: string, currentValue: string) {
+  this.isEditing[field] = true;
+  this.editedValues[field] = currentValue;
+}
+checkEmail() {
+  this.utilisateurService.checkEmailExists(this.email).subscribe({
+    next: (exists: boolean) => {
+      this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+      if (this.emailExists) {
+        this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
+      } else {
+        this.emailError = null;
+      }
     },
     error: (err) => {
-      console.error("Erreur lors de l'upload :", err);
+      console.error('Erreur lors de la vérification de l\'email', err);
     }
   });
 }
 
+saveChanges(field: string) {
+  if (!this.userId) {
+    console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
+    return;
+  }
+  if (field === "profileImage" && this.selectedFile) {
+    this.updateProfileImage();
+    return;
+  }
+  
+  if (field === "password") {
+    const newPassword = this.editedValues['password'];
+    const confirmPassword = this.editedValues['confirmPassword'];
+
+    if (!newPassword || !confirmPassword) {
+      this.passwordError = "Veuillez remplir tous les champs.";
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      this.passwordError = "Le mot de passe doit contenir au moins 6 caractères.";
+      return;
+    }
+    if (!/[A-Z]/.test(newPassword)) {
+      this.passwordError = "⚠️ Le mot de passe doit contenir au moins une majuscule.";
+      return;
+    }
+
+    if (!/[0-9]/.test(newPassword)) {
+      this.passwordError = "⚠️ Le mot de passe doit contenir au moins un chiffre.";
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      this.passwordError = "Les mots de passe ne correspondent pas.";
+      return;
+    }
+
+   
+    this.forgetPasswordService.changePassword(this.userId, this.editedValues['password'], this.editedValues['confirmPassword'])
+      .subscribe({
+        next: (response) => {
+         
+          this.isEditing[field] = false;
+          this.passwordError = "";
+        },
+        error: (err) => {
+          console.error("Erreur lors du changement de mot de passe :", err);
+          this.passwordError = err.error || "Une erreur est survenue.";
+        }
+      });
+
+    return;
+  }
+  if (field === "email") {
+    const email = this.editedValues['email'];
+
+    if (!email) {
+      this.emailError = "⚠️ Veuillez entrer un email.";
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      this.emailError = "⚠️ Veuillez entrer un email valide.";
+      return;
+    }
+    this.utilisateurService.checkEmailExists(email).subscribe({
+      next: (exists) => {
+        if (exists) {
+          this.emailError = "⚠️ Cet email est déjà utilisé.";
+          return; // Empêche la mise à jour de l'email
+        }
+        if (this.userId === null) {
+          console.error("L'ID utilisateur est introuvable.");
+          return;
+        }
+
+        // Si l'email n'existe pas, mettre à jour l'utilisateur
+        this.utilisateurService.updateUser(this.userId, { email })
+          .subscribe({
+            next: (response) => {
+              this.user.email = email;
+              this.isEditing[field] = false;
+              this.emailError = ""; // Réinitialiser les erreurs
+            },
+            error: (err) => {
+              console.error("❌ Erreur lors de la mise à jour de l'email :", err);
+              this.emailError = err.error || "⚠️ Une erreur est survenue.";
+            }
+          });
+      },
+      error: (err) => {
+        console.error("Erreur lors de la vérification de l'email", err);
+        this.emailError = "⚠️ Une erreur est survenue lors de la vérification de l'email.";
+      }
+    });
+
+    return;
+  }
+
+  if (field === "adresse") {
+    if (!this.selectedAdresse) {
+      console.error("Aucune adresse sélectionnée !");
+      return;
+    }
+
+    // Vérifier si `selectedAdresse` est un objet ou une chaîne (nom de la ville)
+    let adresseObjet = typeof this.selectedAdresse === 'string'
+      ? this.adresses.find(a => a.governoate === this.selectedAdresse)
+      : this.selectedAdresse;
+
+    if (!adresseObjet || !adresseObjet.idAdresse) {
+      console.error(" Adresse introuvable !");
+      return;
+    }
+
+    this.utilisateurService.affecterAdresse(this.userId, adresseObjet.idAdresse)
+      .subscribe({
+        next: (response) => {
+          console.log(` ${field} mis à jour avec succès :`, response);
+  
+          if (response.token) {
+            localStorage.removeItem('accessToken'); 
+            localStorage.setItem('accessToken', response.token); 
+       
+          }
+          this.user.adresse = adresseObjet;
+          this.isEditing[field] = false;
+      
+          
+        },
+        error: (err) => {
+          console.error(" Erreur lors de la mise à jour de l'adresse :", err);
+        }
+      });
+  }
+
+
+  
+  const updatedData = { [field]: this.editedValues[field] };
+
+  this.utilisateurService.updateUser(this.userId, updatedData)
+    .subscribe({
+      next: (response) => {
+        console.log(` ${field} mis à jour avec succès :`, response);
+
+        if (response.token) {
+          localStorage.removeItem('accessToken'); 
+          localStorage.setItem('accessToken', response.token); 
+     
+        }
+
+        this.user[field] = updatedData[field]; 
+        this.isEditing[field] = false; 
+      },
+      error: (err) => {
+        console.error(`Erreur lors de la mise à jour de ${field} :`, err);
+      }
+    });
+}
 }
    
    

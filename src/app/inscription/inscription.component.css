@@ -210,4 +210,43 @@ input {
     height: 15px;
     accent-color: #007bff; /* Couleur de la case (bleu) */
     margin: 5px; /* Retire l'espace entre la case et le texte */
+}.alert {
+    display: block !important;
+    background-color: #007bff;  /* Couleur de fond */
+    color: white;  /* Couleur du texte */
+    width: 400px;
+    height: 80px;
+    border-radius: 5px;  /* Coins arrondis */
+    padding: 15px;  /* Espace interne autour du texte */
+    font-size: 16px;  /* Taille de police */
+    font-weight: bold;  /* Poids de la police pour plus de visibilité */
+    position: fixed;  /* Fixe l'alerte à une position précise */
+    top: 20px;  /* Place l'alerte en haut de la page */
+    left: 50%;  /* Centrer horizontalement */
+    transform: translateX(-50%);  /* Centrer complètement */
+    z-index: 9999;  /* Assurez-vous qu'il est au-dessus des autres éléments */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);  /* Ombre subtile autour de l'alerte */
+    transition: opacity 0.5s ease, transform 0.5s ease;  /* Ajout d'une animation de transition */
+}
+
+.alert.show {
+    opacity: 1;  /* Rendre l'alerte visible */
+    transform: translateX(-50%) translateY(0);  /* Animation de l'alerte qui glisse vers le bas */
+}
+
+.alert.hide {
+    opacity: 0;  /* Rendre l'alerte invisible */
+    transform: translateX(-50%) translateY(-20px);  /* L'alerte glisse vers le haut avant de disparaître */
+}
+
+/* Optionnel : Ajout d'un bouton pour fermer l'alerte */
+.alert .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
 }

@@ -20,7 +20,7 @@
      
     <label>nom</label>
         <input formControlName="nom" placeholder="&#xf007;" class="input-fa">
-
+       
      
       <div class="error" *ngIf="form1.get('nom')?.invalid && form1.get('nom')?.touched">
         <span *ngIf="form1.get('nom')?.errors?.['required']">⚠️ Le nom est requis.</span>
@@ -29,16 +29,22 @@
     
       
       <label>Email</label>
-      <input formControlName="email" type="email" placeholder="&#xf0e0;" class="input-fa">
+      <input formControlName="email" type="email" placeholder="&#xf0e0;"  class="input-fa">
       
       <div class="error" *ngIf="form1.get('email')?.invalid && form1.get('email')?.touched">
         <span *ngIf="form1.get('email')?.errors?.['required']">⚠️ L'email est requis.</span>
         <span *ngIf="form1.get('email')?.errors?.['email']">⚠️ Entrez un email valide.</span>
       </div>
+      <div *ngIf="form1.get('email')?.hasError('emailExists')">
+        <small class="text-danger">⚠️L'email existe déjà ! Veuillez en choisir un autre.</small>
+      </div>
     
       
         <label>Mot de passe</label>
-        <input formControlName="password" type="password" placeholder="&#xf023;" class="input-fa">
+        <div class="input-container">
+          <input formControlName="password" type="password" placeholder="Mot de passe" class="input-fa">
+          <i class="fas fa-lock input-icon"></i> <!-- Icône Font Awesome -->
+        </div>
      
       <div class="error" *ngIf="form1.get('password')?.invalid && form1.get('password')?.touched">
         <span *ngIf="form1.get('password')?.errors?.['required']">⚠️ Le mot de passe est requis.</span>
@@ -67,6 +73,11 @@
       <input type="file" accept="image/*" (change)="onFileSelected($event,'image')">
     
       <button (click)="onSubmit()">Soumettre</button>
+      
+        <div *ngIf="notificationMessage" class="alert alert-info mt-3">
+          {{ notificationMessage }}
+        </div>
+
     </form>
     
    

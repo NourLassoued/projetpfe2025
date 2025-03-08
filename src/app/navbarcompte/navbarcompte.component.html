@@ -20,7 +20,7 @@
         <ul>
             <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : '/Profileparticulier'">👤 Voir mon profil</li>
             <li>✉️ Mes messages</li>
-            <li routerLink="/updateprestaitre">⚙️ Mon compte</li>
+            <li  [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : '/Updateparticulier'">⚙️ Mon compte</li>
             <li>❓Besoin d'aide?</li>
             <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
         </ul>

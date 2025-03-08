@@ -33,6 +33,9 @@ export class UtilisateurService {
   affecterAdresse(utilisateurId: number, adresseId: number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/affecter-adresse/${utilisateurId}/${adresseId}`, {});
   }
+  checkEmailExists(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/email-exists/${email}`);
+  }
 
 
   creerDemande(idUtilisateur: number, idService: number, demande: Demande): Observable<any> {

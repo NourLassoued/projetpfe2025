@@ -19,14 +19,15 @@ export class FileService {
   
  
     return this.http.post(`${this.apiUrl}/upload`, formData, { responseType: 'text' });
-}/*
+  }
+  /*
     uploadFile(file: File): Observable<string> {
       const formData = new FormData();
       formData.append('file', file);
     
       return this.http.post<string>(`${this.apiUrl}/upload`, formData);
-    }
-    */
+    }*/
+    
 
 
   getImage(filename: string): Observable<Blob> {

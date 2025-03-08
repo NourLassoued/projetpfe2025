@@ -1,89 +1,227 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
+/* Assurer que tout l'écran est utilisé */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 950px;
+  font-family: Arial, sans-serif;
+ 
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+ 
+ 
+}
+
+/* Sidebar fixée sur toute la hauteur disponible */
+.sidebar {
+  width: 250px;
+  background-color: #fbf5f5;
+  color: rgb(18, 17, 17);
+  padding-top: 20px;
+  flex-shrink: 0;
+ height: 970px;
+
+  left: 0;
+  top: 50px; /* Ajuster en fonction de la hauteur de la navbar */
+  bottom: 0;
+  overflow-y: auto; /* Permet le scroll si nécessaire */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.sidebar li i {
+  margin-right: 10px;
+}
+
+.sidebar ul li.active, .sidebar ul li:hover {
+  background-color: #bbbdc0;
+}
+/* Contenu principal */
+.content {
+  flex: 1;
+ 
+ 
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+/* Section du profil en colonne */
+.profile-section {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+/* Centrer l'image de profil */
+#profile-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ddd;
+  margin: auto;
+  cursor: pointer;
+}
+
+#profile-icon {
+  width: 100%;
+  height: auto;
+}
+
+.default-icon {
+  font-size: 50px;
+  color: #666;
+}
+
+/* Chaque section bien alignée */
+.section {
+  width: 100%;
+}
+
+.section label {
+  font-weight: bold;
+  font-size: 17px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Boîte de contenu */
+.competence {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.competence p {
+  margin: 0;
+  flex: 1;
+}
+
+/* Boutons */
+.edit-btn, .savee-btn {
+ 
+
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+
+
+/* Édition */
+.edit-container {
+  display: flex;
+  align-items: center;
+}
+
+.blue-icon {
+  color:#edcd8e;
+}
+.edit-container input{
+  width: 300px; /* Prend toute la largeur disponible */
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px; /* Coins arrondis */
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+.edit-container input:focus {
+  border-color: #007bff; /* Change la couleur au focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.edit-container select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   
-  .profile-section {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 60%;
-  }
-  
-  #profile-container {
-    text-align: center;
-  }
-  
-  .image-wrapper {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #profile-icon {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .default-icon {
-    font-size: 50px;
-    color: #aaa;
-  }
-  
-  .info-section {
-    flex: 1;
-  }
-  
-  h2 {
-    margin-bottom: 15px;
-  }
-  
-  p {
-    margin: 8px 0;
-  }
-  
-  .badge {
-    background: orange;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 5px;
-    font-size: 0.9em;
-  }
-  
-  .verify-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .verify-button:hover {
-    background: #0056b3;
-  }
-  
-  a {
-    color: #007bff;
-    text-decoration: none;
-    margin-left: 5px;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+}
+select {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  margin-right: 10px;
+  width: 500px;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Messages d'erreur */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.edit-containerr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Ajoute un espace entre les champs */
+}
+
+.password-input {
+  width: 100%;
+  max-width: 300px; /* Ajuste la largeur */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 90px;
+  transition: border-color 0.3s ease;
+}
+
+.password-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.save-btnpasword {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 350px;
+}

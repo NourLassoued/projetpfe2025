@@ -1,26 +1,153 @@
-<app-navbarcompte></app-navbarcompte>
+<body>
+  <app-navbarcompte></app-navbarcompte>
 
-<div class="container">
-    <div class="profile-section">
-      <div id="profile-container">
-        <div class="image-wrapper" (click)="triggerFileInput()">
-          <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
-          <ng-template #defaultIcon>
-            <i class="fas fa-user default-icon"></i>
-          </ng-template>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li><i class="fa fa-home blue-icon"></i> Acceuil</li>
+        <li>📋 Mes demandes</li>
+        <li>📅 Mes réservations</li>
+        <li>📜 Mon historique</li>
+        <li>🚪 Se déconnecter</li>
+      </ul>
+    </aside>
+
+    <!-- Contenu principal -->
+    <div class="content">
+      <div class="profile-section">
+        <div id="profile-container">
+          <div class="image-wrapper" (click)="triggerFileInput()">
+            <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+            <ng-template #defaultIcon>
+              <i class="fas fa-user default-icon"></i>
+            </ng-template>
+          </div>
+          <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none"/>
         </div>
-        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none"/>
+        <h3>Informations personnelles</h3>
+        <div class="content">
+
+          
+          <div class="section">
+            <label>Nom</label>
+            <div class="competence">
+              <ng-container *ngIf="!isEditing['nom'] else 
+                                                            editNom">
+                <p (click)="startEditing('nom', user?.nom)">
+                  {{ user?.nom || 'Aucune nom disponible.' }}
+                </p>
+                <button class="edit-btn" (click)="startEditing('nom', user?.nom)">✏️</button>
+              </ng-container>
+        
+              <ng-template #editNom>
+                <div class="edit-container">
+                  <input  [(ngModel)]="editedValues['nom']">
+                  <button class="savee-btn" (click)="saveChanges('nom')">✔️</button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+     
+        
+        <div class="content">
+        <div class="section">
+          <label>email</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['email']   else editEmail">
+              <p (click)="startEditing('email', user?.email)">
+                {{ user?.email || 'Aucune email disponible.' }}
+              </p>
+              <button class="edit-btn" (click)="startEditing('email', user?.email)">✏️</button>
+            </ng-container>
+      
+            <ng-template #editEmail>
+              <div class="edit-container">
+                <input type="text"  [(ngModel)]="editedValues['email']">
+                <button class="savee-btn" (click)="saveChanges('email')">✔️</button>
+              </div>
+              <div class="error" *ngIf="emailError">
+                <span>⚠️ {{ emailError }}</span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
       </div>
-  
-      <div class="info-section">
-        <h2>Informations personnelles</h2>
-        <p><strong>Prénom :</strong> Nourel El Houda <a href="#">Modifier</a></p>
-        <p><strong>Nom :</strong> Lassoued <a href="#">Modifier</a></p>
-        <p><strong>Adresse e-mail :</strong> nourelhoudalassoued98@gmail.com <span class="badge">Non vérifié</span> <a href="#">Modifier</a></p>
-        <button class="verify-button">Recevoir un e-mail de confirmation</button>
-        <p><strong>Mot de passe :</strong> •••••••• <a href="#">Modifier</a></p>
-        <p><strong>Sexe :</strong> Non renseigné(e) <a href="#">Modifier</a></p>
+      
+        <div class="content">
+          <div class="section">
+              <label>📞 Téléphone</label>
+              <div class="competence">
+                  <ng-container *ngIf="!isEditing['telephoneNumber']; else editTelephone">
+                      <p (click)="startEditing('telephoneNumber', user?.telephoneNumber)">
+                          {{ user?.telephoneNumber || 'Aucun numéro disponible.' }}
+                      </p>
+                      <button class="edit-btn" (click)="startEditing('telephoneNumber', user?.telephoneNumber)">✏️</button>
+                  </ng-container>
+              
+                  <ng-template #editTelephone>
+                      <div class="edit-container">
+                          <input type="text" [(ngModel)]="editedValues['telephoneNumber']">
+                          <button class="savee-btn" (click)="saveChanges('telephoneNumber')">✔️</button>
+                      </div>
+                  </ng-template>
+              </div>
+              
+              
+          </div>
+      </div>
+      <div class="content">
+        <div class="section">
+          <label>📍Adresse</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['adresse']; else editAdresse">
+              <p (click)="startEditing('adresse', user?.adresse)">
+                {{ user?.adresse?.governoate || 'Adresse non renseignée.' }}
+              </p>
+              <button class="edit-btn" (click)="startEditing('adresse', user?.adresse)">✏️</button>
+            </ng-container>
+      
+            <ng-template #editAdresse>
+              <div class="edit-container">
+                <select [(ngModel)]="selectedAdresse">
+                  <option *ngFor="let adresse of adresses" [ngValue]="adresse">
+                    {{ adresse.governoate }} 
+                  </option>
+                </select>
+                <button class="savee-btn" (click)="saveChanges('adresse')">✔️</button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="section">
+          <label>🔒 Mot de passe</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['password']; else editPassword">
+              <p>********</p>
+              <button class="edit-btn" (click)="startEditing('password', '')">✏️</button>
+            </ng-container>
+      
+            <ng-template #editPassword>
+              <div class="edit-containerr">
+                <input type="password"  class="password-input" placeholder="Nouveau mot de passe" [(ngModel)]="editedValues['password']">
+                <input type="password"  class="password-input" placeholder="Confirmer mot de passe" [(ngModel)]="editedValues['confirmPassword']">
+                <button class="save-btnpasword" (click)="saveChanges('password')">✔️</button>
+              </div>
+              <div class="error" *ngIf="passwordError">
+                <span>⚠️ {{ passwordError }}</span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      </div>
       </div>
     </div>
-  </div>
-<app-footer></app-footer>  
+  
+
+ 
+</body>
+<app-footer></app-footer>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ServiceeService } from '../service/servicee.service';
 import { CategorieService } from '../service/categorie.service';
 import { FileService } from '../service/file.service';
@@ -8,6 +8,9 @@ import { Servicee } from 'src/models/Servicee';
 import { UserRole } from 'src/models/UserRole';
 import { AuthServiceService } from '../service/auth-service.service';
 import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
+import { catchError, debounceTime, Observable, of, switchMap } from 'rxjs';
+import { UtilisateurService } from '../service/utilisateur.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inscription-professionnel',
@@ -27,10 +30,14 @@ export class InscriptionProfessionnelComponent {
   services: any[] = [];   
   selectedFiles: { [key: string]: File } = {};     
   selectedServices: any[] = [];
-  constructor(private fb: FormBuilder,private http:HttpClient,private categorieService:CategorieService,private file:FileService,private service:ServiceeService,private authService: AuthServiceService,) {
+  emailExists: boolean = false;
+  emailError: string | null = null; 
+  email: string = '';
+  notificationMessage: string = ''; 
+  constructor(private fb: FormBuilder,private http:HttpClient,private categorieService:CategorieService,private file:FileService,private service:ServiceeService,private authService: AuthServiceService,private utilisateurService:UtilisateurService, private router: Router) {
     this.form1 = this.fb.group({
       nom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")], [this.emailAsyncValidator()] ],
       password: ['', [Validators.required, Validators.minLength(8)]],
       telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], 
      
@@ -45,9 +52,34 @@ export class InscriptionProfessionnelComponent {
     
     
     });
+    
 
   }
- 
+
+
+  showNotification(message: string): void {
+    this.notificationMessage = message;  // Affiche le message
+    setTimeout(() => {
+      this.notificationMessage = '';  // Cache après un délai (ici 3 secondes)
+    }, 3000);  // 3000 ms = 3 secondes
+  }
+
+  closeNotification(): void {
+    this.notificationMessage = '';  // Ferme immédiatement la notification si l'utilisateur clique sur le bouton
+  }
+
+  emailAsyncValidator(): AsyncValidatorFn {
+     return (control: AbstractControl): Observable<ValidationErrors | null> => {
+       if (!control.value) {
+         return of(null);
+       }
+       return this.utilisateurService.checkEmailExists(control.value).pipe(
+         debounceTime(300),
+         switchMap((exists: boolean) => (exists ? of({ emailExists: true }) : of(null))),
+         catchError(() => of(null))
+       );
+     };
+   }
  
 
   showSkillModal() {
@@ -155,6 +187,13 @@ onSubmit(): void {
       
         this.authService.register(formData).subscribe(
           (response: any) => {
+         
+            this.notificationMessage = "Vérifiez votre email pour avoir plus d'informations de votre candidature.";
+            this.form1.reset();
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 2000); 
+         
            
           },
           (error) => {
@@ -172,4 +211,32 @@ onSubmit(): void {
   }
 }
 
+checkEmail() {
+  this.utilisateurService.checkEmailExists(this.email).subscribe({
+    next: (exists: boolean) => {
+      this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+      if (this.emailExists) {
+        this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
+      } else {
+        this.emailError = null;
+      }
+    },
+    error: (err) => {
+      console.error('Erreur lors de la vérification de l\'email', err);
+    }
+  });
 }
+
+
+}    
+
+
+    
+   
+   
+ 
+
+
+
+
+
