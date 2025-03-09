@@ -42,6 +42,9 @@ import { NotificationService } from './service/notification.service';
 import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculier.component';
 import { ProfileparticulierComponent } from './profileparticulier/profileparticulier.component';
 import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
+import { MyDocsComponent } from './my-docs/my-docs.component';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -66,6 +69,9 @@ import { UpdateparticulierComponent } from './updateparticulier/updateparticulie
     ComptepartuculierComponent,
     ProfileparticulierComponent,
     UpdateparticulierComponent,
+    AdmindashboardComponent,
+    MyDocsComponent,
+    UserComponent,
    
 
   ],

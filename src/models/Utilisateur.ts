@@ -23,6 +23,7 @@ export class Utilisateur {
     tarifs?: number;
     disponibilite?: any; 
     description?: string;
+    showFullDescription?: boolean; 
     solde?: number;
     workExperience?: number;
     nomEntreprise?: string;

@@ -1,0 +1,26 @@
+/* Style pour le texte de la description */
+
+  
+  /* Style pour le lien "Show More / Show Less" */
+  .cell a {
+    font-size: 15px;
+    color: #007bff; /* Couleur bleue pour le lien */
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 5px;
+    display: inline-block;
+  }
+  
+  .cell a:hover {
+    text-decoration: underline; /* Souligner le lien au survol */
+  }
+  
+  /* Si la description est bien longue, vous pouvez ajouter un effet de transition */
+  .cell a {
+    transition: color 0.3s ease;
+  }
+  
+  .cell a:hover {
+    color: #0056b3; /* Change la couleur du lien quand il est survolé */
+  }
+  

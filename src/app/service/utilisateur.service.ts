@@ -17,6 +17,12 @@ export class UtilisateurService {
   ajouterUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
     return this.http.post<Utilisateur>(`${this.apiUrl}/ajouter`, utilisateur);
   }
+  getAllUsers(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.apiUrl);
+  }
+  getPrestataires(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.apiUrl}/prestataires`);
+  }
 
 
   deleteUser(id: number): Observable<void> {
