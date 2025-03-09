@@ -128,10 +128,11 @@ public class Utilisateur  implements UserDetails  {
 @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL, orphanRemoval = true)
 
     private List<Disponibilite> disponibilites = new ArrayList<>();
-@JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "adresse_id")
-    private Adresse adressee;
+@JsonManagedReference
+private Adresse adressee;
 
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
@@ -141,6 +142,13 @@ public class Utilisateur  implements UserDetails  {
         this.telephoneNumber = telephoneNumber;
         this.role = role;
         this.createdAt = (createdAt != null) ? createdAt : new Date();
+    }
+
+    public Utilisateur(Long idUtilisateur, UserRole role, Adresse adressee) {
+        this.idUtilisateur = idUtilisateur;
+       this.role=role;
+
+        this.adressee = adressee;
     }
 
 

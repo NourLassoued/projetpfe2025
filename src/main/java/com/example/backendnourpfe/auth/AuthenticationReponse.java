@@ -2,6 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 
+import com.example.backendnourpfe.classes.Adresse;
 import com.example.backendnourpfe.classes.StatusUtilisateur;
 import com.example.backendnourpfe.classes.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,5 +48,7 @@ public class AuthenticationReponse {
     private StatusUtilisateur status;
     @JsonProperty("workExperience")
     private Integer workExperience;
+    @JsonProperty("adresse")
+    private Adresse adresse;
 
 }

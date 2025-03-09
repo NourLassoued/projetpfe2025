@@ -187,6 +187,17 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
         boolean exists = utilisateurService.checkEmailExists(email);
         return ResponseEntity.ok(exists);  // Retourne "true" si l'email existe, "false" sinon
     }
+    @GetMapping("/users")
+    public ResponseEntity<List<Utilisateur>> getAllUsers() {
+        List<Utilisateur> users = utilisateurService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+    @GetMapping("/prestataires")
+    public ResponseEntity<List<Utilisateur>> getPrestataires() {
+        List<Utilisateur> prestataires = utilisateurService.getAllPrestataires();
+        return ResponseEntity.ok(prestataires);
+    }
+
 }
 
 

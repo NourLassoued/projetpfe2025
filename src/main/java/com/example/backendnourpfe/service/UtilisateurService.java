@@ -53,6 +53,33 @@ public class UtilisateurService implements UtlisateurInterface {
 
         utilisateurRepository.deleteById(id);
     }
+    public List<Utilisateur> getAllUsers() {
+        return utilisateurRepository.findAll();
+    }
+    public List<Utilisateur> getAllPrestataires() {
+        List<Utilisateur> prestataires = utilisateurRepository.findAll().stream()
+                .filter(user -> user.getRole() == UserRole.PRESTATAIRE)
+                .map(user -> {
+                    if (user.getAdressee() != null) {
+                        System.out.println("Adresse de " + user.getNom() + ": "
+                                + user.getAdressee().getGovernoate());
+                    } else {
+                        System.out.println("Aucune adresse pour " + user.getNom());
+                    }
+                    return user;
+                })
+                .collect(Collectors.toList());
+        return prestataires;
+    }
+
+
+
+
+
+
+
+
+
 
 
     @Override

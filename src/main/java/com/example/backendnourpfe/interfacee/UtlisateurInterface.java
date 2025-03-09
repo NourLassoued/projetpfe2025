@@ -20,6 +20,9 @@ public interface UtlisateurInterface {
     public Avis donnerAvis(Long idUtilisateur, Long idAvisUtilisateur, Avis avis);
     public List<Object> getAvisByAvisUtilisateur(Long idAvisUtilisateur);
     public Reservation creerReservation(Long idParticulier, Long idPrestataire, Reservation reservation);
+ public List<Utilisateur> getAllPrestataires();
+
 
     public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande);
+ public List<Utilisateur> getAllUsers();
 }
