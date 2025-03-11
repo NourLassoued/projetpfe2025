@@ -6,9 +6,11 @@ import com.example.backendnourpfe.Respository.*;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,22 +58,64 @@ public class UtilisateurService implements UtlisateurInterface {
     public List<Utilisateur> getAllUsers() {
         return utilisateurRepository.findAll();
     }
+/*
     public List<Utilisateur> getAllPrestataires() {
         List<Utilisateur> prestataires = utilisateurRepository.findAll().stream()
                 .filter(user -> user.getRole() == UserRole.PRESTATAIRE)
                 .map(user -> {
                     if (user.getAdressee() != null) {
-                        System.out.println("Adresse de " + user.getNom() + ": "
-                                + user.getAdressee().getGovernoate());
+
                     } else {
-                        System.out.println("Aucune adresse pour " + user.getNom());
+
                     }
                     return user;
                 })
                 .collect(Collectors.toList());
         return prestataires;
     }
+*/
+public List<Utilisateur> getAllParticuliers() {
+    List<Utilisateur> particuliers = utilisateurRepository.findAll().stream()
+            .filter(user -> user.getRole() == UserRole.PARTICULIER)
+            .map(user -> {
+                if (user.getAdressee() != null) {
 
+                } else {
+
+                }
+                return user;
+            })
+            .collect(Collectors.toList());
+    return particuliers;
+}
+
+public List<Utilisateur> getAllPrestataires() {
+    List<Utilisateur> prestataires = utilisateurRepository.findAllPrestatairesWithAdresse(UserRole.PRESTATAIRE);
+
+    for (Utilisateur user : prestataires) {
+        if (user.getAdressee() != null) {
+            System.out.println("Adresse du prestataire : " + user.getAdressee().getIdAdresse());
+        }
+        if (!user.getDisponibilites().isEmpty()) {
+            System.out.println("Disponibilités du prestataire : " + user.getDisponibilites());
+        } else {
+            System.out.println("Aucune disponibilité trouvée pour le prestataire : " + user.getIdUtilisateur());
+        }
+    }
+
+    return prestataires;
+}
+
+    public Utilisateur getUtilisateurFromToken(String token) {
+        String email = jwtService.extractUsername(token); // Extraire l'email depuis le token
+
+        if (email == null) {
+            throw new RuntimeException("Token invalide ou expiré");
+        }
+
+        return utilisateurRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email: " + email));
+    }
 
 
 
@@ -263,18 +307,8 @@ public class UtilisateurService implements UtlisateurInterface {
                 "user", updatedUser
         ));
     }
-/*
-    public Utilisateur affecterAdresse(Long utilisateurId, Long adresseId) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-        Adresse adressee = adresseRepository.findById(adresseId)
-                .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
 
-        utilisateur.setAdressee(adressee);
-        return utilisateurRepository.save(utilisateur);
-
-    }*/
 public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
     Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
             .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
@@ -285,11 +319,11 @@ public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
     utilisateur.setAdressee(adresse);
     Utilisateur updatedUser = utilisateurRepository.save(utilisateur);
 
-    // Générer un nouveau token après la mise à jour
-    String newToken = jwtService.generateToken(updatedUser);
-    System.out.println("🚀 Nouveau token généré : " + newToken);
 
-    // Retourner les informations sous forme de Map
+    String newToken = jwtService.generateToken(updatedUser);
+
+
+
     Map<String, Object> response = new HashMap<>();
     response.put("message", "Adresse affectée avec succès !");
     response.put("token", newToken);

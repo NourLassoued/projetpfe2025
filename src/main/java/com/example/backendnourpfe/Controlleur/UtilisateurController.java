@@ -2,6 +2,7 @@ package com.example.backendnourpfe.Controlleur;
 
 
 
+import com.example.backendnourpfe.Config.JwtService;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
@@ -21,6 +22,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -32,7 +34,6 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
-
 
     @PostMapping("/ajouter")
     public ResponseEntity<Utilisateur> ajouterUtilisateur(@RequestBody Utilisateur utilisateur) {
@@ -46,10 +47,10 @@ public class UtilisateurController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         try {
             utilisateurService.deleteUser(id);
-            return ResponseEntity.ok().build(); // Retourne 200 OK si la suppression réussit
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            // Retourne une réponse 500 en cas d'erreur interne
+
         }
     }
 
@@ -95,56 +96,35 @@ public class UtilisateurController {
         return utilisateurService.creerReservation(idParticulier, idPrestataire, reservation);
     }
 
-    /*
-        @GetMapping("/activation/{email}")
-        public String activateAccount(@PathVariable String email) {
-            // Trouver l'utilisateur en fonction de l'email
-            Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmail(email);
 
-            if (utilisateurOpt.isPresent()) {
-                Utilisateur utilisateur = utilisateurOpt.get();
-
-                // Vérifier si le statut est ATTENTE avant de le mettre à jour
-                if (utilisateur.getStatus() == StatusUtilisateur.ATTENTE) {
-                    utilisateur.setStatus(StatusUtilisateur.ACCEPTE);  // Mettre à jour le statut à "ACCEPTE"
-                    utilisateurRepository.save(utilisateur); // Sauvegarder les modifications
-
-                    // Rediriger vers une page de succès
-                    return "redirect:/activation-success";  // Rediriger vers une page de succès
-                }
-            }
-
-            // Si l'email est invalide ou l'utilisateur est déjà activé
-            return "redirect:/activation-failed";  // Rediriger vers une page d'échec
-        }*/
     @GetMapping("/activation/{email}")
     public ResponseEntity<Void> activateAccount(@PathVariable String email) {
-        // Décoder l'email (pour éviter les problèmes d'encodage dans l'URL)
+
         try {
             email = URLDecoder.decode(email, StandardCharsets.UTF_8);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
 
-        // Trouver l'utilisateur en base de données
+
         Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmail(email);
 
         if (utilisateurOpt.isPresent()) {
             Utilisateur utilisateur = utilisateurOpt.get();
 
-            // Vérifier le statut avant de mettre à jour
+
             if (utilisateur.getStatus() == StatusUtilisateur.ATTENTE) {
                 utilisateur.setStatus(StatusUtilisateur.ACCEPTE);
                 utilisateurRepository.save(utilisateur);
 
-                // 🔄 Redirection vers Angular (http://localhost:4200/login)
+
                 return ResponseEntity.status(HttpStatus.FOUND)
                         .header(HttpHeaders.LOCATION, "http://localhost:4200/login")
                         .build();
             }
         }
 
-        // Si l'utilisateur n'existe pas ou est déjà activé, renvoyer une erreur
+
         return ResponseEntity.badRequest().build();
     }
 
@@ -169,14 +149,7 @@ public class UtilisateurController {
             @Valid @RequestBody Utilisateur utilisateurDetails) {
 
         return utilisateurService.updateUser(id, utilisateurDetails);
-    }/*
-    @PutMapping("/affecter-adresse/{utilisateurId}/{adresseId}")
-    public ResponseEntity<Utilisateur> affecterAdresse(@PathVariable Long utilisateurId, @PathVariable Long adresseId) {
-        Utilisateur utilisateur = utilisateurService.affecterAdresse(utilisateurId, adresseId);
-        return ResponseEntity.ok(utilisateur);
     }
-
-*/
 @PutMapping("/affecter-adresse/{utilisateurId}/{adresseId}")
 public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long utilisateurId, @PathVariable Long adresseId) {
     Map<String, Object> response = utilisateurService.affecterAdresse(utilisateurId, adresseId);
@@ -197,7 +170,14 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
         List<Utilisateur> prestataires = utilisateurService.getAllPrestataires();
         return ResponseEntity.ok(prestataires);
     }
+    @GetMapping("/particuliers")
+    public ResponseEntity<List<Utilisateur>> getUtilisateursParticuliers() {
+        List<Utilisateur> particuliers = utilisateurService.getAllParticuliers();
+        return ResponseEntity.ok(particuliers);
+    }
 
 }
+
+
 
 

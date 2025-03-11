@@ -48,7 +48,7 @@ public class AuthenticationReponse {
     private StatusUtilisateur status;
     @JsonProperty("workExperience")
     private Integer workExperience;
-    @JsonProperty("adresse")
-    private Adresse adresse;
+    @JsonProperty("adressee")
+    private Adresse adressee;
 
 }

@@ -3,11 +3,8 @@ package com.example.backendnourpfe.classes;
 
 
 import com.example.backendnourpfe.Token.Token;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,17 +12,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Utilisateur  implements UserDetails  {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUtilisateur;
@@ -124,15 +121,24 @@ public class Utilisateur  implements UserDetails  {
     @JsonManagedReference
     private List<Servicee> servicesOfferts =new ArrayList<>();
 
+
 @JsonIgnore
 @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL, orphanRemoval = true)
 
+
+@JsonIgnoreProperties("prestataire")
     private List<Disponibilite> disponibilites = new ArrayList<>();
 
-    @ManyToOne
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+
     @JoinColumn(name = "adresse_id")
-@JsonManagedReference
-private Adresse adressee;
+
+
+    @JsonIgnoreProperties("utilisateurs")
+    private Adresse adressee;
 
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
@@ -185,5 +191,15 @@ private Adresse adressee;
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    public List<Map<String, Object>> getDisponibilite() {
+        return disponibilites != null ? disponibilites.stream().map(dispo -> {
+            Map<String, Object> dispoMap = new HashMap<>();
+            dispoMap.put("id", dispo.getId());
+            dispoMap.put("jour", dispo.getJour());
+            dispoMap.put("heureDebut", dispo.getHeureDebut().toString());
+            dispoMap.put("heureFin", dispo.getHeureFin().toString());
+            return dispoMap;
+        }).collect(Collectors.toList()) : Collections.emptyList();
     }
 }

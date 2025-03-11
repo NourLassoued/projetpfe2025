@@ -2,9 +2,11 @@ package com.example.backendnourpfe.auth;
 
 
 
+import com.example.backendnourpfe.classes.Adresse;
 import com.example.backendnourpfe.classes.Disponibilite;
 import com.example.backendnourpfe.classes.StatusUtilisateur;
 import com.example.backendnourpfe.classes.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +40,6 @@ public class RegisterRequest implements Serializable {
     private  String doucument_cv;
     private StatusUtilisateur status;
 
-
     private Integer workExperience;
     private String nomEntreprise;
     private String siret;
@@ -47,4 +48,8 @@ public class RegisterRequest implements Serializable {
     private List<String> competence;
     private List<byte[]> images;
     private List<Disponibilite> disponibilites;
+    private Adresse adresse;
+
+
 }
+

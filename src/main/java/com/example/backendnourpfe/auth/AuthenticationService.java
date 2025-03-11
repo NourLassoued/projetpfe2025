@@ -61,6 +61,7 @@ public AuthenticationReponse register(RegisterRequest request) {
         utilisateur.setImage(request.getImage());
         utilisateur.setTelephoneNumber(request.getTelephoneNumber());
         utilisateur.setRole(role);
+
         utilisateur.setCreatedAt(new Date());
         utilisateur.setCertification(request.getCertification());
         utilisateur.setTarifs(request.getTarifs());
@@ -74,10 +75,16 @@ public AuthenticationReponse register(RegisterRequest request) {
         utilisateur.setNomEntreprise(request.getNomEntreprise());
         utilisateur.setSiret(request.getSiret());
         utilisateur.setSiteWeb(request.getSiteWeb());
+    if (request.getAdresse() != null) {
+        Adresse adresse = new Adresse();
+        adresse.setGovernoate(request.getAdresse().getGovernoate());
+        adresse.setVille(request.getAdresse().getVille());
+        utilisateur.setAdressee(adresse);
+    }
 
 
 
-        if (request.getCompetence() != null && !request.getCompetence().isEmpty()) {
+    if (request.getCompetence() != null && !request.getCompetence().isEmpty()) {
             List<Servicee> services = serviceRepository.findByNomserviceIn(request.getCompetence());
             utilisateur.setServicesOfferts(services);
         }

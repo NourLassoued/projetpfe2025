@@ -28,8 +28,8 @@ public class JwtService {
     private long refreshExpiration;
 
     public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject);
-}
+        return extractClaim(token, Claims::getSubject);
+    }
 
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -57,11 +57,11 @@ public class JwtService {
         claims.put("role", user.getRole());
         claims.put("status", user.getStatus());
         claims.put("telephoneNumber", user.getTelephoneNumber());
-claims.put("id",user.getIdUtilisateur());
+        claims.put("id", user.getIdUtilisateur());
         claims.put("WorkExerience", user.getWorkExperience());
 
 
-    claims.put("adresse",user.getAdressee());
+        claims.put("adresse", user.getAdressee());
 
 
         claims.put("tarifs", user.getTarifs());
@@ -78,7 +78,7 @@ claims.put("id",user.getIdUtilisateur());
         claims.put("cin", Optional.ofNullable(user.getDoucument_CIN()).orElse("Non fourni"));
         claims.put("cv", Optional.ofNullable(user.getDoucument_cv()).orElse("Non fourni"));
 
-        claims.put("solde",Optional.ofNullable(user.getSolde()).orElse(0.0F));
+        claims.put("solde", Optional.ofNullable(user.getSolde()).orElse(0.0F));
 
 
         claims.put("nomEntreprise", Optional.ofNullable(user.getNomEntreprise()).orElse("Particulier"));
@@ -105,10 +105,11 @@ claims.put("id",user.getIdUtilisateur());
     }
 
     public String gererateRefershToken(
-           UserDetails userDetails
+            UserDetails userDetails
     ) {
-        return buildToken(new HashMap<>(),userDetails,refreshExpiration);
+        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
+
     private String buildToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails,
@@ -146,9 +147,9 @@ claims.put("id",user.getIdUtilisateur());
                 .getBody();
 
     }
-        private Key getSignInKey () {
-            byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-            return Keys.hmacShaKeyFor(keyBytes);
-        }
 
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
+}
