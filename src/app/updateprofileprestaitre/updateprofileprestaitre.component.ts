@@ -102,7 +102,7 @@ modificationMode = false;
    
 constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,
   private disponibliteService:DisponibliteService,
-  private toastr: ToastrService,private snackBar: MatSnackBar,private cdRef: ChangeDetectorRef,
+  private toastr: ToastrService,private cdRef: ChangeDetectorRef,
  private forgetPasswordService:ForgetPasswordService,
 private uploadService :FileService,private adreesse:AdresseService) {}
 

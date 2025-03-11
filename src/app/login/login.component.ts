@@ -72,58 +72,7 @@ export class LoginComponent {
     });
   }
   
-/*
- authenticate(): void {
-    this.authService.authenticate(this.loginForm.value.email, this.loginForm.value.password).subscribe(
-
-      response => {
-        console.log('Réponse de l\'authentification dans le composant :', response);
-  
-        // Vérifie si la réponse contient un statut valide
-        if (response && response.status && Object.values(StatusUtilisateur).includes(response.status)) {
-          
-          if (response.status === StatusUtilisateur.ACCEPTE) {
-            console.log('Utilisateur accepté, accès autorisé.');
-  
-            // Stocker l'utilisateur en local
-            localStorage.setItem('currentUser', JSON.stringify(response));
-  
-            // Rediriger vers la page d'accueil
-            this.navigateToHome();
-          } else {
-            console.warn('Utilisateur non accepté, accès refusé.');
-            // Ajouter ici une gestion d'erreur (ex: afficher un message à l'utilisateur)
-          }
-          
-        } else {
-          console.error('La réponse d\'authentification est invalide ou ne contient pas le statut.');
-        }
-      },
-      error => {
-        console.error('Erreur lors de l\'authentification :', error);
-        // Gérer les erreurs d'authentification ici
-      }
-    );
-  }
-  
-
-navigateToHome() {
-  // Naviguer vers la page d'accueil
-  this.router.navigate(['/Front']);
-}
-
-  refreshToken(refreshToken: string): void {
-    this.authService.refreshToken(refreshToken).subscribe(
-      response => {
-        // Traitez la réponse du rafraîchissement de token ici
-        console.log('Token refreshed', response);
-      },
-      error => {
-        // Gérer les erreurs de rafraîchissement de token ici
-        console.error('Refresh token error', error);
-      }
-    );
-  }*/authenticate(): void {
+authenticate(): void {
     this.authService.authenticate(this.loginForm.value.email, this.loginForm.value.password).subscribe(
       response => {
           if (response && response.access_token) {
@@ -139,9 +88,11 @@ navigateToHome() {
                   this.router.navigate(['/Compteprestaitre']);
               } else if (decodedToken.role === 'PARTICULIER') { 
                 this.router.navigate(['/Compteparticulier']);
-               } else {
-                  this.router.navigate(['/Front']);
-              }
+               } else if (decodedToken.role === 'ADMINISTRATEUR') { 
+                this.router.navigate(['/Admindashboard']); 
+              } else {
+                this.router.navigate(['/Front']);
+            }
               
           } else {
               console.error('❌ La réponse ne contient pas de token valide.');

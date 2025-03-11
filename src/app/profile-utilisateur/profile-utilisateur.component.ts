@@ -18,7 +18,7 @@ export class ProfileUtilisateurComponent implements OnInit{
 
  user1: Utilisateur = { servicesOfferts: [] };
    
-  constructor(private fileService: FileService, private sanitizer: DomSanitizer,public notificationService: NotificationService) {}
+  constructor(private fileService: FileService, private sanitizer: DomSanitizer){}
   
    
   ngOnInit(): void {

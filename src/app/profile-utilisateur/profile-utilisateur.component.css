@@ -6,6 +6,7 @@ body {
     height: 1600px;
     
 }
+
 .container {
     display: flex;
     width: 2500px;
@@ -473,4 +474,3 @@ button.close-btn {
     margin: 15px auto 0;
     transition: background 0.2s;
 }
-

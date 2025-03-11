@@ -31,8 +31,9 @@ export class Utilisateur {
     siteWeb?: string;
     doucument_cv?: string;
     doucument_CIN?: string;
+    [key: string]: any;
     servicesOfferts?: Servicee[];
     disponibilites?: Disponibilite[];
-    adresse?: Adresse;
+    adressee?: Adresse;
   }
   

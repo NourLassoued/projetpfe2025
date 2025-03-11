@@ -14,6 +14,7 @@
     
     <!-- FontAwesome JS-->
     <script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+	
     
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
@@ -337,7 +338,7 @@
 			    
 			    <div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">Liste des prestataires</h1>
+			            <h1 class="app-page-title mb-0">liste des utilisateurs</h1>
 				    </div>
 				    <div class="col-auto">
 					     <div class="page-utilities">
@@ -379,8 +380,8 @@
 			   
 			    
 			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
-				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Paid</a>
+				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
+				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Particuliers</a>
 				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Pending</a>
 				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Cancelled</a>
 				</nav>
@@ -391,11 +392,37 @@
 					    <div class="app-card app-card-orders-table shadow-sm mb-5">
 						    <div class="app-card-body">
 							    <div class="table-responsive">
+	<!-- Vérification que selectedPrestataire existe avant d'afficher les disponibilités -->
+<div *ngIf="selectedPrestataire" class="disponibilites-box">
+	<h3>Disponibilités de {{ selectedPrestataire.nom }}:</h3>
+	
+	<!-- Vérification que selectedPrestataire a des disponibilités -->
+	<ul *ngIf="selectedPrestataire.disponibilites && selectedPrestataire.disponibilites.length > 0; else noDisponibilites">
+	  <li *ngFor="let dispo of selectedPrestataire.disponibilites">
+		📅 {{ dispo.jour }} - ⏰ {{ dispo.heureDebut }} à {{ dispo.heureFin }}
+	  </li>
+	</ul>
+	
+	<ng-template #noDisponibilites>
+	  <p>Aucune disponibilité</p>
+	</ng-template>
+	
+	<button (click)="closeDisponibilites()">Fermer</button>
+  </div>
+  
+  
+									  
+									  
+									  
 							        <table class="table app-table-hover mb-0 text-left">
+										
 										<thead>
+											
 											<tr>
+												<th class="cell">Image</th>
 												<th class="cell">Nom</th>
 												<th class="cell">Email</th>
+												<th class="cell">password</th>
 												<th class="cell">Téléphone</th>
 												<th class="cell">Status</th>
 												
@@ -406,23 +433,102 @@
 												<th class="cell">Expérience</th>
 												<th class="cell">Services Offerts</th>
 												<th class="cell">Adresse</th>
-												<th class="cell"></th>
+												<th class="cell">Cv</th>
+												<th class="cell">CIN</th>
+											<th class="cell">Supprimer</th>
+											
+												
 											</tr>
 										</thead>
 										<tbody>
 											<tr *ngFor="let prestataire of prestataires">
-												<td class="cell">{{ prestataire.nom }}</td>
-												<td class="cell">{{ prestataire.email }}</td>
-												<td class="cell">{{ prestataire.telephoneNumber }}</td>
+												<!-- Affichage de la photo de profil -->
 												<td class="cell">
-													<span class="badge" [ngClass]="{'bg-success': prestataire.status === 'ACCEPTE', 'bg-danger': prestataire.status !== 'ACCEPTE'}">
-														{{ prestataire.status }}
+													<img *ngIf="prestataire.image" [src]="prestataire.image" alt="Photo de {{ prestataire.nom }}" class="profile-pic">
+													<i *ngIf="!prestataire.image" class="fa fa-user profile-pic"></i>
+												  </td>
+												  <td class="cell">
+													<!-- Modifier le nom -->
+													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'nom'" 
+														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null">
+													  {{ prestataire.nom }}
 													</span>
-												</td>
+													
+													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'nom'" 
+														   [(ngModel)]="prestataire.nom" 
+														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'nom', prestataire.nom)" 
+														   placeholder="Nom">
+												  </td>
+												  <td class="cell">
+													<!-- Modifier l'email -->
+													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'email'" 
+														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null">
+													  {{ prestataire.email }}
+													</span>
+													
+													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'email'" 
+														   [(ngModel)]="prestataire.email" 
+														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'email', prestataire.email)" 
+														   placeholder="Email">
+												  </td>
+												<td class="cell">{{ prestataire.password ? '********' : '' }}</td>
 											
-												<td class="cell">{{ prestataire.tarifs }}</td>
+												<td class="cell">
+													
+													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'telephoneNumber'" 
+														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null">
+													  {{ prestataire.telephoneNumber }}
+													</span>
+													
+													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'telephoneNumber'" 
+														   [(ngModel)]="prestataire.telephoneNumber" 
+														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber)" 
+														   placeholder="telephoneNumber">
+												  </td>
+												<td class="cell">
+													<!-- Modifier le statut -->
+													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'status'" 
+														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'status', prestataire.status) : null"
+														    [ngClass]="{
+															'status-accepte': prestataire.status === 'ACCEPTE',
+															'status-refuse': prestataire.status === 'REFUSE',
+															'status-attente': prestataire.status === 'ATTENTE'
+														  }">
+													  {{ prestataire.status }}
+													</span>
+													
+													<select *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'status'" 
+															[(ngModel)]="prestataire.status" 
+															(blur)="updateUserInTable(prestataire.idUtilisateur, 'status', prestataire.status)">
+													  <option value="ACCEPTE">Accepte</option>
+													  <option value="REFUSE">Refuse</option>
+													  <option value="ATTENTE">Attente</option>
+													</select>
+												  </td>
+											
 												
-												<td class="cell">{{ prestataire.disponibilites?.length }}</td>
+												<td class="cell">
+													
+													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'tarifs'" 
+														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null">
+													  {{ prestataire.tarifs }}
+													</span>
+													
+													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'tarifs'" 
+														   [(ngModel)]="prestataire.tarifs" 
+														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs)" 
+														   placeholder="tarifs">
+												  </td>
+												
+												
+												<td class="cell">
+													<i #calendarIcon class="fas fa-calendar-alt clickable-icon"
+													   (click)="showDisponibilites(prestataire)">
+													</i>
+												  </td>
+												  
+												  
+												  
 												<td class="cell">
 													<div class="description-container">
 													  <span>{{ prestataire.description | slice: 0:50 }}</span> <!-- Afficher les 50 premiers caractères -->
@@ -433,21 +539,59 @@
 													</div>
 												  </td>
 												<td class="cell">{{ prestataire.solde }}dt</td>
-												<td class="cell">{{ prestataire.workExperience }} </td>
-												<td class="cell">{{ prestataire.competence}} </td>
+												
 												
 												<td class="cell">
-													{{prestataire.adresse}}</td>
+													
+													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'workExperience'" 
+														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null">
+													  {{ prestataire.workExperience }}
+													</span>
+													
+													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'workExperience'" 
+														   [(ngModel)]="prestataire.workExperience" 
+														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience)" 
+														   placeholder="workExperience">
+												  </td>
 												
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
+												<td class="cell">{{ prestataire.competence}} </td>
+												
+												
+												<td class="cell">{{ prestataire.adressee?.governoate }}</td>
+
+												<td class="cell">
+													<a *ngIf="prestataire.doucument_CIN" (click)="downloadFile(prestataire.doucument_CIN)" class="btn-sm app-btn-secondary">
+													  {{ prestataire.doucument_CIN.split('/').pop() }}
+													</a>
+												  </td>
+											  
+												  <td class="cell">
+													<a *ngIf="prestataire.doucument_cv" (click)="downloadFile(prestataire.doucument_cv)" class="btn-sm app-btn-secondary">
+													  {{ prestataire.doucument_cv.split('/').pop() }}
+													</a>
+												  </td>
+																				  
+
+												
+												  <td class="cell">
+													<a href="#" class="btn-sm btn-danger" 
+													(click)="prestataire.idUtilisateur ? supprimerUtilisateur(prestataire.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
+											   
+
+												</td>
+												
+												
+													
 											</tr>
 		
 										</tbody>
 									</table>
+									
 						        </div><!--//table-responsive-->
 						       
 						    </div><!--//app-card-body-->		
 						</div><!--//app-card-->
+					
 						<nav class="app-pagination">
 							<ul class="pagination justify-content-center">
 								<li class="page-item disabled">
@@ -472,56 +616,68 @@
 							        <table class="table mb-0 text-left">
 										<thead>
 											<tr>
-												<th class="cell">Order</th>
-												<th class="cell">Product</th>
-												<th class="cell">Customer</th>
-												<th class="cell">Date</th>
-												<th class="cell">Status</th>
-												<th class="cell">Total</th>
-												<th class="cell"></th>
+												<th class="cell">Image</th>
+												<th class="cell">Nom</th>
+                                               <th class="cell">Email</th>
+                                              <th class="cell">Mot de passe</th>
+                                           
+                                              <th class="cell">Adresse</th>
+                                                <th class="cell">Téléphone</th>
+                                           <th class="cell">Status</th>
+										   <th class="cell">supprimer</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="cell">#15346</td>
-												<td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-												<td class="cell">John Sanders</td>
-												<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$259.35</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15344</td>
-												<td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-												<td class="cell">Teresa Holland</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$123.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15343</td>
-												<td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-												<td class="cell">Jayden Massey</td>
-												<td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$199.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-										
-											
-											<tr>
-												<td class="cell">#15341</td>
-												<td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-												<td class="cell">Raymond Atkins</td>
-												<td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-												<td class="cell">$678.26</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
+											<tr *ngFor="let utilisateur of utilisateursParticuliers;  let i = index">
+												<td class="cell">
+													<img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
+													<i *ngIf="!utilisateur.image" class="fa fa-user profile-pic"></i>
+												  </td>
+												<td class="cell">{{ utilisateur.nom }}</td>
+												<td class="cell">{{ utilisateur.email }}</td>
+												<td class="cell">{{ utilisateur.password ? '********' : '' }}</td>
+												
+												<td class="cell">{{ utilisateur.adressee?.governoate }}</td>
+												<td class="cell">
+													
+													<span *ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'telephoneNumber'" 
+														  (click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null">
+													  {{ utilisateur.telephoneNumber }}
+													</span>
+													
+													<input *ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'telephoneNumber'" 
+														   [(ngModel)]="utilisateur.telephoneNumber" 
+														   (blur)="updateUserInTable(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber)" 
+														   placeholder="telephoneNumber">
+												  </td>
+												<td class="cell">
+													<!-- Modifier le statut -->
+													<span *ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'status'" 
+														  (click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'status', utilisateur.status) : null"
+														   [ngClass]="{
+															'status-accepte': utilisateur.status === 'ACCEPTE',
+															'status-refuse': utilisateur.status === 'REFUSE',
+															'status-attente': utilisateur.status === 'ATTENTE'
+														  }">
+													  {{ utilisateur.status }}
+													</span>
+													
+													<select *ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'status'" 
+															[(ngModel)]="utilisateur.status" 
+															(blur)="updateUserInTable(utilisateur.idUtilisateur, 'status', utilisateur.status)">
+													  <option value="ACCEPTE">Accepte</option>
+													  <option value="REFUSE">Refuse</option>
+													  <option value="ATTENTE">Attente</option>
+													</select>
+												  </td>
+												<td class="cell">
+													<a href="#" class="btn-sm btn-danger" 
+													(click)="utilisateur.idUtilisateur ? supprimerUtilisateur(utilisateur.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
+											   
+
+												</td>
+
+											  </tr>
 		
 										</tbody>
 									</table>
@@ -617,6 +773,7 @@
     <!-- Javascript -->          
     <script src="assetsadmin/plugins/popper.min.js"></script>
     <script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>  
+	
     
     
     <!-- Page Specific JS -->

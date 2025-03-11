@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Disponibilités</h2>
+
+<mat-dialog-content>
+  <ul *ngIf="data?.disponibilites?.length > 0; else noDisponibilites">
+    <li *ngFor="let dispo of data.disponibilites">
+      📅 {{ dispo.jour }} - ⏰ {{ dispo.heureDebut }} à {{ dispo.heureFin }}
+    </li>
+  </ul>
+  
+  <ng-template #noDisponibilites>
+    <p>Aucune disponibilité</p>
+  </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Fermer</button>
+</mat-dialog-actions>

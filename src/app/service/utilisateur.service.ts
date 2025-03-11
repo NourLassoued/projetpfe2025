@@ -20,19 +20,19 @@ export class UtilisateurService {
   getAllUsers(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(this.apiUrl);
   }
-  getPrestataires(): Observable<Utilisateur[]> {
-    return this.http.get<Utilisateur[]>(`${this.apiUrl}/prestataires`);
-  }
-
+ 
+    getPrestataires(): Observable<Utilisateur[]> {
+      return this.http.get<Utilisateur[]>(`${this.apiUrl}/prestataires`);
+    }
+    getUtilisateursParticuliers(): Observable<Utilisateur[]> {
+      return this.http.get<Utilisateur[]>(`${this.apiUrl}/particuliers`);
+    }
 
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteUser/${id}`);
   }
 
-  /*
-  updateUser(id: number, utilisateur: Utilisateur): Observable<Utilisateur> {
-    return this.http.put<Utilisateur>(`${this.apiUrl}/${id}`, utilisateur);
-  }*/
+  
   updateUser(id: number, utilisateur: Partial<Utilisateur>): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, utilisateur);
   }

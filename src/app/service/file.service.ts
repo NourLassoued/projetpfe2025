@@ -20,19 +20,16 @@ export class FileService {
  
     return this.http.post(`${this.apiUrl}/upload`, formData, { responseType: 'text' });
   }
-  /*
-    uploadFile(file: File): Observable<string> {
-      const formData = new FormData();
-      formData.append('file', file);
-    
-      return this.http.post<string>(`${this.apiUrl}/upload`, formData);
-    }*/
-    
 
+  getImage(filename: string): Observable<Blob> {
+    const url = `${this.apiUrl}/get-image/${encodeURIComponent(filename)}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
+/*
 
   getImage(filename: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/get-image/${filename}`, { responseType: 'blob' });
-  }
+  }*/
   updateProfileImage(newImageUrl: string) {
     this.profileImageSubject.next(newImageUrl);
   }
