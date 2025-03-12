@@ -11,48 +11,65 @@
 
     <form [formGroup]="form1">
       <!-- Formulaire 1 -->
+       <label> <i class="fas fa-user"></i> Nom du responsable</label>
       <div >
-        <input formControlName="nom" placeholder="👤 Nom du fondateur">
+        <input formControlName="nom" class="input-fa user" >
+       
+     
         <div class="error" *ngIf="form1.get('nom')?.invalid && form1.get('nom')?.touched">
           <span *ngIf="form1.get('nom')?.errors?.['required']">⚠️ Le nom est requis.</span>
+        
         </div>
-
-        <input formControlName="email" type="email" placeholder="📧 EmailEntreprise">
+        <label> <i class="fas fa-envelope"></i> Email</label>
+        <input formControlName="email" type="email" class="input-fa">
         <div class="error" *ngIf="form1.get('email')?.invalid && form1.get('email')?.touched">
           <span *ngIf="form1.get('email')?.errors?.['required']">⚠️ L'email est requis.</span>
+          <div *ngIf="form1.get('email')?.hasError('emailExists')">
+            <small class="text-danger">⚠️L'email existe déjà ! Veuillez en choisir un autre.</small>
           <span *ngIf="form1.get('email')?.errors?.['email']">⚠️ Entrez un email valide.</span>
         </div>
-
-        <input formControlName="password" type="password" placeholder="🔒 Mot de passe">
+        </div>
+        <label><i class="fas fa-lock"></i> Le mot de passe</label>
+        <input formControlName="password" type="password" class="input-fa">
         <div class="error" *ngIf="form1.get('password')?.invalid && form1.get('password')?.touched">
           <span *ngIf="form1.get('password')?.errors?.['required']">⚠️ Le mot de passe est requis.</span>
           <span *ngIf="form1.get('password')?.errors?.['minlength']">⚠️ Le mot de passe doit contenir au moins 8 caractères.</span>
         </div>
-
-        <input formControlName="telephoneNumber" placeholder="📞 TélephoneEntreprise">
+        <label><i class="fas fa-phone"></i> Le numéro de téléphone</label>
+        <input formControlName="telephoneNumber"  class="input-fa">
         <div class="error" *ngIf="form1.get('telephoneNumber')?.invalid && form1.get('telephoneNumber')?.touched">
           <span *ngIf="form1.get('telephoneNumber')?.errors?.['required']">⚠️ Le numéro de téléphone est requis.</span>
           <span *ngIf="form1.get('telephoneNumber')?.errors?.['pattern']">⚠️ Entrez un numéro valide.</span>
         </div>
-
-        <input formControlName="competence" type="text" placeholder="🔍💼 Sélectionnez votre domaine de spécialisation ?" (click)="showSkillModal()">
+<label> <i class="fas fa-briefcase"></i> Sélectionnez votre domaine de spécialisation </label>
+        <input formControlName="competence" type="text"  (click)="showSkillModal()">
         <div class="error" *ngIf="form1.get('competence')?.invalid && form1.get('competence')?.touched">
           <span>⚠️ La compétence est requise.</span>
         </div>
-        <input formControlName="nomEntreprise" placeholder="🏢 Nom de l'entreprise">
+        <label>   <i class="fas fa-building"></i> Le nom de l'entreprise </label>
+        <input formControlName="nomEntreprise" class="input-fa">
         <div class="error" *ngIf="form1.get('nomEntreprise')?.invalid && form1.get('nomEntreprise')?.touched">
           <span>⚠️ Le nom de l'entreprise est requis.</span>
         </div>
-
-        <input formControlName="siret" placeholder="🔢 Numéro SIRET">
+        <label>   <i class="fas fa-globe"></i> Le site de web de entreprise </label>
+        <input formControlName="siteWeb" class="input-fa">
+        <div class="error" *ngIf="form1.get('siteWeb')?.invalid && form1.get('siteWeb')?.touched">
+          <span>⚠️ Le site de web de entreprise de l'entreprise est requis.</span>
+        </div>
+        <label>  <i class="fas fa-id-card"></i>  Le numéro SIRET</label>
+        <input formControlName="siret"  class="input-fa">
         <div class="error" *ngIf="form1.get('siret')?.invalid && form1.get('siret')?.touched">
           <span *ngIf="form1.get('siret')?.errors?.['required']">⚠️ Le numéro SIRET est requis.</span>
           <span *ngIf="form1.get('siret')?.errors?.['pattern']">⚠️ Le numéro SIRET doit contenir exactement 14 chiffres.</span>
         </div>
-
+        <label><i class="fas fa-image"></i>  logo de l'entreprise</label>
         <input type="file" accept="image/*" (change)="onFileSelected($event, 'image')" placeholder="📷 Logo de l'entreprise">
       </div>
       <button (click)="onSubmit()" >Soumettre</button>
+      <div *ngIf="notificationMessage" class="alert alert-info mt-3">
+        {{ notificationMessage }}
+      </div>
+
     </form>
 
       

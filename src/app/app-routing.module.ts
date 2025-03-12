@@ -26,6 +26,8 @@ import { UpdateparticulierComponent } from './updateparticulier/updateparticulie
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 import { MyDocsComponent } from './my-docs/my-docs.component';
 import { UserComponent } from './user/user.component';
+import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
+import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
 
 
 const routes: Routes = [
@@ -108,9 +110,18 @@ const routes: Routes = [
     path: 'MyDocs',
     component:MyDocsComponent
   },
+
   {
     path: 'user',
     component:UserComponent
+  },
+  {
+    path: 'Profileentreprise',
+    component:ProfiletrpriseComponent
+  },
+  {
+    path: 'UpdateEntreprise',
+    component:UpdateEtrepriseComponent
   }
 
 

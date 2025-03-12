@@ -21,6 +21,7 @@ export class InscriptionProfessionnelComponent {
   step = 1;
   form1: FormGroup;
   
+
   categories: any[] = [];
   showModal = false;
   imageUrls: string[] = [];

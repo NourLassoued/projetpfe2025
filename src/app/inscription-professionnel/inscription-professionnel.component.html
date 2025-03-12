@@ -18,8 +18,8 @@
     <p>Inscrivez-vous dès maintenant et accédez à plus de 4 000 jobs chaque semaine, dans plus de 120 catégories.</p>
     <form [formGroup]="form1">
      
-    <label>nom</label>
-        <input formControlName="nom" placeholder="&#xf007;" class="input-fa">
+    <label><i class="fas fa-user"></i> nom</label>
+        <input formControlName="nom"  class="input-fa">
        
      
       <div class="error" *ngIf="form1.get('nom')?.invalid && form1.get('nom')?.touched">
@@ -28,8 +28,8 @@
     
     
       
-      <label>Email</label>
-      <input formControlName="email" type="email" placeholder="&#xf0e0;"  class="input-fa">
+      <label><i class="fas fa-envelope"></i> Email</label>
+      <input formControlName="email" type="email"  class="input-fa">
       
       <div class="error" *ngIf="form1.get('email')?.invalid && form1.get('email')?.touched">
         <span *ngIf="form1.get('email')?.errors?.['required']">⚠️ L'email est requis.</span>
@@ -40,10 +40,10 @@
       </div>
     
       
-        <label>Mot de passe</label>
+        <label><i class="fas fa-lock"></i>  Mot de passe</label>
         <div class="input-container">
-          <input formControlName="password" type="password" placeholder="Mot de passe" class="input-fa">
-          <i class="fas fa-lock input-icon"></i> <!-- Icône Font Awesome -->
+          <input formControlName="password" type="password" class="input-fa">
+          
         </div>
      
       <div class="error" *ngIf="form1.get('password')?.invalid && form1.get('password')?.touched">
@@ -51,17 +51,17 @@
         <span *ngIf="form1.get('password')?.errors?.['minlength']">⚠️ Le mot de passe doit contenir au moins 6 caractères.</span>
       </div>
     
-      <label>Téléphone</label>
-      <input formControlName="telephoneNumber" placeholder="&#xf095;" class="input-fa">
+      <label><i class="fas fa-phone"></i>  Téléphone</label>
+      <input formControlName="telephoneNumber" class="input-fa">
       <div class="error" *ngIf="form1.get('telephoneNumber')?.invalid && form1.get('telephoneNumber')?.touched">
         <span *ngIf="form1.get('telephoneNumber')?.errors?.['required']">⚠️ Le numéro de téléphone est requis.</span>
         <span *ngIf="form1.get('telephoneNumber')?.errors?.['pattern']">⚠️ Entrez un numéro valide.</span>
       </div>
     
-      <label>Domaine de spécialisation</label>
-      <input formControlName="competence" type="text" placeholder="&#xf0b1;" class="input-fa" (click)="showSkillModal()">
-      <label>Années d'expérience</label>
-<input formControlName="workExperience" type="number" placeholder="&#xf254;" class="input-fa" min="0">
+      <label><i class="fas fa-briefcase"></i> Sélectionnez votre domaine de spécialisation</label>
+      <input formControlName="competence" type="text" class="input-fa" (click)="showSkillModal()">
+      <label><i class="fas fa-calendar-check"></i> Années d'expérience</label>
+<input formControlName="workExperience" type="number"  class="input-fa" min="0">
     
       <label><i class="fas fa-file-upload"></i> Télécharger votre CV</label>
       <input type="file" (change)="onFileSelected($event,'doucument_cv')">
@@ -114,11 +114,11 @@
             <label for="service-{{ service.id }}">{{ service.nomservice }}</label>
 
             <input 
-            class="iconn" 
-            type="checkbox" 
-            id="service-{{ service.id }}" 
-            [checked]="selectedServices.includes(service)" 
-            (change)="selectService(service)" >
+              class="iconn" 
+              type="checkbox" 
+              id="service-{{ service.id }}" 
+              [checked]="selectedServices.includes(service)" 
+              (change)="selectService(service)">
           </div>
           </div>
         </div>

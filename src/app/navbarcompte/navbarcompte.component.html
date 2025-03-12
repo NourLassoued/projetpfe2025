@@ -18,9 +18,11 @@
 
     <div class="profile-menu" id="profile-menu"   [ngClass]="{'active': isMenuOpen}">
         <ul>
-            <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : '/Profileparticulier'">👤 Voir mon profil</li>
+            <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : userRole === 'ENTREPRISE' ? '/Profileentreprise' : '/Profileparticulier'">👤 Voir mon profil</li>
             <li>✉️ Mes messages</li>
-            <li  [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : '/Updateparticulier'">⚙️ Mon compte</li>
+            <li [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : (userRole === 'ENTREPRISE' ? '/UpdateEntreprise' : '/Updateparticulier')">
+                ⚙️ Mon compte
+              </li>
             <li>❓Besoin d'aide?</li>
             <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
         </ul>

@@ -1,0 +1,227 @@
+<body>
+    <app-navbarcompte></app-navbarcompte>
+     <div class="container">
+         <div class="sidebar">
+             
+           <div id="profile-container">
+             <div class="image-wrapper" (click)="triggerFileInput()">
+               <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+               <ng-template #defaultIcon>
+                 <i class="fas fa-user default-icon"></i>
+               </ng-template>
+             </div>
+         
+             <!-- Champ d'upload caché -->
+             <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none"/>
+             <ng-template #defaultIcon>
+               <i class="fas fa-user default-icon" (click)="triggerFileInput()"></i> 
+             </ng-template>
+       
+             <!-- Champ d'upload caché -->
+            
+ 
+           </div>
+         
+       
+             <h2>{{ user?.nom }}</h2>
+           
+             <p>⭐ Pas d'évaluation</p>
+             <button>Contacter</button>
+             <button>Partager mon profil</button>
+         </div>
+         <div>
+           
+                 <h3>A propos de moi</h3>
+            
+                 <div class="content">
+                     <div class="section">
+                       <label>Description</label>
+                       <div class="competence">
+                         <ng-container *ngIf="!isEditing['description']; else editDescription">
+                           <p (click)="startEditing('description', user?.description)">
+                             {{ user?.description || 'Aucune description disponible.' }}
+                           </p>
+                           <button class="edit-btn" (click)="startEditing('description', user?.description)">✏️</button>
+                         </ng-container>
+                   
+                         <ng-template #editDescription>
+                           <div class="edit-container">
+                             <textarea [(ngModel)]="editedValues['description']"></textarea>
+                             <button class="savee-btn" (click)="saveChanges('description')">✔️</button>
+                           </div>
+                         </ng-template>
+                       </div>
+                     </div>
+                   </div>
+                   
+             <div class="content">
+             <div class="section">
+                 <label>💼Mes compétences</label>
+                 <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
+                     <p *ngIf="servicee?.nomservice">
+                        {{ servicee.nomservice }}
+                     </p>
+                 </div>
+                 
+             </div>
+             </div>
+             <div class="content">
+               <div class="section">
+                 <label>nomEntreprise</label>
+                 <div class="competence">
+                   <ng-container *ngIf="!isEditing['nomEntreprise']; else editNomEntreprise">
+                     <p (click)="startEditing('nomEntreprise', user?.nomEntreprise)">
+                       {{ user?.nomEntreprise ? (user.nomEntreprise ) : 'nomEntreprise non renseigné.' }}
+                     </p>
+                     <button class="edit-btn" (click)="startEditing('nomEntreprise', user?.nomEntreprise)">✏️</button>
+                   </ng-container>
+             
+                   <ng-template #editNomEntreprise>
+                     <div class="edit-container">
+                       <input type="text" [(ngModel)]="editedValues['nomEntreprise']">
+                       <button class="savee-btn" (click)="saveChanges('nomEntreprise')">✔️</button>
+                     </div>
+                   </ng-template>
+                 </div>
+               </div>
+             </div>
+             <div class="content">
+                <div class="section">
+                  <label>siteWeb</label>
+                  <div class="competence">
+                    <ng-container *ngIf="!isEditing['siteWeb']; else editSiteWeb">
+                      <p (click)="startEditing('siteWeb', user?.siteWeb)">
+                        {{ user?.siteWeb ? (user.siteWeb ) : 'siteWeb non renseigné.' }}
+                      </p>
+                      <button class="edit-btn" (click)="startEditing('siteWeb', user?.siteWeb)">✏️</button>
+                    </ng-container>
+              
+                    <ng-template #editSiteWeb>
+                      <div class="edit-container">
+                        <input type="text" [(ngModel)]="editedValues['siteWeb']">
+                        <button class="savee-btn" (click)="saveChanges('siteWeb')">✔️</button>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div class="content">
+                <div class="section">
+                  <label>Site Web de l'entreprise</label>
+                  <div class="competence">
+                    <ng-container *ngIf="!isEditing['siteWeb']; else editSiteWeb">
+                      <p (click)="startEditing('siteWeb', user?.siteWeb)">
+                        {{ user?.siteWeb ? (user.siteWeb ) : 'siteWeb non renseigné.' }}
+                      </p>
+                      <button class="edit-btn" (click)="startEditing('siteWeb', user?.siteWeb)">✏️</button>
+                    </ng-container>
+              
+                    <ng-template #editSiteWeb>
+                      <div class="edit-container">
+                        <input type="text" [(ngModel)]="editedValues['nomEntreprise']">
+                        <button class="savee-btn" (click)="saveChanges('nomEntreprise')">✔️</button>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              
+             
+             <div class="content">
+                 <div class="section">
+                     <label>📞 Téléphone</label>
+                     <div class="competence">
+                         <ng-container *ngIf="!isEditing['telephoneNumber']; else editTelephone">
+                             <p (click)="startEditing('telephoneNumber', user?.telephoneNumber)">
+                                 {{ user?.telephoneNumber || 'Aucun numéro disponible.' }}
+                             </p>
+                             <button class="edit-btn" (click)="startEditing('telephoneNumber', user?.telephoneNumber)">✏️</button>
+                         </ng-container>
+                     
+                         <ng-template #editTelephone>
+                             <div class="edit-container">
+                                 <input type="text" [(ngModel)]="editedValues['telephoneNumber']">
+                                 <button class="savee-btn" (click)="saveChanges('telephoneNumber')">✔️</button>
+                             </div>
+                         </ng-template>
+                     </div>
+                     
+                     
+                 </div>
+             </div>
+             <div class="content">
+                <div class="section">
+                    <label>SIRET de l'entreprise"</label>
+                    <div class="competence">
+                        <ng-container *ngIf="!isEditing['siret']; else editSiret">
+                            <p (click)="startEditing('siret', user?.siret)">
+                                {{ user?.siret || 'Aucun siret disponible.' }}
+                            </p>
+                            <button class="edit-btn" (click)="startEditing('siret', user?.siret)">✏️</button>
+                        </ng-container>
+                    
+                        <ng-template #editSiret>
+                            <div class="edit-container">
+                                <input type="text" [(ngModel)]="editedValues['siret']">
+                                <button class="savee-btn" (click)="saveChanges('siret')">✔️</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+             <div class="content">
+               <div class="section">
+                 <label>📍Adresse</label>
+                 <div class="competence">
+                   <ng-container *ngIf="!isEditing['adresse']; else editAdresse">
+                     <p (click)="startEditing('adresse', user?.adresse)">
+                       {{ user?.adresse?.governoate || 'Adresse non renseignée.' }}
+                     </p>
+                     <button class="edit-btn" (click)="startEditing('adresse', user?.adresse)">✏️</button>
+                   </ng-container>
+             
+                   <ng-template #editAdresse>
+                     <div class="edit-container">
+                       <select [(ngModel)]="selectedAdresse">
+                         <option *ngFor="let adresse of adresses" [ngValue]="adresse">
+                           {{ adresse.governoate }} 
+                         </option>
+                       </select>
+                       <button class="savee-btn" (click)="saveChanges('adresse')">✔️</button>
+                     </div>
+                   </ng-template>
+                 </div>
+               </div>
+             </div>
+             
+               <div class="content">
+               <div class="section">
+                 <label>🔒 Mot de passe</label>
+                 <div class="competence">
+                   <ng-container *ngIf="!isEditing['password']; else editPassword">
+                     <p>********</p>
+                     <button class="edit-btn" (click)="startEditing('password', '')">✏️</button>
+                   </ng-container>
+             
+                   <ng-template #editPassword>
+                     <div class="edit-container">
+                       <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="editedValues['password']">
+                       <input type="password" placeholder="Confirmer mot de passe" [(ngModel)]="editedValues['confirmPassword']">
+                       <button class="savee-btn" (click)="saveChanges('password')">✔️</button>
+                     </div>
+                     <div class="error" *ngIf="passwordError">
+                       <span>⚠️ {{ passwordError }}</span>
+                     </div>
+                   </ng-template>
+                 </div>
+               </div>
+             </div>
+              
+            
+         </div>
+     </div>
+     <app-footer></app-footer>
+ </body>
+ 

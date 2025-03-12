@@ -47,6 +47,8 @@ import { AdmindashboardComponent } from './admindashboard/admindashboard.compone
 import { MyDocsComponent } from './my-docs/my-docs.component';
 import { UserComponent } from './user/user.component';
 import { DisponibiliteDialogComponent } from './disponibilite-dialog/disponibilite-dialog.component';
+import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
+import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
 
 
 
@@ -75,6 +77,8 @@ import { DisponibiliteDialogComponent } from './disponibilite-dialog/disponibili
     MyDocsComponent,
     UserComponent,
     DisponibiliteDialogComponent,
+    ProfiletrpriseComponent,
+    UpdateEtrepriseComponent,
    
 
   ],

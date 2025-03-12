@@ -11,11 +11,25 @@ body {
   margin-bottom: 0;
   width:1350px;
   height: 1350px;
-
- 
-
-
 }
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Ajuste l'espace entre l'icône et le bord gauche */
+    transform: translateY(-50%); /* Centre verticalement l'icône */
+    font-size: 18px; /* Taille de l'icône */
+    color: #888; /* Couleur de l'icône */
+  }
+  
+
+  .input-fa {
+    width: 100%;
+    padding-left: 30px; /* Donne de l'espace pour l'icône */
+    font-size: 14px; /* Ajuste la taille du texte dans le champ */
+    padding-right: 10px; /* Éventuellement pour les autres icônes */
+  }
+  
+
 app-footer {
  width:1350px;
 
@@ -35,10 +49,41 @@ flex: 1;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-top:100px;
+  margin-top:250px;
 
   
 }
+label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333; /* Couleur du texte */
+  margin-bottom: 5px;
+}
+
+label i {
+  margin-right: 8px; /* Espace entre l'icône et le texte */
+  color: #007bff; /* Couleur des icônes */
+  font-size: 18px;
+}
+
+.input-fa {
+  width: 100%;
+  padding-left: 30px; /* Donne de l'espace pour l'icône */
+  font-size: 14px; /* Ajuste la taille du texte dans le champ */
+  padding-right: 10px; /* Éventuellement pour les autres icônes */
+}
+
+
+.input-fa::placeholder {
+  font-family: "Font Awesome 5 Free"; /* Assurez-vous que l'icône utilise Font Awesome */
+  content: "\f0e0"; /* L'icône que vous voulez afficher dans le placeholder */
+  text-transform: none; /* Ne pas appliquer de transformation de texte au placeholder */
+  font-weight: normal; /* Pas de gras sur l'icône */
+}
+
+
 input {
   display: block;
   width: 100%;
@@ -75,6 +120,10 @@ label {
   align-items: center;
   justify-content: center;
   position: relative;
+}
+.container input:focus {
+  border-color: #007bff; /* Couleur de bordure lors du focus (ici bleu) */
+  outline: none; /* Enlève le contour par défaut de l'input */
 }
 
 .next-icon {
@@ -261,3 +310,34 @@ color: rgb(14, 13, 13);
 font-size: 12px;
 margin-top: 5px;
 }
+
+.alert {
+  display: block !important;
+  background-color: #007bff;  /* Couleur de fond */
+  color: white;  /* Couleur du texte */
+  width: 400px;
+  height: 80px;
+  border-radius: 5px;  /* Coins arrondis */
+  padding: 15px;  /* Espace interne autour du texte */
+  font-size: 16px;  /* Taille de police */
+  font-weight: bold;  /* Poids de la police pour plus de visibilité */
+  position: fixed;  /* Fixe l'alerte à une position précise */
+  top: 20px;  /* Place l'alerte en haut de la page */
+  left: 50%;  /* Centrer horizontalement */
+  transform: translateX(-50%);  /* Centrer complètement */
+  z-index: 9999;  /* Assurez-vous qu'il est au-dessus des autres éléments */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);  /* Ombre subtile autour de l'alerte */
+  transition: opacity 0.5s ease, transform 0.5s ease;  /* Ajout d'une animation de transition */
+}
+
+.alert.show {
+  opacity: 1;  /* Rendre l'alerte visible */
+  transform: translateX(-50%) translateY(0);  /* Animation de l'alerte qui glisse vers le bas */
+}
+
+.alert.hide {
+  opacity: 0;  /* Rendre l'alerte invisible */
+  transform: translateX(-50%) translateY(-20px);  /* L'alerte glisse vers le haut avant de disparaître */
+}
+
+

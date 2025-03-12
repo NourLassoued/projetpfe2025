@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CategorieService } from '../service/categorie.service';
 import { FileService } from '../service/file.service';
 import { ServiceeService } from '../service/servicee.service';
@@ -8,6 +8,9 @@ import { AuthServiceService } from '../service/auth-service.service';
 import { UserRole } from 'src/models/UserRole';
 import { Servicee } from 'src/models/Servicee';
 import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
+import { UtilisateurService } from '../service/utilisateur.service';
+import { catchError, debounceTime, Observable, of, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inscription-entrprise',
@@ -17,6 +20,7 @@ import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
 export class InscriptionEntrpriseComponent {
   form1: FormGroup;
 
+  notificationMessage: string | null = null;
   step = 1;
   categories: any[] = [];
   showModal = false;
@@ -28,7 +32,9 @@ export class InscriptionEntrpriseComponent {
   selectedServices: any[] = [];
   showForm1: boolean = true;  // Set to true or false based on your logic
   showForm2: boolean = false; // Set to true or false based on your logic
-
+  emailExists: boolean = false;
+  emailError: string | null = null; 
+  email: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -36,14 +42,16 @@ export class InscriptionEntrpriseComponent {
     private categorieService: CategorieService,
     private file: FileService,
     private service: ServiceeService,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private utilisateurService: UtilisateurService,
+    private router: Router
   ) {
     // Initialisation de form1
     this.form1 = this.fb.group({
       nom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")], [this.emailAsyncValidator()] ],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]],
+      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], 
       competence: [[]],
       nomEntreprise: ['', Validators.required],
       siret: ['', [Validators.required, Validators.pattern("^[0-9]{14}$")]],
@@ -163,7 +171,14 @@ export class InscriptionEntrpriseComponent {
 
           this.authService.register(formData).subscribe(
             (response: any) => {
-              console.log("Réponse d'inscription :", response);
+           
+              this.notificationMessage = "Vérifiez votre email pour avoir plus d'informations de votre candidature.";
+              this.form1.reset();
+              setTimeout(() => {
+                this.router.navigate(['/login']);
+              }, 2000); 
+           
+             
             },
             (error) => {
               console.error("Erreur lors de l'inscription :", error);
@@ -179,4 +194,32 @@ export class InscriptionEntrpriseComponent {
       alert("Veuillez remplir tous les champs correctement.");
     }
   }
+checkEmail() {
+  this.utilisateurService.checkEmailExists(this.email).subscribe({
+    next: (exists: boolean) => {
+      this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+      if (this.emailExists) {
+        this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
+      } else {
+        this.emailError = null;
+      }
+    },
+    error: (err) => {
+      console.error('Erreur lors de la vérification de l\'email', err);
+    }
+  });
+}
+emailAsyncValidator(): AsyncValidatorFn {
+     return (control: AbstractControl): Observable<ValidationErrors | null> => {
+       if (!control.value) {
+         return of(null);
+       }
+       return this.utilisateurService.checkEmailExists(control.value).pipe(
+         debounceTime(300),
+         switchMap((exists: boolean) => (exists ? of({ emailExists: true }) : of(null))),
+         catchError(() => of(null))
+       );
+     };
+   }
+ 
 }

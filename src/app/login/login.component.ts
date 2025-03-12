@@ -90,7 +90,10 @@ authenticate(): void {
                 this.router.navigate(['/Compteparticulier']);
                } else if (decodedToken.role === 'ADMINISTRATEUR') { 
                 this.router.navigate(['/Admindashboard']); 
-              } else {
+               } else if (decodedToken.role === 'ENTREPRISE') { 
+                  this.router.navigate(['/Compteprestaitre']);}
+              
+              else {
                 this.router.navigate(['/Front']);
             }
               
