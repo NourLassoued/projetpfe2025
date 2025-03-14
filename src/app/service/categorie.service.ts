@@ -15,11 +15,15 @@ export class CategorieService {
     return this.http.get<Categorie[]>(`${this.apiUrl}/getAllCategories`);
   }
 
- 
-  createCategorie(categorie: Categorie): Observable<Categorie> {
-    return this.http.post<Categorie>(`${this.apiUrl}`, categorie);
+  createCategorie(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData);
   }
-
+ 
+/*
+createCategorie(data: any): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}`, data);
+}
+*/
  
   updateCategorie(id: number, categorie: Categorie): Observable<Categorie> {
     return this.http.put<Categorie>(`${this.apiUrl}/${id}`, categorie);

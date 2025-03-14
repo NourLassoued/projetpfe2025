@@ -150,45 +150,54 @@ export class CatogoriesComponent {
         console.error('Erreur lors du chargement de l\'image', error);
       }
     );
-  }register(): void {
-    if (!this.registerForm || this.registerForm.invalid) {
-      console.log('Formulaire invalide');
+  }
+  onSubmit(): void {
+    if (!this.registerForm || this.registerForm.invalid) { // Correction ici
+      console.error('Formulaire invalide.');
       return;
     }
-  
-    const formData = { ...this.registerForm.value };
-  
-    // Si une image a été sélectionnée, l'ajouter aux données du formulaire
+
+    const formData = new FormData();
+    formData.append('nom', this.registerForm.get('nom')?.value || '');
+    formData.append('description', this.registerForm.get('description')?.value || '');
+    formData.append('tarif', this.registerForm.get('tarif')?.value || '0');
+
     if (this.selectedFile) {
-      formData.imageCategorie = this.selectedFile;
+      formData.append('imageCategorie', this.selectedFile);
     }
-  
+
     this.categorieService.createCategorie(formData).subscribe(
-      (response: any) => {
-        this.registerForm?.reset(); // Utilisation de l'opérateur ?. pour appeler reset uniquement si registerForm est défini
-        this.notificationMessage = "Catégorie ajoutée avec succès.";
-  
-        // Redirection après 2 secondes
-        setTimeout(() => {
-          this.router.navigate(['/categories']);
-        }, 2000);
+      response => {
+       
+        this.router.navigate(['/categories']);
+        this.getAllCategories();
       },
       error => {
-        console.error('Erreur lors de l\'ajout de la catégorie :', error);
+        console.error('Erreur lors de l\'ajout de la catégorie:', error);
       }
     );
   }
-  
-  
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.selectedFile = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result; // Enregistrer le résultat pour prévisualisation
-      };
-      reader.readAsDataURL(this.selectedFile); // Lire l'image comme URL
-    }}
-
-      }
+    }
+  }
+  deleteCategory(id: number): void {
+   
+      this.categorieService.deleteCategorie(id).subscribe({
+        next: () => {
+          // Supprimer la catégorie de la liste locale après suppression réussie
+          this.categories = this.categories.filter(category => category.id !== id);
+         this.getAllCategories();
+        },
+        error: err => {
+          console.error('Erreur lors de la suppression:', err);
+          alert('Une erreur est survenue lors de la suppression.');
+        }
+      });
+    }
+  }
+  
+ 
