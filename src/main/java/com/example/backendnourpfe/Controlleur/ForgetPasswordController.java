@@ -87,7 +87,8 @@ public ResponseEntity<String> verifyEmail(@PathVariable String email) {
                 + ".logo { font-size: 24px; font-weight: bold; text-align: center; color: #000; }"
                 + ".logo span { color: #ffcc00; }"
                 + "p { color: #333; font-size: 16px; line-height: 1.5; }"
-                + ".button { display: inline-block; background-color:  #28a745; color:  #ffcc00; padding: 12px 20px; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 5px; margin: 20px auto; }"
+                + ".button { display: inline-block; background-color: #28a745; color: #fff !important; padding: 12px 20px; text-decoration: none !important; font-size: 16px; font-weight: bold; border-radius: 5px; margin: 20px auto; }"
+               + ".button:hover { background-color: #218838; }"
                 + ".footer { font-size: 14px; color: #666; text-align: center; margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px; }"
                 + ".footer a { color: #e63946; text-decoration: none; }"
                 + "</style>"
@@ -149,23 +150,7 @@ public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable
     } catch (Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying OTP: " + ex.getMessage());
     }
-}/*
-    @PostMapping("/changePassword/{id}")
-    public ResponseEntity<String> changePasswordHandler(@RequestBody ChangePassword changePassword, @PathVariable String email) {
-        try {
-            if (!Objects.equals(changePassword.password(), changePassword.repeatPassword())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match. Please try again!");
-            }
-
-            String encodedPassword = passwordEncoder.encode(changePassword.password());
-            utlisateurRepo.updatePassword(email, encodedPassword);
-            return ResponseEntity.ok("Password has been changed!");
-        } catch (UsernameNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error changing password: " + ex.getMessage());
-        }
-    }*/
+}
     @PostMapping("/changePassword/{id}")
     public ResponseEntity<String> changePasswordHandler(@RequestBody ChangePassword changePassword, @PathVariable Long id) {
         try {

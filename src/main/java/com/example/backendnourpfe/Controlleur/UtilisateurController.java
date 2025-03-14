@@ -7,6 +7,7 @@ import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
 import com.example.backendnourpfe.service.UtilisateurService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
@@ -96,8 +98,8 @@ public class UtilisateurController {
         return utilisateurService.creerReservation(idParticulier, idPrestataire, reservation);
     }
 
-
-    @GetMapping("/activation/{email}")
+/*
+    @GetMapping("/{email}")
     public ResponseEntity<Void> activateAccount(@PathVariable String email) {
 
         try {
@@ -119,11 +121,45 @@ public class UtilisateurController {
 
 
                 return ResponseEntity.status(HttpStatus.FOUND)
-                        .header(HttpHeaders.LOCATION, "http://localhost:4200/login")
+                        .header(HttpHeaders.LOCATION)
                         .build();
             }
         }
 
+
+        return ResponseEntity.badRequest().build();
+    }
+*/
+
+
+    @GetMapping("/{email}")
+    public ResponseEntity<Void> activateAccount(@PathVariable String email, HttpServletResponse response) {
+
+        try {
+            email = URLDecoder.decode(email, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmail(email);
+
+        if (utilisateurOpt.isPresent()) {
+            Utilisateur utilisateur = utilisateurOpt.get();
+
+            if (utilisateur.getStatus() == StatusUtilisateur.ATTENTE) {
+                utilisateur.setStatus(StatusUtilisateur.ACCEPTE);
+                utilisateurRepository.save(utilisateur);
+                try {
+
+
+                    response.sendRedirect("http://localhost:4200/login");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return ResponseEntity.status(HttpStatus.FOUND).build();
+            }
+        }
 
         return ResponseEntity.badRequest().build();
     }
@@ -141,7 +177,10 @@ public class UtilisateurController {
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Non authentifié");
     }
 
-
+    @GetMapping("/entreprises")
+    public List<Utilisateur> getAllEntreprises() {
+        return utilisateurService.getAllEntreprises();
+    }
 
   @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(

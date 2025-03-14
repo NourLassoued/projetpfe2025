@@ -88,6 +88,21 @@ public List<Utilisateur> getAllParticuliers() {
             .collect(Collectors.toList());
     return particuliers;
 }
+    public List<Utilisateur> getAllEntreprises() {
+        List<Utilisateur> entreprises = utilisateurRepository.findAll().stream()
+                .filter(user -> user.getRole() == UserRole.ENTREPRISE) // Filtrer selon le rôle ENTREPRISE
+                .map(user -> {
+                    if (user.getAdressee() != null) {
+                        // Traitement spécifique si l'adresse est présente
+                    } else {
+                        // Traitement spécifique si l'adresse est absente
+                    }
+                    return user;
+                })
+                .collect(Collectors.toList());
+        return entreprises;
+    }
+
 
 public List<Utilisateur> getAllPrestataires() {
     List<Utilisateur> prestataires = utilisateurRepository.findAllPrestatairesWithAdresse(UserRole.PRESTATAIRE);
