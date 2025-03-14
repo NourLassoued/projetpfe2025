@@ -1,0 +1,194 @@
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
+import { UtilisateurService } from '../service/utilisateur.service';
+import { FileService } from '../service/file.service';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { CategorieService } from '../service/categorie.service';
+import { Categorie } from 'src/models/Categorie';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-catogories',
+  templateUrl: './catogories.component.html',
+  styleUrls: ['./catogories.component.css']
+})
+export class CatogoriesComponent {
+   profileImage: string | null = null; 
+   categories: any[] = [];
+   imageUrls: string[] = [];
+   showModal: boolean = false; 
+   newCategorie: Categorie = new Categorie()
+   registerForm: FormGroup | undefined;
+   selectedFile: File | null = null;
+   imagePreview: string | ArrayBuffer | null = null;
+   notificationMessage: string = '';
+    user: any;
+    profileImageUrl: SafeUrl | null = null; 
+    openModal() {
+      this.showModal = true;
+    }
+  
+    closeModal() {
+      this.showModal = false;
+    }
+    
+  
+      constructor(private utilisateurService: UtilisateurService,
+        private fileservice:FileService,
+          private cdr: ChangeDetectorRef,
+      private router:Router,
+    private categorieService:CategorieService,
+    private fb: FormBuilder) {
+      
+    
+    }
+    
+      ngOnInit(): void {
+        this.registerForm = this.fb.group({
+          nom: ['', Validators.required],
+          description: ['', Validators.required],
+          tarif: ['', [Validators.required, Validators.min(1)]],
+          imageCategorie: ['']
+        });
+      
+      
+        
+        this.loadUserData();
+        this.getAllCategories();
+      }
+       
+      
+      
+      loadProfileImagee(imagePath: string): void {
+        if (!imagePath) {
+          this.profileImageUrl = 'assets/images/user.png'; 
+          return;
+        }
+      
+        this.fileservice.getImage(imagePath).subscribe({
+          next: (imageBlob) => {
+            const objectURL = URL.createObjectURL(imageBlob);
+            this.profileImageUrl = objectURL; 
+            this.cdr.detectChanges(); 
+          },
+          error: (err) => {
+            console.error("Erreur lors du chargement de l'image :", err);
+            this.profileImageUrl = 'assets/images/user.png'; 
+          }
+        });
+      }
+  
+  
+  
+  
+  
+  
+  loadUserData(): void {
+          const token = localStorage.getItem('accessToken'); 
+      
+          if (!token) {
+            console.error("Aucun token trouvé !");
+            return;
+          }
+      
+          try {
+            const decodedToken: any = jwtDecode(token); 
+      
+            if (!decodedToken.id) {
+              console.error("L'ID utilisateur est introuvable dans le token !");
+              return;
+            }
+      
+            this.user = decodedToken;
+            if (this.user.image) {
+              this.loadProfileImagee(this.user.image);
+            } 
+            if (this.user.telephoneNumber) {
+             
+            }
+            else {
+              console.warn("Aucune image trouvée dans le token !");
+            }
+      
+      
+            
+      
+          } catch (error) {
+            console.error("Erreur lors du décodage du token :", error);
+          }
+        }
+        logout(): void {
+            
+          localStorage.removeItem('accessToken')
+          this.router.navigate(['/Front']); 
+        }  
+        getAllCategories() {
+          this.categorieService.getAllCategories().subscribe(
+            (data) => {
+              this.categories = data;
+             
+              this.categories.forEach((category, index) => {
+                this.getImage(category.imageCategorie, index);
+              });
+            },
+            (error) => {
+              console.error('Erreur lors du chargement des catégories', error);
+            }
+
+          );
+        }
+  
+  getImage(filename: string, index: number) {
+    this.fileservice.getImage(filename).subscribe(
+      (imageBlob) => {
+        const imageUrl = URL.createObjectURL(imageBlob);
+        this.imageUrls[index] = imageUrl;
+        
+      },
+      (error) => {
+        console.error('Erreur lors du chargement de l\'image', error);
+      }
+    );
+  }register(): void {
+    if (!this.registerForm || this.registerForm.invalid) {
+      console.log('Formulaire invalide');
+      return;
+    }
+  
+    const formData = { ...this.registerForm.value };
+  
+    // Si une image a été sélectionnée, l'ajouter aux données du formulaire
+    if (this.selectedFile) {
+      formData.imageCategorie = this.selectedFile;
+    }
+  
+    this.categorieService.createCategorie(formData).subscribe(
+      (response: any) => {
+        this.registerForm?.reset(); // Utilisation de l'opérateur ?. pour appeler reset uniquement si registerForm est défini
+        this.notificationMessage = "Catégorie ajoutée avec succès.";
+  
+        // Redirection après 2 secondes
+        setTimeout(() => {
+          this.router.navigate(['/categories']);
+        }, 2000);
+      },
+      error => {
+        console.error('Erreur lors de l\'ajout de la catégorie :', error);
+      }
+    );
+  }
+  
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result; // Enregistrer le résultat pour prévisualisation
+      };
+      reader.readAsDataURL(this.selectedFile); // Lire l'image comme URL
+    }}
+
+      }

@@ -24,10 +24,11 @@ import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculie
 import { ProfileparticulierComponent } from './profileparticulier/profileparticulier.component';
 import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
-import { MyDocsComponent } from './my-docs/my-docs.component';
+
 import { UserComponent } from './user/user.component';
 import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
 import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
+import { CatogoriesComponent } from './catogories/catogories.component';
 
 
 const routes: Routes = [
@@ -107,8 +108,8 @@ const routes: Routes = [
     component:AdmindashboardComponent
   },
   {
-    path: 'MyDocs',
-    component:MyDocsComponent
+    path: 'catogories',
+    component:CatogoriesComponent
   },
 
   {

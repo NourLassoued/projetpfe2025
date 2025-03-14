@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FileService } from '../service/file.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,25 +17,50 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserComponent implements OnInit ,DoCheck {
   prestataires: Utilisateur[] = [];
   @ViewChild('calendarIcon') calendarIcon!: ElementRef;  
- 
+  entreprises: Utilisateur[] = []; 
   selectedPrestataire: Utilisateur | null = null;
+  profileImage: string | null = null; 
+  user: any;
+    profileImageUrl: SafeUrl | null = null; 
   utilisateursParticuliers: Utilisateur[] = [];
-  profileImage: string | null = null;
+  utilisateursEntreprises: Utilisateur[] = []; 
+
   image: SafeUrl | null = null; 
   sanitizer: any;
-  profileImageUrl: SafeUrl | null = null;
+ 
   editColumn: string | null = null;
   editRowId: number | null = null;
   newValue: any = '';
 
-  constructor(private utilisateurService: UtilisateurService, public dialog: MatDialog,private fileservice:FileService,  private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {}
+  constructor(private utilisateurService: UtilisateurService, public dialog: MatDialog,private fileservice:FileService, 
+     private snackBar: MatSnackBar, 
+     private cdr: ChangeDetectorRef,
+    private router :Router ) {}
   ngDoCheck() {
-    // Cette méthode est appelée à chaque cycle de détection des changements
-    console.log('ngDoCheck appelé');
+   
+   
+  }
+  logout(): void {
+  
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']); 
   }
   ngOnInit(): void {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      this.user = decodedToken;
+      if (this.user.image) {
+        this.loadProfileImage(this.user.image);
+        console.log(this.user.image);
+      }
+    } else {
+      console.warn("Aucun token trouvé !");
+    }
     this.getAllPrestataires(); 
     this.getAllParticuliers();
+    this.getAllEntreprises();
+    this.loadUserData();
   }
 
   getAllPrestataires(): void {
@@ -57,7 +84,7 @@ export class UserComponent implements OnInit ,DoCheck {
     
        
           this.prestataires.forEach(prestataire => {
-            console.log('Adresse du prestataire :', prestataire.adressee); 
+          
             if (prestataire.image) { 
               this.loadProfileImage(prestataire); 
             }
@@ -87,14 +114,35 @@ export class UserComponent implements OnInit ,DoCheck {
         }
       });
     }
+
+
   }
+  loadProfileImagee(imagePath: string): void {
+  if (!imagePath) {
+    this.profileImageUrl = 'assets/images/user.png'; // Image par défaut
+    return;
+  }
+
+  this.fileservice.getImage(imagePath).subscribe({
+    next: (imageBlob) => {
+      const objectURL = URL.createObjectURL(imageBlob);
+      this.profileImageUrl = objectURL; // Met à jour l'URL de l'image
+      this.cdr.detectChanges(); // Force Angular à détecter le changement
+    },
+    error: (err) => {
+      console.error("Erreur lors du chargement de l'image :", err);
+      this.profileImageUrl = 'assets/images/user.png'; // Fallback
+    }
+  });
+}
+
 
     showDisponibilites(prestataire: Utilisateur) {
       this.selectedPrestataire = prestataire;
     }
     
     closeDisponibilites() {
-      this.selectedPrestataire = null; // Réinitialisation après fermeture
+      this.selectedPrestataire = null; 
     }
     downloadFile(filename: string): void {
       this.fileservice.getImage(filename).subscribe({
@@ -103,12 +151,12 @@ export class UserComponent implements OnInit ,DoCheck {
           const objectURL = URL.createObjectURL(imageBlob);
           const link = document.createElement('a');
           link.href = objectURL;
-          link.download = filename;  // Nom du fichier téléchargé sera celui de 'filename'
-          link.click();  // Simule le clic sur le lien pour lancer le téléchargement
+          link.download = filename; 
+          link.click();  
         },
         error: (err) => {
-          console.error('Erreur lors du téléchargement du fichier', err);
-          alert('Erreur lors du téléchargement du fichier : ' + err.message); 
+         
+          
         }
       });
     }
@@ -130,16 +178,46 @@ export class UserComponent implements OnInit ,DoCheck {
         }
       );
     }
+    getAllEntreprises(): void {
+      this.utilisateurService.getAllEntreprises().subscribe(
+        (data) => {
+          this.entreprises = data.map(entreprise => ({
+            ...entreprise,
+          
+            showFullDescription: false,
+            servicesOfferts: entreprise.servicesOfferts
+              ? entreprise.servicesOfferts.map(service => ({
+                  ...service,
+                  nomservice: service.nomservice ? service.nomservice.replace(/[\r\n]+/g, '').trim() : ''
+                }))
+              : [],
+            profileImageUrl: null, 
+            adresse: entreprise.adressee ? entreprise.adressee.governoate : '', 
+          }));
+    
+          this.entreprises.forEach(entreprise => {
+           
+            if (entreprise.image) { 
+              this.loadProfileImage(entreprise); 
+            }
+          });
+        },
+        (error) => {
+          console.error('Erreur lors du chargement des entreprises', error);
+        }
+      );
+    }
+    
     supprimerUtilisateur(id: number): void {
       this.utilisateurService.deleteUser(id).subscribe(
         () => {
          
           this.prestataires = this.prestataires.filter(prestataire => prestataire.idUtilisateur !== id);
   
-        
+        this.getAllEntreprises();
           this.getAllParticuliers();
           this.cdr.detectChanges();
-          console.log('Utilisateur supprimé avec succès');
+        
         },
         (error) => {
           console.error("Erreur lors de la suppression de l'utilisateur", error);
@@ -154,18 +232,52 @@ export class UserComponent implements OnInit ,DoCheck {
     updateUserInTable(id: number, column: string, newValue: any): void {
       this.utilisateurService.updateUser(id, { [column]: newValue }).subscribe(
         (response) => {
-          console.log('Utilisateur mis à jour avec succès', response);
-          // Mettre à jour la ligne dans le tableau localement
+        
+         
           const utilisateur = this.prestataires.find(p => p.idUtilisateur === id);
           if (utilisateur) {
-            utilisateur[column] = newValue; // Mettre à jour la cellule spécifique dans la ligne
+            utilisateur[column] = newValue; 
           }
-          this.editColumn = null; // Quitter le mode édition
-          this.editRowId = null;  // Réinitialiser l'ID de la ligne en édition
+          this.editColumn = null; 
+          this.editRowId = null;  
         },
         (error) => {
           console.error('Erreur lors de la mise à jour de l\'utilisateur', error);
         }
       );
     }
+    loadUserData(): void {
+        const token = localStorage.getItem('accessToken'); 
+    
+        if (!token) {
+          console.error("Aucun token trouvé !");
+          return;
+        }
+    
+        try {
+          const decodedToken: any = jwtDecode(token); 
+    
+          if (!decodedToken.id) {
+            console.error("L'ID utilisateur est introuvable dans le token !");
+            return;
+          }
+    
+          this.user = decodedToken;
+          if (this.user.image) {
+            this.loadProfileImagee(this.user.image);
+          } 
+          if (this.user.telephoneNumber) {
+           
+          }
+          else {
+            console.warn("Aucune image trouvée dans le token !");
+          }
+    
+    
+          
+    
+        } catch (error) {
+          console.error("Erreur lors du décodage du token :", error);
+        }
+      }
   }

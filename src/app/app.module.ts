@@ -30,6 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
 
+import { MatSnackBarModule } from '@angular/material/snack-bar'; // Importer MatSnackBar
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -44,11 +45,14 @@ import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculie
 import { ProfileparticulierComponent } from './profileparticulier/profileparticulier.component';
 import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
-import { MyDocsComponent } from './my-docs/my-docs.component';
+
 import { UserComponent } from './user/user.component';
 import { DisponibiliteDialogComponent } from './disponibilite-dialog/disponibilite-dialog.component';
 import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
 import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
+import { NavbarbackadminComponent } from './navbarbackadmin/navbarbackadmin.component';
+import { CatogoriesComponent } from './catogories/catogories.component';
+
 
 
 
@@ -74,11 +78,14 @@ import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.co
     ProfileparticulierComponent,
     UpdateparticulierComponent,
     AdmindashboardComponent,
-    MyDocsComponent,
+
     UserComponent,
     DisponibiliteDialogComponent,
     ProfiletrpriseComponent,
     UpdateEtrepriseComponent,
+    NavbarbackadminComponent,
+    CatogoriesComponent,
+
    
 
   ],
@@ -100,7 +107,7 @@ import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.co
     MatSelectModule,
     MatOptionModule,
     MatFormFieldModule,
-
+    MatSnackBarModule,
     
     BsDatepickerModule.forRoot() ,
     ToastrModule.forRoot() 

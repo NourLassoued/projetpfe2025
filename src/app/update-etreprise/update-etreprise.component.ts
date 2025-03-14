@@ -25,6 +25,10 @@ export class UpdateEtrepriseComponent implements OnInit {
 triggerFileInput() {
   this.fileInput.nativeElement.click(); // Simule un clic sur l'input file
 }
+
+emailExists: boolean = false;
+emailError: string | null = null; 
+email: string = '';
  
   passwordData = {
     oldPassword: '',

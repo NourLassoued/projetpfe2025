@@ -31,7 +31,7 @@
          </div>
          <div>
            
-                 <h3>A propos de moi</h3>
+                 <h3>Qui sommes-nous</h3>
             
                  <div class="content">
                      <div class="section">
@@ -53,10 +53,34 @@
                        </div>
                      </div>
                    </div>
+                   <div class="content">
+                    <div class="section">
+                      <label>email</label>
+                      <div class="competence">
+                        <ng-container *ngIf="!isEditing['email']   else editEmail">
+                          <p (click)="startEditing('email', user?.email)">
+                            {{ user?.email || 'Aucune email disponible.' }}
+                          </p>
+                          <button class="edit-btn" (click)="startEditing('email', user?.email)">✏️</button>
+                        </ng-container>
+                  
+                        <ng-template #editEmail>
+                          <div class="edit-container">
+                            <input type="text"  [(ngModel)]="editedValues['email']">
+                            <button class="savee-btn" (click)="saveChanges('email')">✔️</button>
+                          </div>
+                          <div class="error" *ngIf="emailError">
+                            <span>⚠️ {{ emailError }}</span>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                  
                    
              <div class="content">
              <div class="section">
-                 <label>💼Mes compétences</label>
+                 <label>💼Notre service</label>
                  <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
                      <p *ngIf="servicee?.nomservice">
                         {{ servicee.nomservice }}
@@ -65,9 +89,10 @@
                  
              </div>
              </div>
+
              <div class="content">
                <div class="section">
-                 <label>nomEntreprise</label>
+                 <label>Nom de l'entreprise</label>
                  <div class="competence">
                    <ng-container *ngIf="!isEditing['nomEntreprise']; else editNomEntreprise">
                      <p (click)="startEditing('nomEntreprise', user?.nomEntreprise)">
@@ -85,26 +110,28 @@
                  </div>
                </div>
              </div>
-             <div class="content">
-                <div class="section">
-                  <label>siteWeb</label>
+          <div class="content">
+              <div class="section">
+                  <label> Années d'expérience</label>
                   <div class="competence">
-                    <ng-container *ngIf="!isEditing['siteWeb']; else editSiteWeb">
-                      <p (click)="startEditing('siteWeb', user?.siteWeb)">
-                        {{ user?.siteWeb ? (user.siteWeb ) : 'siteWeb non renseigné.' }}
-                      </p>
-                      <button class="edit-btn" (click)="startEditing('siteWeb', user?.siteWeb)">✏️</button>
-                    </ng-container>
-              
-                    <ng-template #editSiteWeb>
-                      <div class="edit-container">
-                        <input type="text" [(ngModel)]="editedValues['siteWeb']">
-                        <button class="savee-btn" (click)="saveChanges('siteWeb')">✔️</button>
-                      </div>
-                    </ng-template>
+                      <ng-container *ngIf="!isEditing['workExperience']; else editWorkExperience">
+                          <p (click)="startEditing('workExperience', user?.workExperience)">
+                              {{ user?.workExperience || 'Aucune expérience disponible.' }}
+                          </p>
+                          <button class="edit-btn" (click)="startEditing('workExperience', user?.workExperience)">✏️</button>
+                      </ng-container>
+                  
+                      <ng-template #editWorkExperience>
+                          <div class="edit-container">
+                              <input type="text" [(ngModel)]="editedValues['workExperience']">
+                              <button class="savee-btn" (click)="saveChanges('workExperience')">✔️</button>
+                          </div>
+                      </ng-template>
                   </div>
-                </div>
+                  
+                  
               </div>
+          </div>
               <div class="content">
                 <div class="section">
                   <label>Site Web de l'entreprise</label>

@@ -31,7 +31,9 @@ export class UtilisateurService {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteUser/${id}`);
   }
-
+  getAllEntreprises(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.apiUrl}/entreprises`);
+  }
   
   updateUser(id: number, utilisateur: Partial<Utilisateur>): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, utilisateur);
@@ -66,7 +68,7 @@ export class UtilisateurService {
 
   activateAccount(email: string): Observable<string> {
 
-    return this.http.get<string>(`${this.apiUrl}/activation/${email}`);
+    return this.http.get<string>(`${this.apiUrl}/${email}`);
   }
   getById(id: number): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.apiUrl}/getById/${id}`);

@@ -121,10 +121,10 @@ export class InscriptionComponent  implements OnInit{
         
           this.notificationMessage = "Vérifiez votre boîte email pour activer votre compte.";
         
-          // Ajout d'un délai pour laisser le temps d'afficher la notification
+          
           setTimeout(() => {
             this.router.navigate(['/login']);
-          }, 2000); // 2 secondes avant la redirection
+          }, 2000); 
         },
         error => {
          
@@ -135,7 +135,7 @@ export class InscriptionComponent  implements OnInit{
     checkEmail() {
       this.utilisateurService.checkEmailExists(this.email).subscribe({
         next: (exists: boolean) => {
-          this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+          this.emailExists = exists; 
           if (this.emailExists) {
             this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
           } else {

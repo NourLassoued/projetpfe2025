@@ -37,7 +37,7 @@ body {
 .section label {
     font-size: 18px;
     margin: 10px 0;
-   
+   margin-right: 70px;
     font-weight: bold;
     color:  rgb(87, 83, 83);
 
@@ -518,4 +518,17 @@ button.close-btn {
 
     margin-bottom: 10px;
     
+}
+.site-link {
+    color: #007bff; /* Couleur du texte */
+    text-decoration: none; /* Supprime le souligné par défaut */
+    font-weight: 40px bold; /* Met le texte en gras */
+    transition: color 0.3s ease;
+ 
+   
+}
+
+.site-link:hover {
+    color: #0056b3; /* Changer la couleur lors du survol */
+    text-decoration: underline; /* Ajoute un souligné lors du survol */
 }

@@ -80,8 +80,7 @@
           </div>
        
           <div class="section">
-           
-            {{ user.siteWeb }}
+            <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>
         </div>
       
           <!-- Localisation -->
@@ -93,7 +92,7 @@
     
           <!-- Expérience -->
           <div class="section">
-              <label>🎖️ {{ user?.WorkExerience }} ans d'expérience</label>
+              <label>🎖️{{ user?.WorkExerience }} ans d'expérience</label>
           </div>
     
           <!-- Compétences -->
@@ -112,7 +111,7 @@
           <!-- À propos -->
           <div class="section">
             
-            <h3>À propos de nous</h3>
+            <h3>Qui sommes-nous</h3>
               <p>{{ user?.description }}</p>
           </div>
     </div>
