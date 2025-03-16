@@ -193,7 +193,7 @@
   <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
 </svg>
 						         </span>
-		                         <span class="nav-link-text">Docs</span>
+		                         <span class="nav-link-text">Catégories</span>
 					        </a><!--//nav-link-->
 					    </li><!--//nav-item-->
 					    <li class="nav-item">
@@ -208,7 +208,7 @@
   <circle cx="3.5" cy="10.5" r=".5"/>
 </svg>
 						         </span>
-		                         <span class="nav-link-text">user</span>
+		                         <span class="nav-link-text">Utilisateurs</span>
 					        </a><!--//nav-link-->
 					    </li><!--//nav-item-->
 					    <li class="nav-item has-submenu">
@@ -348,14 +348,18 @@
 					     <div class="page-utilities">
 						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 							    <div class="col-auto">
-								    <form class="docs-search-form row gx-1 align-items-center">
-					                    <div class="col-auto">
-					                        <input type="text" id="search-docs" name="searchdocs" class="form-control search-docs" placeholder="Search">
-					                    </div>
-					                    <div class="col-auto">
-					                        <button type="submit" class="btn app-btn-secondary">Search</button>
-					                    </div>
-					                </form>
+									<form class="docs-search-form row gx-1 align-items-center" (ngSubmit)="onSearch()">
+										<div class="col-auto">
+											
+										  <!-- Lier la valeur de l'input à searchQuery -->
+										  <input type="text" id="search-docs" name="searchdocs"
+										  [(ngModel)]="searchQuery"
+										  (ngModelChange)="onSearch()"
+										  class="form-control search-docs" placeholder="Rechercher">
+
+										</div>
+										
+									  </form>
 					                
 							    </div><!--//col-->
 							    <div class="col-auto">
@@ -434,7 +438,7 @@
 											</div>
 								  
 											<!-- Bouton pour soumettre le formulaire -->
-											<button type="submit" class="btn app-btn-primary" [disabled]="registerForm?.invalid">Ajouter la catégorie</button>
+											<button type="submit" class="btn app-btn-primary" >Ajouter la catégorie</button>
 										  </form>
 										</div>
 									  </div>
@@ -446,7 +450,43 @@
 					    </div><!--//page-utilities-->
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
-	
+	<!-- Modal de modification -->
+	<div class="modal-overlay" *ngIf="isEditModalOpen">
+		<div class="modal-container">
+		  <h2>Modifier la Catégorie</h2>
+		  
+		  <form (ngSubmit)="updateCategory()">
+			<!-- Nom -->
+			<label for="nom">Nom:</label>
+			<input type="text" id="nom" [(ngModel)]="selectedCategory.nom" name="nom" required>
+	  
+			<!-- Description -->
+			<label for="description">Description:</label>
+			<textarea id="description" [(ngModel)]="selectedCategory.description" name="description" required></textarea>
+	  
+			<!-- Tarif -->
+			<label for="tarif">Tarif (DT):</label>
+			<input type="number" id="tarif" [(ngModel)]="selectedCategory.tarif" name="tarif" required>
+	  
+			<!-- Affichage de l'image actuelle -->
+			<div class="image-preview">
+				<img *ngIf="selectedCategory.imageCategorie" [src]="selectedCategory.imageCategorie" alt="Image actuelle">
+
+			</div>
+	  
+			<!-- Nouvelle Image -->
+			<label for="imageCategorie">Changer l'image:</label>
+			<input type="file" id="imageCategorie" (change)="onFileSelected($event)">
+	  
+			<!-- Boutons -->
+			<div class="modal-buttons">
+			  <button type="submit" class="btn btn-success">Enregistrer</button>
+			  <button type="button" class="btn btn-danger" (click)="closeEditModal()">Annuler</button>
+			</div>
+		  </form>
+		</div>
+	  </div>
+  
 			    <div class="row g-4">
 					
 				    <div *ngFor="let category of categories; let i = index" class="col-6 col-md-4 col-xl-3 col-xxl-2">
@@ -487,7 +527,7 @@
 	  <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
 	  <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
 	</svg>Voir</a></li>
-											<li><a class="dropdown-item" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+											<li><a  (click)="openEditModal(category)" class="dropdown-item" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 	  <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
 	</svg>Modifier</a></li>
 				
@@ -505,19 +545,26 @@
 						</div><!--//app-card-->
 				    </div><!--//col-->
 				</div>
-			    <nav class="app-pagination mt-5">
+				<nav class="app-pagination mt-5">
 					<ul class="pagination justify-content-center">
-						<li class="page-item disabled">
-							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-					    </li>
-						<li class="page-item active"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item">
-						    <a class="page-link" href="#">Next</a>
-						</li>
+					  <!-- Previous Button -->
+					  <li class="page-item" [class.disabled]="currentPage === 1">
+						<a class="page-link" href="#" (click)="changePage(currentPage - 1)" aria-label="Previous" [attr.tabindex]="currentPage === 1 ? '-1' : '0'" [attr.aria-disabled]="currentPage === 1 ? 'true' : 'false'">Previous</a>
+					  </li>
+				  
+					  <!-- Page Numbers -->
+					  <li *ngFor="let page of pages" class="page-item" [class.active]="currentPage === page">
+						<a class="page-link" href="#" (click)="changePage(page)">{{ page }}</a>
+					  </li>
+				  
+					  <!-- Next Button -->
+					  <li class="page-item" [class.disabled]="currentPage === totalPages">
+						<a class="page-link" href="#" (click)="changePage(currentPage + 1)" aria-label="Next" [attr.tabindex]="currentPage === totalPages ? '-1' : '0'" [attr.aria-disabled]="currentPage === totalPages ? 'true' : 'false'">Next</a>
+					  </li>
 					</ul>
-				</nav><!--//app-pagination-->
+				  </nav>
+				  
+							  
 		    </div><!--//container-fluid-->
 	    </div><!--//app-content-->
 	

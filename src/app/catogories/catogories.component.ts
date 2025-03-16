@@ -7,7 +7,6 @@ import { jwtDecode } from 'jwt-decode';
 import { CategorieService } from '../service/categorie.service';
 import { Categorie } from 'src/models/Categorie';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 @Component({
   selector: 'app-catogories',
   templateUrl: './catogories.component.html',
@@ -25,10 +24,32 @@ export class CatogoriesComponent {
    notificationMessage: string = '';
     user: any;
     profileImageUrl: SafeUrl | null = null; 
-    openModal() {
-      this.showModal = true;
-    }
+    selectedCategory: Categorie = new Categorie(); 
+    isEditModalOpen: boolean = false; 
+    isCategoryModalOpen = false; 
+    currentPage: number = 1;
+    pageSize: number = 8; 
+    totalPages: number = 1;
+    pages: number[] = [];
+
+    allCategories: any[] = []; 
+
+    filteredCategories: any[] = []; 
   
+   
+    searchQuery: string = '';
+   
+
+   
+  
+
+    
+editModal: any;
+openModal() {
+  
+  this.showModal = true;
+}
+
     closeModal() {
       this.showModal = false;
     }
@@ -48,7 +69,7 @@ export class CatogoriesComponent {
         this.registerForm = this.fb.group({
           nom: ['', Validators.required],
           description: ['', Validators.required],
-          tarif: ['', [Validators.required, Validators.min(1)]],
+          tarif: ['', [ Validators.min(1)]],
           imageCategorie: ['']
         });
       
@@ -56,9 +77,63 @@ export class CatogoriesComponent {
         
         this.loadUserData();
         this.getAllCategories();
+        this.updatePages();
+        this.paginate();
+        
       }
-       
       
+       
+      openEditModal(category: Categorie): void {
+        this.selectedCategory = { ...category }; 
+        this.isEditModalOpen = true;
+      }
+      
+      
+      closeEditModal(): void {
+        this.isEditModalOpen = false;
+      }
+      updateCategory(): void {
+        if (!this.selectedCategory || this.selectedCategory.id === undefined) {
+          console.error("ID de la catégorie manquant !");
+          return;
+        }
+      
+        const formData = new FormData();
+      
+       
+        if (this.selectedCategory.nom) {
+          formData.append('nom', this.selectedCategory.nom);
+        } else {
+          formData.append('nom', ''); 
+        }
+      
+        if (this.selectedCategory.description) {
+          formData.append('description', this.selectedCategory.description);
+        } else {
+          formData.append('description', '');
+        }
+      
+        if (this.selectedCategory.tarif !== undefined && this.selectedCategory.tarif !== null) {
+          formData.append('tarif', this.selectedCategory.tarif.toString());
+        } else {
+          formData.append('tarif', '0'); 
+        }
+      
+        if (this.selectedFile) {
+          formData.append('imageCategorie', this.selectedFile);
+        }
+      
+        this.categorieService.updateCategorie(this.selectedCategory.id, formData).subscribe(
+          response => {
+            console.log('Catégorie mise à jour avec succès:', response);
+            this.closeEditModal();
+            this.getAllCategories(); 
+          },
+          error => {
+            console.error('Erreur lors de la mise à jour de la catégorie:', error);
+          }
+        );
+      }
       
       loadProfileImagee(imagePath: string): void {
         if (!imagePath) {
@@ -122,23 +197,75 @@ export class CatogoriesComponent {
             
           localStorage.removeItem('accessToken')
           this.router.navigate(['/Front']); 
-        }  
-        getAllCategories() {
+        }
+
+        onSearch(): void {
+          console.log("Recherche pour : ", this.searchQuery);
+        
+          if (this.searchQuery.trim() === '') {
+          
+            this.filteredCategories = this.allCategories;
+          } else {
+            this.categorieService.searchCategories(this.searchQuery).subscribe(
+              (data) => {
+               
+        
+                this.filteredCategories = data; 
+                this.totalPages = Math.ceil(this.filteredCategories.length / this.pageSize);
+                this.currentPage = 1; 
+                this.updatePages();
+                this.paginate();
+              },
+              (error) => {
+                console.error('Erreur lors de la recherche des catégories', error);
+              }
+            );
+          }
+        }
+        
+        getAllCategories(): void {
           this.categorieService.getAllCategories().subscribe(
             (data) => {
-              this.categories = data;
-             
-              this.categories.forEach((category, index) => {
-                this.getImage(category.imageCategorie, index);
-              });
+              this.allCategories = data;
+              this.filteredCategories = data;
+              this.totalPages = Math.ceil(this.filteredCategories.length / this.pageSize);
+              this.currentPage = 1;
+              this.updatePages();
+              this.paginate();
             },
             (error) => {
               console.error('Erreur lors du chargement des catégories', error);
             }
-
           );
         }
-  
+        paginate(): void {
+          const start = (this.currentPage - 1) * this.pageSize;
+          const end = start + this.pageSize;
+        
+          
+          this.categories = this.filteredCategories.slice(start, end);
+        
+          this.categories.forEach((category, index) => {
+            this.getImage(category.imageCategorie, index);
+          });
+        
+          this.updatePages();
+        }
+        
+        updatePages(): void {
+          this.pages = [];
+          for (let i = 1; i <= this.totalPages; i++) {
+            this.pages.push(i);
+          }
+        }
+        
+        changePage(page: number): void {
+          if (page >= 1 && page <= this.totalPages) {
+            this.currentPage = page;
+            this.paginate();
+          }
+        }
+      
   getImage(filename: string, index: number) {
     this.fileservice.getImage(filename).subscribe(
       (imageBlob) => {
@@ -152,7 +279,7 @@ export class CatogoriesComponent {
     );
   }
   onSubmit(): void {
-    if (!this.registerForm || this.registerForm.invalid) { // Correction ici
+    if (!this.registerForm || this.registerForm.invalid) { 
       console.error('Formulaire invalide.');
       return;
     }
@@ -188,7 +315,7 @@ export class CatogoriesComponent {
    
       this.categorieService.deleteCategorie(id).subscribe({
         next: () => {
-          // Supprimer la catégorie de la liste locale après suppression réussie
+        
           this.categories = this.categories.filter(category => category.id !== id);
          this.getAllCategories();
         },

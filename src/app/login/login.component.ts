@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServiceService } from '../service/auth-service.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,8 @@ import { jwtDecode } from 'jwt-decode';
 export class LoginComponent {
   
   public loginForm!: FormGroup;
-  showLoginForm = true; // Affiche le formulaire de connexion par défaut
+  showLoginForm = true; 
+  notificationMessage: string | null = null;
   email: string = '';
   password: string = '';
   showResetForm = false; 
@@ -26,7 +27,11 @@ export class LoginComponent {
   showConfirmation = false;
   errorMessage: string = '';
   modalPosition = { top: '50%', left: '50%' }; 
-  constructor(private fb: FormBuilder, private authService: AuthServiceService, private router: Router,private forgetPasswordService:ForgetPasswordService) {
+  constructor(private fb: FormBuilder,
+     private authService: AuthServiceService, 
+     private router: Router,
+     private forgetPasswordService:ForgetPasswordService,
+     private cdr: ChangeDetectorRef) {
     this.loginForm = this.fb.group({
     email: ['', Validators.required],
     password: ['', Validators.required]
@@ -98,15 +103,32 @@ authenticate(): void {
             }
               
           } else {
-              console.error('❌ La réponse ne contient pas de token valide.');
+            setTimeout(() => {
+              this.notificationMessage = "Vérifiez votre email ou password ❌";
+              this.cdr.detectChanges(); 
+              this.hideNotification();
+            }, 2000); 
           }
-      },
-      error => {
-          console.error('🚨 Erreur lors de l\'authentification :', error);
-      }
-  );
-}
+          
+        },
+        error => {
+          setTimeout(() => {
+            this.notificationMessage = "🚨Votre compte n'est pas activé. Vérifiez votre email  !";
+            this.cdr.detectChanges(); 
+            this.hideNotification();
+          }, 2000);
     
+          console.error('Erreur:', error);
+        }
+      );
+    }
+    private hideNotification(): void {
+      setTimeout(() => {
+        this.notificationMessage = "";
+        this.cdr.detectChanges(); // Mise à jour de l'affichage pour cacher le message
+      }, 3000); // Masquer après 3 secondes
+    }
+  
   getImageUrl(filename: string): string {
     return `http://localhost:8087/nour/api/v1/auth/get-image/${filename}`;
   }}

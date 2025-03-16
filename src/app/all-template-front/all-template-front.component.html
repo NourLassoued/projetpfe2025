@@ -39,10 +39,56 @@
             <p>Améliorez votre qualité de vie avec les services à domicile.</p>
             
             <!-- Champ email + bouton sur la même ligne -->
-            <div class="input-containere">
+            <div class="input-containere" >
                
-                <input type="email" placeholder="Quel service recherchez-vous?">
-                <button> <i class="fas fa-search"></i></button>
+                <input  type="text" [placeholder]="currentPlaceholder">
+                <button (click)="showSkillModal()"> 
+                    <i class="fas fa-search"></i>
+                </button>
+                <div    (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
+                    <div class="modal-content"  >
+                      <span class="close" (click)="showModal = false">&times;</span>
+                      <h2>Demander un service</h2>
+              
+                  
+                      <!-- Barre de recherche -->
+                      <input   type="text" id="search-docs" name="searchdocs"
+                      [(ngModel)]="searchQuery"
+                      (ngModelChange)="onSearch()"   placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
+                  
+                      <!-- Affichage des catégories en grille -->
+                      <div class="grid-container">
+                        <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom) ">
+                          <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
+                          <span>{{ category.nom }}</span>
+                          <span class="icon">➜</span>
+                        </div>
+                      
+                      </div>
+                    </div>
+                   
+                  </div>
+                  <div class="modal" *ngIf="showServiceModal">
+                    <div class="modal-content">
+                      <span class="close" (click)="showServiceModal = false">&times;</span>
+                      <h2> {{ selectedCategory?.nom }}</h2>
+                      <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2">
+                   <div class="grid-container">
+                        <div class="category-card" *ngFor="let service of services let i = index"  >
+                          <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+                          <label for="service-{{ service.id }}">{{ service.nomservice }}</label>
+              
+                          <input 
+                            class="iconn" 
+                            type="checkbox" 
+                            id="service-{{ service.id }}" 
+                            
+                            >
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                
             </div>
         </div>
     </div>
@@ -84,40 +130,34 @@
 
 
         <!-- About Start -->
-        <div class="container-xxl py-6" id="about">
-            <div class="container">
-                <div class="row g-5 flex-column-reverse flex-lg-row">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="mb-4">Manage & Push Your Business To The Next Level</h1>
-                        <p class="mb-4">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo eirmod magna dolore erat amet</p>
-                        <div class="d-flex mb-4">
-                            <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="ms-4">
-                                <h5>First Working Process</h5>
-                                <p class="mb-0">Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo magna</p>
-                            </div>
-                        </div>
-                        <div class="d-flex mb-4">
-                            <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="ms-4">
-                                <h5>24/7 Hours Support</h5>
-                                <p class="mb-0">Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo magna</p>
-                            </div>
-                        </div>
-                        <a href="" class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">Read More</a>
-                    </div>
-                    <div class="col-lg-6">
-                        <img class="img-fluid rounded wow zoomIn" data-wow-delay="0.5s" src="assets/img/about.jpg">
+      <!-- About Start -->
+      <div class="container-xxl py-7" id="about">
+        <div class="services-container">
+            <!-- Bouton Précédent -->
+            
+          
+    
+            <!-- Liste des services -->
+            <div class="services-list">
+                <button (click)="prevCategory()" class="scroll-btn left" [disabled]="currentIndex === 0"> <i class="fa fa-angle-left"></i></button>
+                <div class="category-carde" *ngFor="let category of visibleCategories; let i = index">
+                    <img [src]="category.imageCategorie" [alt]="category.nom">
+                    <div class="category-content">
+                        <h3>{{ category.nom }}</h3>
+                        <p>{{ category.description }}</p>
+                        <button class="discover-btn">Découvrir →</button>
                     </div>
                 </div>
+                <button (click)="nextCategory()" class="scroll-btn right" [disabled]="currentIndex + itemsPerPage >= categories.length"> <i class="fa fa-angle-right"></i></button>
             </div>
-        </div>
-        <!-- About End -->
+    
+            <!-- Bouton Suivant -->
+           
+            
+    </div>
+</div>
 
+          
 
         <!-- Overview Start -->
         <div class="container-xxl bg-light my-6 py-5" id="overview">

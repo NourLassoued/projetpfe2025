@@ -45,6 +45,9 @@
                         <i class="fab fa-google"></i> 
                     </button>
                 </div>
+                <div *ngIf="notificationMessage" class="alert alert-info mt-3">
+                    {{ notificationMessage }}
+                  </div>
             </form>
         </div>
     

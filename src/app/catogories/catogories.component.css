@@ -35,24 +35,24 @@
   }
   
   .app-logo:hover .logo-text {
-    color: #007bff; /* Changement de couleur au survol */
+    color: #007bff; 
   }
   .img-fluid {
     width: 1400px; 
-    height: 120px; /* Hauteur fixe de 100px */
+    height: 120px; 
   
-    image-rendering: crisp-edges; /* Permet de rendre l'image plus nette */
+    image-rendering: crisp-edges; 
 }
-/* Appliquer un style à l'icône */
+
 .bi-plus {
   margin-top: 4px;
   font-weight: bold;
-  stroke: #fffdfd; /* Pour ajouter un contour autour de l'icône */
-  stroke-width: 2px; /* Ajuste l'épaisseur du contour */
-  fill: currentColor; /* Remplir l'icône avec la couleur actuelle */
+  stroke: #fffdfd; 
+  stroke-width: 2px; 
+  fill: currentColor;
 }
 
-/* Lorsque le bouton est survolé, changer la couleur de l'icône et l'agrandir */
+
 .app-btn-primary:hover .bi-plus {
  
   transform: scale(1.2); /* Agrandir l'icône au survol */
@@ -95,6 +95,124 @@
 .modal-body {
   padding: 20px 0;
 }
+/* Conteneur du modal (l'overlay) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);  /* Couleur de fond transparente avec un peu de noir */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+/* Contenu du modal */
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Titre du modal */
+.modal-container h2 {
+  margin: 0 0 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Style des champs du formulaire */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="text"], input[type="number"], textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Affichage de l'image actuelle */
+.image-preview {
+  margin-bottom: 15px;
+}
+
+.image-preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Style pour l'input de l'image */
+input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Boutons du modal */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Boutons "Enregistrer" et "Annuler" */
+.modal-buttons .btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-buttons .btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.modal-buttons .btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Effet au survol */
+.modal-buttons .btn:hover {
+  opacity: 0.8;
+}
+
+/* Bouton de fermeture du modal */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #dc3545;
+}
+
 .close {
   position: absolute;
   right: 20px;
@@ -114,4 +232,31 @@ ul.list-unstyled li {
   margin-bottom: 5px; 
   font-size: 14px;
   color: #020202;
+}
+.search-docs {
+  margin-top: 28px;
+  width: 250px; /* Ajuste la largeur du champ */
+  padding: 8px 12px;
+  height: 38px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Bordure légère */
+  border-radius: 7px; /* Coins arrondis */
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Effet au survol */
+.search-docs:hover {
+  border-color: #007bff; /* Change la couleur de la bordure */
+}
+
+/* Effet au focus */
+.search-docs:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Effet lumineux */
+}
+
+/* Ajout d'un espace autour du champ */
+.col-auto {
+  margin-bottom: 10px;
 }

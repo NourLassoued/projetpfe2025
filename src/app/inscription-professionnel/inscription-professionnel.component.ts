@@ -59,14 +59,14 @@ export class InscriptionProfessionnelComponent {
 
 
   showNotification(message: string): void {
-    this.notificationMessage = message;  // Affiche le message
+    this.notificationMessage = message;  
     setTimeout(() => {
-      this.notificationMessage = '';  // Cache après un délai (ici 3 secondes)
-    }, 3000);  // 3000 ms = 3 secondes
+      this.notificationMessage = '';  
+    }, 3000);  
   }
 
   closeNotification(): void {
-    this.notificationMessage = '';  // Ferme immédiatement la notification si l'utilisateur clique sur le bouton
+    this.notificationMessage = '';  
   }
 
   emailAsyncValidator(): AsyncValidatorFn {
@@ -150,8 +150,7 @@ selectService(service: any) {
     this.selectedServices.push(service);
   }
 
-  console.log("Compétences sélectionnées : ", this.selectedServices); 
-
+ 
   
   this.form1.controls['competence'].setValue(this.selectedServices.map(s => s.nomservice));
 }
@@ -215,7 +214,7 @@ onSubmit(): void {
 checkEmail() {
   this.utilisateurService.checkEmailExists(this.email).subscribe({
     next: (exists: boolean) => {
-      this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+      this.emailExists = exists;  
       if (this.emailExists) {
         this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
       } else {

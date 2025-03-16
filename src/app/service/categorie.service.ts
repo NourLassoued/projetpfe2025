@@ -7,27 +7,25 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class CategorieService {
 
-  private apiUrl = 'http://localhost:8088/nour/categories'; // URL de ton backend
+  private apiUrl = 'http://localhost:8088/nour/categories';
 
   constructor(private http: HttpClient) {}
 
   getAllCategories(): Observable<Categorie[]> {
     return this.http.get<Categorie[]>(`${this.apiUrl}/getAllCategories`);
   }
-
+  searchCategories(nom: string): Observable<Categorie[]> {
+    return this.http.get<Categorie[]>(`${this.apiUrl}/search?nom=${nom}`);
+  }
   createCategorie(formData: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, formData);
   }
  
-/*
-createCategorie(data: any): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}`, data);
+
+
+updateCategorie(id: number, categorie: FormData): Observable<Categorie> {
+  return this.http.put<Categorie>(`${this.apiUrl}/${id}`, categorie);
 }
-*/
- 
-  updateCategorie(id: number, categorie: Categorie): Observable<Categorie> {
-    return this.http.put<Categorie>(`${this.apiUrl}/${id}`, categorie);
-  }
 
  
   deleteCategorie(id: number): Observable<void> {
