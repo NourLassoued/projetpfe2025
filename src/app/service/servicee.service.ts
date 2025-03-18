@@ -23,16 +23,22 @@ export class ServiceeService {
   }
 
 
-  updateService(id: number, service: Servicee): Observable<Servicee> {
+  updateService(id: number, service: FormData): Observable<Servicee> {
     return this.http.put<Servicee>(`${this.apiUrl}/${id}`, service);
   }
 
   deleteService(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  rechercherService(nom: string): Observable<Servicee[]> {
+    return this.http.get<Servicee[]>(`${this.apiUrl}/search?nom=${nom}`);
+  }
+ 
 
-  addServiceToCategory(categorieId: number, service: Servicee): Observable<Servicee> {
-    return this.http.post<Servicee>(`${this.apiUrl}/${categorieId}/addService`, service);
+
+
+  addServiceToCategory(categorieId: number, formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${categorieId}/addService`, formData);
   }
 
 

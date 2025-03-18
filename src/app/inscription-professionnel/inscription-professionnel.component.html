@@ -105,7 +105,7 @@
     </div>
     <div class="modal" *ngIf="showServiceModal">
       <div class="modal-content">
-        <span class="close" (click)="showServiceModal = false">&times;</span>
+        <span class="close"(click)="closeServiceModal()" >&times;</span>
         <h2>Services disponibles pour la catégorie : {{ selectedCategory?.nom }}</h2>
         <input type="text" placeholder="🔍 Recherchez un service" class="search-bar">
      <div class="grid-container">

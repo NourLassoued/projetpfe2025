@@ -7,6 +7,8 @@ import { jwtDecode } from 'jwt-decode';
 import { CategorieService } from '../service/categorie.service';
 import { Categorie } from 'src/models/Categorie';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Servicee } from 'src/models/Servicee';
+import { ServiceeService } from '../service/servicee.service';
 @Component({
   selector: 'app-catogories',
   templateUrl: './catogories.component.html',
@@ -31,18 +33,18 @@ export class CatogoriesComponent {
     pageSize: number = 8; 
     totalPages: number = 1;
     pages: number[] = [];
-
+    showServiceModal: boolean = false;
     allCategories: any[] = []; 
-
+   
     filteredCategories: any[] = []; 
-  
+    services: Servicee[] = [];
    
     searchQuery: string = '';
    
 
    
-  
-
+    selectedCategoryId: number = 0; 
+    showActions: boolean = false;
     
 editModal: any;
 openModal() {
@@ -53,14 +55,19 @@ openModal() {
     closeModal() {
       this.showModal = false;
     }
-    
-  
+    checkShowActions(): void {
+      // Remplacer cette logique par celle qui correspond à votre besoin
+      // Par exemple, l'afficher seulement si un utilisateur est connecté ou si une condition est vraie
+      const condition = true; // condition qui détermine si le bloc doit être affiché
+      this.showActions = condition;
+    }
       constructor(private utilisateurService: UtilisateurService,
         private fileservice:FileService,
           private cdr: ChangeDetectorRef,
       private router:Router,
     private categorieService:CategorieService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+  private service:ServiceeService) {
       
     
     }
@@ -79,6 +86,7 @@ openModal() {
         this.getAllCategories();
         this.updatePages();
         this.paginate();
+      
         
       }
       
@@ -88,7 +96,9 @@ openModal() {
         this.isEditModalOpen = true;
       }
       
-      
+      closeServiceModal(): void {
+        this.showServiceModal = false;
+      }
       closeEditModal(): void {
         this.isEditModalOpen = false;
       }
@@ -304,7 +314,25 @@ openModal() {
       }
     );
   }
+  showModalForCategory(categoryId: number): void {
+    this.selectedCategoryId = categoryId;
+    this.service.getAllServicesByCategorie(categoryId).subscribe((services: Servicee[]) => {
+      this.services = services || []; 
+      
 
+
+      if (this.services.length > 0) {
+        
+      } else {
+        console.log('Aucun service trouvé pour cette catégorie');
+      }
+  
+      
+      this.selectedCategory = this.categories.find((category) => category.id === categoryId);
+      
+      this.showServiceModal = true; 
+    });
+  }
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -326,5 +354,3 @@ openModal() {
       });
     }
   }
-  
- 

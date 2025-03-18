@@ -72,10 +72,14 @@ export class InscriptionEntrpriseComponent {
     this.step = 1;
   }
    
-
+  closeServiceModal() {
+    this.showServiceModal = false;
+    this.showModal = false
+  
+  }
 
   showSkillModal() {
-    console.log("Ouverture de la modale...");
+    
     this.getAllCategories();
     this.showModal = true;
   }

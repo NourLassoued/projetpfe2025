@@ -353,578 +353,257 @@
 	    
 	    <div class="app-content pt-3 p-md-3 p-lg-4">
 		    <div class="container-xl">
-			    
 			    <div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">liste des utilisateurs</h1>
+			            <h1 class="app-page-title mb-0">Service</h1>
 				    </div>
 				    <div class="col-auto">
 					     <div class="page-utilities">
-						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center" (ngSubmit)="onSearch()">
 							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center">
-					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
-					                    </div>
-					                    <div class="col-auto">
-					                        <button type="submit" class="btn app-btn-secondary">Search</button>
-					                    </div>
-					                </form>
+									<form class="docs-search-form row gx-1 align-items-center" >
+										<div class="col-auto">
+											
+										  <!-- Lier la valeur de l'input à searchQuery -->
+										  <input type="text" id="search-docs" name="searchdocs"
+										  [(ngModel)]="searchQuery"
+										  (ngModelChange)="onSearch()"
+										  class="form-control search-docs" placeholder="Rechercher">
+
+										</div>
+										
+									  </form>
 					                
 							    </div><!--//col-->
 							    <div class="col-auto">
 								    
-								    <select class="form-select w-auto" >
-										  <option selected value="option-1">All</option>
-										  <option value="option-2">This week</option>
-										  <option value="option-3">This month</option>
-										  <option value="option-4">Last 3 months</option>
+								    <select class="form-select w-auto">
+										  <option selected="" value="option-1">All</option>
+										  <option value="option-2">Text file</option>
+										  <option value="option-3">Image</option>
+										  <option value="option-4">Spreadsheet</option>
+										  <option value="option-5">Presentation</option>
+										  <option value="option-6">Zip file</option>
 										  
 									</select>
 							    </div>
-							    <div class="col-auto">						    
-								    <a class="btn app-btn-secondary" href="#">
-									    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-		  <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-		  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-		</svg>
-									    Download CSV
+								<div class="col-auto">
+									<a class="btn app-btn-primary" (click)="openModal()" href="#">
+										<!-- Icône SVG avec effet de gras -->
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus me-2 icon-bold" viewBox="0 0 16 16">
+											<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+										</svg>
+										Ajouter
 									</a>
-							    </div>
+								</div>
+								<div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;" aria-hidden="false">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Ajouter un Service</h5>
+                                          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <!-- Formulaire pour ajouter un service -->
+                                          <form *ngIf="registerForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                                            <!-- Nom du service -->
+                                            <div class="mb-3">
+                                              <label for="nomservice" class="form-label">Nom du service</label>
+                                              <input type="text" id="nomservice" formControlName="nomservice" class="form-control" required>
+                                              <div *ngIf="registerForm?.get('nomservice')?.invalid && registerForm?.get('nomservice')?.touched" class="text-danger">
+                                                Le nom du service est requis.
+                                              </div>
+                                            </div>
+                                  
+                                            <!-- Description du service -->
+                                            <div class="mb-3">
+                                              <label for="description" class="form-label">Description</label>
+                                              <input type="text" id="description" formControlName="description" class="form-control" required>
+                                              <div *ngIf="registerForm?.get('description')?.invalid && registerForm?.get('description')?.touched" class="text-danger">
+                                                La description est requise.
+                                              </div>
+                                            </div>
+											<div class="mb-3">
+												<label for="tarif" class="form-label">Tarif</label>
+												<input type="number" id="tarif" formControlName="tarif" class="form-control" required min="1">
+												<div *ngIf="registerForm?.get('tarif')?.invalid && registerForm?.get('tarif')?.touched" class="text-danger">
+												  Le tarif est requis et doit être supérieur à 0.
+												</div>
+											  </div>
+                                  
+                                            <!-- Image du service -->
+                                            <div class="mb-3">
+                                              <label for="imageService" class="form-label">Image du service</label>
+                                              <input type="file" id="imageService" (change)="onFileSelected($event)" class="form-control">
+                                            </div>
+                                  
+                                            <!-- Prévisualisation de l'image -->
+                                            <div *ngIf="imagePreview" class="mb-3">
+                                              <img [src]="imagePreview" alt="Prévisualisation" class="img-fluid">
+                                            </div>
+                                  
+                                            <!-- Sélection de la catégorie -->
+                                            <div class="mb-3">
+                                              <label for="categorie" class="form-label">Catégorie</label>
+                                              <select id="categorie" formControlName="categorie" class="form-control" required>
+                                                <option value="">Choisir une catégorie</option>
+                                                <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
+                                              </select>
+                                              <div *ngIf="registerForm?.get('categorie')?.invalid && registerForm?.get('categorie')?.touched" class="text-danger">
+                                                La catégorie est requise.
+                                              </div>
+                                            </div>
+                                  
+                                            <!-- Message de notification -->
+                                            <div *ngIf="notificationMessage" class="alert alert-success">
+                                              {{ notificationMessage }}
+                                            </div>
+                                  
+                                            <!-- Bouton pour soumettre le formulaire -->
+                                            <button type="submit" class="btn app-btn-primary">Ajouter le service</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+								
+								  
 						    </div><!--//row-->
-					    </div><!--//table-utilities-->
+					    </div><!--//page-utilities-->
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
-			   
-			    
-			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
-				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Particuliers</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Entreprise</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Cancelled</a>
-				</nav>
-				
-				
-				<div class="tab-content" id="orders-table-tab-content">
-			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-					    <div class="app-card app-card-orders-table shadow-sm mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-	<!-- Vérification que selectedPrestataire existe avant d'afficher les disponibilités -->
-<div *ngIf="selectedPrestataire" class="disponibilites-box">
-	<h3>Disponibilités de {{ selectedPrestataire.nom }}:</h3>
-	
-	<!-- Vérification que selectedPrestataire a des disponibilités -->
-	<ul *ngIf="selectedPrestataire.disponibilites && selectedPrestataire.disponibilites.length > 0; else noDisponibilites">
-	  <li *ngFor="let dispo of selectedPrestataire.disponibilites">
-		📅 {{ dispo.jour }} - ⏰ {{ dispo.heureDebut }} à {{ dispo.heureFin }}
-	  </li>
-	</ul>
-	
-	<ng-template #noDisponibilites>
-	  <p>Aucune disponibilité</p>
-	</ng-template>
-	
-	<button (click)="closeDisponibilites()">Fermer</button>
-  </div>
+	<!-- Modal de modification -->
+
+
+	<div class="modal-overlay" *ngIf="isEditModalOpen">
+		<div class="modal-container">
+			<h2>Modifier le service</h2>
+ <form (ngSubmit)="updateCategory()">
+	<!-- Nom -->
+			<label for="nomservice">Nom:</label>
+			<input type="text" id="nomservice" [(ngModel)]="selectedservice.nomservice" name="nomservice" required>
+	  
+			<!-- Description -->
+			<label for="description">Description:</label>
+			<textarea id="description" [(ngModel)]="selectedservice.description" name="description" required></textarea>
+	  
+			<!-- Tarif -->
+			 	<!-- Tarif -->
+			<label for="tarif">Tarif (DT):</label>
+			<input type="number" id="tarif" [(ngModel)]="selectedservice.tarif" name="tarif" required>
+			
+			<div class="image-preview">
+				<img *ngIf="selectedservice.imageService" [src]="selectedservice.imageService" alt="Image actuelle">
+
+			</div>
+	  
+			<!-- Nouvelle Image -->
+			<label for="imageService">Changer l'image:</label>
+			<input type="file" id="imageService" (change)="onFileSelected($event)">
+	  
+			<!-- Boutons -->
+			<div class="modal-buttons">
+			  <button type="submit" class="btn btn-success">Enregistrer</button>
+			  <button type="button" class="btn btn-danger" (click)="closeEditModal()">Annuler</button>
+			</div>
+		  </form>
+		</div>
+	  </div>
   
-  
-									  
-									  
-									  
-							        <table class="table app-table-hover mb-0 text-left">
-										
-										<thead>
-											
-											<tr>
-												<th class="cell">Image</th>
-												<th class="cell">Nom</th>
-												<th class="cell">Email</th>
-												<th class="cell">password</th>
-												<th class="cell">Téléphone</th>
-												<th class="cell">Status</th>
-												
-												<th class="cell">Tarifs</th>
-												<th class="cell">Disponibilité</th>
-												<th class="cell">Description</th>
-												<th class="cell">Solde</th>
-												<th class="cell">Expérience</th>
-												<th class="cell">Services Offerts</th>
-												<th class="cell">Adresse</th>
-												<th class="cell">Cv</th>
-												<th class="cell">CIN</th>
-											<th class="cell">Supprimer</th>
-											
-												
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let prestataire of prestataires">
-												<!-- Affichage de la photo de profil -->
-												<td class="cell">
-													<img *ngIf="prestataire.image" [src]="prestataire.image" alt="Photo de {{ prestataire.nom }}" class="profile-pic">
-													<i *ngIf="!prestataire.image" class="fa fa-user profile-pic"></i>
-												  </td>
-												  <td class="cell">
-													<!-- Modifier le nom -->
-													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'nom'" 
-														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null">
-													  {{ prestataire.nom }}
-													</span>
-													
-													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'nom'" 
-														   [(ngModel)]="prestataire.nom" 
-														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'nom', prestataire.nom)" 
-														   placeholder="Nom">
-												  </td>
-												  <td class="cell">
-													<!-- Modifier l'email -->
-													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'email'" 
-														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null">
-													  {{ prestataire.email }}
-													</span>
-													
-													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'email'" 
-														   [(ngModel)]="prestataire.email" 
-														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'email', prestataire.email)" 
-														   placeholder="Email">
-												  </td>
-												<td class="cell">{{ prestataire.password ? '********' : '' }}</td>
-											
-												<td class="cell">
-													
-													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'telephoneNumber'" 
-														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null">
-													  {{ prestataire.telephoneNumber }}
-													</span>
-													
-													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'telephoneNumber'" 
-														   [(ngModel)]="prestataire.telephoneNumber" 
-														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber)" 
-														   placeholder="telephoneNumber">
-												  </td>
-												<td class="cell">
-													<!-- Modifier le statut -->
-													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'status'" 
-														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'status', prestataire.status) : null"
-														    [ngClass]="{
-															'status-accepte': prestataire.status === 'ACCEPTE',
-															'status-refuse': prestataire.status === 'REFUSE',
-															'status-attente': prestataire.status === 'ATTENTE'
-														  }">
-													  {{ prestataire.status }}
-													</span>
-													
-													<select *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'status'" 
-															[(ngModel)]="prestataire.status" 
-															(blur)="updateUserInTable(prestataire.idUtilisateur, 'status', prestataire.status)">
-													  <option value="ACCEPTE">Accepte</option>
-													  <option value="REFUSE">Refuse</option>
-													  <option value="ATTENTE">Attente</option>
-													</select>
-												  </td>
-											
-												
-												<td class="cell">
-													
-													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'tarifs'" 
-														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null">
-													  {{ prestataire.tarifs }}
-													</span>
-													
-													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'tarifs'" 
-														   [(ngModel)]="prestataire.tarifs" 
-														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs)" 
-														   placeholder="tarifs">
-												  </td>
-												
-												
-												<td class="cell">
-													<i #calendarIcon class="fas fa-calendar-alt clickable-icon"
-													   (click)="showDisponibilites(prestataire)">
-													</i>
-												  </td>
-												  
-												  
-												  
-												<td class="cell">
-													<div class="description-container">
-													  <span>{{ prestataire.description | slice: 0:50 }}</span> <!-- Afficher les 50 premiers caractères -->
-													  <span *ngIf="prestataire.showFullDescription">{{ prestataire.description | slice: 50 }}</span> <!-- Afficher la suite si showFullDescription est vrai -->
-													  <a *ngIf="prestataire.description && prestataire.description.length > 50" (click)="toggleDescription(prestataire)">
-														{{ prestataire.showFullDescription ? 'Show Less' : 'Show More' }}
-													  </a>
-													</div>
-												  </td>
-												<td class="cell">{{ prestataire.solde }}dt</td>
-												
-												
-												<td class="cell">
-													
-													<span *ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'workExperience'" 
-														  (click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null">
-													  {{ prestataire.workExperience }}
-													</span>
-													
-													<input *ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'workExperience'" 
-														   [(ngModel)]="prestataire.workExperience" 
-														   (blur)="updateUserInTable(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience)" 
-														   placeholder="workExperience">
-												  </td>
-												
-												<td class="cell">{{ prestataire.competence}} </td>
-												
-												
-												<td class="cell">{{ prestataire.adressee?.governoate }}</td>
-
-												<td class="cell">
-													<a *ngIf="prestataire.doucument_CIN" (click)="downloadFile(prestataire.doucument_CIN)" class="btn-sm app-btn-secondary">
-													  {{ prestataire.doucument_CIN.split('/').pop() }}
-													</a>
-												  </td>
-											  
-												  <td class="cell">
-													<a *ngIf="prestataire.doucument_cv" (click)="downloadFile(prestataire.doucument_cv)" class="btn-sm app-btn-secondary">
-													  {{ prestataire.doucument_cv.split('/').pop() }}
-													</a>
-												  </td>
-																				  
-
-												
-												  <td class="cell">
-													<a href="#" class="btn-sm btn-danger" 
-													(click)="prestataire.idUtilisateur ? supprimerUtilisateur(prestataire.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
-											   
-
-												</td>
-												
-												
-													
-											</tr>
-		
-										</tbody>
-									</table>
-									
-						        </div><!--//table-responsive-->
-						       
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
+	
+			    <div class="row g-4">
 					
-						<nav class="app-pagination">
-							<ul class="pagination justify-content-center">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-							    </li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item">
-								    <a class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</nav><!--//app-pagination-->
-						
-			        </div><!--//tab-pane-->
-			        
-			        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
+				    <div *ngFor="let service of servicee; let i = index" class="col-6 col-md-4 col-xl-3 col-xxl-2">
+					  
+						<div class="app-card app-card-doc shadow-sm h-100">
+							
+							<div class="app-card-thumb-holder ">
+								
+									<img [src]="imageUrls[i] || 'assets/images/default-category.png'" 
+										 alt="{{ service.nomservice }}" 
+										 class="img-fluid"
+										 >
+								
+							</div>
+						    <div class="app-card-body p-3 has-card-actions">
+							    
+							    <h4 class="app-doc-title truncate mb-0">
+									
+										<a href="#">{{ service.nomservice }}</a>
+									</h4>
+							    <div class="app-doc-meta">
+								    <ul class="list-unstyled mb-0">
+									    <li><span class="text-muted">Description:</span>{{ service.description }}</li>
+
+										<li><span class="text-muted">Tarif:</span>{{ service.tarif }}dt/h</li>
+								    </ul>
+							    </div><!--//app-doc-meta-->
+							    
+							    <div class="app-card-actions">
+								    <div class="dropdown">
+									    <div class="dropdown-toggle no-toggle-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+										    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			  <path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+			</svg>
+									    </div><!--//dropdown-toggle-->
+									    <ul class="dropdown-menu">
+										  
+											<li><a   (click)="openEditModal(service)" class="dropdown-item" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+	</svg>Modifier</a></li>
+				
+	                                        <li><hr class="dropdown-divider"></li>
+											<li><a  (click)="deleteservice(service.idservice)" class="dropdown-item" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+	  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+	</svg>Supprimer</a></li>
+										</ul>
+								    </div><!--//dropdown-->
+						        </div><!--//app-card-actions-->
 								    
-							        <table class="table mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Image</th>
-												<th class="cell">Nom</th>
-                                               <th class="cell">Email</th>
-                                              <th class="cell">Mot de passe</th>
-                                           
-                                              <th class="cell">Adresse</th>
-                                                <th class="cell">Téléphone</th>
-                                           <th class="cell">Status</th>
-										   <th class="cell">supprimer</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let utilisateur of utilisateursParticuliers;  let i = index">
-												<td class="cell">
-													<img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
-													<i *ngIf="!utilisateur.image" class="fa fa-user profile-pic"></i>
-												  </td>
-												<td class="cell">{{ utilisateur.nom }}</td>
-												<td class="cell">{{ utilisateur.email }}</td>
-												<td class="cell">{{ utilisateur.password ? '********' : '' }}</td>
-												
-												<td class="cell">{{ utilisateur.adressee?.governoate }}</td>
-												<td class="cell">
-													
-													<span *ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'telephoneNumber'" 
-														  (click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null">
-													  {{ utilisateur.telephoneNumber }}
-													</span>
-													
-													<input *ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'telephoneNumber'" 
-														   [(ngModel)]="utilisateur.telephoneNumber" 
-														   (blur)="updateUserInTable(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber)" 
-														   placeholder="telephoneNumber">
-												  </td>
-												<td class="cell">
-													<!-- Modifier le statut -->
-													<span *ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'status'" 
-														  (click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'status', utilisateur.status) : null"
-														   [ngClass]="{
-															'status-accepte': utilisateur.status === 'ACCEPTE',
-															'status-refuse': utilisateur.status === 'REFUSE',
-															'status-attente': utilisateur.status === 'ATTENTE'
-														  }">
-													  {{ utilisateur.status }}
-													</span>
-													
-													<select *ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'status'" 
-															[(ngModel)]="utilisateur.status" 
-															(blur)="updateUserInTable(utilisateur.idUtilisateur, 'status', utilisateur.status)">
-													  <option value="ACCEPTE">Accepte</option>
-													  <option value="REFUSE">Refuse</option>
-													  <option value="ATTENTE">Attente</option>
-													</select>
-												  </td>
-												<td class="cell">
-													<a href="#" class="btn-sm btn-danger" 
-													(click)="utilisateur.idUtilisateur ? supprimerUtilisateur(utilisateur.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
-											   
+						    </div><!--//app-card-body-->
 
-												</td>
-
-											  </tr>
-		
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
 						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-			        
-			        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        <table class="table mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Image</th>
-												<th class="cell">Nom</th>
-												<th class="cell">nomEntreprise</th>
-												<th class="cell">Email</th>
-												<th class="cell">password</th>
-												<th class="cell">Téléphone</th>
-												<th class="cell">Status</th>
-												<th class="cell">Services Offerts</th>
-												<th class="cell">Siret</th>
-												<th class="cell">siteWeb</th>	
-												<th class="cell">Description</th>
-												<th class="cell">adressee</th>
-												<th class="cell">Expérience</th>
-												
-												<th class="cell">supprimer</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let entreprise of entreprises">
-												<!-- Affichage de la photo de profil -->
-												<td class="cell">
-													<img *ngIf="entreprise.image" [src]="entreprise.image" alt="Photo de {{ entreprise.nom }}" class="profile-pic">
-													<i *ngIf="!entreprise.image" class="fa fa-user profile-pic"></i>
-												  </td>
-												  <td class="cell">
-													<!-- Modifier le nom -->
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'nom'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nom', entreprise.nom) : null">
-													  {{ entreprise.nom }}
-													</span>
-													
-													<input *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'nom'" 
-														   [(ngModel)]="entreprise.nom" 
-														   (blur)="updateUserInTable(entreprise.idUtilisateur, 'nom', entreprise.nom)" 
-														   placeholder="Nom">
-												  </td>
-												  <td class="cell">
-													<!-- Modifier le nom -->
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'nomEntreprise'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise) : null">
-													  {{ entreprise.nomEntreprise }}
-													</span>
-													
-													<input *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'nomEntreprise'" 
-														   [(ngModel)]="entreprise.nomEntreprise" 
-														   (blur)="updateUserInTable(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise)" 
-														   placeholder="nomEntreprise">
-												  </td>
-												  <td class="cell">
-													<!-- Modifier l'email -->
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'email'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'email', entreprise.email) : null">
-													  {{ entreprise.email }}
-													</span>
-													
-													<input *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'email'" 
-														   [(ngModel)]="entreprise.email" 
-														   (blur)="updateUserInTable(entreprise.idUtilisateur, 'email', entreprise.email)" 
-														   placeholder="Email">
-												  </td>
-												<td class="cell">{{ entreprise.password ? '********' : '' }}</td>
-											
-												<td class="cell">
-													
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'telephoneNumber'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber) : null">
-													  {{ entreprise.telephoneNumber }}
-													</span>
-													
-													<input *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'telephoneNumber'" 
-														   [(ngModel)]="entreprise.telephoneNumber" 
-														   (blur)="updateUserInTable(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber)" 
-														   placeholder="telephoneNumber">
-												  </td>
-												<td class="cell">
-													<!-- Modifier le statut -->
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'status'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'status', entreprise.status) : null"
-														    [ngClass]="{
-															'status-accepte': entreprise.status === 'ACCEPTE',
-															'status-refuse': entreprise.status === 'REFUSE',
-															'status-attente': entreprise.status === 'ATTENTE'
-														  }">
-													  {{ entreprise.status }}
-													</span>
-													
-													<select *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'status'" 
-															[(ngModel)]="entreprise.status" 
-															(blur)="updateUserInTable(entreprise.idUtilisateur, 'status', entreprise.status)">
-													  <option value="ACCEPTE">Accepte</option>
-													  <option value="REFUSE">Refuse</option>
-													  <option value="ATTENTE">Attente</option>
-													</select>
-												  </td>
-											
-												  <td class="cell">{{ entreprise.competence}} </td>
-												<td class="cell">
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'siret'" 
-													(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siret', entreprise.siret) : null">
-												{{ entreprise.siret }}
-											  </span>
-												</td>
-												<td class="cell">
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'siteWeb'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siteWeb', entreprise.siteWeb) : null">
-													  {{ entreprise.siteWeb }}
-													</span>
-												
-													
-													<input *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'tarifs'" 
-														   [(ngModel)]="entreprise.tarifs" 
-														   (blur)="updateUserInTable(entreprise.idUtilisateur, 'tarifs', entreprise.tarifs)" 
-														   placeholder="tarifs">
-												  </td>
-												
-												
-
-												  
-												  
-												  
-												<td class="cell">
-													<div class="description-container">
-													  <span>{{ entreprise.description | slice: 0:50 }}</span> <!-- Afficher les 50 premiers caractères -->
-													  <span *ngIf="entreprise.showFullDescription">{{ entreprise.description | slice: 50 }}</span> <!-- Afficher la suite si showFullDescription est vrai -->
-													  <a *ngIf="entreprise.description && entreprise.description.length > 50" (click)="toggleDescription(entreprise)">
-														{{ entreprise.showFullDescription ? 'Show Less' : 'Show More' }}
-													  </a>
-													</div>
-												  </td>
-												  <td class="cell">{{ entreprise.adressee?.governoate }}</td>
-												
-												
-												<td class="cell">
-													
-													<span *ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'workExperience'" 
-														  (click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience) : null">
-													  {{ entreprise.workExperience }}
-													</span>
-													
-													<input *ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'workExperience'" 
-														   [(ngModel)]="entreprise.workExperience" 
-														   (blur)="updateUserInTable(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience)" 
-														   placeholder="workExperience">
-												  </td>
-												
-												
-												
-												
-												
-
-												
-											  
-												  											  
-
-												
-												  <td class="cell">
-													<a href="#" class="btn-sm btn-danger" 
-													(click)="entreprise.idUtilisateur ? supprimerUtilisateur(entreprise.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
-											   
-
-												</td>
-												
-												
-													
-											</tr>
-		
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-			        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        <table class="table mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Order</th>
-												<th class="cell">Product</th>
-												<th class="cell">Customer</th>
-												<th class="cell">Date</th>
-												<th class="cell">Status</th>
-												<th class="cell">Total</th>
-												<th class="cell"></th>
-											</tr>
-										</thead>
-										<tbody>
-											
-											<tr>
-												<td class="cell">#15342</td>
-												<td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-												<td class="cell">Reina Brooks</td>
-												<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-												<td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-												<td class="cell">$59.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-				</div><!--//tab-content-->
+				    </div><!--//col-->
+				</div>
 				
+				<nav class="app-pagination mt-5">
+					<ul class="pagination justify-content-center">
+					  <!-- Previous Button -->
+					  <li class="page-item" [class.disabled]="currentPage === 1">
+						<a class="page-link" href="#" (click)="changePages(currentPage - 1)" aria-label="Previous" [attr.tabindex]="currentPage === 1 ? '-1' : '0'" [attr.aria-disabled]="currentPage === 1 ? 'true' : 'false'">Previous</a>
+					  </li>
+				  
+					  <!-- Page Numbers -->
+					  <li *ngFor="let page of pages" class="page-item" [class.active]="currentPage === page">
+						<a class="page-link" href="#" (click)="changePages(page)">{{ page }}</a>
+					  </li>
+				  
+					  <!-- Next Button -->
+					  <li class="page-item" [class.disabled]="currentPage === totalPages">
+						<a class="page-link" href="#" (click)="changePages(currentPage + 1)" aria-label="Next" [attr.tabindex]="currentPage === totalPages ? '-1' : '0'" [attr.aria-disabled]="currentPage === totalPages ? 'true' : 'false'">Next</a>
+					  </li>
+					</ul>
+				  </nav>
+				  
+				  
+				  
+				  <!-- Ajoute ce test pour voir si Angular détecte bien les pages -->
 				
-			    
+				  
+
+				  
+				  
+				  
+				  
+				  
+							  
 		    </div><!--//container-fluid-->
 	    </div><!--//app-content-->
+	
 	    
-	    <footer class="app-footer">
+		<footer class="app-footer">
 		    <div class="container text-center py-3">
 		         <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
             <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
@@ -938,8 +617,10 @@
     <!-- Javascript -->          
     <script src="assetsadmin/plugins/popper.min.js"></script>
     <script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>  
-	
-    
+
+    <!-- Charts JS -->
+    <script src="assetsadmin/plugins/chart.js/chart.min.js"></script> 
+    <script src="assetsadmin/js/index-charts.js"></script> 
     
     <!-- Page Specific JS -->
     <script src="assetsadmin/js/app.js"></script> 

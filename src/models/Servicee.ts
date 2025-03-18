@@ -7,6 +7,7 @@ export class Servicee {
     nomservice?: string;
     imageService?: string;
     description?: string;
+    tarif?: number;
     categorie?: Categorie;
     demandes?: Demande[];
     prestataires?: Utilisateur[];

@@ -343,14 +343,15 @@ border-color: #247df0; /* Changement de bordure au survol */
 }
 
 .category-content h3 {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 .category-content p {
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.9;
+  font-weight: bold;
   margin-bottom: 15px;
 }
 

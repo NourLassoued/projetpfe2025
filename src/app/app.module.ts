@@ -52,6 +52,8 @@ import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.compone
 import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
 import { NavbarbackadminComponent } from './navbarbackadmin/navbarbackadmin.component';
 import { CatogoriesComponent } from './catogories/catogories.component';
+import { ServiceComponent } from './service/service.component';
+import { BricolageComponent } from './bricolage/bricolage.component';
 
 
 
@@ -85,6 +87,8 @@ import { CatogoriesComponent } from './catogories/catogories.component';
     UpdateEtrepriseComponent,
     NavbarbackadminComponent,
     CatogoriesComponent,
+    ServiceComponent,
+    BricolageComponent,
 
    
 

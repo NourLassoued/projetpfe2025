@@ -56,7 +56,11 @@ export class InscriptionProfessionnelComponent {
     
 
   }
-
+  closeServiceModal() {
+    this.showServiceModal = false;
+    this.showModal = false
+  
+  }
 
   showNotification(message: string): void {
     this.notificationMessage = message;  

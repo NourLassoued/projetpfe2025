@@ -13,16 +13,11 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
   styleUrls: ['./all-template-front.component.css']
 })
 export class AllTemplateFrontComponent {
-  imageUrlss: { [key: string]: string } = {
-    'Déménagement': 'assets/images/demenagement.jpg',
-    'Ménage': 'assets/images/menage.jpg',
-    'Enfants': 'assets/images/enfants.jpg',
-    'Animaux': 'assets/images/animaux.jpg'
-  };
-  displayedCategories: any[] = []; // Les catégories actuellement affichées
-  currentIndex: number = 0; // L'index actuel
+
+  displayedCategories: any[] = []; 
+  currentIndex: number = 0; 
  
-  totalCategories: number = 0; // Nombre total de catégories
+  totalCategories: number = 0; 
   categories: any[] = [];
   imageUrls: string[] = [];
 
@@ -62,21 +57,15 @@ export class AllTemplateFrontComponent {
   
       this.showModal = true;
     }
-    /*
-  getAllCategories() {
-    this.categorieService.getAllCategories().subscribe(
-      (data) => {
-        this.filteredCategories = data;
-       
-        this.filteredCategories.forEach((category, index) => {
-          this.getImage(category.imageCategorie, index);
-        });
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des catégories', error);
-      }
-    );
-  }*/
+  
+    
+    closeServiceModal() {
+      this.showServiceModal = false;
+      this.showModal = false
+    
+    }
+    
+  
     getAllCategories() {
       this.categorieService.getAllCategories().subscribe(
         (data) => {
@@ -87,7 +76,7 @@ export class AllTemplateFrontComponent {
             console.warn('Aucune catégorie trouvée');
           }
           this.filteredCategories.forEach((category, index) => {
-            this.getImage(category.imageCategorie, index); // Vérifiez que cette méthode existe et fonctionne
+            this.getImage(category.imageCategorie, index); 
           });
         },
         (error) => {
@@ -101,7 +90,7 @@ export class AllTemplateFrontComponent {
         (data) => {
           this.categories = data.map((category) => ({
             ...category,
-            imageCategorie: this.getStaticImage(category.nom ?? '') // Remplace undefined par une chaîne vide
+            imageCategorie: this.getStaticImage(category.nom ?? '') 
           }));
         },
         (error) => {
@@ -110,26 +99,37 @@ export class AllTemplateFrontComponent {
       );
     }
     getStaticImage(categoryName?: string): string {
+      if (!categoryName) return '/assets/img/default.png'; 
+
+  const normalizedCategory = categoryName.trim(); 
+
       const imageMap: { [key: string]: string } = {
+        'Bricolage': '/assets/img/Bricolage.png',
       
         'Ménage': '/assets/img/menage.png',
+        'Jardinage': '/assets/img/Jardinage.png',
         'Enfants': '/assets/img/enfants.png',
+        'Déménagement':'/assets/img/demenagement.png',
         'Aide à domicile': '/assets/img/Aide à domicile.png',
         'Animaux': '/assets/img/animaux.png',
-        'Cours particuliers': '/assets/img/Cours particuliers.png',
-        'Déménagement': '/assets/img/Transpore.png',
-        'Sécurité et domotique': '/assets/img/Sécurité et domotique.png',
+       
         'Informatique': '/assets/img/Informatique.png',
-        'Bricolage': '/assets/img/Bricolage.png',
-        'Jardinage': '/assets/img/Jardinage.png',
+        'Cours particuliers': '/assets/img/Cours particuliers.png',
+       
+        'Construction et Gros oeuvre': '/assets/img/Construction et Gros oeuvre.png',
+       
+      
         'Décoration et Finitions': '/assets/img/Décoration et Finitions.png',
-        'Construction et Gros Œuvre ': '/assets/img/Construction et Gros Œuvre.png',
+        'Sécurité et domotique': '/assets/img/Sécurité et domotique.png',
+     
       };
     
-      return imageMap[categoryName || ''] || 'assets/images/default.jpg'; // Image par défaut si nom non trouvé
+    
+      return imageMap[normalizedCategory] || '/assets/img/default.png';
+    
     }
     updateCategoriesToShow() {
-      // Met à jour les catégories à afficher, seulement 4 catégories à la fois
+      
       this.Categories = this.Categories.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
     }
   
@@ -246,14 +246,14 @@ export class AllTemplateFrontComponent {
     return this.categories.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
   }
 
-  // Passer aux catégories précédentes
+
   prevCategory() {
     if (this.currentIndex > 0) {
       this.currentIndex -= this.itemsPerPage;
     }
   }
 
-  // Passer aux catégories suivantes
+ 
   nextCategory() {
     if (this.currentIndex + this.itemsPerPage < this.categories.length) {
       this.currentIndex += this.itemsPerPage;

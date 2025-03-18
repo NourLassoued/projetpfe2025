@@ -29,6 +29,8 @@ import { UserComponent } from './user/user.component';
 import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
 import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
 import { CatogoriesComponent } from './catogories/catogories.component';
+import { ServiceComponent } from './service/service.component';
+import { BricolageComponent } from './bricolage/bricolage.component';
 
 
 const routes: Routes = [
@@ -123,7 +125,16 @@ const routes: Routes = [
   {
     path: 'UpdateEntreprise',
     component:UpdateEtrepriseComponent
+  },
+  {
+    path: 'Service',
+    component:ServiceComponent
+  },
+  {
+    path: 'Bricolage',
+    component:BricolageComponent
   }
+
 
 
 
