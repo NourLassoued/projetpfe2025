@@ -1,0 +1,178 @@
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Servicee } from 'src/models/Servicee';
+import { CategorieService } from '../service/categorie.service';
+import { FileService } from '../service/file.service';
+import { ServiceeService } from '../service/servicee.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-demenagement',
+  templateUrl: './demenagement.component.html',
+  styleUrls: ['./demenagement.component.css']
+})
+export class DemenagementComponent {
+    services: Servicee[] = [];
+      imageUrls: string[] = [];
+      showModal=false;
+      filteredServices: Servicee[] = [];
+      searchQuery: string = '';
+      categoryName: string = '';
+      constructor(private categorieService:CategorieService,private file:FileService,
+          private service:ServiceeService,
+         
+          private route: Router,
+          private cdr: ChangeDetectorRef) {}
+          ngOnInit(): void {
+                
+            this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');  
+            
+            if (this.categoryName) {
+            
+              this.getServicesByCategoryName(this.categoryName); 
+            } else {
+              console.warn("Aucun nom de catégorie trouvé dans localStorage.");
+            }
+          
+            this.startTypingEffect();  
+          }
+          ngOnDestroy() {
+     
+     
+            
+            localStorage.removeItem('categorieName')
+          } 
+    
+      openServiceModal() {
+        this.showModal = true;
+      }
+    
+     
+      closeServiceModal() {
+        this.showModal = false;
+      }
+      filterServices() {
+        if (this.searchQuery.trim() === '') {
+       
+          this.filteredServices = this.services;
+        } else {
+        
+          this.filteredServices = this.services.filter(service =>
+            service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+          );
+        }
+      }
+      
+      
+      
+    
+      getImage(filename: string, index: number) {
+       
+        this.file.getImage(filename).subscribe(
+          (imageBlob) => {
+            const imageUrl = URL.createObjectURL(imageBlob);
+            this.imageUrls[index] = imageUrl;
+            
+          },
+          (error) => {
+            console.error(` Erreur lors du chargement de l'image ${filename}`, error);
+          }
+        );
+      }
+    
+      searchServices() {
+     
+        const categorieName = localStorage.getItem('categorieName');
+        
+        if (categorieName) {
+         
+          this.getServicesByCategoryName(categorieName);
+        } else {
+          console.warn("Aucun nom de catégorie valide trouvé dans localStorage.");
+        }
+      }
+      
+     
+        getServicesByCategoryName(categorieName: string): void {
+          this.service.getServicesByCategoryName(categorieName).subscribe(
+            (services: Servicee[]) => {
+              console.log('Services récupérés pour la catégorie:', categorieName, services);
+              if (services && services.length > 0) {
+                this.services = services;
+    
+                this.services.forEach((service, index) => {
+                  if (service.imageService) {
+                   
+                    this.getImage(service.imageService, index);
+                  
+                  } 
+                  
+                  else {
+                    console.warn(`Pas d'image pour le service ${service.nomservice}, utilisation de l'image par défaut.`);
+                    this.imageUrls[index] = 'assets/default-image.jpg';
+                  }
+                });
+                this.filterServices();
+              
+              } else {
+                console.warn('Aucun service trouvé pour la catégorie:', categorieName);
+              }
+            },
+            (error) => {
+              console.error('Erreur lors de la récupération des services:', error);
+            }
+          );
+        }
+      
+          placeholders: string[] = [
+            "Transport et manutention 📦",
+            "Location de camion avec chauffeur 🚚",
+            "Emballage et protection des objets 🏠",
+            "Montage et démontage de meubles 🔧",
+            "Chargement et déchargement efficace 💪",
+            "Déménagement en toute sérénité ✅"
+           
+          ];
+        
+          currentPlaceholder: string = "";
+          private index: number = 0;
+          private charIndex: number = 0;
+          private typingSpeed: number = 100;
+          private isTyping: boolean = false;
+        
+          
+        
+          startTypingEffect() {
+            this.typePlaceholder(); 
+            setInterval(() => { if (!this.isTyping) {  
+              this.typePlaceholder();
+            }
+          }, 2000);  
+        }
+        
+        typePlaceholder() {
+          if (this.isTyping) return; 
+        
+          this.isTyping = true; 
+          this.currentPlaceholder = ""; 
+          this.charIndex = 0;
+          const text = this.placeholders[this.index];
+        
+          const typingInterval = setInterval(() => {
+            if (this.charIndex < text.length) {
+              this.currentPlaceholder += text[this.charIndex];
+              this.charIndex++;
+            } else {
+              clearInterval(typingInterval);
+              setTimeout(() => {
+                this.isTyping = false;  
+                this.index = (this.index + 1) % this.placeholders.length;
+              }, 100);  
+            }
+          }, this.typingSpeed);
+        } 
+        }
+  
+  
+  
+
+

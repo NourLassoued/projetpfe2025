@@ -50,6 +50,9 @@ export class ServiceeService {
   getAllServicesByCategorie(categorieId: number): Observable<Servicee[]> {
     return this.http.get<Servicee[]>(`${this.apiUrl}/categorie/${categorieId}`);
   }
+  getServicesByCategoryName(categorieName: string): Observable<Servicee[]> {
+    return this.http.get<Servicee[]>(`${this.apiUrl}/categorie-name/${categorieName}`);
+  }
 
   getUtilisateursByService(serviceId: number): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(`${this.apiUrl}/par-service/${serviceId}`);

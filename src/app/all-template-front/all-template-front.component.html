@@ -72,17 +72,20 @@
                     <div class="modal-content">
                       <span class="close"(click)="closeServiceModal()" >&times;</span>
                       <h2> {{ selectedCategory?.nom }}</h2>
-                      <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2">
+                      <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
+                      [(ngModel)]="searchQuery"
+                      (input)="filterServices()">
+                      
                    <div class="grid-container">
                     
-                        <div class="category-card" *ngFor="let service of services let i = index"  >
+                        <div class="category-card" *ngFor="let service of filteredServices; let i = index"  >
                           <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
-                          <label for="service-{{ service.id }}">{{ service.nomservice }}</label>
+                          <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
               
                           <input 
                             class="iconn" 
                             type="checkbox" 
-                            id="service-{{ service.id }}" 
+                            id="service-{{ service.idservice }}" 
                             
                             >
                         </div>
@@ -146,7 +149,8 @@
                     <div class="category-content">
                         <h3>{{ category.nom }}</h3>
                         <p>{{ category.description }}</p>
-                        <button class="discover-btn">Découvrir →</button>
+                        <button class="discover-btn" (click)="navigateToCategory(category.nom)">Découvrir →</button>
+
                     </div>
                 </div>
                 <button (click)="nextCategory()" class="scroll-btn right" [disabled]="currentIndex + itemsPerPage >= categories.length"> <i class="fa fa-angle-right"></i></button>

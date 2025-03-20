@@ -3,14 +3,17 @@
    
     <div class="container">
         <div class="text-section">
-            <h1 class="title"><i class="fas fa-tools"></i> Bricolage</h1>
-            <h1 class="subtitle">Réservez tous 
-                vos <br>services<br> de bricolage</h1>
+            <h1 class="title"><i class="fas fa-baby"></i> Enfants</h1>
+
+            <h1 class="subtitle">Trouvez la meilleure
+               à proximité
+              
+            <br>   Garde d'enfant  <br> à proximité</h1>
             <p class="description">
-                Pour tous vos petits travaux à domicile: installation électrique, pose d'étagères, montage de meubles, plomberie.
+                Nous sélectionnons des gardes d'enfants fiables pour des moments ludiques et éducatifs, que ce soit ponctuel, périscolaire ou de longue durée. 
             </p>
             <button  (click)="openServiceModal()" class="button">
-                Demander un service de bricolage 
+                Demander un service d'enfants 
                 <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
                   <path
                     fill-rule="evenodd"
@@ -21,11 +24,11 @@
             </button>
         </div>
         <div class="image-section">
-            <img src="/assets/img/Bricolage11.png" alt="Bricolage Image" class="bricolage-image">
+            <img src="/assets/img/Enfantes.png" alt="Bricolage Image" class="bricolage-image">
         </div>
     </div>
-    <h1 class="h1">Tous les services de bricolage</h1>
-    <p>Rénovation, aménagement ou petites réparations, gagnez du temps et de l’argent en déléguant à des bricoleurs qualifiés.</p>
+    <h1 class="h1">Tous les types de garde d’enfants</h1>
+    <p>Garde ponctuelle, périscolaire, week-end, vacances ou longue durée, avec des profils de confiance</p>
     
     <div   class="search-container">
         <input type="text" [placeholder]="currentPlaceholder">
@@ -36,7 +39,7 @@
          <div *ngIf="showModal" class="modal-overlay">
             <div class="modal-content">
                 <span class="close"(click)="closeServiceModal()" >&times;</span>
-                <h2> Bricolage</h2>
+                <h2> Enfants</h2>
                 <input type="text" placeholder="🔍 De quel service avez-vous besoin " 
                 class="search-bar2"
                 [(ngModel)]="searchQuery"

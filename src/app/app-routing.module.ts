@@ -31,6 +31,10 @@ import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.co
 import { CatogoriesComponent } from './catogories/catogories.component';
 import { ServiceComponent } from './service/service.component';
 import { BricolageComponent } from './bricolage/bricolage.component';
+import { MenageComponent } from './menage/menage.component';
+import { JardinageComponent } from './jardinage/jardinage.component';
+import { EnfantsComponent } from './enfants/enfants.component';
+import { DemenagementComponent } from './demenagement/demenagement.component';
 
 
 const routes: Routes = [
@@ -133,8 +137,25 @@ const routes: Routes = [
   {
     path: 'Bricolage',
     component:BricolageComponent
-  }
+  },
+  {
+    path: 'Ménage',
+    component:MenageComponent
+  },
+  
 
+  {
+    path: 'Jardinage',
+    component:JardinageComponent
+  },
+  {
+    path: 'Enfants',
+    component:EnfantsComponent
+  },
+  {
+  path: 'Demenagement',
+  component:DemenagementComponent
+}
 
 
 

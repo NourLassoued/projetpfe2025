@@ -54,6 +54,10 @@ import { NavbarbackadminComponent } from './navbarbackadmin/navbarbackadmin.comp
 import { CatogoriesComponent } from './catogories/catogories.component';
 import { ServiceComponent } from './service/service.component';
 import { BricolageComponent } from './bricolage/bricolage.component';
+import { MenageComponent } from './menage/menage.component';
+import { JardinageComponent } from './jardinage/jardinage.component';
+import { EnfantsComponent } from './enfants/enfants.component';
+import { DemenagementComponent } from './demenagement/demenagement.component';
 
 
 
@@ -89,6 +93,10 @@ import { BricolageComponent } from './bricolage/bricolage.component';
     CatogoriesComponent,
     ServiceComponent,
     BricolageComponent,
+    MenageComponent,
+    JardinageComponent,
+    EnfantsComponent,
+    DemenagementComponent,
 
    
 

@@ -34,12 +34,13 @@ export class AllTemplateFrontComponent {
  
   newFilteredCategories: any[] = []
   searchQuery: string = '';
-
+  filteredServices: Servicee[] = [];
+  searchQueryservice: string = '';
   showModal = false;
   showServiceModal = false; 
   selectedServices: any[] = [];
   
-  constructor(private http:HttpClient,private categorieService:CategorieService,private file:FileService,
+  constructor(private categorieService:CategorieService,private file:FileService,
     private service:ServiceeService,
     private router: Router,
     private cdr: ChangeDetectorRef) {
@@ -152,6 +153,18 @@ export class AllTemplateFrontComponent {
       );
     }
   }
+  filterServices() {
+    if (this.searchQuery.trim() === '') {
+     
+      this.filteredServices = this.services;
+    } else {
+   
+      this.filteredServices = this.services.filter(service =>
+        service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
+  }
+  
   
 
 
@@ -186,6 +199,7 @@ export class AllTemplateFrontComponent {
         this.services.forEach((service, index) => {
           this.getImage(service.imageService, index);
         });
+        this.filterServices();
       },
       (error) => {
         console.error('Erreur lors du chargement des services:', error);
@@ -259,6 +273,34 @@ export class AllTemplateFrontComponent {
       this.currentIndex += this.itemsPerPage;
     }
   }
+navigateToCategory(categorieName: string) {
+  const selectedCategory = this.categories.find(category => category.nom === categorieName);  // Chercher par nom
+  if (!selectedCategory) {
+    console.error('Catégorie non trouvée pour le nom:', categorieName);
+    return;  
+  }
 
+
+  localStorage.setItem('categorieName', JSON.stringify(selectedCategory.nom));
+
+  
+  const categoryRoutes: { [key: string]: string } = {
+    'Bricolage': '/Bricolage',
+    'Ménage': '/Ménage',
+    'Jardinage':'/Jardinage',
+   
+    'Enfants': '/Enfants',
+    'Déménagement':'/Demenagement',
+  };
+
+
+  const route = categoryRoutes[selectedCategory.nom];
+
+  if (route) { 
+    this.router.navigateByUrl(route);  
+  } else {
+    console.error('Route non définie pour cette catégorie:', selectedCategory.nom);
+  }
+}
 
 }
