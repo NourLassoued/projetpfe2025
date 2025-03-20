@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +58,13 @@ public class ServiService implements Serviceinterface {
     }
     public List<Utilisateur> getUtilisateursByServiceOrderedByRating(Long serviceId) {
         return utilisateurRepository.findUtilisateursByServiceOrderedByRating(serviceId);
+    }
+    public List<Servicee> rechercherParNom(String nom) {
+        return serviceRepository.findByNomserviceContainingIgnoreCase(nom);
+    }
+    public Servicee findById(Long id) {
+        Optional<Servicee> serviceOptional = serviceRepository.findById(id);
+        return serviceOptional.orElse(null);
     }
 }
 

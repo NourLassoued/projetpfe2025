@@ -14,4 +14,5 @@ public interface Serviceinterface {
     public Servicee ajouterServiceAuCategorie(Long categorieId, Servicee service);
     public List<Servicee> getAllServicesByCategorie(Long categorieId);
     public List<Utilisateur> getUtilisateursByService(Long serviceId);
-    }
+    public List<Servicee> rechercherParNom(String nom);
+}

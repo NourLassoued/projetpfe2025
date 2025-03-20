@@ -7,7 +7,7 @@ import java.util.List;
 public interface CategoriesInterface {
     public List<Categorie> getAll() ;
 
-
+    public List<Categorie> searchCategoriesByName(String nom);
     public Categorie create(Categorie categorie) ;
 
     public Categorie update(Long id, Categorie categorie) ;

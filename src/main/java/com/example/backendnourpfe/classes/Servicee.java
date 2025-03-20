@@ -21,6 +21,7 @@ public class Servicee {
     private String nomservice;
     private String imageService;
     private String description;
+    private Float tarif;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "categorie_id")

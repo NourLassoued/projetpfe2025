@@ -3,6 +3,7 @@ package com.example.backendnourpfe.auth;
 
 
 import com.example.backendnourpfe.Config.LogoutService;
+import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.io.IOException;
 public class AuthenticationController {
     private  final  AuthenticationService service;
     private final LogoutService logoutService;
+    private UtilisateurRepository utilisateurRepository;
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         // Vous pouvez ajouter d'autres actions de nettoyage si nécessaire
@@ -33,6 +35,7 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(service.register(request));
     }
+
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationReponse> authenticate(

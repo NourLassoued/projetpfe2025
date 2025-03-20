@@ -10,6 +10,7 @@ import java.util.List;
 public interface ServiceRepository extends JpaRepository<Servicee, Long> {
     List<Servicee> findByCategorieId(Long categorieId);
     List<Servicee> findByNomserviceIn(List<String> nomservices);
+    List<Servicee> findByNomserviceContainingIgnoreCase(String nomservice);
 
 
 

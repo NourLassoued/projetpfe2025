@@ -37,6 +37,17 @@ public class CategorieService implements CategoriesInterface {
         }
         return null;
     }
+    public Categorie findById(Long id) {
+        Optional<Categorie> categorieOptional = categorieRepository.findById(id);
+        return categorieOptional.orElse(null);
+    }
+    public List<Categorie> searchCategoriesByName(String nom) {
+        if (nom == null || nom.isEmpty()) {
+            return categorieRepository.findAll();
+        } else {
+            return categorieRepository.findByNomContainingIgnoreCase(nom);
+        }
+    }
 
     @Override
     public void deleteCategorie(Long id) {
