@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule ,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import { InscriptionEntrpriseComponent } from './inscription-entrprise/inscripti
 import { LoginComponent } from './login/login.component';
 import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
 import { EditpasswordComponent } from './editpassword/editpassword.component';
-
+import { registerLocaleData } from '@angular/common';
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
@@ -58,7 +58,15 @@ import { MenageComponent } from './menage/menage.component';
 import { JardinageComponent } from './jardinage/jardinage.component';
 import { EnfantsComponent } from './enfants/enfants.component';
 import { DemenagementComponent } from './demenagement/demenagement.component';
-
+import { AidedomicileComponent } from './aidedomicile/aidedomicile.component';
+import { AnimauxComponent } from './animaux/animaux.component';
+import { InformatiqueComponent } from './informatique/informatique.component';
+import { CoursparticuliersComponent } from './coursparticuliers/coursparticuliers.component';
+import { ConstructionetGrosoeuvreComponent } from './constructionet-grosoeuvre/constructionet-grosoeuvre.component';
+import { DecorationComponent } from './decoration/decoration.component';
+import { SecuriteComponent } from './securite/securite.component';
+import { DemandeComponent } from './demande/demande.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 
@@ -97,6 +105,14 @@ import { DemenagementComponent } from './demenagement/demenagement.component';
     JardinageComponent,
     EnfantsComponent,
     DemenagementComponent,
+    AidedomicileComponent,
+    AnimauxComponent,
+    InformatiqueComponent,
+    CoursparticuliersComponent,
+    ConstructionetGrosoeuvreComponent,
+    DecorationComponent,
+    SecuriteComponent,
+    DemandeComponent,
 
    
 
@@ -123,9 +139,13 @@ import { DemenagementComponent } from './demenagement/demenagement.component';
     
     BsDatepickerModule.forRoot() ,
     ToastrModule.forRoot() 
+    
  
   ],
-  providers: [NotificationService],
+ 
+  
+  providers: [  { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+     NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

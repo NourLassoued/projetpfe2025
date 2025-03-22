@@ -35,6 +35,14 @@ import { MenageComponent } from './menage/menage.component';
 import { JardinageComponent } from './jardinage/jardinage.component';
 import { EnfantsComponent } from './enfants/enfants.component';
 import { DemenagementComponent } from './demenagement/demenagement.component';
+import { AidedomicileComponent } from './aidedomicile/aidedomicile.component';
+import { AnimauxComponent } from './animaux/animaux.component';
+import { InformatiqueComponent } from './informatique/informatique.component';
+import { CoursparticuliersComponent } from './coursparticuliers/coursparticuliers.component';
+import { ConstructionetGrosoeuvreComponent } from './constructionet-grosoeuvre/constructionet-grosoeuvre.component';
+import { DecorationComponent } from './decoration/decoration.component';
+import { SecuriteComponent } from './securite/securite.component';
+import { DemandeComponent } from './demande/demande.component';
 
 
 const routes: Routes = [
@@ -155,13 +163,48 @@ const routes: Routes = [
   {
   path: 'Demenagement',
   component:DemenagementComponent
-}
+},
+{
+  path: 'aide-a-domicile',
+  component:AidedomicileComponent
+},
+{
+  path: 'Animaux',
+  component:AnimauxComponent
+},
+{
+path: 'Informatique',
+component:InformatiqueComponent
+},
+{
+  path: 'Coursparticuliers',
+  component:CoursparticuliersComponent  
+  },
+  {
+    path: 'Decoration',
+    component:DecorationComponent  
+  },
+  {
+    path: 'Construction',
+    component:ConstructionetGrosoeuvreComponent  
+  },
+  {
+    path: 'Domotique',
+    component:SecuriteComponent 
+  },
+  {
+    path: 'Demande',
+    component:DemandeComponent 
+  }
+
+
+
 
 
 
 ];
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })], // 🔥 Ajout de cette option
     exports: [RouterModule]
   })
   export class AppRoutingModule { }

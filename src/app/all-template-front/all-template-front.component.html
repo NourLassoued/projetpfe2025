@@ -78,9 +78,10 @@
                       
                    <div class="grid-container">
                     
-                        <div class="category-card" *ngFor="let service of filteredServices; let i = index"  >
-                          <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
-                          <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
+                    <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)">
+                        <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+                        <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
+                      
               
                           <input 
                             class="iconn" 

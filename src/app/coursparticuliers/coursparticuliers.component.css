@@ -10,7 +10,7 @@ body {
     width: 1500px;
    margin-left: 20px;
   height: 500px;
-  background: linear-gradient(to right, #d3e2ef, #ffffff);
+  background: linear-gradient(to right, #f1d8fc, #ffffff);
 
 
 
@@ -25,13 +25,13 @@ body {
 .title {
     font-size: 30px;
     font-weight: bold;
-    color: #09a5a5;
+    color: #420773;
 }
 
 .subtitle {
     font-size: 50px;
     margin-top: 10px;
-    color: #e3b02d;
+    color: #281837;
 }
 
 .description {
@@ -243,12 +243,12 @@ p {
 
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    height: 350px; /* Assure une hauteur uniforme */
+    height: 460px; /* Assure une hauteur uniforme */
 }
 
 .service-card img {
     width: 350px; /* Largeur fixe */
-    height: 190px; /* Hauteur fixe */
+    height: 280px; /* Hauteur fixe */
     object-fit: cover; /* Pour que l'image conserve ses proportions et soit coupée si nécessaire */
     border-radius: 8px; /* Optionnel : ajouter un arrondi aux coins */
   }

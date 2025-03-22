@@ -1,3 +1,4 @@
+import { Demande } from "./Demande";
 import { Utilisateur } from "./Utilisateur";
 
 export class Adresse {
@@ -7,4 +8,5 @@ export class Adresse {
   governoate!: string; 
   ville!: string;     
   utilisateurs?: Utilisateur[]; 
+  demandes?: Demande[] = [];
   }

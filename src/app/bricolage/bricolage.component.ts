@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CategorieService } from '../service/categorie.service';
 import { ServiceeService } from '../service/servicee.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FileService } from '../service/file.service';
 import { Servicee } from 'src/models/Servicee';
 
@@ -33,6 +33,7 @@ export class BricolageComponent {
         } else {
           console.warn("Aucun nom de catégorie trouvé dans localStorage.");
         }
+
       
         this.startTypingEffect();  
       }

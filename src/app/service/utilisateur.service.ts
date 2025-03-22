@@ -46,8 +46,8 @@ export class UtilisateurService {
   }
 
 
-  creerDemande(idUtilisateur: number, idService: number, demande: Demande): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/creerDemande/${idUtilisateur}/${idService}`, demande);
+  creerDemande(emailUtilisateur:String, idService: number, idAdresse:number,demande: Demande): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/creerDemande/${emailUtilisateur}/${idService}/${idAdresse}`, demande);
   }
 
 

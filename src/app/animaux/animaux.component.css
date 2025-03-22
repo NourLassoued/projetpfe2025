@@ -1,3 +1,9 @@
+
+:root {
+    --couleur-primaire: #A8D5BA; /* Vert clair */
+    --couleur-secondaire: #F1C6A1; /* Beige doux */
+    --couleur-texte: #333333; /* Gris foncé pour le texte */
+  }
 body {
     font-family: Arial, sans-serif;
   
@@ -7,13 +13,10 @@ body {
 
 .container {
     margin-top: 120px;
-    width: 1500px;
-   margin-left: 20px;
+    width: 1900px;
+   margin-left: 20px;           
   height: 500px;
-  background: linear-gradient(to right, #d3e2ef, #ffffff);
-
-
-
+    background: linear-gradient(to right, #A8D5BA , #ffffff);
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -25,13 +28,15 @@ body {
 .title {
     font-size: 30px;
     font-weight: bold;
-    color: #09a5a5;
+    color: #06887d;
+    text-align: start;
 }
 
 .subtitle {
     font-size: 50px;
     margin-top: 10px;
-    color: #e3b02d;
+    color: #001d1a;
+    text-align: start;
 }
 
 .description {
@@ -46,8 +51,8 @@ body {
 }
 
 .bricolage-image {
-    width: 400px; /* Ajustez la taille de l'image selon vos besoins */
-    height: 400px;
+    width: 470px; /* Ajustez la taille de l'image selon vos besoins */
+    height: 450px;
     object-fit: cover;
     border-radius: 20px;
 
@@ -240,15 +245,15 @@ p {
     justify-content: space-between; /* Force le prix en bas */
     padding: 15px;
     border: 1px solid #ddd;
-
+width: 400px;
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    height: 350px; /* Assure une hauteur uniforme */
+    height: 370px; /* Assure une hauteur uniforme */
 }
 
 .service-card img {
-    width: 350px; /* Largeur fixe */
-    height: 190px; /* Hauteur fixe */
+    width: 370px; /* Largeur fixe */
+    height: 150px; /* Hauteur fixe */
     object-fit: cover; /* Pour que l'image conserve ses proportions et soit coupée si nécessaire */
     border-radius: 8px; /* Optionnel : ajouter un arrondi aux coins */
   }

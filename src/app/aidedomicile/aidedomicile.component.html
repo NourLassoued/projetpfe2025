@@ -3,17 +3,17 @@
    
     <div class="container">
         <div class="text-section">
-            <h1 class="title"><i class="fas fa-baby"></i> Enfants</h1>
-
-            <h1 class="subtitle">Trouvez la meilleure
-               à proximité
+            <h1 class="title"><i class="fas fa-hands-helping"></i>
+                Aide à domicile</h1>
+            <h1 class="subtitle">Réservez 
+                <br>des services d’aide 
               
-            <br>   Garde d'enfant  <br> à proximité</h1>
+            <br>   à domicile pour vous  <br>ou vos proches </h1>
             <p class="description">
-                Nous sélectionnons des gardes d'enfants fiables pour des moments ludiques et éducatifs, que ce soit ponctuel, périscolaire ou de longue durée. 
+                Compagnie, assistance pour les courses et les rendez-vous, aide à la préparation des repas. Trouvez la personne parfaite
             </p>
             <button  (click)="openServiceModal()" class="button">
-                Demander un service d'enfants 
+                Reserver le prestataire ideal 
                 <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
                   <path
                     fill-rule="evenodd"
@@ -24,11 +24,11 @@
             </button>
         </div>
         <div class="image-section">
-            <img src="/assets/img/Enfantes.png" alt="Bricolage Image" class="bricolage-image">
+            <img src="/assets/img/aideDomicille.png" alt="Bricolage Image" class="bricolage-image">
         </div>
     </div>
-    <h1 class="h1">Tous les types de garde d’enfants</h1>
-    <p>Garde ponctuelle, périscolaire, week-end, vacances ou longue durée, avec des profils de confiance</p>
+    <h1 class="h1">Tous les services d’aide à domicile</h1>
+    <p>De l'accompagnement à la préparation des repas, personnalisez vos services d'aide à domicile et payez uniquement pour ce dont vous avez besoin.</p>
     
     <div   class="search-container">
         <input type="text" [placeholder]="currentPlaceholder">
@@ -39,7 +39,7 @@
          <div *ngIf="showModal" class="modal-overlay">
             <div class="modal-content">
                 <span class="close"(click)="closeServiceModal()" >&times;</span>
-                <h2> Enfants</h2>
+                <h2> aide à domicile</h2>
                 <input type="text" placeholder="🔍 De quel service avez-vous besoin " 
                 class="search-bar2"
                 [(ngModel)]="searchQuery"
@@ -66,7 +66,7 @@
           <img [src]="imageUrls[i]" alt="{{ service.nomservice }}">
           <h3>{{ service.nomservice}}</h3>
           <p class="service-description" >{{ service.description }}</p>
-          <p class="service-price"> À partir de  Prix : {{ service.tarif }}</p>
+          <p class="service-price"> À partir de  Prix : {{ service.tarif }} </p>
         </div>
     </div>
       

@@ -13,7 +13,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
   styleUrls: ['./all-template-front.component.css']
 })
 export class AllTemplateFrontComponent {
-
+  selectedServiceId!: number;  
   displayedCategories: any[] = []; 
   currentIndex: number = 0; 
  
@@ -49,7 +49,7 @@ export class AllTemplateFrontComponent {
     ngOnInit(): void {
    this.getAllCategories();
    this. getAllCategoriess() ;
-      
+ 
     
     }
     showSkillModal() {
@@ -288,9 +288,16 @@ navigateToCategory(categorieName: string) {
     'Bricolage': '/Bricolage',
     'Ménage': '/Ménage',
     'Jardinage':'/Jardinage',
-   
+   'Animaux':'/Animaux',
     'Enfants': '/Enfants',
     'Déménagement':'/Demenagement',
+    'Aide à domicile':'/aide-a-domicile',
+    'Informatique':'/Informatique',
+    'Cours particuliers' :'/Coursparticuliers',
+    'Construction et Gros oeuvre':'/Construction',
+    'Décoration et Finitions':'/Decoration',
+    'Sécurité et domotique':'/Domotique'
+
   };
 
 
@@ -302,5 +309,10 @@ navigateToCategory(categorieName: string) {
     console.error('Route non définie pour cette catégorie:', selectedCategory.nom);
   }
 }
+selectService(service: any) {
+  this.selectedServiceId = service.idservice;  // ✅ Récupérer l'ID du service sélectionné
+  this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
+}
+
 
 }

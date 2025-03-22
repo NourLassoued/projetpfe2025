@@ -10,7 +10,7 @@ body {
     width: 1500px;
    margin-left: 20px;
   height: 500px;
-  background: linear-gradient(to right, #d3e2ef, #ffffff);
+  background: linear-gradient(to right, #e7ecf1, #ffffff);
 
 
 
@@ -25,13 +25,13 @@ body {
 .title {
     font-size: 30px;
     font-weight: bold;
-    color: #09a5a5;
+    color: #1b4e4e;
 }
 
 .subtitle {
     font-size: 50px;
     margin-top: 10px;
-    color: #e3b02d;
+    color: #3c4842;
 }
 
 .description {

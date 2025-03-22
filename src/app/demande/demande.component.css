@@ -1,0 +1,337 @@
+body {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin: 0;
+   
+}
+.container {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 90px;
+    width: 700px;
+}
+h1{
+    margin-top: 50px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.card {
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    padding: 16px;
+    text-align: center;
+}
+.card.selected {
+   
+    position: relative;
+    border: 3px solid #007bff;
+   
+ 
+}
+.card.selected .checkmark {
+    display: block;
+}
+.checkmark {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color:  #007bff; ;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+}
+.icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+.title {
+    font-size: 18px;
+    font-weight: 600;
+}
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 8px;
+}
+.description {
+    font-size: 12px;
+    color: #9ca3af;
+}
+.popular {
+    position: absolute;
+margin-top: 110px;
+  margin-left: 45px;
+    background-color: #fbbf24;
+    font-size: 15px;
+    padding: 2px 4px;
+    border-radius: 10px;
+}
+.text-center {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.button {
+    background-color: #007bff; ;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.time {
+    margin: 0 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+.link {
+    color: #007bff; ;
+    text-decoration: none;
+}
+.link-button {
+    background-color: #007bff; ;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+}.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* Ajoute un espacement entre le switch et le texte */
+}
+
+/* L'élément label utilise flexbox pour aligner ses enfants (input, slider et texte) sur une ligne */
+.switch {
+    display: flex;
+    align-items: center;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Le slider */
+.slider {
+    position: relative;
+    cursor: pointer;
+    width: 3.5em;
+    height: 2em;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 1.4em;
+    width: 1.4em;
+    background-color: white;
+    border-radius: 50%;
+    left: 0.3em;
+    bottom: 0.3em;
+    transition: .4s;
+}
+
+.switch input:checked + .slider {
+    background-color: #2196F3;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(1.5em);
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+.switch .label-text {
+    margin-left: 10px; /* Ajoute de l'espace entre le switch et le texte */
+}
+lebel{
+    color: #000;
+}
+.calendar-container {
+    width: 700px;
+    margin-top: 60px;
+   
+   
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .calendar-header {
+    display: flex;
+  
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .day-name {
+    font-weight: bold;
+    color: #888;
+  }
+  
+  .day {
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  
+  .day:hover {
+    background: #e3f2fd;
+    cursor: pointer;
+  }
+  .time-grid {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    justify-content: center;
+   
+}
+.calendar{
+    margin-top: 100px;
+}
+button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+button.selected {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+.time-selection{
+    margin-top: 150px;
+}
+.additional-info {
+    background-color: #ffffff;
+    padding: 24px;
+    margin-top: 200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
+    width: 700px;
+}
+
+.additional-info label {
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    color: #000;
+}
+.additional-info input,
+.additional-info textarea,
+.additional-info select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.additional-info input:focus,
+.additional-info textarea:focus,
+.additional-info select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+.additional-info textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.additional-info input[type="file"] {
+    border: none;
+    background: transparent;
+    padding: 5px;
+}
+
+.additional-info input[type="tel"] {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.footer .link-button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.footer .link-button:hover {
+    background-color: #0056b3;
+}
+
+.footer .link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer .link:hover {
+    text-decoration: underline;
+}

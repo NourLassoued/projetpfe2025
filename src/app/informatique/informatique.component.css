@@ -1,19 +1,18 @@
+
+
 body {
     font-family: Arial, sans-serif;
-  
+
     
     padding: 0;
 }
 
 .container {
     margin-top: 120px;
-    width: 1500px;
-   margin-left: 20px;
+    width: 3000px;
+   margin-left: 20px;           
   height: 500px;
-  background: linear-gradient(to right, #d3e2ef, #ffffff);
-
-
-
+    background: linear-gradient(to right, #bcdbf1 , #ffffff);
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -25,13 +24,15 @@ body {
 .title {
     font-size: 30px;
     font-weight: bold;
-    color: #09a5a5;
+    color: #007BFF;
+    text-align: start;
 }
 
 .subtitle {
     font-size: 50px;
     margin-top: 10px;
-    color: #e3b02d;
+    color: #1E1E2F;
+    text-align: start;
 }
 
 .description {
@@ -46,8 +47,8 @@ body {
 }
 
 .bricolage-image {
-    width: 400px; /* Ajustez la taille de l'image selon vos besoins */
-    height: 400px;
+    width: 470px; /* Ajustez la taille de l'image selon vos besoins */
+    height: 450px;
     object-fit: cover;
     border-radius: 20px;
 
@@ -240,14 +241,14 @@ p {
     justify-content: space-between; /* Force le prix en bas */
     padding: 15px;
     border: 1px solid #ddd;
-
+width: 380px;
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    height: 350px; /* Assure une hauteur uniforme */
+    height: 370px; /* Assure une hauteur uniforme */
 }
 
 .service-card img {
-    width: 350px; /* Largeur fixe */
+    width: 360px; /* Largeur fixe */
     height: 190px; /* Hauteur fixe */
     object-fit: cover; /* Pour que l'image conserve ses proportions et soit coupée si nécessaire */
     border-radius: 8px; /* Optionnel : ajouter un arrondi aux coins */
