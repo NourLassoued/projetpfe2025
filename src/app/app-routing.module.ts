@@ -43,6 +43,8 @@ import { ConstructionetGrosoeuvreComponent } from './constructionet-grosoeuvre/c
 import { DecorationComponent } from './decoration/decoration.component';
 import { SecuriteComponent } from './securite/securite.component';
 import { DemandeComponent } from './demande/demande.component';
+import { DemandecompteComponent } from './demandecompte/demandecompte.component';
+import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 
 
 const routes: Routes = [
@@ -195,9 +197,16 @@ component:InformatiqueComponent
   {
     path: 'Demande',
     component:DemandeComponent 
+  },
+  
+  {
+    path: 'Demandeservice',
+    component:DemandecompteComponent 
+  },
+  {
+    path: 'Mesdemandes',
+    component:MesdemandesComponent 
   }
-
-
 
 
 

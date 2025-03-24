@@ -41,7 +41,7 @@
                 class="search-bar2"
                 [(ngModel)]="searchQuery"
                 (input)="filterServices()">
-                <div class="category-card" *ngFor="let service of filteredServices; let i = index">
+                <div class="category-card" *ngFor="let service of filteredServices; let i = index"(click)="selectService(service)">
                     <img [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
                     <span  class="service-name" >{{ service.nomservice }}</span>
 
@@ -58,7 +58,7 @@
   
     <div class="services-grid">
       
-        <div class="service-card" *ngFor="let service of services; let i = index">
+        <div class="service-card" *ngFor="let service of services; let i = index" >
        
           <img [src]="imageUrls[i]" alt="{{ service.nomservice }}">
           <h3>{{ service.nomservice}}</h3>

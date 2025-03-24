@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+  
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+ width:2500px;
+    margin: 0px;
+    padding: 0px;
+  
+  
+ 
+
+  
+   
+}
+.content{
+   
+    width: 900px;
+    margin-left: 100px;
+ 
+
+    
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 20px;
+    width: 700px;
+    height: 500px;
+   
+}
+.image-section img {
+    width: 150px;
+    height: auto;
+}
+.info-section {
+    flex: 1;
+}
+.info-section h2 {
+    margin: 0 0 10px 0;
+}
+.info-section p {
+    margin: 5px 0;
+}
+.btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.discussion {
+    margin-left: 50px;
+    background: white;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.message {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.message-content {
+    flex: 1;
+}
+.name {
+    font-weight: bold;
+}
+.price {
+    color: green;
+}
+.text {
+    margin: 5px 0;
+}
+.time {
+    font-size: 12px;
+    color: gray;
+}
+
+.sidebar {
+    width: 250px;
+    height: 670px;
+
+    background-color: #fbf5f5;
+   
+  
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar ul li {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+.sidebar ul li.active, .sidebar ul li:hover {
+    background-color: #bbbdc0;
+}

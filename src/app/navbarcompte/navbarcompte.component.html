@@ -1,6 +1,56 @@
 <nav class="navbar">
     <div class="logo">PrestatairePro</div>
-    <button class="middle-btn" *ngIf="userRole === 'PARTICULIER'"><i class="fa fa-plus"></i> Demander un service</button>
+    <button  (click)="showSkillModal()" class="middle-btn" *ngIf="userRole === 'PARTICULIER'" ><i class="fa fa-plus"></i> Demander un service</button>
+    <div    (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
+        <div class="modal-content"  >
+          <span class="close" (click)="showModal = false">&times;</span>
+          <h2>Demander un service</h2>
+  
+      
+          <!-- Barre de recherche -->
+          <input   type="text" id="search-docs" name="searchdocs"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearch()"   placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
+      
+          <!-- Affichage des catégories en grille -->
+          <div class="grid-container">
+            <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom) ">
+              <img  [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
+              <span>{{ category.nom }}</span>
+              <span class="icon">➜</span>
+            </div>
+          
+          </div>
+        </div>
+       
+      </div>
+      <div class="modal" *ngIf="showServiceModal">
+        <div class="modal-content">
+          <span class="close"(click)="closeServiceModal()" >&times;</span>
+          <h2> {{ selectedCategory?.nom }}</h2>
+          <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
+          [(ngModel)]="searchQuery"
+          (input)="filterServices()">
+          
+       <div class="grid-container">
+        
+        <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)">
+            <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+            <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
+          
+  
+              <input 
+                class="iconn" 
+                type="checkbox" 
+                id="service-{{ service.idservice }}" 
+                
+                >
+          </div>
+          </div>
+        </div>
+    </div>
+  
+    
     <div class="nav-icons">
         <a href="#"><i class="fas fa-envelope"></i></a>
         <a href="#"><i class="fas fa-bell"></i></a>

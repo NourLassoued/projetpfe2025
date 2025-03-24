@@ -16,11 +16,12 @@ export class DemenagementComponent {
       showModal=false;
       filteredServices: Servicee[] = [];
       searchQuery: string = '';
+      selectedServiceId!: number;
       categoryName: string = '';
       constructor(private categorieService:CategorieService,private file:FileService,
           private service:ServiceeService,
          
-          private route: Router,
+          private router: Router,
           private cdr: ChangeDetectorRef) {}
           ngOnInit(): void {
                 
@@ -170,6 +171,10 @@ export class DemenagementComponent {
             }
           }, this.typingSpeed);
         } 
+        selectService(service: any) {
+          this.selectedServiceId = service.idservice; 
+          this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
+        }
         }
   
   

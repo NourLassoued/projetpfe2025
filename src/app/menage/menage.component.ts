@@ -14,11 +14,13 @@ export class MenageComponent {
     services: Servicee[] = [];
     imageUrls: string[] = [];
     showModal=false;
+    selectedServiceId!: number;
     filteredServices: Servicee[] = [];
     searchQuery: string = '';
     categoryName: string = '';
     constructor(private file:FileService,
         private service:ServiceeService,
+        private router: Router,
        
        
        ) {}
@@ -173,6 +175,10 @@ export class MenageComponent {
           }
         }, this.typingSpeed);
       } 
+      selectService(service: any) {
+        this.selectedServiceId = service.idservice; 
+        this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
+      }
       }
 
 

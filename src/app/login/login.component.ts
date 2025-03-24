@@ -41,12 +41,12 @@ export class LoginComponent {
   });}
 
   openModal() {
-    console.log("✅ Modal ouverte !");
+  
     this.showModal = true;
   }
 
   closeModal() {
-    console.log("❌ Modal fermée !");
+   
     this.showModal = false;
   }
   resetPassword() {
@@ -65,13 +65,13 @@ export class LoginComponent {
   
     this.forgetPasswordService.verifyEmail(email).subscribe({
       next: (response) => {
-        console.log('✅ Email trouvé, envoi en cours...');
+        console.log(' Email trouvé, envoi en cours...');
         
-        // 🔹 Navigation vers "/Front" après la vérification réussie
+      
         this.router.navigate(['/new']);
       },
       error: (err) => {
-        console.error('❌ Erreur :', err);
+        console.error(' Erreur :', err);
         this.errorMessage = "Cet email n'existe pas dans notre base de données.";
       }
     });

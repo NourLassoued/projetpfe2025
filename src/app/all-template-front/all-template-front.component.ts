@@ -310,7 +310,7 @@ navigateToCategory(categorieName: string) {
   }
 }
 selectService(service: any) {
-  this.selectedServiceId = service.idservice;  // ✅ Récupérer l'ID du service sélectionné
+  this.selectedServiceId = service.idservice;  
   this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
 }
 

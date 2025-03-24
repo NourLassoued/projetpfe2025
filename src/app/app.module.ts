@@ -67,6 +67,8 @@ import { DecorationComponent } from './decoration/decoration.component';
 import { SecuriteComponent } from './securite/securite.component';
 import { DemandeComponent } from './demande/demande.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { DemandecompteComponent } from './demandecompte/demandecompte.component';
+import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 
 
 
@@ -113,6 +115,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     DecorationComponent,
     SecuriteComponent,
     DemandeComponent,
+    DemandecompteComponent,
+    MesdemandesComponent,
 
    
 

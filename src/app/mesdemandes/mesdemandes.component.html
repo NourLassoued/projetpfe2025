@@ -1,0 +1,45 @@
+
+<body>
+    <app-navbarcompte></app-navbarcompte>
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <ul>
+                    <li>📌Tableau de bord</li>
+                   <li>📋 Mes demandes</li>
+                    <li>📋 Mes jobs</li>
+                    <li>📅 Mes réservations</li>
+                    <li>📜 Mon historique</li>
+                   <li>🚪 Se déconnecter</li>
+                </ul>
+                
+            </ul>
+        </aside>
+        <main class="content">
+            <h2>Mes Demandes</h2>
+
+            <!-- Boucle pour afficher les demandes -->
+            <div *ngFor="let demande of demandes ; let i = index">
+                <div class="card">
+                  <div class="image-section">
+                    <!-- Affichage de l'image -->
+                    <img *ngIf="imageUrls[i]" alt="{{demande.title}}"
+                                             [src]="imageUrls[i]" >
+
+                  </div>
+                    <div class="info-section">
+                        <h3>{{ demande.title }}</h3>
+                        <p><span class="location">📍 {{ demande.adressedemande?.governoate }}</span></p>
+                        <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }}</span></p>
+                        <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
+                        <p><span class="description">📝 {{ demande.description }}</span></p>
+                        <p><strong>🛠 Service: </strong>{{ demande.servicee?.nomservice }}</p>
+                        <p><strong>📞 Numéro de téléphone: </strong>{{ demande.telephoneNumber }}</p>
+                        <button class="btn" >Voir plus</button>
+                        <button class="btn" >Modifier</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>

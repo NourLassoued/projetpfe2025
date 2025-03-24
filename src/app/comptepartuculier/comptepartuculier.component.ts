@@ -5,6 +5,10 @@ import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { CategorieService } from '../service/categorie.service';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { ServiceeService } from '../service/servicee.service';
+import { Servicee } from 'src/models/Servicee';
+import { Demande } from 'src/models/Demande';
+import { DemandeService } from '../service/demande.service';
 
 @Component({
   selector: 'app-comptepartuculier',
@@ -18,13 +22,20 @@ export class ComptepartuculierComponent  implements OnInit{
     imageUrls: string[] = [];
     currentIndex = 0; 
   itemsPerPage = 8; 
+  userId!: number;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
-  
-    constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private categorieService:CategorieService) {}
+  services: any[] = [];
+  demandes: Demande[] = [];
+    constructor(private fileService: FileService, 
+      private sanitizer: DomSanitizer, private router:
+       Router,private categorieService:CategorieService,
+      private service:ServiceeService,
+      private demandeService: DemandeService) {}
     ngOnInit(): void {
       this.loadUserData();
       this.getAllCategories();
+      this.getDemandesByUserId();
     
     }
     loadUserData(): void {
@@ -34,6 +45,7 @@ export class ComptepartuculierComponent  implements OnInit{
         try {
           const decodedToken: any = jwtDecode(token);
           this.user = decodedToken;
+          this.userId = decodedToken.id;
     
         
     
@@ -50,7 +62,24 @@ export class ComptepartuculierComponent  implements OnInit{
         console.warn(" Aucun token trouvé dans localStorage !");
       }
     }
+   
+   getAllServicesByCategorie(categorieId: number) {
+      this.service.getAllServicesByCategorie(categorieId).subscribe(
+        (services: Servicee[]) => {
+          this.services = services;
+          this.services.forEach((service, index) => {
+            this.getImage(service.imageService, index);
+          });
+         
+        },
+        (error) => {
+          console.error('Erreur lors du chargement des services:', error);
+          
+        }
+      );
+    }
   
+   
     loadProfileImage(filename: string): void {
       this.fileService.getImage(filename).subscribe({
         next: (imageBlob) => {
@@ -70,7 +99,7 @@ export class ComptepartuculierComponent  implements OnInit{
          
           this.categories.forEach((category, index) => {
             this.getImage(category.imageCategorie, index);
-            console.log("catogries",this.categories)
+
           });
         },
         (error) => {
@@ -97,19 +126,32 @@ export class ComptepartuculierComponent  implements OnInit{
     get visibleCategories() {
       return this.categories.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
     }
-  
-    // Passer aux catégories précédentes
+ 
     prevCategory() {
       if (this.currentIndex > 0) {
         this.currentIndex -= this.itemsPerPage;
       }
     }
   
-    // Passer aux catégories suivantes
+   
     nextCategory() {
       if (this.currentIndex + this.itemsPerPage < this.categories.length) {
         this.currentIndex += this.itemsPerPage;
       }
     }
+    getDemandesByUserId() {
+      if (this.userId) {
+        this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe(
+          (data: Demande[]) => {
+            this.demandes = data;
+            console.log('Demandes récupérées :', this.demandes);
+          },
+          (error) => {
+            console.error('Erreur lors de la récupération des demandes', error);
+          }
+        );
+      }
+    }
+  }
   
-}
+

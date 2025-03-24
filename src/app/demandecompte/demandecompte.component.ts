@@ -1,28 +1,22 @@
-import { Component, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
-import { MatCalendar } from '@angular/material/datepicker';
-import { Moment } from 'moment';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { Location } from '@angular/common';
-
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Adresse } from 'src/models/Adresse';
-import { Utilisateur } from 'src/models/Utilisateur';
 import { Servicee } from 'src/models/Servicee';
+import { Utilisateur } from 'src/models/Utilisateur';
 import { UtilisateurService } from '../service/utilisateur.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdresseService } from '../service/adresse.service';
 import { FileService } from '../service/file.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Demande } from 'src/models/Demande';
 import { AuthServiceService } from '../service/auth-service.service';
+import { Demande } from 'src/models/Demande';
 import { jwtDecode } from 'jwt-decode';
-import { ForgetPasswordService } from '../service/forget-password.service';
+
 @Component({
-  selector: 'app-demande',
-  templateUrl: './demande.component.html',
-  styleUrls: ['./demande.component.css'],
- 
+  selector: 'app-demandecompte',
+  templateUrl: './demandecompte.component.html',
+  styleUrls: ['./demandecompte.component.css']
 })
-export class DemandeComponent  {
+export class DemandecompteComponent {
   today: Date = new Date();
 
   adresses: Adresse[] = [];
@@ -32,7 +26,7 @@ export class DemandeComponent  {
   selectedAdresse: any = '';
   step: number = 1;
   showResetForm = false; 
-  resetPasswordForm: FormGroup;
+ 
   selectedTimee: string = "";
   services: Servicee[] = []; 
   showModal: boolean = false;
@@ -51,7 +45,8 @@ export class DemandeComponent  {
   selectedDate: Date | null = null;
 
   adresseSelectionnée!: Adresse;
-  
+  email: string | null = null;
+  serviceId: number | null = null;
 
   errorMessage: string = '';
   serviceSelectionné!: Servicee;
@@ -65,15 +60,15 @@ export class DemandeComponent  {
 private file:FileService,
 private route: ActivatedRoute,
 private authService: AuthServiceService,
-private router: Router, private location: Location,
- private forgetPasswordService:ForgetPasswordService, ) {
+private router: Router
+ ) {
   
   {
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
    
     this.demandeForm = this.fb.group({
-      emailUtilisateur: ['', [Validators.required, Validators.email]],
+      
       description: ['', Validators.required],
       date: ['', Validators.required],
       heureTravail: ['', Validators.required],
@@ -81,34 +76,40 @@ private router: Router, private location: Location,
       idAdresse: ['', Validators.required] ,
       title: ['', Validators.required],  
   telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
-  password: ['', [Validators.required, Validators.minLength(6)]], 
+ 
     });
 
-    this.resetPasswordForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
-    });}
+  }
   
 
    
-  }
-  ngOnInit() {
+  }ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const idService = params['idservice'];  
-      if (idService) {
-        
-        this.serviceSelectionné = { idservice: idService, nomservice: '' }; 
-       
-        this.demandeForm.patchValue({
-          idService: idService
-        });
+      this.serviceId = params['idservice'];
+  
+     
+      if (params['email']) {
+        this.email = params['email'];
+      } else {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+          try {
+            const decodedToken: any = jwtDecode(token);
+            this.email = decodedToken.sub; 
+          } catch (error) {
+            console.error("Erreur lors du décodage du token :", error);
+          }
+        }
       }
+  
+      
     });
   
     this.loadAdresses();
     this.updateCalendar();
-    
   }
-
+  
+  
   openModal() {
   
     this.showModal = true;
@@ -116,63 +117,83 @@ private router: Router, private location: Location,
   closeModal() {
    
     this.showModal = false;
-  }
-  submitDemande() {
+  }submitDemande() {
+    // Vérification de la validité du formulaire
+    console.log("Vérification de la validité du formulaire...");
     if (this.demandeForm.invalid) {
-     
-      return;
+      console.error("Formulaire invalide !");
+      // Affichage des erreurs de chaque champ
+      Object.keys(this.demandeForm.controls).forEach(field => {
+        const control = this.demandeForm.get(field);
+        if (control?.invalid) {
+          console.warn(`- ${field} : Erreur :`, control.errors);
+        }
+      });
+      return; // Sortir si le formulaire est invalide
     }
-
-    const emailUtilisateur = this.demandeForm.value.emailUtilisateur;
+  
+    // Récupération des valeurs du formulaire
     const idService = this.demandeForm.value.idService;
     const idAdresse = this.demandeForm.value.idAdresse;
     const description = this.demandeForm.value.description;
-    const password = this.demandeForm.value.password; 
     const date = this.demandeForm.value.date;
     const heureTravail = this.demandeForm.value.heureTravail;
-    const title = this.demandeForm.value.title;  
-    const telephoneNumber = this.demandeForm.value.telephoneNumber
-
-
-    const utilisateur = this.utilisateurs.find(u => u.email === emailUtilisateur);
-
- 
+    const title = this.demandeForm.value.title;
+    const telephoneNumber = this.demandeForm.value.telephoneNumber;
+  
+    console.log("Valeurs récupérées du formulaire :");
+    console.log("idService:", idService);
+    console.log("idAdresse:", idAdresse);
+    console.log("description:", description);
+    console.log("date:", date);
+    console.log("heureTravail:", heureTravail);
+    console.log("title:", title);
+    console.log("telephoneNumber:", telephoneNumber);
+  
+    const emailUtilisateur = this.email;
+    if (!emailUtilisateur) {
+      console.error("L'email de l'utilisateur est introuvable !");
+      return; // Retourner si l'email est manquant
+    }
+  
+    // Recherche du service et de l'adresse sélectionnés
     const service = this.services.find(s => s.idservice === idService);
     const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
-    this.authService.authenticate(emailUtilisateur, password).subscribe(
-      (authResponse) => {
-          const decodedToken: any = jwtDecode(authResponse.access_token);
-   
+  
+    console.log("Service trouvé :", service);
+    console.log("Adresse trouvée :", adresse);
+  
+    if (!service || !adresse) {
+      console.error("Service ou adresse non trouvés !");
+      return; // Sortir si le service ou l'adresse n'est pas trouvé
+    }
+  
     const demande: Demande = {
       description: description,
       date: date,
       heureTravail: heureTravail,
       demandephoto: this.selectedFile ? this.selectedFile.name : undefined,
-      servicee: service, 
-      adressedemande: adresse,  
-      utilisateur: utilisateur  ,
-      title: title, 
-      telephoneNumber: telephoneNumber  
+      servicee: service,
+      adressedemande: adresse,
+      utilisateur: this.utilisateurActuel,
+      title: title,
+      telephoneNumber: telephoneNumber
     };
-
-    
+  
+    console.log("Demande préparée :", demande);
+  
+    // Envoi de la demande via le service
     this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
       (response) => {
-       
-        if (decodedToken.role === 'PARTICULIER') {
-        
-          this.router.navigate(['/Compteparticulier']);
-        }
+        console.log("Demande envoyée avec succès !");
+        console.log(response); // Affichage de la réponse de l'API
       },
       (error) => {
-        console.error('Erreur lors de la création de la demande', error);
-     
+        console.error("Erreur lors de la création de la demande", error);
       }
     );
-  })
   }
-
-
+  
 
   selectTime(hour: number) {
     if (!this.unknownHours) {
@@ -242,7 +263,7 @@ private router: Router, private location: Location,
   
     
   nextStepe() {
-    if (this.step < 4) {
+    if (this.step < 3) {
       this.step++;
     }
   }
@@ -309,30 +330,5 @@ private router: Router, private location: Location,
     });
   }
   
-  resetPassword() {
-    if (this.resetPasswordForm.valid) {
-    
-     
-      this.closeModal();
-    }
-  }verifyAndSendEmail() {
-    if (this.resetPasswordForm.invalid) {
-      this.errorMessage = 'Veuillez entrer une adresse e-mail valide.';
-      return;
-    }
-  
-    const email = this.resetPasswordForm.value.email;
-  
-    this.forgetPasswordService.verifyEmail(email).subscribe({
-      next: (response) => {
-      
-      
-        this.router.navigate(['/new']);
-      },
-      error: (err) => {
-        console.error(' Erreur :', err);
-        this.errorMessage = "Cet email n'existe pas dans notre base de données.";
-      }
-    });
-  }
 }
+
