@@ -2,12 +2,14 @@ package com.example.backendnourpfe.classes;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -22,19 +24,27 @@ public class Demande {
     private Date date;
     private String description;
     private  String title;
+    private Integer telephoneNumber;
 
-    private String adresse;
     @Enumerated(EnumType.STRING)
     private StatusDemande statusDemande;
     private  int heureTravail;
     private  String demandephoto;
-@JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
+
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "utilisateur_id")
+
     private Utilisateur utilisateur;
-@JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "service_id")
+
+@ManyToOne(fetch = FetchType.EAGER)
+
+@JoinColumn(name = "service_id")
+
     private Servicee servicee;
 
+@ManyToOne(fetch = FetchType.EAGER)
+
+@JoinColumn(name = "adresse_id")
+
+    private Adresse adressedemande;
 }

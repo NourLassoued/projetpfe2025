@@ -23,7 +23,7 @@ public interface UtlisateurInterface {
  public List<Utilisateur> getAllPrestataires();
     public List<Utilisateur> getAllParticuliers();
     public List<Utilisateur> getAllEntreprises();
+    public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) ;
 
-    public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande);
  public List<Utilisateur> getAllUsers();
 }

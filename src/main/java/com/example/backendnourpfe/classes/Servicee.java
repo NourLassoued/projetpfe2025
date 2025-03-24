@@ -1,5 +1,6 @@
 package com.example.backendnourpfe.classes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,9 @@ public class Servicee {
     @ManyToOne
     @JoinColumn(name = "categorie_id")
     private Categorie categorie;
-    @JsonIgnore
+
     @OneToMany(mappedBy = "servicee")
+    @JsonBackReference
     private List<Demande> demandes;
 @JsonIgnore
 @ManyToMany(mappedBy = "servicesOfferts",cascade = CascadeType.ALL)

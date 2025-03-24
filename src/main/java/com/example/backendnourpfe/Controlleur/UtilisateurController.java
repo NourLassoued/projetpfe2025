@@ -3,6 +3,8 @@ package com.example.backendnourpfe.Controlleur;
 
 
 import com.example.backendnourpfe.Config.JwtService;
+import com.example.backendnourpfe.Respository.AdresseRepository;
+import com.example.backendnourpfe.Respository.ServiceRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
@@ -36,6 +38,10 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+
 
     @PostMapping("/ajouter")
     public ResponseEntity<Utilisateur> ajouterUtilisateur(@RequestBody Utilisateur utilisateur) {
@@ -56,16 +62,17 @@ public class UtilisateurController {
         }
     }
 
+    @PostMapping(value = "/creerDemande/{emailUtilisateur}/{idService}/{idAdresse}", consumes = "application/json", produces = "application/json")
+public ResponseEntity<Map<String, Object>> creerDemande(
+        @PathVariable String emailUtilisateur,
+        @PathVariable Long idService,
+        @PathVariable Long idAdresse,
+        @RequestBody Demande demande) {
 
-    @PostMapping("/creerDemande/{idUtilisateur}/{idservice}")
-    public ResponseEntity<Map<String, Object>> creerDemande(
-            @PathVariable Long idUtilisateur,
-            @PathVariable Long idservice,
-            @RequestBody Demande demande) {
+    Map<String, Object> response = utilisateurService.creerDemande(emailUtilisateur, idService, idAdresse, demande);
+    return ResponseEntity.ok(response);
+}
 
-        Map<String, Object> response = utilisateurService.creerDemande(idUtilisateur, idservice, demande);
-        return ResponseEntity.ok(response);
-    }
 
     @PostMapping("/{idUtilisateur}/avis/{idAvisUtilisateur}")
     public ResponseEntity<Avis> donnerAvis(
@@ -98,38 +105,7 @@ public class UtilisateurController {
         return utilisateurService.creerReservation(idParticulier, idPrestataire, reservation);
     }
 
-/*
-    @GetMapping("/{email}")
-    public ResponseEntity<Void> activateAccount(@PathVariable String email) {
 
-        try {
-            email = URLDecoder.decode(email, StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-
-
-        Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmail(email);
-
-        if (utilisateurOpt.isPresent()) {
-            Utilisateur utilisateur = utilisateurOpt.get();
-
-
-            if (utilisateur.getStatus() == StatusUtilisateur.ATTENTE) {
-                utilisateur.setStatus(StatusUtilisateur.ACCEPTE);
-                utilisateurRepository.save(utilisateur);
-
-
-                return ResponseEntity.status(HttpStatus.FOUND)
-                        .header(HttpHeaders.LOCATION)
-                        .build();
-            }
-        }
-
-
-        return ResponseEntity.badRequest().build();
-    }
-*/
 
 
     @GetMapping("/{email}")

@@ -131,19 +131,10 @@ public List<Utilisateur> getAllPrestataires() {
         return utilisateurRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email: " + email));
     }
-
-
-
-
-
-
-
-
-
-
     @Override
-    public Map<String, Object> creerDemande(Long idUtilisateur, Long idservice, Demande demande) {
-        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
+    public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
+
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(emailUtilisateur)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
         if (utilisateur.getRole() != UserRole.PARTICULIER) {
@@ -151,17 +142,25 @@ public List<Utilisateur> getAllPrestataires() {
         }
 
 
-        Servicee service = serviceRepository.findById(idservice)
+        Servicee service = serviceRepository.findById(idService)
                 .orElseThrow(() -> new RuntimeException("Service non trouvé"));
+
+
+        Adresse adresse = adresseRepository.findById(idAdresse)
+                .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
 
 
         demande.setUtilisateur(utilisateur);
         demande.setServicee(service);
+        demande.setAdressedemande(adresse);
+
         demande.setStatusDemande(StatusDemande.EN_COURS);
+
+
         Demande savedDemande = demandeRepository.save(demande);
 
 
-        List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idservice);
+        List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idService);
 
 
         Map<String, Object> response = new HashMap<>();
@@ -170,6 +169,15 @@ public List<Utilisateur> getAllPrestataires() {
 
         return response;
     }
+
+
+
+
+
+
+
+
+
 
 
     @Override

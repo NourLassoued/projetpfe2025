@@ -78,17 +78,17 @@ public ResponseEntity<Servicee> updateService(
 
     @GetMapping("/categorie-name/{categorieName}")
     public ResponseEntity<List<Servicee>> getServicesByCategoryName(@PathVariable String categorieName) {
-        // Trouver la catégorie par nom
+
         Optional<Categorie> categorieOptional = categorieRepository.findByNom(categorieName);
 
         if (categorieOptional.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Si la catégorie n'est pas trouvée
+            return ResponseEntity.noContent().build();
         }
 
-        // Récupérer la liste des services associés à cette catégorie
+
         List<Servicee> services = categorieOptional.get().getServices();
 
-        // Retourner la liste des services dans la réponse
+
         return ResponseEntity.ok(services);
     }
 
