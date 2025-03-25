@@ -86,14 +86,16 @@ public class Utilisateur  implements UserDetails  {
     @JsonProperty("doucument_CIN")
     private  String doucument_CIN;
 
+
 @JsonIgnore
     @OneToOne(mappedBy = "user")
     private ForgotPassword forgotPassword;
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private  List<Token> tokens;
-    @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore
+    @OneToMany(mappedBy = "utilisateur")
+
     private List<Demande> demandes;
     @OneToMany(mappedBy = "utilisateur")
     @JsonIgnore

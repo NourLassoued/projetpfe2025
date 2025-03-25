@@ -3,9 +3,12 @@ package com.example.backendnourpfe.Controlleur;
 import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.service.DemandeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -19,9 +22,15 @@ public class DemandeController {
     }
 
 
-    @PutMapping("updateDemande/{idDemande}")
-    public Demande updateDemande(@PathVariable Long idDemande, @RequestBody Demande demandeDetails) {
-        return demandeService.updateDemande(idDemande, demandeDetails);
+    @PutMapping( "/{id}")
+    public Demande updateDemande(@PathVariable Long id, @RequestBody Demande demandeDetails) {
+        return demandeService.updateDemande(id, demandeDetails);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Demande> getDemandeById(@PathVariable Long id) {
+        Optional<Demande> demande = demandeService.getDemandeById(id);
+        return demande.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

@@ -28,7 +28,7 @@ public class Demande {
 
     @Enumerated(EnumType.STRING)
     private StatusDemande statusDemande;
-    private  int heureTravail;
+    private  Integer heureTravail;
     private  String demandephoto;
 
 @ManyToOne(fetch = FetchType.EAGER)

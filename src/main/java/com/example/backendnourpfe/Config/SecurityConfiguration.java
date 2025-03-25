@@ -27,7 +27,8 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**", "/forgetPassword/**", "/categories/**",
             "/services/**","/utilisateurss/**","/disponibilites/**" ,"/adresses/**",
-            "/demandes/**"
+            "/demandes/**",
+
     };
 
     private final JwtAuthenticat jwtAuthFilter;
@@ -44,6 +45,7 @@ public class SecurityConfiguration {
                         .requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers(HttpMethod.POST, "/utilisateurss/**").permitAll()
 
+                        .requestMatchers(HttpMethod.PUT, "/demandes/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
                         .anyRequest().authenticated()
