@@ -6,6 +6,7 @@ import { CategorieService } from '../service/categorie.service';
 import { ServiceeService } from '../service/servicee.service';
 import { DemandeService } from '../service/demande.service';
 import { jwtDecode } from 'jwt-decode';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mesdemandes',
@@ -14,7 +15,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class MesdemandesComponent {
    user: any = null;
-  
+
       categories: any[] = [];
       imageUrls: { [key: number]: string } = {};
    
@@ -23,8 +24,7 @@ export class MesdemandesComponent {
     services: any[] = [];
     demandes: Demande[] = [];
       constructor(private fileService: FileService, 
-        private categorieService:CategorieService,
-        private service:ServiceeService,
+        private router: Router,
         private demandeService: DemandeService) {}
       ngOnInit(): void {
         this.loadUserData();
@@ -80,11 +80,11 @@ export class MesdemandesComponent {
           this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe(
             (data: Demande[]) => {
               this.demandes = data;
-              // On parcourt les demandes et on charge les images
+              
               this.demandes.forEach((demande, index) => {
-                // Vérification si demande.demandephoto n'est pas undefined avant d'appeler getImage
+                
                 if (demande.demandephoto) {
-                  this.getImage(demande.demandephoto, index); // Chargement de l'image pour chaque demande
+                  this.getImage(demande.demandephoto, index); 
                 }
               });
             },
@@ -94,4 +94,14 @@ export class MesdemandesComponent {
           );
         }
       }
+      gererDemande(demande: any) {
+      
+        if (!demande || !demande.idDemande) {
+            console.error("Erreur : L'ID de la demande est invalide.");
+            return;
+        }
+        this.router.navigate(['/gerer-demande'], { queryParams: { id: demande.idDemande } });
+    }
+    
+   
     }           

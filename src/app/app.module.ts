@@ -69,6 +69,8 @@ import { DemandeComponent } from './demande/demande.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { DemandecompteComponent } from './demandecompte/demandecompte.component';
 import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
+import { GererdemandeComponent } from './gererdemande/gererdemande.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -117,6 +119,7 @@ import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
     DemandeComponent,
     DemandecompteComponent,
     MesdemandesComponent,
+    GererdemandeComponent,
 
    
 
@@ -140,7 +143,7 @@ import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
     MatOptionModule,
     MatFormFieldModule,
     MatSnackBarModule,
-    
+    MatMenuModule,
     BsDatepickerModule.forRoot() ,
     ToastrModule.forRoot() 
     

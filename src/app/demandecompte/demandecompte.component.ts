@@ -28,7 +28,7 @@ export class DemandecompteComponent {
   showResetForm = false; 
  
   selectedTimee: string = "";
-  services: Servicee[] = []; 
+  services: Servicee[] = [];
   showModal: boolean = false;
   utilisateurs: Utilisateur[] = []; 
   weekDays: string[] = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
@@ -72,9 +72,11 @@ private router: Router
       description: ['', Validators.required],
       date: ['', Validators.required],
       heureTravail: ['', Validators.required],
-      idService: ['', Validators.required], 
+      idService: ['', Validators.required],
       idAdresse: ['', Validators.required] ,
       title: ['', Validators.required],  
+      emailUtilisateur: ['', [Validators.required, Validators.email]],
+      
   telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
  
     });
@@ -85,25 +87,25 @@ private router: Router
    
   }ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.serviceId = params['idservice'];
+    
+      this.serviceId = +params['idservice'];  
+      this.email = params['email'];  
   
-     
-      if (params['email']) {
-        this.email = params['email'];
-      } else {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-          try {
-            const decodedToken: any = jwtDecode(token);
-            this.email = decodedToken.sub; 
-          } catch (error) {
-            console.error("Erreur lors du décodage du token :", error);
-          }
-        }
-      }
+
+      console.log('Email récupéré:', this.email);
+      console.log('ID Service récupéré:', this.serviceId);
   
       
+      this.demandeForm.patchValue({
+        emailUtilisateur: this.email,
+        idService: this.serviceId
+      });
+  
+     
+     
     });
+  
+  
   
     this.loadAdresses();
     this.updateCalendar();
@@ -117,22 +119,12 @@ private router: Router
   closeModal() {
    
     this.showModal = false;
-  }submitDemande() {
-    // Vérification de la validité du formulaire
-    console.log("Vérification de la validité du formulaire...");
+  }  submitDemande(): void {
     if (this.demandeForm.invalid) {
-      console.error("Formulaire invalide !");
-      // Affichage des erreurs de chaque champ
-      Object.keys(this.demandeForm.controls).forEach(field => {
-        const control = this.demandeForm.get(field);
-        if (control?.invalid) {
-          console.warn(`- ${field} : Erreur :`, control.errors);
-        }
-      });
-      return; // Sortir si le formulaire est invalide
+      return;
     }
-  
-    // Récupération des valeurs du formulaire
+
+    const emailUtilisateur = this.demandeForm.value.emailUtilisateur;
     const idService = this.demandeForm.value.idService;
     const idAdresse = this.demandeForm.value.idAdresse;
     const description = this.demandeForm.value.description;
@@ -140,60 +132,40 @@ private router: Router
     const heureTravail = this.demandeForm.value.heureTravail;
     const title = this.demandeForm.value.title;
     const telephoneNumber = this.demandeForm.value.telephoneNumber;
+
+
+    const utilisateur = this.utilisateurs.find(u => u.email === emailUtilisateur);
+const service = this.services.find(s => s.idservice == idService);  
+const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
+
   
-    console.log("Valeurs récupérées du formulaire :");
-    console.log("idService:", idService);
-    console.log("idAdresse:", idAdresse);
-    console.log("description:", description);
-    console.log("date:", date);
-    console.log("heureTravail:", heureTravail);
-    console.log("title:", title);
-    console.log("telephoneNumber:", telephoneNumber);
   
-    const emailUtilisateur = this.email;
-    if (!emailUtilisateur) {
-      console.error("L'email de l'utilisateur est introuvable !");
-      return; // Retourner si l'email est manquant
-    }
+ 
   
-    // Recherche du service et de l'adresse sélectionnés
-    const service = this.services.find(s => s.idservice === idService);
-    const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
-  
-    console.log("Service trouvé :", service);
-    console.log("Adresse trouvée :", adresse);
-  
-    if (!service || !adresse) {
-      console.error("Service ou adresse non trouvés !");
-      return; // Sortir si le service ou l'adresse n'est pas trouvé
-    }
-  
+
     const demande: Demande = {
-      description: description,
-      date: date,
-      heureTravail: heureTravail,
-      demandephoto: this.selectedFile ? this.selectedFile.name : undefined,
+      description,
+      date,
+      heureTravail,
+      demandephoto: '',  
       servicee: service,
-      adressedemande: adresse,
-      utilisateur: this.utilisateurActuel,
-      title: title,
-      telephoneNumber: telephoneNumber
+      adressedemande: adresse, 
+      utilisateur,
+      title,
+      telephoneNumber
     };
-  
-    console.log("Demande préparée :", demande);
-  
-    // Envoi de la demande via le service
+
+
     this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
       (response) => {
-        console.log("Demande envoyée avec succès !");
-        console.log(response); // Affichage de la réponse de l'API
+       
+        this.router.navigate(['/Compteparticulier']);
       },
       (error) => {
         console.error("Erreur lors de la création de la demande", error);
       }
     );
   }
-  
 
   selectTime(hour: number) {
     if (!this.unknownHours) {

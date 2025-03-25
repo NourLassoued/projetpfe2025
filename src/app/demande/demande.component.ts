@@ -85,7 +85,7 @@ private router: Router, private location: Location,
     });
 
     this.resetPasswordForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
+      emailUtilisateur: ['', [Validators.required, Validators.email]]
     });}
   
 
@@ -117,6 +117,7 @@ private router: Router, private location: Location,
    
     this.showModal = false;
   }
+
   submitDemande() {
     if (this.demandeForm.invalid) {
      
@@ -171,6 +172,7 @@ private router: Router, private location: Location,
     );
   })
   }
+
 
 
 

@@ -1,6 +1,6 @@
-
+<app-navbarcompte></app-navbarcompte>
 <body>
-    <app-navbarcompte></app-navbarcompte>
+   
     <div class="container">
         <aside class="sidebar">
             <ul>
@@ -28,18 +28,17 @@
 
                   </div>
                     <div class="info-section">
-                        <h3>{{ demande.title }}</h3>
-                        <p><span class="location">📍 {{ demande.adressedemande?.governoate }}</span></p>
+                        <h3>🛠 Service:{{ demande.servicee?.nomservice }}</h3>
+                        
                         <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }}</span></p>
                         <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
-                        <p><span class="description">📝 {{ demande.description }}</span></p>
-                        <p><strong>🛠 Service: </strong>{{ demande.servicee?.nomservice }}</p>
-                        <p><strong>📞 Numéro de téléphone: </strong>{{ demande.telephoneNumber }}</p>
-                        <button class="btn" >Voir plus</button>
-                        <button class="btn" >Modifier</button>
+
+                       
+                        <button class="btn" (click)="gererDemande(demande)" >Gérer ma demande</button>
                     </div>
                 </div>
             </div>
         </main>
+        
     </div>
 </body>

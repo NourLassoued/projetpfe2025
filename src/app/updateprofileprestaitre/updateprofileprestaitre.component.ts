@@ -279,7 +279,7 @@ ngOnInit(): void {
       return;
     }
 
-    // Vérifier si `selectedAdresse` est un objet ou une chaîne (nom de la ville)
+   
     let adresseObjet = typeof this.selectedAdresse === 'string'
       ? this.adresses.find(a => a.governoate === this.selectedAdresse)
       : this.selectedAdresse;

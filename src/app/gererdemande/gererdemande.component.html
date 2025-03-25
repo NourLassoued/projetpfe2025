@@ -1,0 +1,82 @@
+<app-navbarcompte></app-navbarcompte>
+<body>
+    <div class="texte">
+        <a routerLink="/Mesdemandes" >Mes demandes </a> 
+        <i class="fas fa-chevron-right"></i> 
+        <span>{{ demande.servicee?.nomservice }}</span>
+
+    </div>
+    
+    <div class="container">
+        
+        <div   *ngIf="demande" class="task-card">
+            <img [src]="imageUrls[0]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
+            <h2>🛠 Service: {{ demande.servicee?.nomservice }}</h2>
+           
+
+            <p><span class="location">📍 {{ demande.adressedemande?.governoate }}</span></p>
+            <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }} - ⏰ {{ demande.date | date: 'HH:mm' }}</span></p>
+          
+
+            <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
+           
+            <div *ngIf="showDetails">
+                <p><span class="date">{{ demande.title }}</span></p>
+                <p><span class="description">📝 {{ demande.description }}</span></p>
+                <p><strong>📞 Numéro de téléphone: </strong>{{ demande.telephoneNumber }}</p>
+            </div>
+          
+           
+            <button (click)="toggleDetails()">Voir plus</button>
+            <button  (click)="affichrmodifier()">Modifier</button>
+            <div class="notification-box" *ngIf="!showNotification" (click)="stopPropagation($event)">
+               
+                    <a mat-menu-item href="#"  (click)="openModel()">
+                        <mat-icon>edit</mat-icon>
+                        Modifier ma demande
+                      </a>
+                      <br>
+                    
+                      <a class="delete" mat-menu-item href="#" (click)="handleDeleteClick()">
+                        <mat-icon>event_busy</mat-icon>
+                        Annuler ma demande
+                      </a>
+            </div>
+        </div>
+        <div *ngIf="showModel" class="modal">
+            <div class="modal-content">
+              <span class="close" (click)="closeModel()">&times;</span>
+      
+              <h2>Modifier ma demande</h2>
+              <form (ngSubmit)="submitForm()">
+                <label for="title">Titre:</label>
+                <input id="title" [(ngModel)]="demande.title" name="title" required>
+      
+                <label for="description">Description:</label>
+                <textarea id="description" [(ngModel)]="demande.description" name="description"></textarea>
+      
+                <label for="telephoneNumber">Numéro de téléphone:</label>
+                <input id="telephoneNumber" [(ngModel)]="demande.telephoneNumber" name="telephoneNumber" required>
+                <label for="heureTravail">Heure de travail:</label>
+                <input id="heureTravail" type="number" [(ngModel)]="demande.heureTravail" name="heureTravail" required>
+          
+                <label for="date">Date et Heure:</label>
+                <input id="date" type="datetime-local" [(ngModel)]="demande.date" name="date" required>
+              
+                
+          
+                <button type="submit">Sauvegarder</button>
+              </form>
+            </div>
+          </div>
+      
+        <div class="public-discussion">
+            <h3>Discussion publique (1)</h3>
+            <div class="comment">
+                <p><strong>Alex • 80,00 €</strong></p>
+                <p>Bonjour, j’ai postulé mais je suis disponible jeudi pas vendredi. J’attends votre retour. Bonne soirée.</p>
+                <p class="time">il y a 18 heures</p>
+            </div>
+        </div>
+    </div>
+</body>

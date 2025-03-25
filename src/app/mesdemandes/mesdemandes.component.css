@@ -18,10 +18,14 @@ body {
 }
 .content{
    
-    width: 900px;
-    margin-left: 100px;
- 
-
+   
+ margin-top: 100px;
+ margin-left: 270px;
+ padding: 20px;
+ width: calc(100% - 270px);
+ display: flex;
+ flex-wrap: wrap; /* Permet aux cartes de passer à la ligne */
+ gap: 20px; /* Ajoute de l'espace entre les cartes */
     
 }
 
@@ -33,12 +37,14 @@ body {
     display: flex;
     gap: 20px;
     width: 700px;
-    height: 500px;
+    height: 400px;
    
 }
 .image-section img {
-    width: 150px;
-    height: auto;
+    width: 350px;
+    height: 150px;
+    border-radius: 20px;
+    
 }
 .info-section {
     flex: 1;
@@ -53,10 +59,26 @@ body {
     background: #007bff;
     color: white;
     border: none;
+    width: 350px;
+    height: 50px;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
     margin-right: 10px;
+}
+.btn:hover {
+    background: #007bff;
+    
+  
+  color:white;
+    transform: scale(1.05); /* Légère augmentation de taille */
+    background: #007bff;
+}
+
+/* Effet au clic */
+.btn:active {
+    transform: scale(0.98);
+    background: #007bff;
 }
 .discussion {
     margin-left: 50px;
@@ -92,13 +114,27 @@ body {
     font-size: 12px;
     color: gray;
 }
-
-.sidebar {
-    width: 250px;
-    height: 670px;
-
-    background-color: #fbf5f5;
+app-navbarcompte {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
    
+    z-index: 1000; /* Pour rester au-dessus de tout */
+   
+}
+.sidebar {
+    
+    position: fixed;
+    background-color: #fbf5f5;
+    width: 200px; /* Largeur de la barre latérale */
+    height: 100vh; /* 100% de la hauteur de la fenêtre */
+    position: fixed; /* La rend fixe */
+   
+    
+  margin-top: 70px;
+    
+    overflow-y: auto; /* Ajoute un défilement si le contenu est trop long */
   
 }
 .sidebar ul {

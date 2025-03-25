@@ -45,6 +45,7 @@ import { SecuriteComponent } from './securite/securite.component';
 import { DemandeComponent } from './demande/demande.component';
 import { DemandecompteComponent } from './demandecompte/demandecompte.component';
 import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
+import { GererdemandeComponent } from './gererdemande/gererdemande.component';
 
 
 const routes: Routes = [
@@ -206,8 +207,13 @@ component:InformatiqueComponent
   {
     path: 'Mesdemandes',
     component:MesdemandesComponent 
-  }
+  },
+  
 
+  {
+    path: 'gerer-demande',
+    component:GererdemandeComponent 
+  }
 
 
 
