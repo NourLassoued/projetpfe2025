@@ -43,7 +43,7 @@ export class AuthServiceService {
  
   getAuthToken(): string {
     const token = localStorage.getItem('accessToken');
-    console.log('SERVICE token is' + token)
+  
 
     return token || 'EMPTY';
   }
@@ -112,13 +112,7 @@ authenticate(email: string, password: string): Observable<any> {
     }
   }
   private isAdmin: boolean = false;
+} 
 
-  setIsAdmin(isAdmin: boolean) {
-    this.isAdmin = isAdmin;
-  }
-
-  getIsAdmin(): boolean {
-    return this.isAdmin;
-  }
   
-}
+

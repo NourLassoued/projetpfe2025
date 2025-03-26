@@ -530,7 +530,7 @@ verifierChevauchement(nouvelleDispo: any): boolean {
     );
 
     if (chevauche) {
-      console.log("❌ Chevauchement détecté avec :", dispo);
+      console.log(" Chevauchement détecté avec :", dispo);
     }
 
     return chevauche;

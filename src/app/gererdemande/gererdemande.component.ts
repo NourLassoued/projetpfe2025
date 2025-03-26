@@ -3,6 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { FileService } from '../service/file.service';
 import { AuthServiceService } from '../service/auth-service.service';
+import { UtilisateurService } from '../service/utilisateur.service';
+import { jwtDecode } from 'jwt-decode';
+import { co } from '@fullcalendar/core/internal-common';
+import { Demande } from 'src/models/Demande';
 
 @Component({
   selector: 'app-gererdemande',
@@ -10,21 +14,53 @@ import { AuthServiceService } from '../service/auth-service.service';
   styleUrls: ['./gererdemande.component.css']
 })
 export class GererdemandeComponent{
-  demandeId: string | null = null;
+  
   showDetails = false;
-  demande: any;
+ 
   imageUrls: { [key: number]: string } = {};
   showNotification = false;
   showModel = false;
- 
+  user: any = null;
+  utilisateurId!: number;
+  userId!: number;
+  demande: Demande = new Demande();
+  demandeId!: number;
+  demandeDetails: {
+    idDemande: number | null;
+    title: string;
+    description: string;
+    telephoneNumber: number | null;
+    heureTravail: number | null;
+    date: Date;
+    
+  } = {
+    idDemande: null,
+    title: '',
+    description: '',
+    telephoneNumber: null,
+    heureTravail: null,
+    date: new Date(),  
+  };
+
+  // Autres variables et méthodes...
+
+
   constructor(private route: ActivatedRoute,
     private fileService: FileService,
     private demandeservice:DemandeService,
     private router: Router,
-    private auth:AuthServiceService) 
+    private auth:AuthServiceService,
+  private Utilisateurservice:UtilisateurService) 
    {}
 
   ngOnInit() {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      this.utilisateurId = decodedToken.id; // Récupérer l'ID de l'utilisateur depuis le token
+    } else {
+      console.warn('Aucun token trouvé dans le localStorage');
+    }
     this.route.queryParams.subscribe(params => {
       this.demandeId = params['id'];
      
@@ -38,7 +74,33 @@ export class GererdemandeComponent{
         }
       }
     });
+    this.loadUserData();
   }
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
+  
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        this.user = decodedToken;
+        this.userId = decodedToken.id;
+  
+      console.log('userId',this.userId);
+  
+        if (this.user.image) {
+         
+          
+        } else {
+          console.warn(" Aucune image trouvée dans le token !");
+        }
+      } catch (error) {
+        console.error(' Erreur lors du décodage du token:', error);
+      }
+    } else {
+      console.warn(" Aucun token trouvé dans localStorage !");
+    }
+  }
+
   getImage(filename: string, index: number) {
     const encodedFilename = encodeURIComponent(filename);
     this.fileService.getImage(encodedFilename).subscribe(
@@ -51,34 +113,19 @@ export class GererdemandeComponent{
         
       }
     );
-  }
- 
-  getDemandeDetails(id: number): void {
+  }getDemandeDetails(id: number): void {
     console.log(`Récupération des détails pour la demande avec l'ID: ${id}`);
     
     this.demandeservice.getDemandeById(id).subscribe(
       (data) => {
         this.demande = data;
-        if (this.demande.date) {
-          // Si la date est déjà au format string, convertissez-la en objet Date
-          const dateObj = new Date(this.demande.date);
   
-          // Extraire la date et l'heure et les formater
-          const year = dateObj.getFullYear();
-          const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Ajouter un zéro devant si nécessaire
-          const day = String(dateObj.getDate()).padStart(2, '0'); // Ajouter un zéro devant si nécessaire
-          const hours = String(dateObj.getHours()).padStart(2, '0'); // Ajouter un zéro devant si nécessaire
-          const minutes = String(dateObj.getMinutes()).padStart(2, '0'); // Ajouter un zéro devant si nécessaire
-  
-          // Format "YYYY-MM-DDTHH:mm" pour datetime-local
-          this.demande.date = `${year}-${month}-${day}T${hours}:${minutes}`;
-  
-          console.log('Date pour le formulaire:', this.demande.date);
+        if (this.demande?.date) {
+          this.demandeDetails.date = new Date(this.demande.date); // Utilisez directement la date comme objet Date
         }
-        
-      
+  
+        // Vérification et récupération de l'image du service
         if (this.demande?.servicee?.imageService) {
-         
           this.getImage(this.demande.servicee.imageService, 0); 
         } else {
           console.log('Aucune image disponible pour ce service');
@@ -89,19 +136,20 @@ export class GererdemandeComponent{
       }
     );
   }
-
+  
+  // Méthode pour formater la date au format yyyy-MM-dd
+  formatDateTime(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');  
+    const day = String(date.getDate()).padStart(2, '0');  
+    const hours = String(date.getHours()).padStart(2, '0');  
+    const minutes = String(date.getMinutes()).padStart(2, '0');  
+    return `${year}-${month}-${day}T${hours}:${minutes}`;  
+  }
 toggleDetails() {
   this.showDetails = !this.showDetails;
 }
-modifierDemande() {
-  console.log("Modifier ma demande");
- 
-}
 
-annulerDemande() {
-  console.log("Annuler ma demande");
- 
-}
 
 
 affichrmodifier() {
@@ -112,39 +160,41 @@ closeModel() {
 }
 openModel() {
   this.showModel = true;
-}submitForm(): void {
-  if (this.demandeId) {
-    const id = Number(this.demandeId);
+}updateDemande(): void {
+  // Vérification des données avant de faire la requête
+  this.demandeDetails = {
+    idDemande: this.demandeId,
+ 
+    
+      title: this.demande.title ?? '',  // Si title est undefined, utiliser une chaîne vide
+      description: this.demande.description ?? '',  // Si description est undefined, utiliser une chaîne vide
+      telephoneNumber: this.demande.telephoneNumber ?? null,  // Si telephoneNumber est undefined, utiliser null
+      heureTravail: this.demande.heureTravail ?? null,
+      date: this.demande.date ? new Date(this.demande.date) : new Date()
 
-    if (isNaN(id)) {
-      console.error('L\'ID de la demande est invalide');
-      alert('L\'ID de la demande est invalide.');
-      return;
+    
+  };
+
+  console.log('Données à mettre à jour:', this.demandeDetails); // Ajoutez ceci pour déboguer
+
+  this.demandeservice.updateDemande(this.demandeId, this.demandeDetails).subscribe(
+    (response) => {
+      console.log('Demande mise à jour:', response);
+      this.demande = response; // Mettre à jour la demande avec la réponse du backend
+      this.demandeDetails = { ...response }; // Optionnellement, vous pouvez aussi mettre à jour demandeDetails
+      this.router.navigate(['/Mesdemandes']); // Rediriger vers la page des demandes
+    },
+    (error) => {
+      console.error('Erreur lors de la mise à jour:', error);
+      alert('Erreur lors de la mise à jour de la demande');
     }
+  );
+}
 
-    // Vérifier si le token est bien présent avant d'envoyer la requête
-    const token = this.auth.getAccessToken();
-    if (!token) {
-      console.error('Utilisateur non authentifié');
-      alert('Vous devez être connecté pour mettre à jour une demande.');
-      return;
-    }
 
-    this.demandeservice.updateDemande(id, this.demande).subscribe(
-      (response) => {
-        console.log('Demande mise à jour avec succès:', response);
-        this.closeModel();
-      },
-      (error) => {
-        console.error('Erreur lors de la mise à jour de la demande:', error);
-        alert('Erreur lors de la mise à jour de la demande. Veuillez réessayer.');
-      }
-    );
-  } else {
-    console.error('L\'ID de la demande est manquant');
-    alert('L\'ID de la demande est manquant.');
-  }
-}deleteDemande(idDemande: number): void {
+
+
+deleteDemande(idDemande: number): void {
   this.demandeservice.deleteDemande(idDemande).subscribe(
     () => {
       console.log('Demande supprimée avec succès');

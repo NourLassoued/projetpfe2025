@@ -46,30 +46,30 @@
         <div *ngIf="showModel" class="modal">
             <div class="modal-content">
               <span class="close" (click)="closeModel()">&times;</span>
-      
+          
               <h2>Modifier ma demande</h2>
-              <form (ngSubmit)="submitForm()">
+              <form (ngSubmit)="updateDemande()">
                 <label for="title">Titre:</label>
-                <input id="title" [(ngModel)]="demande.title" name="title" required>
-      
+                <input id="title" [(ngModel)]="demande.title" type="text" name="title" required>
+          
                 <label for="description">Description:</label>
                 <textarea id="description" [(ngModel)]="demande.description" name="description"></textarea>
-      
+          
                 <label for="telephoneNumber">Numéro de téléphone:</label>
-                <input id="telephoneNumber" [(ngModel)]="demande.telephoneNumber" name="telephoneNumber" required>
+                <input id="telephoneNumber" type="number" [(ngModel)]="demande.telephoneNumber" name="telephoneNumber" required>
+          
                 <label for="heureTravail">Heure de travail:</label>
                 <input id="heureTravail" type="number" [(ngModel)]="demande.heureTravail" name="heureTravail" required>
-          
-                <label for="date">Date et Heure:</label>
-                <input id="date" type="datetime-local" [(ngModel)]="demande.date" name="date" required>
-              
                 
-          
+                    <label for="date">Date</label>
+                    <input id="date" type="datetime-local"
+                     [(ngModel)]="demande.date" name="date" />
+                  
                 <button type="submit">Sauvegarder</button>
               </form>
             </div>
           </div>
-      
+          
         <div class="public-discussion">
             <h3>Discussion publique (1)</h3>
             <div class="comment">
