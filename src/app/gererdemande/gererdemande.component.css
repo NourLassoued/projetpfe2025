@@ -97,7 +97,7 @@ button:last-child {
     margin-right: 0; /* Enlève l'espace à droite du dernier bouton */
 }
 .notification-box {
-    position: fixed;
+  
     top: 370px;
 
   
@@ -112,10 +112,11 @@ button:last-child {
     align-items: center;
     height: 100px;
     width: 280px;
+    background-color: #fffcfc;
     text-align: center;
     z-index: 1000;
-    margin-top: 50px;
-    margin-left: 300px;
+  margin-top: 10px;
+    margin-left: 370px;
 }
 mat-menu a {
     margin-bottom: 15px; /* Adds space between the two items */
@@ -153,12 +154,13 @@ mat-menu a {
   
   .modal-content {
     background-color: white;
-    margin: 10% auto;
+    margin: 7% auto;
     padding: 20px;
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
   }
+
   
   .close {
     color: #aaa;
@@ -214,6 +216,11 @@ label{
 input[type="number"],
 input[type="datetime-local"] {
   font-size: 16px;
+}
+label{
+  font-size: 15px;
+  font-weight: bold;
+  color: #363636;
 }
 
 input:focus,

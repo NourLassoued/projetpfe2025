@@ -5,7 +5,8 @@
             
           <div id="profile-container">
             <div class="image-wrapper" (click)="triggerFileInput()">
-              <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+              <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+
               <ng-template #defaultIcon>
                 <i class="fas fa-user default-icon"></i>
               </ng-template>
@@ -113,14 +114,16 @@
               <div class="section">
                   <label> Années d'expérience</label>
                   <div class="competence">
-                      <ng-container *ngIf="!isEditing['workExperience']; else editWorkExperience">
-                          <p (click)="startEditing('workExperience', user?.workExperience)">
-                              {{ user?.workExperience || 'Aucun numéro disponible.' }}
+                      <ng-container *ngIf="!isEditing['workExperience']; else editWork">
+                          <p (click)="startEditing('workExperience', user?.WorkExerience)">
+                              {{ user?.
+                                workExperience
+                                 || 'Aucun workExperience disponible.' }}
                           </p>
                           <button class="edit-btn" (click)="startEditing('workExperience', user?.workExperience)">✏️</button>
                       </ng-container>
                   
-                      <ng-template #editWorkExperience>
+                      <ng-template #editWork>
                           <div class="edit-container">
                               <input type="text" [(ngModel)]="editedValues['workExperience']">
                               <button class="savee-btn" (click)="saveChanges('workExperience')">✔️</button>
@@ -241,13 +244,19 @@
   <label>Jour :</label>
   <select #jour (change)="nouvelleDisponibilite.jour = jour.value">
     <option value="" disabled selected>Choisir un jour</option>
+
+
+
+
+  
+  
+    <option value="Dimanche">Dimanche</option>
     <option value="Lundi">Lundi</option>
     <option value="Mardi">Mardi</option>
     <option value="Mercredi">Mercredi</option>
     <option value="Jeudi">Jeudi</option>
     <option value="Vendredi">Vendredi</option>
     <option value="Samedi">Samedi</option>
-    <option value="Dimanche">Dimanche</option>
   </select>
   <div class="error" *ngIf="erreurs.jour">
     <span>⚠️ {{ erreurs.jour }}</span>
@@ -262,6 +271,10 @@
   <div class="error" *ngIf="erreurs.heureFin">
     <span>⚠️ {{ erreurs.heureFin }}</span>
   </div>
+  <div class="error" *ngIf="erreurs.general">
+    <span>⚠️ {{ erreurs.general }}</span>
+  </div>
+  
   <div class="buttons">
     <button class="save-btn" (click)="ajouterDisponibilite(nouvelleDisponibilite)">✅ Sauvegarder</button>
     <button class="close-btn" (click)="fermerFormulaire()">❌ Annuler</button>

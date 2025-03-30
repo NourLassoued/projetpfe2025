@@ -1,4 +1,5 @@
 import { Adresse } from "./Adresse";
+import { Postulation } from "./Postulation";
 import { Servicee } from "./Servicee";
 import { StatusDemande } from "./StatusDemande";
 import { Utilisateur } from "./Utilisateur";
@@ -15,5 +16,6 @@ export class Demande {
     utilisateur?: Utilisateur;
     servicee?: Servicee;
     adressedemande?: Adresse;
+    postulations?: Postulation[];
   }
   

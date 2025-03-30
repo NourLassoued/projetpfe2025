@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
@@ -52,7 +52,8 @@ export class NavbarcompteComponent implements    AfterViewInit {
       private authServiceService:AuthServiceService,
     private categorieService:CategorieService,private file:FileService,
         private service:ServiceeService,
-        private router: Router,) {}
+        private router: Router,
+        private changeDetectorRef: ChangeDetectorRef) {}
     
     ngAfterViewInit(): void {
     this.toggleMenu();

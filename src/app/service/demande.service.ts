@@ -28,7 +28,9 @@ export class DemandeService {
       })
     });
   }
-  
+  getDemandesDisponibles(utilisateurId: number): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/utilisateur/${utilisateurId}`);
+  }
 
   
 

@@ -36,6 +36,7 @@
    
   
 }
+
 .sidebar ul {
     list-style: none;
     padding: 0;
@@ -171,4 +172,86 @@
 #profile-container i {
     font-size: 40px;
     color: rgb(140, 137, 137);
+}/* Style de la liste des demandes */
+.requests ul {
+    list-style-type: none; /* Supprime les puces */
+    padding: 0;
+    margin: 0;
 }
+
+/* Style de chaque demande */
+.requests li {
+    background:  #fbf5f5; /* Fond blanc pour une meilleure lisibilité */
+    padding: 20px;
+    margin-bottom: 20px; /* Espacement entre les demandes */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Effet au survol */
+.requests li:hover {
+    transform: translateY(-5px); /* Légère élévation au survol */
+}
+
+/* Alignement et espace entre les boutons */
+.btn-group {
+    display: flex; /* Alignement horizontal */
+    gap: 15px; /* Ajoute un espace entre les boutons */
+    margin-top: 15px; /* Espace au-dessus des boutons */
+}
+
+/* Style des boutons */
+.btn-postuler {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Bouton "Voir plus" */
+.btn-postuler:first-child {
+    background-color: #3498db; /* Bleu */
+    color: white;
+}
+
+/* Bouton "Postuler" */
+.btn-postuler:last-child {
+    background-color: #2ecc71; /* Vert */
+    color: white;
+}
+
+/* Effet au survol */
+.btn-postuler:hover {
+    opacity: 0.8;
+}.modal {
+    display: block; /* s'assure que la modal est affichée */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent */
+    z-index: 1000; /* S'assurer que la modal est au-dessus de tout autre contenu */
+  }
+  
+  .modal-content {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    max-width: 500px;
+    top: 20%;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  

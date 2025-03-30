@@ -3,6 +3,10 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { DemandeService } from '../service/demande.service';
+import { Demande } from 'src/models/Demande';
+import { UtilisateurService } from '../service/utilisateur.service';
+import { Postulation } from 'src/models/Postulation';
 
 
 @Component({
@@ -12,9 +16,19 @@ import { Router } from '@angular/router';
 })
 export class CompteprestaitreComponent implements OnInit{
   user: any = null;
-  profileImageUrl: SafeUrl | null = null; // Pas d'image par défaut
-
-  constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router) {}
+  profileImageUrl: SafeUrl | null = null; 
+  userId!: number;
+  showDetailsMap: { [key: number]: boolean } = {}; // Objet pour stocker l'état des détails
+  // Variables pour le modal de postulation
+  showModal: boolean = false;
+  selectedDemande!: Demande;
+  commentaire: string = '';;
+  demandesDisponibles: Demande[] = [];
+  constructor(private fileService: FileService,
+     private sanitizer: DomSanitizer, 
+     private utilisateurService:UtilisateurService,
+ 
+     private demandeService: DemandeService) {}
   ngOnInit(): void {
     this.loadUserData();
   
@@ -26,7 +40,7 @@ export class CompteprestaitreComponent implements OnInit{
       try {
         const decodedToken: any = jwtDecode(token);
         this.user = decodedToken;
-  
+        this.userId = decodedToken.id;
       
   
         if (this.user.image) {
@@ -35,11 +49,40 @@ export class CompteprestaitreComponent implements OnInit{
         } else {
           console.warn(" Aucune image trouvée dans le token !");
         }
+        if (this.userId) { // 👉 Vérifie si l'ID est bien défini avant l'appel
+          console.log("📥 Appel de getDemandesDisponibles()...");
+          this.getDemandesDisponibles();
+        } else {
+          console.error("❌ Erreur : ID utilisateur non défini !");
+        }
       } catch (error) {
         console.error(' Erreur lors du décodage du token:', error);
       }
     } else {
       console.warn(" Aucun token trouvé dans localStorage !");
+    }
+  }
+  getDemandesDisponibles(): void {
+    if (this.userId) {
+      this.demandeService.getDemandesDisponibles(this.userId).subscribe(
+        (data: Demande[]) => {
+          this.demandesDisponibles = data;
+          this.demandesDisponibles.forEach(demande => {
+            if (demande.idDemande !== undefined) {
+              this.showDetailsMap[demande.idDemande] = false;
+            }
+          });
+        },
+        error => console.error('Erreur lors de la récupération des demandes disponibles', error)
+      );
+    } else {
+      console.warn("⚠️ Impossible de récupérer les demandes : utilisateur non identifié !");
+    }
+  }
+  
+  toggleDetails(demandeId?: number): void {
+    if (demandeId !== undefined) {
+      this.showDetailsMap[demandeId] = !this.showDetailsMap[demandeId];
     }
   }
 
@@ -56,7 +99,49 @@ export class CompteprestaitreComponent implements OnInit{
     });
   }
 
-   
+ 
+envoyerPostulation(): void {
+  // Validation du commentaire
+  if (!this.commentaire || this.commentaire.trim() === '') {
+    console.error('Le commentaire est requis.');
+    return;  // Ne pas envoyer la requête si le commentaire est vide
+  }
+
+  // Validation de la demande
+  if (!this.selectedDemande || !this.selectedDemande.idDemande) {
+    console.error('La demande sélectionnée est invalide.');
+    return;  // Ne pas envoyer la requête si la demande est invalide
+  }
+
+  // Validation de l'utilisateur
+  if (!this.user || !this.user.id) {
+    console.error('L\'utilisateur est invalide.');
+    return;
+  }
+
+  // Préparer l'objet de la postulation
+  const postulation: Postulation = {
+    commentaire: this.commentaire,
+    datePostulation: new Date(),
+    demande: this.selectedDemande, // Vérifiez que 'selectedDemande' est un objet valide
+    prestataire: this.user        // Vérifiez que 'user' est un objet valide
+  };
+
+  // Appel HTTP pour envoyer la postulation
+  this.utilisateurService.postuler(this.selectedDemande.idDemande, this.user.id, postulation)
+    .subscribe({
+      next: (response) => {
+        console.log('Postulation envoyée avec succès');
+        this.closeModal();  // Fermer le modal après l'envoi
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'envoi de la postulation', error);
+      }
+    });
+}
+
+  
+  
   setupMenuToggle(): void {
     const menuIcon = document.getElementById('menu-icon');
     const profileMenu = document.getElementById('profile-menu');
@@ -69,6 +154,17 @@ export class CompteprestaitreComponent implements OnInit{
     }
 
   }
+  openModal(demande: Demande): void {
+    console.log('Ouverture du modal pour la demande :', demande); 
+    this.selectedDemande = demande;  
+    this.commentaire = '';           
+    this.showModal = true;          
+  }
+  closeModal(): void {
+    this.showModal = false;
+  }
+
+ 
 
 }
 

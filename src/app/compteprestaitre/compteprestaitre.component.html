@@ -39,13 +39,65 @@
             </div>
         </div>
         
+        
         <section class="requests">
-            <h2>Vous n’avez pas de demande en cours</h2>
-            <p>Créez votre demande gratuitement et recevez des offres rapidement !</p>
+            <h2 *ngIf="demandesDisponibles.length === 0">Vous n’avez pas de demande en cours</h2>
+            <p *ngIf="demandesDisponibles.length === 0">
+                Créez votre demande gratuitement et recevez des offres rapidement !
+            </p>
+        
+            <div *ngIf="demandesDisponibles.length > 0">
+                <h2>Vos demandes disponibles</h2>
+                <ul>
+                    <li *ngFor="let demande of demandesDisponibles">
+                        <strong>🛠 Service: {{ demande.servicee?.nomservice }}</strong>
+                        <br>📅 {{ demande.date | date: 'dd MMM yyyy' }} - ⏰ {{ demande.date | date: 'HH:mm' }}
+                        <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
+        
+                        <!-- Affichage des détails uniquement pour la demande cliquée -->
+                        <div *ngIf="demande.idDemande !== undefined && showDetailsMap[demande.idDemande]">
+
+                            <p><span class="date">{{ demande.title }}</span></p>
+                            <p><span class="description">📝 {{ demande.description }}</span></p>
+                            <strong>👤 Ajouté par : {{ demande.utilisateur?.nom }}</strong>
+                            <p><span class="location">📍 {{ demande.adressedemande?.governoate }}</span></p>
+                            <p><strong>📞 Numéro de téléphone: </strong>{{ demande.telephoneNumber }}</p>
+                        </div>
+        
+                        <div class="btn-group">
+                            <button (click)="toggleDetails(demande.idDemande)" class="btn-postuler">
+                                👀 {{ demande.idDemande !== undefined && showDetailsMap[demande.idDemande] ? 'Voir moins' : 'Voir plus' }}
+                            </button>
+                            
+                            <button (click)="openModal(demande)" class="btn-postuler">
+                                📩 Postuler
+                              </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </section>
+        
     </main>
     
 </div>
+<div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Postuler à la demande</h3>
+
+        <form (ngSubmit)="envoyerPostulation()">
+            <div>
+                <label for="commentaire">Commentaire :</label>
+                <textarea id="commentaire" [(ngModel)]="commentaire" name="commentaire" required></textarea>
+            </div>
+
+            <div>
+                <button type="submit" class="btn-submit">Envoyer la postulation</button>
+            </div>
+        </form>
+    </div>
+  </div>
 
 </body>
 <app-footer></app-footer>

@@ -27,9 +27,9 @@
             </div>
           
            
-            <button (click)="toggleDetails()">Voir plus</button>
-            <button  (click)="affichrmodifier()">Modifier</button>
-            <div class="notification-box" *ngIf="!showNotification" (click)="stopPropagation($event)">
+            <button (click)="toggleDetails()"> {{ showDetails ? 'Voir moins' : 'Voir plus' }}</button>
+            <button  class="box" (click)="affichrmodifier()">Modifier</button>
+            <div class="notification-box"  *ngIf="showNotification" >
                
                     <a mat-menu-item href="#"  (click)="openModel()">
                         <mat-icon>edit</mat-icon>
@@ -63,7 +63,8 @@
                 
                     <label for="date">Date</label>
                     <input id="date" type="datetime-local"
-                     [(ngModel)]="demande.date" name="date" />
+                     [(ngModel)]="demandeDetails.date"
+                     [min]="minDate"  name="date" />
                   
                 <button type="submit">Sauvegarder</button>
               </form>

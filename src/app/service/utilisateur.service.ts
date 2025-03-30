@@ -73,5 +73,9 @@ export class UtilisateurService {
   getById(id: number): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.apiUrl}/getById/${id}`);
   }
+  postuler(demandeId: number, utilisateurId: number, postulation: any): Observable<any> {
+    const url = `${this.apiUrl}/postuler/${demandeId}/${utilisateurId}`;
+    return this.http.post<any>(url, postulation);
+  }
 }
 

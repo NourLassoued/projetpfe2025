@@ -23,14 +23,13 @@
                 <div class="card">
                   <div class="image-section">
                     <!-- Affichage de l'image -->
-                    <img *ngIf="imageUrls[i]" alt="{{demande.title}}"
-                                             [src]="imageUrls[i]" >
+                    <img [src]="imageUrls[i]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
 
                   </div>
                     <div class="info-section">
                         <h3>🛠 Service:{{ demande.servicee?.nomservice }}</h3>
                         
-                        <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }}</span></p>
+                        <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }} - ⏰ {{ demande.date | date: 'HH:mm' }}</span></p>
                         <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
 
                        

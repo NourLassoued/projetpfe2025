@@ -32,7 +32,7 @@ export class DemandeComponent  {
   selectedAdresse: any = '';
   step: number = 1;
   showResetForm = false; 
-  resetPasswordForm: FormGroup;
+  resetPasswordForm!: FormGroup;
   selectedTimee: string = "";
   services: Servicee[] = []; 
   showModal: boolean = false;
@@ -72,7 +72,7 @@ private router: Router, private location: Location,
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
    
-    this.demandeForm = this.fb.group({
+    /*this.demandeForm = this.fb.group({
       emailUtilisateur: ['', [Validators.required, Validators.email]],
       description: ['', Validators.required],
       date: ['', Validators.required],
@@ -86,12 +86,14 @@ private router: Router, private location: Location,
 
     this.resetPasswordForm = this.fb.group({
       emailUtilisateur: ['', [Validators.required, Validators.email]]
-    });}
+    });}*/
   
 
    
   }
+}
   ngOnInit() {
+    /*
     this.route.queryParams.subscribe(params => {
       const idService = params['idservice'];  
       if (idService) {
@@ -102,8 +104,36 @@ private router: Router, private location: Location,
           idService: idService
         });
       }
+    });*/
+ 
+    this.demandeForm = this.fb.group({
+      emailUtilisateur: ['', [Validators.required, Validators.email]],
+      description: ['', Validators.required],
+      date: ['', Validators.required],
+      heureTravail: ['', Validators.required],
+      idService: ['', Validators.required], 
+      idAdresse: ['', Validators.required] ,
+      title: ['', Validators.required],  
+  telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
+  password: ['', [Validators.required, Validators.minLength(6)]], 
     });
-  
+    this.route.queryParams.subscribe(params => {
+      const idService = params['idservice'];
+      if (idService) {
+        this.serviceSelectionné = { idservice: idService, nomservice: '' };
+        
+        if (this.demandeForm) {  // Vérifie si le formulaire est bien initialisé
+          this.demandeForm.patchValue({
+            idService: idService
+          });
+        }
+      }
+    });
+
+this.resetPasswordForm = this.fb.group({
+  emailUtilisateur: ['', [Validators.required, Validators.email]]
+});
+
     this.loadAdresses();
     this.updateCalendar();
     
@@ -117,13 +147,11 @@ private router: Router, private location: Location,
    
     this.showModal = false;
   }
-
   submitDemande() {
     if (this.demandeForm.invalid) {
-     
       return;
     }
-
+  
     const emailUtilisateur = this.demandeForm.value.emailUtilisateur;
     const idService = this.demandeForm.value.idService;
     const idAdresse = this.demandeForm.value.idAdresse;
@@ -132,49 +160,55 @@ private router: Router, private location: Location,
     const date = this.demandeForm.value.date;
     const heureTravail = this.demandeForm.value.heureTravail;
     const title = this.demandeForm.value.title;  
-    const telephoneNumber = this.demandeForm.value.telephoneNumber
-
-
+    const telephoneNumber = this.demandeForm.value.telephoneNumber;
+  
     const utilisateur = this.utilisateurs.find(u => u.email === emailUtilisateur);
-
- 
     const service = this.services.find(s => s.idservice === idService);
     const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
+  
     this.authService.authenticate(emailUtilisateur, password).subscribe(
       (authResponse) => {
-          const decodedToken: any = jwtDecode(authResponse.access_token);
-   
-    const demande: Demande = {
-      description: description,
-      date: date,
-      heureTravail: heureTravail,
-      demandephoto: this.selectedFile ? this.selectedFile.name : undefined,
-      servicee: service, 
-      adressedemande: adresse,  
-      utilisateur: utilisateur  ,
-      title: title, 
-      telephoneNumber: telephoneNumber  
-    };
-
-    
-    this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
-      (response) => {
-       
-        if (decodedToken.role === 'PARTICULIER') {
-        
-          this.router.navigate(['/Compteparticulier']);
-        }
+        const decodedToken: any = jwtDecode(authResponse.access_token);
+  
+        const demande: Demande = {
+          description: description,
+          date: date,
+          heureTravail: heureTravail,
+          demandephoto: this.selectedFile ? this.selectedFile.name : undefined,
+          servicee: service, 
+          adressedemande: adresse,  
+          utilisateur: utilisateur,
+          title: title, 
+          telephoneNumber: telephoneNumber  
+        };
+  
+        console.log("Envoi de la demande :", demande);
+        this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
+          (response) => {
+            console.log("Demande créée avec succès :", response);
+            if (decodedToken.role === 'PARTICULIER') {
+              this.router.navigate(['/Compteparticulier']);
+            }
+          },
+          (error) => {
+            console.log("Erreur lors de la création de la demande :", error);
+            if (error.status === 400) {
+              alert("Données invalides !");
+            } else if (error.status === 500) {
+              alert("Erreur serveur, réessayez plus tard !");
+            } else {
+              alert("Une erreur est survenue, veuillez réessayer.");
+            }
+          }
+        );
       },
-      (error) => {
-        console.error('Erreur lors de la création de la demande', error);
-     
+      (authError) => {
+        console.log("Erreur d'authentification :", authError);
+        alert("Échec de l'authentification. Vérifiez vos identifiants.");
       }
     );
-  })
   }
-
-
-
+  
 
   selectTime(hour: number) {
     if (!this.unknownHours) {
@@ -244,13 +278,17 @@ private router: Router, private location: Location,
   
     
   nextStepe() {
+    this.showCalendar = true;
     if (this.step < 4) {
       this.step++;
     }
   }
 
   previousStepe() {
-    this.step = 1;
+    this.showCalendar = false;
+    if (this.step > 0) {
+      this.step--;
+    }
   }updateCalendar() {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
@@ -304,7 +342,6 @@ private router: Router, private location: Location,
     this.showCalendar = false;
   }
 
-
   loadAdresses(): void {
     this.adresse.getAllAdresses().subscribe((data: Adresse[]) => {
       this.adresses = data;
@@ -317,7 +354,8 @@ private router: Router, private location: Location,
      
       this.closeModal();
     }
-  }verifyAndSendEmail() {
+  }
+  verifyAndSendEmail() {
     if (this.resetPasswordForm.invalid) {
       this.errorMessage = 'Veuillez entrer une adresse e-mail valide.';
       return;

@@ -83,8 +83,8 @@ export class MesdemandesComponent {
               
               this.demandes.forEach((demande, index) => {
                 
-                if (demande.demandephoto) {
-                  this.getImage(demande.demandephoto, index); 
+                if (demande.servicee?.imageService) {
+                  this.getImage(demande.servicee.imageService, index);
                 }
               });
             },

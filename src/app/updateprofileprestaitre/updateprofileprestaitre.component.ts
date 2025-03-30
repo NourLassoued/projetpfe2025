@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
@@ -21,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ForgetPasswordService } from '../service/forget-password.service';
 import { AdresseService } from '../service/adresse.service';
 import { Adresse } from 'src/models/Adresse';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-updateprofileprestaitre',
@@ -30,12 +31,15 @@ import { Adresse } from 'src/models/Adresse';
 })
 export class UpdateprofileprestaitreComponent implements OnInit ,AfterViewInit {
   @ViewChild('calendarComponent') calendarComponent!: FullCalendarComponent;
-  @ViewChild('fileInput') fileInput!: ElementRef;
+  //@ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
+// lie pour la methode de menu
 triggerFileInput() {
-  this.fileInput.nativeElement.click(); // Simule un clic sur l'input file
+  this.fileInput.nativeElement.click(); 
 }
   calendarApi: any;
+    // Initialisation de la référence au calendrier
   ngAfterViewInit() {
     if (this.calendarComponent) {
       this.calendarApi = this.calendarComponent.getApi();
@@ -43,6 +47,9 @@ triggerFileInput() {
       console.error(" FullCalendar non trouvé !");
     }
   }
+
+
+
   passwordData = {
     oldPassword: '',
     password: '',
@@ -66,7 +73,8 @@ userId: number | null = null;
     jour: '',
     heureDebut: '',
     heureFin: ''
-  }; private apiUrl = 'http://localhost:8088/nour/api/v1/auth';
+  }
+
   erreurs: { general?: string; jour?: string; heureDebut?: string; heureFin?: string } = {};
 
   soumis: boolean = false;
@@ -104,19 +112,29 @@ constructor(private fileService: FileService, private sanitizer: DomSanitizer, p
   private disponibliteService:DisponibliteService,
   private toastr: ToastrService,private cdRef: ChangeDetectorRef,
  private forgetPasswordService:ForgetPasswordService,
-private uploadService :FileService,private adreesse:AdresseService) {}
+private uploadService :FileService,private adreesse:AdresseService,
+ private renderer: Renderer2) {}
 
 ngOnInit(): void {
  
   this.loadAdresses();
     this.loadUserData();
+    console.log("Données utilisateur :", this.user);
     this.loadDisponibilites();
-
+    
+  // Mise à jour de l'URL de l'image du profil si un changement est détecté
+    this.fileService.profileImage$.subscribe((newImageUrl) => {
+      if (newImageUrl) {
+        this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(newImageUrl);
+       
+      }
+    });
    
     this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' };
-   
+    this.erreurs = {};
 
     const token = localStorage.getItem('accessToken');
+    
     if (token) {
       const decodedToken: any = jwtDecode(token);
      
@@ -132,13 +150,14 @@ ngOnInit(): void {
       }
     }
   }
-  
+ 
+  //loadAdresses
   loadAdresses(): void {
     this.adreesse.getAllAdresses().subscribe((data) => {
       this.adresses = data;
     });
   }
-
+//loadProfileImage
   loadProfileImage(filename: string): void {
     this.fileService.getImage(filename).subscribe({
       next: (imageBlob) => {
@@ -151,8 +170,8 @@ ngOnInit(): void {
       }
     });
   }
-  
 
+//loadUserData
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');
   
@@ -202,18 +221,23 @@ ngOnInit(): void {
  
 
   
-  
+  // Démarre l'édition d'un champ de l'utilisateur
   startEditing(field: string, currentValue: string) {
     this.isEditing[field] = true;
     this.editedValues[field] = currentValue;
   }
+
+
+   // Sauvegarde les modifications d'un champ de l'utilisateur
  saveChanges(field: string) {
   if (!this.userId) {
     console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
     return;
   }
+   // Met à jour l'image de profil
   if (field === "profileImage" && this.selectedFile) {
     this.updateProfileImage();
+   
     return;
   }
   
@@ -310,7 +334,7 @@ ngOnInit(): void {
       });
   }
 
-
+// Mise à jour de tout autre champ
   
   const updatedData = { [field]: this.editedValues[field] };
 
@@ -324,6 +348,7 @@ ngOnInit(): void {
           localStorage.setItem('accessToken', response.token); 
      
         }
+     
 
         this.user[field] = updatedData[field]; 
         this.isEditing[field] = false; 
@@ -333,6 +358,7 @@ ngOnInit(): void {
       }
     });
 }
+//// / Gestion de la modification des disponibilités
 loadDisponibilites() {
   const daysOfWeek: { [key: string]: number } = {
     'Dimanche': 0, 'Lundi': 1, 'Mardi': 2, 'Mercredi': 3, 'Jeudi': 4, 'Vendredi': 5, 'Samedi': 6
@@ -374,7 +400,10 @@ loadDisponibilites() {
 
  
 
-}ouvrirEdition(dispo?: any) {
+}
+ 
+
+ouvrirEdition(dispo?: any) {
   this.editionActive = true;
   this.disponibiliteSelectionnee = dispo ? { ...dispo } : null;
 }
@@ -383,7 +412,7 @@ fermerEdition() {
   this.editionActive = false;
   this.disponibiliteSelectionnee = null;
 }
-
+//update dispoblite
 updateDisponibilite() {
   if (!this.disponibiliteSelectionnee || !this.disponibiliteSelectionnee.id) {
    
@@ -420,6 +449,8 @@ updateDisponibilite() {
 
 
 }
+   
+
 refreshCalendar() {
   setTimeout(() => {
     const calendarApi = this.calendarComponent.getApi();
@@ -445,19 +476,39 @@ onEventClick(info: any) {
     this.ouvrirEdition(dispo);
   }
 }
+/*
 afficherFormulaireAjout() {
   this.editionActive = true;
   this.ajoutMode = true;
   this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' }; 
  
+}*/
+afficherFormulaireAjout() {
+  this.ajoutMode = true;
+  this.editionActive = false;
+  this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' }; // 🔥 On initialise ici
+  this.erreurs = {};
 }
+
 
 afficherFormulaireModification(dispo: Disponibilite) {
   this.editionActive = true;
-  this.ajoutMode = false;
+  this.ajoutMode = true;
   this.disponibiliteSelectionnee = { ...dispo }; 
 }
+//ajouterDisponibilite
 ajouterDisponibilite(nouvelleDispo: any) {
+
+  if (!nouvelleDispo) {
+    console.warn("ℹ Initialisation de nouvelleDisponibilite...");
+    nouvelleDispo = { jour: '', heureDebut: '', heureFin: '' };
+  }
+  if (!this.nouvelleDisponibilite) {
+    this.nouvelleDisponibilite = { jour: '', heureDebut: '', heureFin: '' };
+  }
+
+
+
  
   this.erreurs = {}; 
  
@@ -508,16 +559,19 @@ ajouterDisponibilite(nouvelleDispo: any) {
       this.erreurs.general = "";
       this.editionActive = false;
       this.ajoutMode = false;  
-      this.cdRef.detectChanges();
-
-      this.loadDisponibilites();
-      this.refreshCalendar();
+      setTimeout(() => {
+        this.cdRef.detectChanges();
+        this.loadDisponibilites();
+        this.refreshCalendar();
+      }, 100);
+    
     }, (error) => {
       this.erreurs.general = "❌ Erreur lors de l'ajout : " + error.message;
-      this.cdRef.detectChanges();
+        console.error("🚨 Erreur API :", error);
+        this.cdRef.detectChanges();
     });
 }
-
+//verfication ajouter de dispobilite 
 verifierChevauchement(nouvelleDispo: any): boolean {
   const chevauchement = this.user.disponibilites.some((dispo: any) => {
     const chevauche = (
@@ -564,6 +618,7 @@ fermerFormulaire() {
   this.ajoutMode = false;
   this.modificationMode = false;
 }
+//supprimer 
 supprimerDisponibilite(disponibiliteId: number): void {
  
 
@@ -612,7 +667,6 @@ onFileSelected(event: any) {
   }
 }
 
-  
 getImage(filename: string, index: number) {
   this.fileService.getImage(filename).subscribe(
     (imageBlob) => {
@@ -624,11 +678,9 @@ getImage(filename: string, index: number) {
       console.error('Erreur lors du chargement de l\'image', error);
     }
   );
-}
-updateProfileImage() {
-  this.loadUserData(); 
+}updateProfileImage() {
   if (!this.userId) {
-    console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
+    console.error("Impossible de mettre à jour : ID utilisateur introuvable !");
     return;
   }
 
@@ -638,38 +690,48 @@ updateProfileImage() {
   }
 
   this.uploadService.uploadFile(this.selectedFile).subscribe({
-    next: (imageUrl) => {
-     
+    next: (response: any) => {
+      const filename = response.split(': ')[1];
+      if (!filename) {
+        console.error("Réponse d'upload invalide :", response);
+        return;
+      }
 
-      this.utilisateurService.updateUser(Number(this.userId), { image: imageUrl })
-        .subscribe({
-          next: (response) => {
-          
-            this.profileImageUrl = imageUrl;
-        
-            this.isEditing['profileImage'] = false;
-            const updatedImageUrl = `http://localhost:8088/nour/api/v1/auth/get-image/${imageUrl}?t=${new Date().getTime()}`;
-            this.profileImageUrl = updatedImageUrl;
+      const updatedImageUrl = `http://localhost:8088/nour/api/v1/auth/get-image/${filename}?t=${new Date().getTime()}`;
+      this.profileImageUrl = updatedImageUrl;  // Met à jour l'URL de l'image de profil
 
-          
-            this.fileService.updateProfileImage(updatedImageUrl);
+      // Détecte les changements manuellement
+      this.cdr.detectChanges();
 
-            if (response.token) {
-              localStorage.removeItem('accessToken');
-              localStorage.setItem('accessToken', response.token);
-            
-            }
-            this.loadUserData();
-          },
-          error: (err) => {
-            console.error(" Erreur lors de la mise à jour du profil :", err);
+      setTimeout(() => {
+        const imgElement = document.getElementById('profile-icon') as HTMLImageElement;
+        if (imgElement) {
+          this.renderer.setAttribute(imgElement, 'src', updatedImageUrl);
+        }
+      }, 100);
+
+      this.utilisateurService.updateUser(Number(this.userId), { image: filename }).subscribe({
+        next: (updateResponse) => {
+          this.isEditing['profileImage'] = false;
+          this.fileService.updateProfileImage(updatedImageUrl);
+
+          if (updateResponse.token) {
+            localStorage.removeItem('accessToken');
+         
+           
           }
-        });
+          localStorage.setItem('accessToken', updateResponse.token);
+
+          this.loadUserData();
+        },
+        error: (err) => {
+          console.error("Erreur lors de la mise à jour du profil :", err);
+        }
+      });
     },
     error: (err) => {
       console.error("Erreur lors de l'upload :", err);
     }
   });
 }
-
 }
