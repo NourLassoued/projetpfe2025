@@ -141,6 +141,8 @@ public class Utilisateur  implements UserDetails  {
 
     @JsonIgnoreProperties("utilisateurs")
     private Adresse adressee;
+    @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL)
+    private List<Postulation> postulations;
 
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;

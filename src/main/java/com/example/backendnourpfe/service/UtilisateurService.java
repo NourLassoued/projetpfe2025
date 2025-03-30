@@ -10,6 +10,8 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,22 +60,7 @@ public class UtilisateurService implements UtlisateurInterface {
     public List<Utilisateur> getAllUsers() {
         return utilisateurRepository.findAll();
     }
-/*
-    public List<Utilisateur> getAllPrestataires() {
-        List<Utilisateur> prestataires = utilisateurRepository.findAll().stream()
-                .filter(user -> user.getRole() == UserRole.PRESTATAIRE)
-                .map(user -> {
-                    if (user.getAdressee() != null) {
 
-                    } else {
-
-                    }
-                    return user;
-                })
-                .collect(Collectors.toList());
-        return prestataires;
-    }
-*/
 public List<Utilisateur> getAllParticuliers() {
     List<Utilisateur> particuliers = utilisateurRepository.findAll().stream()
             .filter(user -> user.getRole() == UserRole.PARTICULIER)
@@ -131,6 +118,9 @@ public List<Utilisateur> getAllPrestataires() {
         return utilisateurRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email: " + email));
     }
+
+
+
     @Override
     public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
 
@@ -259,7 +249,7 @@ public List<Utilisateur> getAllPrestataires() {
         Utilisateur user = utilisateurRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé !"));
 
-        // 🔹 Met à jour les champs nécessaires
+
         if (utilisateurDetails.getNom() != null) user.setNom(utilisateurDetails.getNom());
         if (utilisateurDetails.getEmail() != null) user.setEmail(utilisateurDetails.getEmail());
         if (utilisateurDetails.getPassword() != null) user.setPassword(utilisateurDetails.getPassword());

@@ -36,18 +36,7 @@ public class JwtService {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-/*
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
 
-    public String generateToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails
-    ) {
-        return buildToken(extraClaims, userDetails, jwtExpiration);
-    }
-*/
 
 
     public String generateToken(Utilisateur user) {
@@ -58,17 +47,17 @@ public class JwtService {
         claims.put("status", user.getStatus());
         claims.put("telephoneNumber", user.getTelephoneNumber());
         claims.put("id", user.getIdUtilisateur());
-        claims.put("WorkExerience", user.getWorkExperience());
+        claims.put("workExperience", user.getWorkExperience());
 
 
         claims.put("adresse", user.getAdressee());
 
-
+claims.put("Demande",user.getDemandes());
         claims.put("tarifs", user.getTarifs());
         claims.put("telephoneNumber", user.getTelephoneNumber());
         claims.put("description", Optional.ofNullable(user.getDescription()).orElse("no"));
 
-        // Gérer les valeurs nulles proprement
+
         claims.put("services", Optional.ofNullable(user.getServicesOfferts())
                 .orElse(Collections.emptyList())
                 .stream()
@@ -91,11 +80,12 @@ public class JwtService {
                 .map(dispo -> Map.of(
                         "id", dispo.getId(),
                         "jour", dispo.getJour(),
-                        "heureDebut", dispo.getHeureDebut().toString(),  // Convertir LocalTime en String
+                        "heureDebut", dispo.getHeureDebut().toString(),
                         "heureFin", dispo.getHeureFin().toString()
 
                 ))
                 .collect(Collectors.toList()));
+
 
         for (Servicee service : user.getServicesOfferts()) {
             System.out.println("   - " + service.getNomservice());

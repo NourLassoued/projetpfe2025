@@ -1,10 +1,12 @@
 package com.example.backendnourpfe.Config;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -27,7 +31,7 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**", "/forgetPassword/**", "/categories/**",
             "/services/**","/utilisateurss/**","/disponibilites/**" ,"/adresses/**",
-            "/demandes/**",
+            "/demandes/**",  "/postulation/**"
 
     };
 
@@ -39,16 +43,20 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
 
                         .requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers(HttpMethod.POST, "/utilisateurss/**").permitAll()
 
-                        .requestMatchers(HttpMethod.PUT, "/demandes/**").permitAll()
+                       .requestMatchers(HttpMethod.PUT, "/demandes/**").permitAll()
+
+
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                        .anyRequest().authenticated()
+                   // .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -62,6 +70,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
 
 }

@@ -8,6 +8,7 @@ import com.example.backendnourpfe.Respository.ServiceRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
+import com.example.backendnourpfe.service.PostulationService;
 import com.example.backendnourpfe.service.UtilisateurService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -39,7 +40,7 @@ public class UtilisateurController {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
-    private ServiceRepository serviceRepository;
+    private PostulationService postulationService;
 
 
 
@@ -72,6 +73,12 @@ public ResponseEntity<Map<String, Object>> creerDemande(
     Map<String, Object> response = utilisateurService.creerDemande(emailUtilisateur, idService, idAdresse, demande);
     return ResponseEntity.ok(response);
 }
+/*
+
+    @PutMapping( "/updateDemande/{id}")
+    public Demande updateDemande(@PathVariable Long id, @RequestBody Demande demandeDetails) {
+        return utilisateurService.updateDemande(id, demandeDetails);
+    }*/
 
 
     @PostMapping("/{idUtilisateur}/avis/{idAvisUtilisateur}")
@@ -189,6 +196,18 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
     public ResponseEntity<List<Utilisateur>> getUtilisateursParticuliers() {
         List<Utilisateur> particuliers = utilisateurService.getAllParticuliers();
         return ResponseEntity.ok(particuliers);
+    }
+    @PostMapping("/postuler/{demandeId}/{utilisateurId}")
+    public ResponseEntity<Postulation> postuler(
+            @PathVariable Long demandeId,
+            @PathVariable Long utilisateurId,
+            @RequestBody Postulation postulation) {
+
+        // Appeler la méthode du service pour effectuer la postulation
+        Postulation savedPostulation = postulationService.postuler(demandeId, utilisateurId, postulation);
+
+        // Retourner une réponse avec l'objet postulation sauvegardé
+        return ResponseEntity.ok(savedPostulation);
     }
 
 }

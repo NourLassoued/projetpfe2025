@@ -75,6 +75,7 @@ public AuthenticationReponse register(RegisterRequest request) {
         utilisateur.setNomEntreprise(request.getNomEntreprise());
         utilisateur.setSiret(request.getSiret());
         utilisateur.setSiteWeb(request.getSiteWeb());
+        utilisateur.setDemandes(request.getDemandes());
     if (request.getAdresse() != null) {
         Adresse adresse = new Adresse();
         adresse.setGovernoate(request.getAdresse().getGovernoate());
@@ -120,14 +121,14 @@ public AuthenticationReponse register(RegisterRequest request) {
             emailService.sendActivationEmailParticulier(utilisateur.getEmail(), utilisateur.getNom());
         }
 
-        // 🔹 Génération des tokens JWT
+
         String jwtToken = jwtService.generateToken(utilisateur);
         String refreshToken = jwtService.generateToken(utilisateur);
 
-        // 🔹 Sauvegarde du token
+
         saveUserToken(saveUser, jwtToken);
 
-        // 🔹 Retourne la réponse d'authentification
+
         return AuthenticationReponse.builder()
                 .accesToken(jwtToken)
                 .refershToken(refreshToken)

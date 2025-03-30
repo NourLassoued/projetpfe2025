@@ -2,10 +2,7 @@ package com.example.backendnourpfe.auth;
 
 
 
-import com.example.backendnourpfe.classes.Adresse;
-import com.example.backendnourpfe.classes.Disponibilite;
-import com.example.backendnourpfe.classes.StatusUtilisateur;
-import com.example.backendnourpfe.classes.UserRole;
+import com.example.backendnourpfe.classes.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,6 +46,7 @@ public class RegisterRequest implements Serializable {
     private List<byte[]> images;
     private List<Disponibilite> disponibilites;
     private Adresse adresse;
+    private List<Demande> demandes;
 
 
 }

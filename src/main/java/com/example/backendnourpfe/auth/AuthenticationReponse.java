@@ -3,6 +3,7 @@ package com.example.backendnourpfe.auth;
 
 
 import com.example.backendnourpfe.classes.Adresse;
+import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.StatusUtilisateur;
 import com.example.backendnourpfe.classes.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -50,5 +53,5 @@ public class AuthenticationReponse {
     private Integer workExperience;
     @JsonProperty("adressee")
     private Adresse adressee;
-
+    private List<Demande> demandes;
 }
