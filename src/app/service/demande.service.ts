@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Demande } from 'src/models/Demande';
 import { AuthServiceService } from './auth-service.service';
+import { Postulation } from 'src/models/Postulation';
 @Injectable({
   providedIn: 'root'
 })
@@ -38,6 +39,9 @@ export class DemandeService {
  
   getAllDemandesByUtilisateurId(idUtilisateur: number): Observable<Demande[]> {
     return this.http.get<Demande[]>(`${this.apiUrl}/getAllDemandesByUtilisateurId/${idUtilisateur}`);
+  }
+  getPostulationsByDemande(idDemande: number): Observable<Postulation[]> {
+    return this.http.get<Postulation[]>(`${this.apiUrl}/${idDemande}/postulations`);
   }
 
 }

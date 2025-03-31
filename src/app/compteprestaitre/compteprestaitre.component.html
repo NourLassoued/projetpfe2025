@@ -86,14 +86,15 @@
         <span class="close" (click)="closeModal()">&times;</span>
         <h3>Postuler à la demande</h3>
 
-        <form (ngSubmit)="envoyerPostulation()">
-            <div>
-                <label for="commentaire">Commentaire :</label>
+        <form class="commentaire" (ngSubmit)="envoyerPostulation()">
+            <div class="commentaire">
+                <label for="commentaire">Commentaire</label>
                 <textarea id="commentaire" [(ngModel)]="commentaire" name="commentaire" required></textarea>
             </div>
 
             <div>
-                <button type="submit" class="btn-submit">Envoyer la postulation</button>
+                
+                <button type="submit" class="btn-postuler">Envoyer la postulation</button>
             </div>
         </form>
     </div>

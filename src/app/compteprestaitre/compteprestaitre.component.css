@@ -254,4 +254,29 @@
     font-size: 30px;
     cursor: pointer;
   }
-  
+  textarea {
+    flex: 1; /* Prend tout l'espace disponible */
+    resize: vertical; /* Permet de redimensionner verticalement */
+}
+
+
+.commentaire label {
+    width: 250px;
+     /* Largeur fixe pour aligner les labels */
+    text-align: start;
+    font-weight: bold;
+}
+
+.commentaire textarea {
+    flex: 1; /* Permet au textarea de prendre tout l’espace restant */
+    height: 150px; /* Hauteur minimale */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: none;
+    width: 420px;
+    line-height: 1.5; /* Meilleur espacement entre les lignes */
+    resize: vertical; /* Permet à l’utilisateur de redimensionner uniquement en hauteur */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}

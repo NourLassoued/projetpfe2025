@@ -119,26 +119,32 @@ envoyerPostulation(): void {
     return;
   }
 
-  // Préparer l'objet de la postulation
-  const postulation: Postulation = {
-    commentaire: this.commentaire,
-    datePostulation: new Date(),
-    demande: this.selectedDemande, // Vérifiez que 'selectedDemande' est un objet valide
-    prestataire: this.user        // Vérifiez que 'user' est un objet valide
-  };
 
-  // Appel HTTP pour envoyer la postulation
+    const postulation: Postulation = {
+      commentaire: this.commentaire,
+      datePostulation: new Date(),
+      demande: { idDemande: this.selectedDemande.idDemande }, 
+      prestataire: { idUtilisateur: this.user.id }
+    };
+
   this.utilisateurService.postuler(this.selectedDemande.idDemande, this.user.id, postulation)
     .subscribe({
       next: (response) => {
-        console.log('Postulation envoyée avec succès');
+        console.log('Postulation envoyée avec succès', response);
         this.closeModal();  // Fermer le modal après l'envoi
       },
       error: (error) => {
+        // Ajout de plus de détails pour faciliter le débogage
         console.error('Erreur lors de l\'envoi de la postulation', error);
+        if (error.status === 400) {
+          alert('Une erreur de validation s\'est produite. Veuillez vérifier les données et réessayer.');
+        } else {
+          alert('Une erreur inconnue est survenue. Veuillez réessayer plus tard.');
+        }
       }
     });
 }
+
 
   
   

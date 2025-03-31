@@ -6,6 +6,7 @@ import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
 
 import { Demande } from 'src/models/Demande';
+import { Postulation } from 'src/models/Postulation';
 
 @Component({
   selector: 'app-gererdemande',
@@ -21,9 +22,12 @@ export class GererdemandeComponent{
   showModel = false;
   user: any = null;
   utilisateurId!: number;
+  serviceImageUrls: string[] = [];  
+prestataireImageUrls: string[] = [];  
   userId!: number;
   demande: Demande = new Demande();
   demandeId!: number;
+  postulations: Postulation[] = [];
   demandeDetails: {
     idDemande: number | null;
     title: string;
@@ -109,19 +113,23 @@ export class GererdemandeComponent{
       console.warn(" Aucun token trouvé dans localStorage !");
     }
   }
-  getImage(filename: string, index: number) {
-    const encodedFilename = encodeURIComponent(filename);
-    this.fileService.getImage(encodedFilename).subscribe(
+  getImage(filename: string, index: number, type: 'service' | 'prestataire') {
+    this.fileService.getImage(filename).subscribe(
       (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
-        this.imageUrls[index] = imageUrl; 
+        
+        if (type === 'service') {
+          this.serviceImageUrls[index] = imageUrl;  
+        } else if (type === 'prestataire') {
+          this.prestataireImageUrls[index] = imageUrl; 
+        }
       },
       (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
-        
       }
     );
   }
+  
   getDemandeDetails(id: number): void {
   
     
@@ -135,17 +143,45 @@ export class GererdemandeComponent{
         }
 
         if (this.demande?.servicee?.imageService) {
-          this.getImage(this.demande.servicee.imageService, 0); 
+         
+          this.getImage(this.demande.servicee.imageService, 0, 'service'); 
+          
         } else {
           console.log('Aucune image disponible pour ce service');
         }
+        this.getPostulationsByDemande(id);
       },
       (error) => {
         console.error('Erreur lors de la récupération de la demande:', error);
       }
     );
   }
-  
+  getPostulationsByDemande(idDemande: number): void {
+    this.demandeservice.getPostulationsByDemande(idDemande).subscribe(
+      (postulationsData) => {
+        
+        this.postulations = postulationsData;
+
+        this.postulations.forEach((postulation, index) => {
+          if (postulation.prestataire?.image) {
+          
+            
+            this.getImage(postulation.prestataire.image, index, 'prestataire');
+          } else {
+           
+            this.imageUrls[index] = 'assets/default-avatar.png';
+            console.warn(`Postulation ${postulation.id}: Aucun prestataire ou image, image par défaut utilisée.`);
+          }
+        });
+
+       
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
+      }
+    );
+}
+
  
   formatDateForInput(date: string | number | Date): string {
     
@@ -206,7 +242,7 @@ updateDemande(): void {
 
   this.demandeservice.updateDemande(this.demandeId, this.demandeDetails).subscribe(
     (response) => {
-      console.log('Demande mise à jour:', response);
+      
       this.demande = response; 
       this.demandeDetails = { ...response }; 
       this.router.navigate(['/Mesdemandes']); 
@@ -231,6 +267,14 @@ deleteDemande(idDemande: number): void {
       console.error('Erreur lors de la suppression de la demande', error);
     }
   );
+}
+goToProfile(userId?: number) {
+ 
+  if (userId) {
+    this.router.navigate(['/Profil', userId]);
+  } else {
+    console.error("ID non défini !");
+  }
 }
 
 

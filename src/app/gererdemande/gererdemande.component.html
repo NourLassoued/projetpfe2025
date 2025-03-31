@@ -10,7 +10,7 @@
     <div class="container">
         
         <div   *ngIf="demande" class="task-card">
-            <img [src]="imageUrls[0]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
+          <img *ngIf="serviceImageUrls.length > 0" [src]="serviceImageUrls[0]" alt="Image du service" class="service-image">
             <h2>🛠 Service: {{ demande.servicee?.nomservice }}</h2>
            
 
@@ -70,14 +70,21 @@
               </form>
             </div>
           </div>
-          
-        <div class="public-discussion">
-            <h3>Discussion publique (1)</h3>
-            <div class="comment">
-                <p><strong>Alex • 80,00 €</strong></p>
-                <p>Bonjour, j’ai postulé mais je suis disponible jeudi pas vendredi. J’attends votre retour. Bonne soirée.</p>
-                <p class="time">il y a 18 heures</p>
+          <div class="public-discussion">
+            <h3>Discussion publique</h3>
+            <div *ngFor="let postulation of postulations ; let i = index" class="comment">
+                <div class="comment-header">
+                  <img *ngIf="prestataireImageUrls[i]" [src]="prestataireImageUrls[i]" alt="Image du prestataire"
+                  class="profile-pic"   (click)="goToProfile(postulation.prestataire?.['idUtilisateur'])">
+
+
+
+                    <p><strong >{{ postulation.prestataire?.nom }}</strong> </p>
+                </div>
+                <p>{{ postulation.commentaire }}</p>
+                <p class="time">{{ postulation.datePostulation | date: 'dd MMM yyyy' }}</p>
             </div>
         </div>
     </div>
+        
 </body>

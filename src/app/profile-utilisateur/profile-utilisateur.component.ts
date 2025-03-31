@@ -4,6 +4,7 @@ import { FileService } from '../service/file.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { NotificationService } from '../service/notification.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-utilisateur',
@@ -17,11 +18,14 @@ export class ProfileUtilisateurComponent implements OnInit{
     profileImageUrl: SafeUrl | null = null; 
 
  user1: Utilisateur = { servicesOfferts: [] };
-   
-  constructor(private fileService: FileService, private sanitizer: DomSanitizer){}
+ userId: number | undefined;
+  constructor(private fileService: FileService, 
+    private sanitizer: DomSanitizer,
+    ){}
   
    
   ngOnInit(): void {
+   
     this.loadUserData();
   
     const token = localStorage.getItem('accessToken');

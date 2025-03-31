@@ -46,6 +46,7 @@ import { DemandeComponent } from './demande/demande.component';
 import { DemandecompteComponent } from './demandecompte/demandecompte.component';
 import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 import { GererdemandeComponent } from './gererdemande/gererdemande.component';
+import { ProfilComponent } from './profil/profil.component';
 
 
 const routes: Routes = [
@@ -213,6 +214,10 @@ component:InformatiqueComponent
   {
     path: 'gerer-demande',
     component:GererdemandeComponent 
+  },
+  {
+    path: 'Profil/:id',
+    component:ProfilComponent 
   }
 
 

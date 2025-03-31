@@ -6,6 +6,7 @@ import { Reservation } from 'src/models/Reservation';
 import { Utilisateur } from 'src/models/Utilisateur';
 
 import { Observable } from 'rxjs/internal/Observable';
+import { Postulation } from 'src/models/Postulation';
 @Injectable({
   providedIn: 'root'
 })
@@ -73,7 +74,7 @@ export class UtilisateurService {
   getById(id: number): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.apiUrl}/getById/${id}`);
   }
-  postuler(demandeId: number, utilisateurId: number, postulation: any): Observable<any> {
+  postuler(demandeId: number, utilisateurId: number, postulation: Postulation): Observable<Postulation> {
     const url = `${this.apiUrl}/postuler/${demandeId}/${utilisateurId}`;
     return this.http.post<any>(url, postulation);
   }

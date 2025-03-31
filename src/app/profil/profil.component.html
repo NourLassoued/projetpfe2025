@@ -1,0 +1,169 @@
+<app-navbarcompte></app-navbarcompte>
+<body>
+<div class="container">
+    <!-- Sidebar contenant l'image de profil -->
+    <div class="sidebar">
+        <div id="profile-container">
+            <div class="image-wrapper">
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                <div class="price">
+                    {{ user?.tarifs }} dt
+                </div>
+                <!-- Bloc des informations de notation -->
+                <div class="rating-info">
+                    <div>
+                        <strong>33</strong> <span>⭐</span>
+                        <p>Évaluations</p>
+                    </div>
+                    <div class="rating">
+                        <strong class="strong">4,97</strong> <span>❤️</span>
+                        <p class="rating-text">Note sur 5</p>
+                    </div>
+                    <div>
+                        <strong>3</strong>
+                        <p>mois chez Yoojo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <!-- Boutons de contact -->
+        <div class="button-container">
+            <button (click)="afficherNumero()">
+                Contacter
+            </button>
+            <button>
+                <i class="fa-solid fa-calendar-check"></i> Réserver moi
+            </button>
+        </div>
+    </div>
+    <div class="notification-box" *ngIf="showNotification">
+      <div class="user-card">
+          <div class="profile-container">
+              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+          </div>
+          <div class="user-info">
+              <h3>{{ user?.nom || 'Utilisateur' }}</h3>
+              <p>Pour toutes questions</p>
+          </div>
+      </div>
+   
+      
+      <div class="contact-buttons">
+        <button class="contact-btn message-btn">
+            <i class="fas fa-envelope"></i> Message
+        </button>
+        <a [href]="'tel:' + user?.telephoneNumber" class="contact-btn phone-btn">
+            <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
+        </a>
+    </div>
+    
+  
+      <button  class="close-btn" (click)="closeNotification()">Fermer</button>
+  </div>
+  
+  
+    
+    
+  
+    <!-- Contenu du profil -->
+    <div class="container-profile">
+        <!-- Nom et vérifications -->
+        <div class="section">
+            <label>{{ user?.nom }}</label>
+            <div class="verification-container">
+                <span class="verification-item">
+                    <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
+                </span>
+                <span class="verification-item">
+                    <i class="fa-solid fa-circle-check"></i> Numéro de téléphone vérifié
+                </span>
+            </div>
+        </div>
+  
+        <!-- Localisation -->
+        <div class="section">
+            <i class="fas fa-map-marker-alt location-icon"></i>
+            {{ user.adressee?.governoate }}
+        </div>
+  
+        <!-- Expérience -->
+        <div class="section">
+            <label>🎖️ {{ user?.workExperience }} ans d'expérience</label>
+        </div>
+  
+        <!-- Compétences -->
+        
+        <div class="section">
+            <label>💼 Mes compétences</label>
+            <div class="competences-container">
+                <div class="competence" *ngFor="let servicee of user?.competence">
+                    <p>{{ servicee }}</p> 
+                
+                </div>
+            </div>
+        </div>
+  <div class="content">
+
+        <div class="section">
+          
+            <h3>À propos de moi</h3>
+            <p>{{ user?.description }}</p>
+        </div>
+  </div>
+        <!-- Disponibilités -->
+         <div class="content">
+        <div class="section">
+            <ng-container *ngIf="user?.disponibilite && user.disponibilite.length > 0">
+                <h3>Disponibilité</h3>
+                <ul class="disponibilites-list">
+                    <li *ngFor="let dispo of user.disponibilite">
+                      <!-- Icône pour l'heure -->
+                      <i class="fa-solid fa-clock"></i>
+                      <!-- Affichage du jour et des horaires -->
+                      {{ dispo.jour }} : {{ dispo.heureDebut }} h - {{ dispo.heureFin }} h
+                    </li>
+                  </ul>
+            </ng-container>
+            
+        </div>
+         </div>
+        <!-- Avis clients -->
+         <div class="content">
+        <div class="section">
+            <label class="sectionn">Avis clients</label>
+            <div class="rating">★ 5,0 (20 avis)</div>
+            <div class="bar-container"><span>5★</span> <div class="bar"><div class="bar-fill" style="width: 100%;"></div></div> <span>20</span></div>
+            <div class="bar-container"><span>4★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
+            <div class="bar-container"><span>3★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
+            <div class="bar-container"><span>2★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
+            <div class="bar-container"><span>1★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
+  
+            <div class="reviews">
+                <div class="review-card">
+                    <img src="assets/img/nour.JPG" alt="User" class="user-image"><label>Nom</label>
+                    <div class="review-header"><span>6 jours sur Yoojo</span></div>
+                    <div class="stars">★★★★★</div>
+                    <div class="review-text">Bonjour Mr Louis, merci pour votre prestation à distance...</div>
+                </div>
+                <div class="review-card">
+                    <img src="assets/img/nour.JPG" alt="User" class="user-image"><label>Nom</label>
+                    <div class="review-header"><span>19 jours sur Yoojo</span></div>
+                    <div class="stars">★★★★★</div>
+                    <div class="review-text">Super disponible, minutieux, je recommande fortement.</div>
+                </div>
+                <div class="review-card">
+                    <img src="assets/img/nour.JPG" alt="User" class="user-image"><label>Nom</label>
+                    <div class="review-header"><span>2 mois sur Yoojo</span></div>
+                    <div class="stars">★★★★★</div>
+                    <div class="review-text">Très professionnel, je recommande...</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  
+  <!-- Pied de page -->
+  <app-footer></app-footer>
+  </body>

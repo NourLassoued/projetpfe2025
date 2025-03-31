@@ -71,6 +71,7 @@ import { DemandecompteComponent } from './demandecompte/demandecompte.component'
 import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 import { GererdemandeComponent } from './gererdemande/gererdemande.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { ProfilComponent } from './profil/profil.component';
 
 
 
@@ -120,6 +121,7 @@ import { MatMenuModule } from '@angular/material/menu';
     DemandecompteComponent,
     MesdemandesComponent,
     GererdemandeComponent,
+    ProfilComponent,
 
    
 
