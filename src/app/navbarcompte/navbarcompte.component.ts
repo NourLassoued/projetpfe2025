@@ -18,7 +18,7 @@ export class NavbarcompteComponent implements    AfterViewInit {
     selectedServiceId!: number;  
     displayedCategories: any[] = []; 
     currentIndex: number = 0; 
-   
+    demandesDisponibles: any[] = [];
     totalCategories: number = 0; 
     categories: any[] = [];
     imageUrls: string[] = [];
@@ -53,7 +53,7 @@ export class NavbarcompteComponent implements    AfterViewInit {
     private categorieService:CategorieService,private file:FileService,
         private service:ServiceeService,
         private router: Router,
-        private changeDetectorRef: ChangeDetectorRef) {}
+       ) {}
     
     ngAfterViewInit(): void {
     this.toggleMenu();

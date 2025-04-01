@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { SafeUrl } from '@angular/platform-browser';
+
 import { Demande } from 'src/models/Demande';
 import { FileService } from '../service/file.service';
-import { CategorieService } from '../service/categorie.service';
-import { ServiceeService } from '../service/servicee.service';
+
 import { DemandeService } from '../service/demande.service';
 import { jwtDecode } from 'jwt-decode';
 import { Route, Router } from '@angular/router';
@@ -14,15 +13,18 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./mesdemandes.component.css']
 })
 export class MesdemandesComponent {
+  demandes: Demande[] = [];
+    demandesAvecPostulations: { [key: number]: number } = {};
    user: any = null;
-
+   postulations: { [key: number]: any[] } = {};
       categories: any[] = [];
       imageUrls: { [key: number]: string } = {};
    
     userId!: number;
-   
+  
+
     services: any[] = [];
-    demandes: Demande[] = [];
+ 
       constructor(private fileService: FileService, 
         private router: Router,
         private demandeService: DemandeService) {}
@@ -86,6 +88,9 @@ export class MesdemandesComponent {
                 if (demande.servicee?.imageService) {
                   this.getImage(demande.servicee.imageService, index);
                 }
+                if (demande.idDemande !== undefined) {
+                  this.getPostulationsByDemande(demande.idDemande);
+              }
               });
             },
             (error) => {
@@ -94,6 +99,17 @@ export class MesdemandesComponent {
           );
         }
       }
+      getPostulationsByDemande(idDemande: number): void {
+        this.demandeService.getPostulationsByDemande(idDemande).subscribe(
+            (postulationsData) => {
+                this.demandesAvecPostulations[idDemande] = postulationsData.length; // Stocke le nombre de postulations
+            },
+            (error) => {
+                console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
+            }
+        );
+    }
+    
       gererDemande(demande: any) {
       
         if (!demande || !demande.idDemande) {
@@ -102,6 +118,10 @@ export class MesdemandesComponent {
         }
         this.router.navigate(['/gerer-demande'], { queryParams: { id: demande.idDemande } });
     }
-    
+    logout(): void {
+  
+      localStorage.removeItem('accessToken')
+      this.router.navigate(['/Front']); 
+    }
    
     }           

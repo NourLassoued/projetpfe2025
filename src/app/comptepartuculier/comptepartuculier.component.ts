@@ -152,6 +152,12 @@ export class ComptepartuculierComponent  implements OnInit{
         );
       }
     }
+    logout(): void {
+  
+      localStorage.removeItem('accessToken')
+      this.router.navigate(['/Front']); 
+    }
+  
   }
   
 

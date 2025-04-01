@@ -18,19 +18,21 @@ export class CompteprestaitreComponent implements OnInit{
   user: any = null;
   profileImageUrl: SafeUrl | null = null; 
   userId!: number;
-  showDetailsMap: { [key: number]: boolean } = {}; // Objet pour stocker l'état des détails
-  // Variables pour le modal de postulation
+  showDetailsMap: { [key: number]: boolean } = {}; 
+  demandesDisponibles: Demande[] = [];
   showModal: boolean = false;
   selectedDemande!: Demande;
   commentaire: string = '';;
-  demandesDisponibles: Demande[] = [];
+
   constructor(private fileService: FileService,
      private sanitizer: DomSanitizer, 
      private utilisateurService:UtilisateurService,
  
-     private demandeService: DemandeService) {}
+     private demandeService: DemandeService,
+     private router: Router,) {}
   ngOnInit(): void {
     this.loadUserData();
+    this.getDemandesDisponibles();
   
   }
   loadUserData(): void {
@@ -49,11 +51,11 @@ export class CompteprestaitreComponent implements OnInit{
         } else {
           console.warn(" Aucune image trouvée dans le token !");
         }
-        if (this.userId) { // 👉 Vérifie si l'ID est bien défini avant l'appel
-          console.log("📥 Appel de getDemandesDisponibles()...");
-          this.getDemandesDisponibles();
+        if (this.userId) { 
+         
+         
         } else {
-          console.error("❌ Erreur : ID utilisateur non défini !");
+          console.error(" Erreur : ID utilisateur non défini !");
         }
       } catch (error) {
         console.error(' Erreur lors du décodage du token:', error);
@@ -66,20 +68,25 @@ export class CompteprestaitreComponent implements OnInit{
     if (this.userId) {
       this.demandeService.getDemandesDisponibles(this.userId).subscribe(
         (data: Demande[]) => {
-          this.demandesDisponibles = data;
+          this.demandesDisponibles = data || []; // Assure-toi de ne pas avoir de null, sinon un tableau vide
+  
+          // Initialisation des détails de la demande
           this.demandesDisponibles.forEach(demande => {
             if (demande.idDemande !== undefined) {
               this.showDetailsMap[demande.idDemande] = false;
             }
           });
         },
-        error => console.error('Erreur lors de la récupération des demandes disponibles', error)
+        error => {
+          console.error('Erreur lors de la récupération des demandes disponibles', error);
+          this.demandesDisponibles = []; // Si erreur, on initialise demandesDisponibles en tableau vide
+        }
       );
     } else {
-      console.warn("⚠️ Impossible de récupérer les demandes : utilisateur non identifié !");
+      console.warn("Impossible de récupérer les demandes : utilisateur non identifié !");
+      this.demandesDisponibles = []; // Si l'utilisateur n'est pas trouvé, initialisation de demandesDisponibles
     }
   }
-  
   toggleDetails(demandeId?: number): void {
     if (demandeId !== undefined) {
       this.showDetailsMap[demandeId] = !this.showDetailsMap[demandeId];
@@ -101,19 +108,19 @@ export class CompteprestaitreComponent implements OnInit{
 
  
 envoyerPostulation(): void {
-  // Validation du commentaire
+
   if (!this.commentaire || this.commentaire.trim() === '') {
     console.error('Le commentaire est requis.');
-    return;  // Ne pas envoyer la requête si le commentaire est vide
+    return;  
   }
 
-  // Validation de la demande
+
   if (!this.selectedDemande || !this.selectedDemande.idDemande) {
     console.error('La demande sélectionnée est invalide.');
-    return;  // Ne pas envoyer la requête si la demande est invalide
+    return;  
   }
 
-  // Validation de l'utilisateur
+
   if (!this.user || !this.user.id) {
     console.error('L\'utilisateur est invalide.');
     return;
@@ -131,10 +138,11 @@ envoyerPostulation(): void {
     .subscribe({
       next: (response) => {
         console.log('Postulation envoyée avec succès', response);
-        this.closeModal();  // Fermer le modal après l'envoi
+        this.closeModal(); 
+        this.getDemandesDisponibles();
       },
       error: (error) => {
-        // Ajout de plus de détails pour faciliter le débogage
+       
         console.error('Erreur lors de l\'envoi de la postulation', error);
         if (error.status === 400) {
           alert('Une erreur de validation s\'est produite. Veuillez vérifier les données et réessayer.');
@@ -170,7 +178,11 @@ envoyerPostulation(): void {
     this.showModal = false;
   }
 
- 
+  logout(): void {
+  
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']); 
+  }
 
 }
 

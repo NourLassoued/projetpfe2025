@@ -10,7 +10,7 @@
                 <li>📋 Mes jobs</li>
                 <li>📅 Mes réservations</li>
                 <li>📜 Mon historique</li>
-               <li>🚪 Se déconnecter</li>
+               <li (click)="logout()">🚪 Se déconnecter</li>
             </ul>
             
         </ul>
@@ -41,7 +41,9 @@
         
         
         <section class="requests">
-            <h2 *ngIf="demandesDisponibles.length === 0">Vous n’avez pas de demande en cours</h2>
+            <h2 *ngIf="demandesDisponibles && demandesDisponibles.length === 0">
+                Vous n’avez pas de demande en cours
+            </h2>
             <p *ngIf="demandesDisponibles.length === 0">
                 Créez votre demande gratuitement et recevez des offres rapidement !
             </p>

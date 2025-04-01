@@ -5,12 +5,12 @@
         <aside class="sidebar">
             <ul>
                 <ul>
-                    <li>📌Tableau de bord</li>
+                    <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
                    <li>📋 Mes demandes</li>
                     <li>📋 Mes jobs</li>
                     <li>📅 Mes réservations</li>
                     <li>📜 Mon historique</li>
-                   <li>🚪 Se déconnecter</li>
+                    <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
                 </ul>
                 
             </ul>
@@ -24,14 +24,26 @@
                   <div class="image-section">
                     <!-- Affichage de l'image -->
                     <img [src]="imageUrls[i]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
+                   
+                        <div class="postulations-section" *ngIf="demande.idDemande !== undefined">
+                            <span class="notification-text"><i class="fas fa-bell notification-icon"></i>  Vous avez reçu {{ demandesAvecPostulations[demande.idDemande] ?? 0 }} offres</span>
+            
+                            <!-- Vérification que postulations existe avant de boucler dessus -->
+                            <div class="prestataire-avatars" *ngIf="(postulations[demande.idDemande] ?? []).length > 0">
 
-                  </div>
+                                <img *ngFor="let postulation of postulations[demande.idDemande]" 
+                                     [src]="postulation.prestataire?.image ? imageUrls[postulation.prestataire.id] : 'assets/default-avatar.png'" 
+                                     alt="Prestataire" class="avatar">
+                            </div>
+                        </div>
+                    </div>
+                
                     <div class="info-section">
                         <h3>🛠 Service:{{ demande.servicee?.nomservice }}</h3>
                         
                         <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }} - ⏰ {{ demande.date | date: 'HH:mm' }}</span></p>
                         <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
-
+                        
                        
                         <button class="btn" (click)="gererDemande(demande)" >Gérer ma demande</button>
                     </div>

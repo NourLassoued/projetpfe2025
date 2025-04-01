@@ -1,6 +1,7 @@
 import { NgModule ,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { DateFnsModule } from 'ngx-date-fns';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -146,6 +147,7 @@ import { ProfilComponent } from './profil/profil.component';
     MatFormFieldModule,
     MatSnackBarModule,
     MatMenuModule,
+    DateFnsModule,
     BsDatepickerModule.forRoot() ,
     ToastrModule.forRoot() 
     

@@ -82,9 +82,57 @@
                     <p><strong >{{ postulation.prestataire?.nom }}</strong> </p>
                 </div>
                 <p>{{ postulation.commentaire }}</p>
-                <p class="time">{{ postulation.datePostulation | date: 'dd MMM yyyy' }}</p>
+                <p class="time">{{ getTempsEcoule(postulation.datePostulation) }}</p>
+
             </div>
         </div>
     </div>
+    <h2 class="offres">Offres</h2>
+    <div  *ngFor="let utilisateur of utilisateurs  ;let i = index" class="card">
+      <div  class="profile">
         
+        <img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
+        <div class="user-info" *ngFor="let avis of utilisateur.avisRecus">
+          <h4>{{ utilisateur.nom }}</h4>
+          <p class="rating">⭐ {{ avis.note }}  /5 </p>
+      </div>
+          
+          <p class="price">{{ utilisateur.tarifs }}dt</p>
+      </div>
+      <div class="details">
+         
+          <p>{{ utilisateur.workExperience }} ans d'expérience</p>
+          <p>{{ utilisateur.description }} </p>
+          <div class="competences-container">
+           
+
+              <div class="competence" *ngFor="let servicee of utilisateur?.competence">
+                <p>{{ servicee }}</p> 
+            
+            </div>
+            
+            </div>
+        
+          <div *ngIf="utilisateur.avisRecus && utilisateur.avisRecus.length > 0">
+            <ul class="avis">
+                <li *ngFor="let avis of utilisateur.avisRecus">
+                    <blockquote>
+                        {{ avis.commentaire }} 
+                        <br>
+                        <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
+
+                        <br>
+                        <span class="author">{{ avis.utilisateur?.nom }}</span>
+                    </blockquote>
+                </li>
+            </ul>
+        </div>
+          </div>
+         
+     
+      <div class="actions">
+        <button *ngIf="utilisateur.idUtilisateur !== undefined" (click)="reserver(utilisateur.idUtilisateur)">Continuer avec {{ utilisateur.nom }}</button>
+          <a (click)="goToProfile(utilisateur?.['idUtilisateur'])">Voir le profil</a>
+      </div>
+  </div>
 </body>

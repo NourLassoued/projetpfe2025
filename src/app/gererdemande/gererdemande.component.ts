@@ -2,11 +2,16 @@ import { Component, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { FileService } from '../service/file.service';
-
+import { formatDistanceToNow, parseISO } from 'date-fns';
+import { fr } from 'date-fns/locale'; // Pour afficher en français
 import { jwtDecode } from 'jwt-decode';
 
 import { Demande } from 'src/models/Demande';
 import { Postulation } from 'src/models/Postulation';
+import { ServiceeService } from '../service/servicee.service';
+import { Utilisateur } from 'src/models/Utilisateur';
+import { ReservationService } from '../service/reservation.service';
+import { Reservation } from 'src/models/Reservation';
 
 @Component({
   selector: 'app-gererdemande',
@@ -27,7 +32,10 @@ prestataireImageUrls: string[] = [];
   userId!: number;
   demande: Demande = new Demande();
   demandeId!: number;
+  reservation: Reservation = new Reservation();
   postulations: Postulation[] = [];
+  utilisateurs: Utilisateur[] = [];
+  user1: Utilisateur = { servicesOfferts: [] };
   demandeDetails: {
     idDemande: number | null;
     title: string;
@@ -56,6 +64,8 @@ prestataireImageUrls: string[] = [];
     private fileService: FileService,
     private demandeservice:DemandeService,
     private router: Router,
+    private serviceeService:ServiceeService,
+    private reservationService: ReservationService
    ) 
    {
     const today = new Date();
@@ -67,6 +77,7 @@ prestataireImageUrls: string[] = [];
     this.minDate = today.toISOString().slice(0, 16); 
    }
   ngOnInit() {
+    
     const token = localStorage.getItem('accessToken');
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -113,7 +124,15 @@ prestataireImageUrls: string[] = [];
       console.warn(" Aucun token trouvé dans localStorage !");
     }
   }
-  getImage(filename: string, index: number, type: 'service' | 'prestataire') {
+  getTempsEcoule(date?: Date): string {
+    if (!date) {
+      return 'Date inconnue'; 
+    }
+  
+    return formatDistanceToNow(date, { addSuffix: true, locale: fr });
+  }
+  
+  getImage(filename: string, index: number, type: 'service' | 'prestataire'  | 'utilisateur') {
     this.fileService.getImage(filename).subscribe(
       (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
@@ -123,7 +142,11 @@ prestataireImageUrls: string[] = [];
         } else if (type === 'prestataire') {
           this.prestataireImageUrls[index] = imageUrl; 
         }
-      },
+       else if (type === 'utilisateur') {
+        this.utilisateurs[index].image = imageUrl;  // Met à jour l'image dans la liste des utilisateurs
+      
+      }
+    },
       (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
       }
@@ -149,6 +172,37 @@ prestataireImageUrls: string[] = [];
         } else {
           console.log('Aucune image disponible pour ce service');
         }
+        if (this.demande?.servicee?.idservice) {
+          const serviceId = this.demande.servicee.idservice;
+          this.serviceeService.getUtilisateursByServiceOrderedByRating(serviceId).subscribe(
+            (utilisateurs: any[]) => {  
+              this.utilisateurs = utilisateurs;
+              this.utilisateurs.forEach((utilisateur, index) => {
+                console.log(`🔎 Vérification des services pour ${utilisateur.nom}`, utilisateur);
+  
+                if (utilisateur['services'] && Array.isArray(utilisateur['services'])) {
+                  utilisateur.servicesOfferts = utilisateur['services'].map((service: string) => ({
+                    idservice: undefined,
+
+                    nomservice: service.replace(/[\r\n]+/g, '').trim()
+                  }));
+                } else {
+                  console.warn(`⚠ Aucun service trouvé pour ${utilisateur.nom} !`);
+                  utilisateur.servicesOfferts = [];
+                }
+  
+                if (utilisateur.image) {
+                  this.getImage(utilisateur.image, index, 'utilisateur');
+                }
+              });
+            },
+            (error) => {
+              console.error('❌ Erreur lors de la récupération des utilisateurs:', error);
+            }
+          );
+        }
+  
+          
         this.getPostulationsByDemande(id);
       },
       (error) => {
@@ -294,5 +348,26 @@ onClickOutside(event: Event) {
     this.showNotification = false;
   }
 }
+reserver(prestataireId: number) {
+  if (!this.utilisateurId || !this.demandeId || !prestataireId) {
+    console.error("Impossible d'effectuer la réservation : Informations manquantes.");
+    return;
+  }
 
+  // Remplissage de la réservation
+  this.reservation.dateReservation = new Date();
+
+
+  this.reservationService.reserverPrestataire(this.utilisateurId, prestataireId, this.demandeId, this.reservation)
+    .subscribe({
+      next: (data) => {
+        console.log("Réservation réussie :", data);
+        alert("Réservation effectuée avec succès !");
+      },
+      error: (err) => {
+        console.error("Erreur lors de la réservation :", err);
+        alert("Échec de la réservation !");
+      }
+    });
+}
 }

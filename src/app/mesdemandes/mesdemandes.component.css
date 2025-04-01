@@ -40,6 +40,12 @@ body {
     height: 400px;
    
 }
+.image-section {
+    display: flex;
+    align-items: center; /* Aligne verticalement les éléments */
+    gap: 15px; /* Espace entre l'image et la notification */
+  }
+  
 .image-section img {
     width: 350px;
     height: 150px;
@@ -152,3 +158,31 @@ app-navbarcompte {
 .sidebar ul li.active, .sidebar ul li:hover {
     background-color: #bbbdc0;
 }
+.postulations-section {
+    display: flex;
+    flex-direction: column; /* La notification peut être sur plusieurs lignes */
+    justify-content: center; /* Centrer verticalement le texte */
+  }
+  
+  .prestataire-avatars {
+    display: flex;
+    gap: 10px; /* Espacement entre les avatars */
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .notification-icon {
+    font-size: 1.6em; /* Taille de l'icône */
+    color: #efff0d; /* Couleur de l'icône (orange ici) */
+  }
+  .notification-text {
+    display: flex;  
+    font-weight: bold;           /* Utiliser Flexbox pour aligner l'icône et le texte sur la même ligne */
+    align-items: center;       /* Centrer verticalement l'icône et le texte */
+    gap: 8px;                  /* Espacement entre l'icône et le texte */
+    font-size: 1.4rem;           /* Taille du texte */
+    color: #1c1c1c;               /* Couleur du texte (noir clair) */
+  }
