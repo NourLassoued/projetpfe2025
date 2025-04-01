@@ -2,9 +2,8 @@ package com.example.backendnourpfe.Controlleur;
 
 
 
-import com.example.backendnourpfe.Config.JwtService;
-import com.example.backendnourpfe.Respository.AdresseRepository;
-import com.example.backendnourpfe.Respository.ServiceRepository;
+
+import com.example.backendnourpfe.Respository.ReservationRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
@@ -13,12 +12,12 @@ import com.example.backendnourpfe.service.UtilisateurService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,7 +26,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -41,6 +40,7 @@ public class UtilisateurController {
     private UtilisateurRepository utilisateurRepository;
     @Autowired
     private PostulationService postulationService;
+
 
 
 
@@ -73,12 +73,6 @@ public ResponseEntity<Map<String, Object>> creerDemande(
     Map<String, Object> response = utilisateurService.creerDemande(emailUtilisateur, idService, idAdresse, demande);
     return ResponseEntity.ok(response);
 }
-/*
-
-    @PutMapping( "/updateDemande/{id}")
-    public Demande updateDemande(@PathVariable Long id, @RequestBody Demande demandeDetails) {
-        return utilisateurService.updateDemande(id, demandeDetails);
-    }*/
 
 
     @PostMapping("/{idUtilisateur}/avis/{idAvisUtilisateur}")
@@ -103,15 +97,6 @@ public ResponseEntity<Map<String, Object>> creerDemande(
     public List<Object> getAvisByAvisUtilisateur(@PathVariable Long idAvisUtilisateur) {
         return utilisateurService.getAvisByAvisUtilisateur(idAvisUtilisateur);
     }
-
-    @PostMapping("/creerReservation/{idParticulier}/{idPrestataire}")
-    public Reservation creerReservation(
-            @PathVariable Long idParticulier,
-            @PathVariable Long idPrestataire,
-            @RequestBody Reservation reservation) {
-        return utilisateurService.creerReservation(idParticulier, idPrestataire, reservation);
-    }
-
 
 
 
@@ -203,12 +188,12 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
             @PathVariable Long utilisateurId,
             @RequestBody Postulation postulation) {
 
-        // Appeler la méthode du service pour effectuer la postulation
         Postulation savedPostulation = postulationService.postuler(demandeId, utilisateurId, postulation);
 
-        // Retourner une réponse avec l'objet postulation sauvegardé
+
         return ResponseEntity.ok(savedPostulation);
     }
+
 
 }
 

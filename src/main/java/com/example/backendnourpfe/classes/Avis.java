@@ -1,5 +1,6 @@
 package com.example.backendnourpfe.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +25,12 @@ public class Avis {
     private Date dateAvis;
     @ManyToOne
     @JoinColumn(name = "utilisateur_id", nullable = false)
+    @JsonIgnoreProperties("avisRecus")
     private Utilisateur utilisateur;
 
     @ManyToOne
     @JoinColumn(name = "avis_utilisateur_id", nullable = false)
+    @JsonIgnoreProperties("avisDonnes")
     private Utilisateur avisUtilisateur;
 
 

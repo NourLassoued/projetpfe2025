@@ -1,6 +1,8 @@
 package com.example.backendnourpfe.Controlleur;
 
+import com.example.backendnourpfe.Respository.PostulationRepository;
 import com.example.backendnourpfe.classes.Demande;
+import com.example.backendnourpfe.classes.Postulation;
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.DemandeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class DemandeController {
 @Autowired
     private DemandeService demandeService;
+    @Autowired
+    private PostulationRepository postulationRepository;
     @DeleteMapping("deleteDemande/{idDemande}")
     public void deleteDemande(@PathVariable Long idDemande) {
         demandeService.deleteDemande(idDemande);
@@ -74,7 +78,11 @@ public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long i
     }
 }
 
-
+    @GetMapping("/{idDemande}/postulations")
+    public ResponseEntity<List<Postulation>> getPostulationsByDemande(@PathVariable Long idDemande) {
+        List<Postulation> postulations = postulationRepository.findByDemande_IdDemande(idDemande);
+        return ResponseEntity.ok(postulations);
+    }
 
 }
 

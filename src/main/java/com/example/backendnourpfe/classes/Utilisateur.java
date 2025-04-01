@@ -97,12 +97,15 @@ public class Utilisateur  implements UserDetails  {
     @OneToMany(mappedBy = "utilisateur")
 
     private List<Demande> demandes;
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
-    @JsonIgnore
+
+    @JsonIgnoreProperties("utilisateur")
     private List<Avis> avisDonnes ;
-    @JsonIgnore
+
 
     @OneToMany(mappedBy = "avisUtilisateur")
+    @JsonIgnoreProperties("avisUtilisateur")
     private List<Avis> avisRecus ;
     @JsonIgnore
 
@@ -141,7 +144,9 @@ public class Utilisateur  implements UserDetails  {
 
     @JsonIgnoreProperties("utilisateurs")
     private Adresse adressee;
+    @JsonIgnore
     @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("prestataire")
     private List<Postulation> postulations;
 
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {

@@ -1,5 +1,7 @@
 package com.example.backendnourpfe.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,12 +21,13 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idReservation;
 
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateReservation;
     @Enumerated(EnumType.STRING)
     private StatusReservation statusReservation;
 
-    private String description;
+
     @ManyToOne
     @JoinColumn(name = "particulier_id", nullable = false)
     private Utilisateur particulier;
@@ -33,5 +36,11 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "prestataire_id", nullable = false)
     private Utilisateur prestataire;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "demande_id", nullable = false)
+    @JsonManagedReference
+    private Demande demande;
+
 
 }

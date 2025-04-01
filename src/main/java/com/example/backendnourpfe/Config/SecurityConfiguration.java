@@ -31,7 +31,8 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**", "/forgetPassword/**", "/categories/**",
             "/services/**","/utilisateurss/**","/disponibilites/**" ,"/adresses/**",
-            "/demandes/**",  "/postulation/**"
+            "/demandes/**",  "/postulation/**",
+            "/reservation/**"
 
     };
 
@@ -55,8 +56,8 @@ public class SecurityConfiguration {
 
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                   // .anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                    .anyRequest().authenticated()
+                       // .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

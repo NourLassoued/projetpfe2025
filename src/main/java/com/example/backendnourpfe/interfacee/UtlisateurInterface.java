@@ -19,12 +19,11 @@ public interface UtlisateurInterface {
     ResponseEntity<?> updateUser(Long id, Utilisateur utilisateurDetails);
     public Avis donnerAvis(Long idUtilisateur, Long idAvisUtilisateur, Avis avis);
     public List<Object> getAvisByAvisUtilisateur(Long idAvisUtilisateur);
-    public Reservation creerReservation(Long idParticulier, Long idPrestataire, Reservation reservation);
+
  public List<Utilisateur> getAllPrestataires();
     public List<Utilisateur> getAllParticuliers();
     public List<Utilisateur> getAllEntreprises();
     public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) ;
-    //public Demande updateDemande(Long id, Demande demandeDetails);
 
     public List<Utilisateur> getAllUsers();
 }

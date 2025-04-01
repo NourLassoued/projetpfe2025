@@ -40,8 +40,7 @@ public class UtilisateurService implements UtlisateurInterface {
     private JwtService jwtService;
     @Autowired
     private  DisponibiliteRepository disponibiliteRepository;
-    @Autowired
-    private DisponibiliteService disponibiliteService;
+
     @Autowired
     private AdresseRepository adresseRepository;
 
@@ -80,9 +79,9 @@ public List<Utilisateur> getAllParticuliers() {
                 .filter(user -> user.getRole() == UserRole.ENTREPRISE) // Filtrer selon le rôle ENTREPRISE
                 .map(user -> {
                     if (user.getAdressee() != null) {
-                        // Traitement spécifique si l'adresse est présente
+
                     } else {
-                        // Traitement spécifique si l'adresse est absente
+
                     }
                     return user;
                 })
@@ -214,7 +213,7 @@ public List<Utilisateur> getAllPrestataires() {
                 })
                 .collect(Collectors.toList());
     }
-
+    /*
     public Reservation creerReservation(Long idParticulier, Long idPrestataire, Reservation reservation) {
 
         Utilisateur particulier = utilisateurRepository.findById(idParticulier)
@@ -239,7 +238,7 @@ public List<Utilisateur> getAllPrestataires() {
 
         return reservationRepository.save(reservation);
     }
-
+*/
     public boolean checkEmailExists(String email) {
         return utilisateurRepository.existsByEmail(email);
     }

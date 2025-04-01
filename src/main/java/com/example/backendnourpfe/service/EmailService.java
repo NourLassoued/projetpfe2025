@@ -2,6 +2,7 @@ package com.example.backendnourpfe.service;
 
 
 import com.example.backendnourpfe.classes.MailBody;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,7 +27,17 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    // ✅ Méthode pour créer un MimeMessage
+    public void envoyerEmailConfirmation(String to, String sujet, String contenu) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(to);
+        helper.setSubject(sujet);
+        helper.setText(contenu, true); // Activer le HTML
+
+        javaMailSender.send(message);
+    }
+
     public MimeMessage createMimeMessage() {
         return javaMailSender.createMimeMessage();
     }
@@ -66,13 +77,13 @@ public class EmailService {
                             "<body>" +
                             "<div class='email-container'>" +
                             "<h2>Bonjour " + nom + ",</h2>" +
-                            "<p>Merci de vous être inscrit sur notre plateforme <strong>SOS Job Tunisie</strong>.</p>" +
+                            "<p>Merci de vous être inscrit sur notre plateforme <strong>SOS Service Tunisie</strong>.</p>" +
                             "<p>Votre compte sera activé après vérification de vos documents.</p>" +
                             "<p>Nous allons vous contacter dans les prochains jours pour passer un entretien en ligne et discuter davantage de vos services.</p>" +
                             "<br>" +
                             "<p>Cordialement,</p>" +
-                            "<p><strong>L'équipe SOS Job Tunisie</strong></p>" +
-                            "<div class='footer'>© 2025 SOS Job Tunisie - Tous droits réservés.</div>" +  // ✅ Pied de page
+                            "<p><strong>L'équipe SOS Service Tunisie</strong></p>" +
+                            "<div class='footer'>© 2025 SOS Service Tunisie - Tous droits réservés.</div>" +  // ✅ Pied de page
                             "</div>" +
                             "</body>" +
                             "</html>";
@@ -92,7 +103,7 @@ public class EmailService {
     }
     public void sendActivationEmailParticulier(String to, String nom) {
         try {
-            String subject = "Activation de votre compte SOS Job Tunisie";
+            String subject = "Activation de votre compte SOS Service Tunisie";
             String activationLink = "http://localhost:8088/nour/utilisateurss/" + to;
 
 
