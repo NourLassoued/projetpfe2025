@@ -13,6 +13,7 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./mesdemandes.component.css']
 })
 export class MesdemandesComponent {
+  showDemandes = false;
   demandes: Demande[] = [];
     demandesAvecPostulations: { [key: number]: number } = {};
    user: any = null;
@@ -122,6 +123,9 @@ export class MesdemandesComponent {
   
       localStorage.removeItem('accessToken')
       this.router.navigate(['/Front']); 
+    }
+    toggleDemandes() {
+      this.showDemandes = !this.showDemandes;
     }
    
     }           

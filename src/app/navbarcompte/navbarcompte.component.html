@@ -68,6 +68,9 @@
 
     <div class="profile-menu" id="profile-menu"   [ngClass]="{'active': isMenuOpen}">
         <ul>
+          <li [routerLink]="userRole === 'PRESTATAIRE' ? '/Compteprestaitre' : userRole === 'ENTREPRISE' ? '/Compteprestaitre' : '/Compteparticulier'">
+            📌 Tableau de bord 
+          </li>
             <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : userRole === 'ENTREPRISE' ? '/Profileentreprise' : '/Profileparticulier'">👤 Voir mon profil</li>
             <li>✉️ Mes messages</li>
             <li [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : (userRole === 'ENTREPRISE' ? '/UpdateEntreprise' : '/Updateparticulier')">

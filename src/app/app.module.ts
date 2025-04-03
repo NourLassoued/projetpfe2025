@@ -7,6 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AllTemplateFrontComponent } from './all-template-front/all-template-front.component';
 import { FooterComponent } from './footer/footer.component';
@@ -23,7 +24,7 @@ import { registerLocaleData } from '@angular/common';
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -73,6 +74,10 @@ import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 import { GererdemandeComponent } from './gererdemande/gererdemande.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfilComponent } from './profil/profil.component';
+import { DemandeterminneComponent } from './demandeterminne/demandeterminne.component';
+import { RouterModule } from '@angular/router';
+import { DemandecompletedComponent } from './demandecompleted/demandecompleted.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 
 
@@ -123,6 +128,9 @@ import { ProfilComponent } from './profil/profil.component';
     MesdemandesComponent,
     GererdemandeComponent,
     ProfilComponent,
+    DemandeterminneComponent,
+    DemandecompletedComponent,
+    ReservationComponent,
 
    
 
@@ -149,10 +157,16 @@ import { ProfilComponent } from './profil/profil.component';
     MatMenuModule,
     DateFnsModule,
     BsDatepickerModule.forRoot() ,
-    ToastrModule.forRoot() 
-    
- 
+  
+    BrowserAnimationsModule, // ✅ Obligatoire pour Toastr
+    ToastrModule.forRoot({
+      timeOut: 3000, 
+      positionClass: 'toast-top-right',
+      preventDuplicates: true
+    })
   ],
+ 
+  
  
   
   providers: [  { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },

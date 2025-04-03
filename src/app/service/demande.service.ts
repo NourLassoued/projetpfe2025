@@ -34,7 +34,9 @@ export class DemandeService {
   }
 
   
-
+  getDemandesByUtilisateurDateBefore(id: number): Observable<Demande[]> {
+    return this.http.get<Demande[]>(`${this.apiUrl}/${id}/datebefore`);
+  }
   
  
   getAllDemandesByUtilisateurId(idUtilisateur: number): Observable<Demande[]> {
@@ -43,5 +45,8 @@ export class DemandeService {
   getPostulationsByDemande(idDemande: number): Observable<Postulation[]> {
     return this.http.get<Postulation[]>(`${this.apiUrl}/${idDemande}/postulations`);
   }
-
+  getDemandesTermineesByUserId(idUtilisateur: number): Observable<Demande[]> {
+    return this.http.get<Demande[]>(`${this.apiUrl}/${idUtilisateur}/demandestermines`);
+  }
+ 
 }

@@ -75,7 +75,7 @@
             <div *ngFor="let postulation of postulations ; let i = index" class="comment">
                 <div class="comment-header">
                   <img *ngIf="prestataireImageUrls[i]" [src]="prestataireImageUrls[i]" alt="Image du prestataire"
-                  class="profile-pic"   (click)="goToProfile(postulation.prestataire?.['idUtilisateur'])">
+                  class="profile-pic"     (click)="goToProfile(postulation.prestataire?.idUtilisateur, utilisateurId, demandeId)">
 
 
 
@@ -128,11 +128,15 @@
             </ul>
         </div>
           </div>
-         
+        
      
       <div class="actions">
         <button *ngIf="utilisateur.idUtilisateur !== undefined" (click)="reserver(utilisateur.idUtilisateur)">Continuer avec {{ utilisateur.nom }}</button>
-          <a (click)="goToProfile(utilisateur?.['idUtilisateur'])">Voir le profil</a>
+        <a *ngIf="utilisateur.idUtilisateur !== undefined" 
+        (click)="goToProfile(utilisateur.idUtilisateur,utilisateurId, demandeId)"
+>
+   Voir le profil
+     </a>
       </div>
   </div>
 </body>

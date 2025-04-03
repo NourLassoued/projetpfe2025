@@ -5,6 +5,9 @@ import { FileService } from '../service/file.service';
 import { ActivatedRoute } from '@angular/router';
 import { UtilisateurService } from '../service/utilisateur.service';
 import { jwtDecode } from 'jwt-decode';
+import { ReservationService } from '../service/reservation.service';
+import { ToastrService } from 'ngx-toastr';
+import { Reservation } from 'src/models/Reservation';
 
 @Component({
   selector: 'app-profil',
@@ -15,17 +18,35 @@ export class ProfilComponent {
     showNotification = false;
     profileImage: string | null = null; 
     user: any;
-      profileImageUrl: SafeUrl | null = null; 
-  
-   user1: Utilisateur = { servicesOfferts: [] };
-   userId: number | undefined;
-    constructor(private fileService: FileService, 
-      private sanitizer: DomSanitizer,
-      private activatedRoute: ActivatedRoute,
-    private utilisateurservice:UtilisateurService ){}
+    profileImageUrl: SafeUrl | null = null; 
+    reservation: Reservation = new Reservation();
+  user1: Utilisateur = { servicesOfferts: [] };
+  userId: number | undefined;
+  prestataireId!: number;
+  utilisateurId!: number;
+  demandeId!: number;
+  constructor(private fileService: FileService, 
+  private sanitizer: DomSanitizer,
+  private activatedRoute: ActivatedRoute,
+  private utilisateurservice:UtilisateurService ,
+  private reservationService: ReservationService,
+    private toastr: ToastrService){}
 
       ngOnInit(): void {
         this.loadUserData();
+
+        this.activatedRoute.paramMap.subscribe(params => {
+          this.prestataireId = +params.get('prestataireId')!; // ID Prestataire
+        });
+        
+        this.activatedRoute.queryParamMap.subscribe(params => {
+          this.utilisateurId = +params.get('utilisateurId')!; // ID Utilisateur
+          this.demandeId = +params.get('demandeId')!; // ID Demande
+          console.log("Prestataire ID:", this.prestataireId);
+          console.log("Utilisateur ID:", this.utilisateurId);
+          console.log("Demande ID:", this.demandeId);
+        });
+        
         this.activatedRoute.paramMap.subscribe(params => {
           const userIdParam = params.get('id');  
       
@@ -130,4 +151,29 @@ export class ProfilComponent {
       closeNotification() {
         this.showNotification = false;
       }
+      
+reserver(prestataireId: number) {
+  if (!this.utilisateurId || !this.demandeId || !prestataireId) {
+    this.toastr.error("Informations manquantes pour la réservation.", "Erreur");
+    return;
+  }
+
+
+  this.reservation.dateReservation = new Date();
+
+
+  this.reservationService.reserverPrestataire(this.utilisateurId, prestataireId, this.demandeId, this.reservation)
+    .subscribe({
+      next: (data) => {
+        
+        this.toastr.success("Réservation effectuée ! En attente de la réponse du prestataire."
+, "Succès");
+      },
+      error: (err) => {
+        console.error("Erreur lors de la réservation :", err);
+        this.toastr.error("Échec de la réservation !", "Erreur");
+      }
+    });
+}
+
     }

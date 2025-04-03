@@ -37,7 +37,7 @@
     "moment": "^2.30.1",
     "ngx-bootstrap": "^11.0.2",
     "ngx-date-fns": "^10.0.1",
-    "ngx-toastr": "^19.0.0",
+    "ngx-toastr": "^16.0.0",
     "owl.carousel": "^2.3.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

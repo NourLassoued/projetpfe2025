@@ -19,4 +19,14 @@ export class ReservationService {
     return this.http.post<Reservation>(url, reservation);
   }
 
+  
+  getReservationsByDemandeId(idDemande: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/byDemande/${idDemande}`);
+  }
+  annulerReservation(reservationId: number, utilisateurId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/annuler/${reservationId}/${utilisateurId}`);
+  }
+  terminerReservation(idReservation: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/terminer/${idReservation}`, {});
+  }
 }

@@ -9,7 +9,7 @@
             <ul>
                 <ul>
                     <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
-                    <li (click)="toggleDemandes()">
+                    <li   routerLink="/Mesdemandes"  (click)="toggleDemandes()">
                         📋 Mes demandes
                         <span *ngIf="showDemandes">
                             <i class="fa fa-chevron-down"></i> <!-- Icône flèche vers le bas -->
@@ -33,7 +33,7 @@
         </aside>
         <main class="content">
             
-            <h2>Demandes de service en cours</h2>
+            <h2>Demandes de Service Archivées</h2>
            
             <!-- Boucle pour afficher les demandes -->
             <div *ngFor="let demande of demandes ; let i = index">
@@ -62,7 +62,8 @@
                         <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
                         
                        
-                        <button class="btn" (click)="gererDemande(demande)" >Gérer ma demande</button>
+                        <button class="btn" *ngIf="demande.idDemande" (click)="handleDeleteClick(demande.idDemande)">Supprimer ma demande</button>
+
                     </div>
                 </div>
             </div>
@@ -71,3 +72,4 @@
     </div>
 
 </body>
+

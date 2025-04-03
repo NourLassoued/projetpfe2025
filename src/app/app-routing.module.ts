@@ -47,6 +47,9 @@ import { DemandecompteComponent } from './demandecompte/demandecompte.component'
 import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 import { GererdemandeComponent } from './gererdemande/gererdemande.component';
 import { ProfilComponent } from './profil/profil.component';
+import { DemandeterminneComponent } from './demandeterminne/demandeterminne.component';
+import { DemandecompletedComponent } from './demandecompleted/demandecompleted.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 
 const routes: Routes = [
@@ -209,16 +212,28 @@ component:InformatiqueComponent
     path: 'Mesdemandes',
     component:MesdemandesComponent 
   },
-  
-
   {
+        path: 'Mesdemandesarchivees',
+        component: DemandeterminneComponent 
+          },
+          {
+            path: 'Mesdemandeterminees',
+            component: DemandecompletedComponent 
+              },
+{
     path: 'gerer-demande',
-    component:GererdemandeComponent 
+    component:GererdemandeComponent ,
+   
   },
   {
     path: 'Profil/:id',
     component:ProfilComponent 
+  },
+  {
+    path: 'Reservation/:idDemande',
+    component:ReservationComponent 
   }
+
 
 
 

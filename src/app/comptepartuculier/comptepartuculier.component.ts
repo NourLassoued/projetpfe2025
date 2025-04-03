@@ -16,6 +16,7 @@ import { DemandeService } from '../service/demande.service';
   styleUrls: ['./comptepartuculier.component.css']
 })
 export class ComptepartuculierComponent  implements OnInit{
+  showDemandes = false;
    user: any = null;
     profileImageUrl: SafeUrl | null = null; 
     categories: any[] = [];
@@ -157,7 +158,9 @@ export class ComptepartuculierComponent  implements OnInit{
       localStorage.removeItem('accessToken')
       this.router.navigate(['/Front']); 
     }
-  
+    toggleDemandes() {
+      this.showDemandes = !this.showDemandes;
+    }  
   }
   
 

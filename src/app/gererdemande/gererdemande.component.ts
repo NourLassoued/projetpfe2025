@@ -5,6 +5,7 @@ import { FileService } from '../service/file.service';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale'; // Pour afficher en français
 import { jwtDecode } from 'jwt-decode';
+import { ToastrService } from 'ngx-toastr';
 
 import { Demande } from 'src/models/Demande';
 import { Postulation } from 'src/models/Postulation';
@@ -65,7 +66,8 @@ prestataireImageUrls: string[] = [];
     private demandeservice:DemandeService,
     private router: Router,
     private serviceeService:ServiceeService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private toastr: ToastrService
    ) 
    {
     const today = new Date();
@@ -77,7 +79,7 @@ prestataireImageUrls: string[] = [];
     this.minDate = today.toISOString().slice(0, 16); 
    }
   ngOnInit() {
-    
+   
     const token = localStorage.getItem('accessToken');
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -99,7 +101,9 @@ prestataireImageUrls: string[] = [];
       }
     });
     this.loadUserData();
+    
   }
+
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');
   
@@ -143,7 +147,7 @@ prestataireImageUrls: string[] = [];
           this.prestataireImageUrls[index] = imageUrl; 
         }
        else if (type === 'utilisateur') {
-        this.utilisateurs[index].image = imageUrl;  // Met à jour l'image dans la liste des utilisateurs
+        this.utilisateurs[index].image = imageUrl;  
       
       }
     },
@@ -197,7 +201,7 @@ prestataireImageUrls: string[] = [];
               });
             },
             (error) => {
-              console.error('❌ Erreur lors de la récupération des utilisateurs:', error);
+              console.error('Erreur lors de la récupération des utilisateurs:', error);
             }
           );
         }
@@ -322,14 +326,31 @@ deleteDemande(idDemande: number): void {
     }
   );
 }
+/*
 goToProfile(userId?: number) {
  
   if (userId) {
     this.router.navigate(['/Profil', userId]);
   } else {
     console.error("ID non défini !");
-  }
+  
 }
+    
+}
+*/
+goToProfile(prestataireId?: number, utilisateurId?: number, demandeId?: number) {
+  if (!prestataireId || !utilisateurId || !demandeId) {
+    console.error("Informations manquantes !");
+    return;
+  }
+
+  // Naviguer avec paramètres dans l'URL
+  this.router.navigate(['/Profil', prestataireId], {
+    queryParams: { utilisateurId: utilisateurId, demandeId: demandeId }
+  });
+}
+
+
 
 
 handleDeleteClick(): void {
@@ -350,23 +371,24 @@ onClickOutside(event: Event) {
 }
 reserver(prestataireId: number) {
   if (!this.utilisateurId || !this.demandeId || !prestataireId) {
-    console.error("Impossible d'effectuer la réservation : Informations manquantes.");
+    this.toastr.error("Informations manquantes pour la réservation.", "Erreur");
     return;
   }
 
-  // Remplissage de la réservation
+
   this.reservation.dateReservation = new Date();
 
 
   this.reservationService.reserverPrestataire(this.utilisateurId, prestataireId, this.demandeId, this.reservation)
     .subscribe({
       next: (data) => {
-        console.log("Réservation réussie :", data);
-        alert("Réservation effectuée avec succès !");
+        
+        this.toastr.success("Réservation effectuée ! En attente de la réponse du prestataire."
+, "Succès");
       },
       error: (err) => {
         console.error("Erreur lors de la réservation :", err);
-        alert("Échec de la réservation !");
+        this.toastr.error("Échec de la réservation !", "Erreur");
       }
     });
 }

@@ -65,6 +65,7 @@ export class NavbarcompteComponent implements    AfterViewInit {
       this.userRole = this.authServiceService.getUserRole();
       this.loadUserData();
       this.getAllCategories();
+      this.redirectBasedOnRole();
    
     
       this.fileService.profileImage$.subscribe((newImageUrl) => {
@@ -76,7 +77,15 @@ export class NavbarcompteComponent implements    AfterViewInit {
     
     }
    
-    
+    redirectBasedOnRole(): void {
+      if (this.userRole === 'prestataire') {
+        this.router.navigate(['/Compteprestaitre']);
+      } else if (this.userRole === 'entreprise') {
+        this.router.navigate(['/Compteprestaitre']);
+      } else {
+        console.error('Rôle inconnu');
+      }
+    }
     
   getImage(filename: string, index: number) {
     this.file.getImage(filename).subscribe(
