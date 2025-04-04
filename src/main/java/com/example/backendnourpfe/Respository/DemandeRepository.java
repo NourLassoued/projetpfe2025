@@ -6,11 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public interface DemandeRepository  extends JpaRepository<Demande,Long> {
     List<Demande> findByUtilisateur(Utilisateur utilisateur);
 
+    List<Demande> findByUtilisateurAndStatusDemandeAndDateAfter(Utilisateur utilisateur, StatusDemande statusDemande, Date date);
+    public List<Demande> findByUtilisateurAndStatusDemande(Utilisateur utilisateur, StatusDemande statusDemande);
+
+    public List<Demande> findByUtilisateurAndStatusDemandeInAndDateBefore(
+            Utilisateur utilisateur,
+            List<StatusDemande> statusDemande,
+            Date date);
 
     @Query("SELECT d FROM Demande d " +
             "WHERE d.adressedemande.idAdresse = :adresseId " +

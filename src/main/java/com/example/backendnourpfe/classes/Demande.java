@@ -3,6 +3,7 @@ package com.example.backendnourpfe.classes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,9 +54,9 @@ public class Demande {
 
     @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postulation> postulations = new ArrayList<>();
-    @JsonIgnore
+
     @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @JsonIgnoreProperties("demande")
     private List<Reservation> reservations = new ArrayList<>();
-;
+
 }

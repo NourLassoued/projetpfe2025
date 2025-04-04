@@ -77,7 +77,17 @@ public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long i
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
+    @GetMapping("/{id}/demandestermines")
+    public ResponseEntity<List<Demande>> getDemandesTerminees(@PathVariable Long id) {
+        List<Demande> demandesTerminees = demandeService.getAllDemandesByUtilisateurIdTerminees(id);
+        return ResponseEntity.ok(demandesTerminees);
+    }
 
+    @GetMapping("/{id}/datebefore")
+    public ResponseEntity<List<Demande>> getDemandesByUtilisateurDateBefore(@PathVariable Long id) {
+        List<Demande> demandes = demandeService.getAllDemandesByUtilisateurIddDateBefore(id);
+        return ResponseEntity.ok(demandes);
+    }
     @GetMapping("/{idDemande}/postulations")
     public ResponseEntity<List<Postulation>> getPostulationsByDemande(@PathVariable Long idDemande) {
         List<Postulation> postulations = postulationRepository.findByDemande_IdDemande(idDemande);

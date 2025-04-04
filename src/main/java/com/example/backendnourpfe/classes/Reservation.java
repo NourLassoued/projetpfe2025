@@ -1,6 +1,7 @@
 package com.example.backendnourpfe.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,10 +37,10 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "prestataire_id", nullable = false)
     private Utilisateur prestataire;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "demande_id", nullable = false)
-    @JsonManagedReference
+    @JsonIgnoreProperties("reservations")
     private Demande demande;
 
 
