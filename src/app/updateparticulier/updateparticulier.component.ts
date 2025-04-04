@@ -381,6 +381,12 @@ saveChanges(field: string) {
       }
     });
 }
+   
+logout(): void {
+    
+  localStorage.removeItem('accessToken')
+  this.router.navigate(['/Front']); 
+}
 }
    
    

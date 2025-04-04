@@ -11,13 +11,13 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class ReservationComponent {
   prestataireImageUrls: { [key: number]: string } = {}; 
-utilisateurs: any[] = [];  // Ajoute cette ligne si `utilisateurs` est utilisé
+utilisateurs: any[] = [];  
   serviceImageUrls: { [key: number]: string } = {};
   idDemande!: number;
   userId!: number;
   reservations: any[] = [];
   utilisateurId: number | null = null; 
-  demandes: any[] = [];  // Ajout de cette déclaration
+  demandes: any[] = []; 
   imageUrls: { [key: number]: string } = {};
   user: any = null;
   constructor(private route: ActivatedRoute,
@@ -29,8 +29,7 @@ utilisateurs: any[] = [];  // Ajoute cette ligne si `utilisateurs` est utilisé
 
   ngOnInit(): void {
     this.idDemande = Number(this.route.snapshot.paramMap.get('idDemande'));
-    console.log("ID de la demande récupéré :", this.idDemande);
-
+   
   this.getReservations();
      this.loadUserData();
    
@@ -58,10 +57,10 @@ utilisateurs: any[] = [];  // Ajoute cette ligne si `utilisateurs` est utilisé
     this.reservationService.getReservationsByDemandeId(this.idDemande).subscribe(
       (data) => {
         this.reservations = data;
-        console.log("Données reçues :", this.reservations);
+       
         
         if (this.reservations.length > 0) {
-          console.log("Demande associée :", this.reservations[0].demande);
+        
           
           
           const demandeServiceImage = this.reservations[0].demande?.servicee?.imageService;
@@ -72,7 +71,7 @@ utilisateurs: any[] = [];  // Ajoute cette ligne si `utilisateurs` est utilisé
      
         this.reservations.forEach((reservation, index) => {
           if (reservation.prestataire?.image) {
-            console.log(`Chargement de l'image: ${reservation.prestataire.image}`);
+          
 
 this.getImage(reservation.prestataire.image, index, 'prestataire');
 

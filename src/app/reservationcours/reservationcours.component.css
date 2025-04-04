@@ -1,0 +1,222 @@
+body {
+  font-family: Arial, sans-serif;
+
+  margin: 0;
+  padding: 0;
+}
+.container {
+  display: flex;
+width:2500px;
+  margin: 0px;
+  padding: 0px;
+
+
+
+
+
+ 
+}
+
+
+
+.image-section {
+  display: flex;
+  align-items: center; 
+  gap: 15px; }
+
+.image-section img {
+  width: 350px;
+  height: 150px;
+  border-radius: 20px;
+  
+}
+
+.btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  width: 350px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn:hover {
+  background: #007bff;
+  
+
+color:white;
+  transform: scale(1.05); 
+  background: #007bff;
+}
+
+
+.btn:active {
+  transform: scale(0.98);
+  background: #007bff;
+}
+
+
+app-navbarcompte {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+ 
+  z-index: 1000; 
+ 
+}
+.sidebar {
+  
+  position: fixed;
+  background-color: #fbf5f5;
+  width: 200px; /* Largeur de la barre latérale */
+  height: 100vh; /* 100% de la hauteur de la fenêtre */
+  position: fixed; /* La rend fixe */
+ 
+  
+margin-top: 70px;
+  
+  overflow-y: auto; /* Ajoute un défilement si le contenu est trop long */
+
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar ul li {
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+.sidebar ul li.active, .sidebar ul li:hover {
+  background-color: #bbbdc0;
+}
+
+
+.content {
+width: 1000px;
+ margin-top: 90px;
+ margin-left: 250px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+
+
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.rappel {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.reserver {
+  background-color: #2196F3;
+  color: white;
+}
+
+.service-image {
+  width: 400px;
+  height: 140px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+  color: red;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.delete mat-icon {
+  margin-right: 5px;
+}
+.action-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px; /* <-- C'est ça qui ajoute l'espace entre les deux boutons */
+  flex-wrap: wrap; /* Pour qu'ils se déplacent en ligne suivante si l'écran est petit */
+}
+/* Conteneur de la carte */
+.card.task-card {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Conteneur interne en flex pour aligner les deux parties */
+.reservation-item {
+ 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap; /* Pour que ça s'adapte sur petit écran */
+}
+
+/* Détails réservation */
+.reservation-details {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* Infos du prestataire */
+.prestataire-info {
+  width: 300px;
+  background-color: #f7f7f7;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+
+
+

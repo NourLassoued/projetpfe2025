@@ -29,4 +29,10 @@ export class ReservationService {
   terminerReservation(idReservation: number): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/terminer/${idReservation}`, {});
   }
+  getReservationsEnAttenteParParticulier(idParticulier: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/attente/${idParticulier}`);
+  }
+  getReservationsTermineesByParticulier(id: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/terminees/particulier/${id}`);
+  }
 }

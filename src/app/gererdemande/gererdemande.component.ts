@@ -80,6 +80,8 @@ prestataireImageUrls: string[] = [];
    }
   ngOnInit() {
    
+  
+   
     const token = localStorage.getItem('accessToken');
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -326,25 +328,14 @@ deleteDemande(idDemande: number): void {
     }
   );
 }
-/*
-goToProfile(userId?: number) {
- 
-  if (userId) {
-    this.router.navigate(['/Profil', userId]);
-  } else {
-    console.error("ID non défini !");
-  
-}
-    
-}
-*/
+
 goToProfile(prestataireId?: number, utilisateurId?: number, demandeId?: number) {
   if (!prestataireId || !utilisateurId || !demandeId) {
     console.error("Informations manquantes !");
     return;
   }
 
-  // Naviguer avec paramètres dans l'URL
+
   this.router.navigate(['/Profil', prestataireId], {
     queryParams: { utilisateurId: utilisateurId, demandeId: demandeId }
   });
@@ -392,4 +383,5 @@ reserver(prestataireId: number) {
       }
     });
 }
+
 }

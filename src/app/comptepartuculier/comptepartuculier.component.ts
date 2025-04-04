@@ -16,6 +16,7 @@ import { DemandeService } from '../service/demande.service';
   styleUrls: ['./comptepartuculier.component.css']
 })
 export class ComptepartuculierComponent  implements OnInit{
+  showReservations: boolean = false;
   showDemandes = false;
    user: any = null;
     profileImageUrl: SafeUrl | null = null; 
@@ -38,6 +39,9 @@ export class ComptepartuculierComponent  implements OnInit{
       this.getAllCategories();
       this.getDemandesByUserId();
     
+    }
+    toggleReservations() {
+      this.showReservations = !this.showReservations;
     }
     loadUserData(): void {
       const token = localStorage.getItem('accessToken');

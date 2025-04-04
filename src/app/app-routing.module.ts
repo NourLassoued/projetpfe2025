@@ -50,6 +50,8 @@ import { ProfilComponent } from './profil/profil.component';
 import { DemandeterminneComponent } from './demandeterminne/demandeterminne.component';
 import { DemandecompletedComponent } from './demandecompleted/demandecompleted.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { ReservationcoursComponent } from './reservationcours/reservationcours.component';
+import { HistoriqueComponent } from './historique/historique.component';
 
 
 const routes: Routes = [
@@ -232,7 +234,16 @@ component:InformatiqueComponent
   {
     path: 'Reservation/:idDemande',
     component:ReservationComponent 
+  },
+  {
+    path: 'Reservationcours',
+    component:ReservationcoursComponent 
+  },
+  {
+    path: 'Historique',
+    component:HistoriqueComponent 
   }
+
 
 
 

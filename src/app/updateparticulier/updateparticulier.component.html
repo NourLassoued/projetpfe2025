@@ -7,9 +7,9 @@
       <ul>
         <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
         <li routerLink="/Mesdemandes">📋 Mes demandes</li>
-        <li>📅 Mes réservations</li>
-        <li>📜 Mon historique</li>
-        <li>🚪 Se déconnecter</li>
+        <li routerLink="/Reservationcours">📅 Réservations en cours</li>
+        <li routerLink="/Historique">📜  Mon historique</li>
+        <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
       </ul>
     </aside>
 

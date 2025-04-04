@@ -78,6 +78,8 @@ import { DemandeterminneComponent } from './demandeterminne/demandeterminne.comp
 import { RouterModule } from '@angular/router';
 import { DemandecompletedComponent } from './demandecompleted/demandecompleted.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { ReservationcoursComponent } from './reservationcours/reservationcours.component';
+import { HistoriqueComponent } from './historique/historique.component';
 
 
 
@@ -131,6 +133,8 @@ import { ReservationComponent } from './reservation/reservation.component';
     DemandeterminneComponent,
     DemandecompletedComponent,
     ReservationComponent,
+    ReservationcoursComponent,
+    HistoriqueComponent,
 
    
 
