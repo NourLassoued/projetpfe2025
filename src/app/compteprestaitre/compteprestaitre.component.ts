@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
-import { JwtPayload, jwtDecode } from 'jwt-decode';
+import {jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { Demande } from 'src/models/Demande';
 import { UtilisateurService } from '../service/utilisateur.service';
 import { Postulation } from 'src/models/Postulation';
 
-
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-compteprestaitre',
   templateUrl: './compteprestaitre.component.html',
@@ -27,7 +27,7 @@ export class CompteprestaitreComponent implements OnInit{
   constructor(private fileService: FileService,
      private sanitizer: DomSanitizer, 
      private utilisateurService:UtilisateurService,
- 
+     private toastr: ToastrService,
      private demandeService: DemandeService,
      private router: Router,) {}
   ngOnInit(): void {
@@ -137,8 +137,9 @@ envoyerPostulation(): void {
   this.utilisateurService.postuler(this.selectedDemande.idDemande, this.user.id, postulation)
     .subscribe({
       next: (response) => {
-        console.log('Postulation envoyée avec succès', response);
+       
         this.closeModal(); 
+        this.toastr.success('Votre postulation a été envoyée avec succès !', 'Succès');
         this.getDemandesDisponibles();
       },
       error: (error) => {

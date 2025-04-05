@@ -48,6 +48,8 @@ import { ProfileparticulierComponent } from './profileparticulier/profileparticu
 import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 
+
+
 import { UserComponent } from './user/user.component';
 import { DisponibiliteDialogComponent } from './disponibilite-dialog/disponibilite-dialog.component';
 import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
@@ -80,6 +82,8 @@ import { DemandecompletedComponent } from './demandecompleted/demandecompleted.c
 import { ReservationComponent } from './reservation/reservation.component';
 import { ReservationcoursComponent } from './reservationcours/reservationcours.component';
 import { HistoriqueComponent } from './historique/historique.component';
+import { PostulationComponent } from './postulation/postulation.component';
+import { ReservationprestaitreComponent } from './reservationprestaitre/reservationprestaitre.component';
 
 
 
@@ -135,6 +139,8 @@ import { HistoriqueComponent } from './historique/historique.component';
     ReservationComponent,
     ReservationcoursComponent,
     HistoriqueComponent,
+    PostulationComponent,
+    ReservationprestaitreComponent,
 
    
 
@@ -161,7 +167,7 @@ import { HistoriqueComponent } from './historique/historique.component';
     MatMenuModule,
     DateFnsModule,
     BsDatepickerModule.forRoot() ,
-  
+   
     BrowserAnimationsModule, // ✅ Obligatoire pour Toastr
     ToastrModule.forRoot({
       timeOut: 3000, 

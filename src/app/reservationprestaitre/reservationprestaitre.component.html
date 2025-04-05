@@ -1,0 +1,58 @@
+<body>
+    <app-navbarcompte></app-navbarcompte>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <ul>
+                    <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
+                   <li> 📩 Mes postulations</li>
+                    <li>📋 Mes jobs</li>
+                    <li routerLink="/reservationprestataire">📅 Mes réservations</li>
+                    <li>📜 Mon historique</li>
+                   <li (click)="logout()">🚪 Se déconnecter</li>
+                </ul>
+                
+            </ul>
+        </aside>
+
+        <main class="content">
+          <h2>📅 Mes réservations</h2>
+    
+          <table *ngIf="reservations.length > 0" class="postulation-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Date</th>
+               
+                <th>Service</th>
+                <th>Client</th>
+                <th>Annuler</th>
+              
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reservation of reservations; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ reservation.demande?.date | date:'short' }}</td>
+               
+                <td>{{reservation.demande?.servicee?.nomservice}}</td>
+                <td>{{reservation.particulier?.nom}}</td>
+                <td  *ngIf="reservation.idReservation"
+                class="delete-btn"
+                title="Annuler"
+                (click)="annulerReservation(reservation.idReservation)">
+                  <i class="fa fa-times-circle cancel-icon"></i> Annuler
+                </td>
+               
+              </tr>
+            </tbody>
+          </table>
+    
+          <div *ngIf="reservations.length === 0" class="no-data">
+            Aucune réservation confirmée trouvée.
+          </div>
+        </main>
+    </div>
+       
+      </body> 

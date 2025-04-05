@@ -95,7 +95,7 @@ export class NavbarcompteComponent implements    AfterViewInit {
        
       },
       (error) => {
-        console.error('Erreur lors du chargement de l\'image', error);
+       // console.error('Erreur lors du chargement de l\'image', error);
       }
     );
   }

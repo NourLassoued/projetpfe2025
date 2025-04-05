@@ -1,0 +1,79 @@
+<body>
+  <app-navbarcompte></app-navbarcompte>
+  
+  <div class="container">
+      <aside class="sidebar">
+          <ul>
+              <ul>
+                  <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
+                 <li> 📩 Mes postulations</li>
+                  <li>📋 Mes jobs</li>
+                  <li routerLink="/reservationprestataire">📅 Mes réservations</li>
+                  <li>📜 Mon historique</li>
+                 <li (click)="logout()">🚪 Se déconnecter</li>
+              </ul>
+              
+          </ul>
+      </aside>
+
+      <main class="content">
+          <h2>📩 Mes postulations</h2>
+        
+          <table class="postulation-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Commentaire</th>
+                <th>Date</th>
+                <th>Titre de la demande</th>
+                <th>Client</th>
+               
+                <th>Supprimer</th>
+                <th>Mettre à jour</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of postulations; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ p.commentaire }}</td>
+                <td>{{ p.datePostulation | date: 'short' }}</td>
+                <td>{{ p.demande?.title }}</td>
+                <td>{{ p.demande?.utilisateur?.nom }}</td>
+                <td  (click)="deletePostulation(p.id)"  title="Supprimer" class="delete-btn">
+                    
+                    🗑️
+                  
+                </td>
+                <td>
+                  
+                  <button (click)="openUpdateModal(p)" class="btn btn-primary">Mettre à jour</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+         
+          <div *ngIf="postulations.length === 0" class="no-data">
+            Aucune postulation trouvée.
+          </div>
+         <div *ngIf="isUpdateModalOpen" class="modal">
+          
+            <div class="modal-content">
+              <span class="close" (click)="closeUpdateModal()">&times;</span>
+              <h3>Modifier la Postulation</h3>
+    
+             
+              <form (ngSubmit)="submitUpdatePostulation()">
+                <div>
+                  <label for="commentaire">Commentaire</label>
+                  <textarea id="commentaire" [(ngModel)]="updatedPostulation.commentaire" name="commentaire" required></textarea>
+                </div>
+    
+                <button type="submit">Mettre à jour</button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    
+     
+    </body> 

@@ -52,6 +52,8 @@ import { DemandecompletedComponent } from './demandecompleted/demandecompleted.c
 import { ReservationComponent } from './reservation/reservation.component';
 import { ReservationcoursComponent } from './reservationcours/reservationcours.component';
 import { HistoriqueComponent } from './historique/historique.component';
+import { PostulationComponent } from './postulation/postulation.component';
+import { ReservationprestaitreComponent } from './reservationprestaitre/reservationprestaitre.component';
 
 
 const routes: Routes = [
@@ -242,6 +244,14 @@ component:InformatiqueComponent
   {
     path: 'Historique',
     component:HistoriqueComponent 
+  },
+  {
+    path: 'Postulation',
+    component:PostulationComponent 
+  },
+  {
+    path: 'reservationprestataire',
+    component:ReservationprestaitreComponent 
   }
 
 

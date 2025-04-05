@@ -35,4 +35,7 @@ export class ReservationService {
   getReservationsTermineesByParticulier(id: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/terminees/particulier/${id}`);
   }
+  getReservationsConfirmées(prestataireId: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/prestataire/${prestataireId}/reservations/confirmées`);
+  }
 }

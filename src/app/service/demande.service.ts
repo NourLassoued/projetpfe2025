@@ -48,5 +48,17 @@ export class DemandeService {
   getDemandesTermineesByUserId(idUtilisateur: number): Observable<Demande[]> {
     return this.http.get<Demande[]>(`${this.apiUrl}/${idUtilisateur}/demandestermines`);
   }
- 
+  getPostulationsByPrestataire(idPrestataire: number): Observable<Postulation[]> {
+    return this.http.get<Postulation[]>(`${this.apiUrl}/${idPrestataire}/postulationsutlisateure`);
+  
+  }
+  updatePostulation(id: number, postulation: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/updatePostulation/${id}`, postulation);
+  
+  }
+
+  deletePostulation(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }
