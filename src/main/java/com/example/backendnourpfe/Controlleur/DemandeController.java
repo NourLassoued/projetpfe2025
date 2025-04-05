@@ -3,15 +3,16 @@ package com.example.backendnourpfe.Controlleur;
 import com.example.backendnourpfe.Respository.PostulationRepository;
 import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.Postulation;
-import com.example.backendnourpfe.classes.Utilisateur;
+
 import com.example.backendnourpfe.service.DemandeService;
+import com.example.backendnourpfe.service.PostulationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,8 @@ public class DemandeController {
     private DemandeService demandeService;
     @Autowired
     private PostulationRepository postulationRepository;
+    @Autowired
+    private PostulationService postulationService;
     @DeleteMapping("deleteDemande/{idDemande}")
     public void deleteDemande(@PathVariable Long idDemande) {
         demandeService.deleteDemande(idDemande);
@@ -92,6 +95,32 @@ public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long i
     public ResponseEntity<List<Postulation>> getPostulationsByDemande(@PathVariable Long idDemande) {
         List<Postulation> postulations = postulationRepository.findByDemande_IdDemande(idDemande);
         return ResponseEntity.ok(postulations);
+    }
+    @GetMapping("/{id}/postulationsutlisateure")
+    public ResponseEntity<List<Postulation>> getPostulationsByPrestataire(@PathVariable Long id) {
+        List<Postulation> postulations = postulationService.getPostulationsByPrestataire(id);
+        return ResponseEntity.ok(postulations);
+    }
+    @PutMapping("/updatePostulation/{id}")
+    public ResponseEntity<Postulation> updatePostulation(
+            @PathVariable Long id,
+            @RequestBody Postulation updatedPostulation) {
+
+        try {
+            Postulation postulation = postulationService.updatePostulation(id, updatedPostulation);
+            return ResponseEntity.ok(postulation);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePostulation(@PathVariable Long id) {
+        try {
+            postulationService.deletePostulation(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(404).build();
+        }
     }
 
 }

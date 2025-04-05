@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.ServiceNotFoundException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,12 +40,17 @@ public class UtilisateurService implements UtlisateurInterface {
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
+    private EmailService emailService;
+    @Autowired
     private JwtService jwtService;
     @Autowired
     private  DisponibiliteRepository disponibiliteRepository;
 
     @Autowired
     private AdresseRepository adresseRepository;
+    @Autowired
+    private
+    PostulationRepository postulationRepository;
 
 
     @Override
@@ -119,7 +127,7 @@ public List<Utilisateur> getAllPrestataires() {
     }
 
 
-
+/*
     @Override
     public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
 
@@ -164,6 +172,120 @@ public List<Utilisateur> getAllPrestataires() {
 
 
 
+
+
+
+
+*/
+
+    @Override
+    public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
+
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(emailUtilisateur)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+        if (utilisateur.getRole() != UserRole.PARTICULIER) {
+            throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
+        }
+
+        Servicee service = serviceRepository.findById(idService)
+                .orElseThrow(() -> new RuntimeException("Service non trouvé"));
+
+        Adresse adresse = adresseRepository.findById(idAdresse)
+                .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
+
+        demande.setUtilisateur(utilisateur);
+        demande.setServicee(service);
+        demande.setAdressedemande(adresse);
+        demande.setStatusDemande(StatusDemande.EN_COURS);
+
+        Demande savedDemande = demandeRepository.save(demande);
+
+        // ⚙️ Partie filtrage des prestataires valides
+        List<Utilisateur> tousPrestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idService);
+        List<Utilisateur> prestatairesFiltres = new ArrayList<>();
+
+        for (Utilisateur prestataire : tousPrestataires) {
+
+            // Adresse doit correspondre
+            if (prestataire.getAdressee() == null || !prestataire.getAdressee().getIdAdresse().equals(idAdresse)) continue;
+
+            for (Disponibilite dispo : prestataire.getDisponibilites()) {
+
+                String jourDemande = convertirJourEnAnglais(dispo.getJour());
+                LocalDateTime demandeDateTime = convertDateToLocalDateTime(savedDemande.getDate());
+                String jourDemandeFormate = demandeDateTime.getDayOfWeek().toString(); // ex: MONDAY
+
+                if (!jourDemandeFormate.equalsIgnoreCase(jourDemande)) continue;
+
+                LocalTime heureDemande = demandeDateTime.toLocalTime();
+                if (!heureDemande.isBefore(dispo.getHeureDebut()) && !heureDemande.isAfter(dispo.getHeureFin())) {
+
+                    boolean dejaPostule = postulationRepository.existsByDemandeAndPrestataire(savedDemande, prestataire);
+                    if (!dejaPostule) {
+                        prestatairesFiltres.add(prestataire);
+                        emailService.sendHtmlEmail(
+                                prestataire.getEmail(),
+                                "Nouvelle demande correspondant à votre disponibilité",
+                                "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;\">" +
+                                        "<h2 style=\"color: #333;\">📬 Nouvelle Demande Disponible</h2>" +
+                                        "<p>Bonjour <strong>" + prestataire.getNom() + "</strong>,</p>" +
+                                        "<p>Une nouvelle demande a été créée pour le service <strong style='color:#007BFF'>" + service.getNomservice() + "</strong>.</p>" +
+                                        "<p><strong>Date :</strong> " + demandeDateTime + "<br>" +
+                                        "<strong>Client :</strong> " + utilisateur.getNom() + "</p>" +
+
+                                        "<p style='margin-top: 20px;'>Cliquez sur le bouton ci-dessous pour postuler :</p>" +
+
+                                        "<div style=\"text-align: center; margin: 20px 0;\">" +
+                                        "<a href=\"http://localhost:4200/login\" style=\"" +
+                                        "display: inline-block;" +
+                                        "padding: 10px 20px;" +
+                                        "background-color: #28a745;" +
+                                        "color: white;" +
+                                        "text-decoration: none;" +
+                                        "border-radius: 5px;" +
+                                        "font-weight: bold;" +
+                                        "transition: background-color 0.3s ease;\">" +
+                                        "Postuler" +
+                                        "</a>" +
+                                        "</div>" +
+
+                                        "<p>Merci de votre collaboration,<br>L'équipe de la plateforme.</p>" +
+                                        "</div>"
+                        );
+
+                        ;
+                    }
+                }
+            }
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("demande", savedDemande);
+        response.put("prestatairesNotifiés", prestatairesFiltres);
+
+        return response;
+    }
+    private String convertirJourEnAnglais(String jourFrancais) {
+        Map<String, String> jours = Map.of(
+                "Lundi", "Monday",
+                "Mardi", "Tuesday",
+                "Mercredi", "Wednesday",
+                "Jeudi", "Thursday",
+                "Vendredi", "Friday",
+                "Samedi", "Saturday",
+                "Dimanche", "Sunday"
+        );
+        return jours.getOrDefault(jourFrancais, jourFrancais);
+    }
+
+
+
+    private LocalDateTime convertDateToLocalDateTime(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
 
 
 

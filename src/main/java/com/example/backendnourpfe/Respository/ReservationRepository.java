@@ -17,6 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
             "AND r.statusReservation = 'EN_ATTENTE'")
     List<Reservation> findEnAttenteByParticulier(@Param("idParticulier") Long idParticulier);
     List<Reservation> findByStatusReservationAndParticulier_IdUtilisateur(StatusReservation status, Long idUtilisateur);
+    List<Reservation> findByPrestataireIdUtilisateurAndStatusReservation(Long prestataireId, StatusReservation statusReservation);
 
 
 }

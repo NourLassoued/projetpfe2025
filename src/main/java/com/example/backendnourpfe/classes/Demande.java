@@ -51,7 +51,7 @@ public class Demande {
 @JoinColumn(name = "adresse_id")
 
     private Adresse adressedemande;
-
+    @JsonIgnoreProperties("demande")
     @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postulation> postulations = new ArrayList<>();
 
