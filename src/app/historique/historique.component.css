@@ -201,8 +201,76 @@ height: 250px;
   border-radius: 10px;
   text-align: center;
 }
+.stars {
+  display: flex;
+  gap: 5px;
+  font-size: 0.3rem;  /* Ajuste la taille des étoiles */
+  cursor: pointer;
+}
+
+.stars svg {
+  width: 4rem; /* Ajustez la largeur */
+  height: 4rem; /* Ajustez la hauteur */
+}
+
+.stars svg:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.stars .text-yellow-400 {
+  color: yellow;
+}
+
+.stars .text-gray-400 {
+  color: gray;
+}
+
+.modal {
+  
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 60px;
+  left: 0; top: 0; width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.modal.show {
+  display: block;
+}
+.modal-content {
+
+ margin-top: 60px;
+   background-color: #fdfdfd;
+  margin-left: 390px;
+  padding: 20px;
+  width: 40%;
+  border-radius: 8px;
+}
 
 
+.close {
+  position: absolute;
+  top: 10px;  /* Ajustez selon votre préférence */
+  right: 10px;  /* Ajustez pour placer le bouton à droite */
+  font-size: 2rem;
+  cursor: pointer;
+}
 
+.modal-content h2 {
+  margin-top: 0;  /* Enlever la marge par défaut pour plus de précision */
+  padding-right: 30px;  /* Laisser de l'espace pour le bouton de fermeture */
+}
+.btnenvoyer{
+background: #007bff;
+  color: white;
+  border: none;
+  width: 500px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 
+}
 

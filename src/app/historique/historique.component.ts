@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ReservationService } from '../service/reservation.service';
 import { jwtDecode } from 'jwt-decode';
+import { Avis } from 'src/models/Avis';
+import { UtilisateurService } from '../service/utilisateur.service';
 
 @Component({
   selector: 'app-historique',
@@ -24,14 +26,20 @@ export class HistoriqueComponent {
   
           reservationsEnAttente: any[] = [];
         userId!: number;
-      
-    
+        showModal = false;
+        selectedReservation: any = null;
+        avis: Avis = {
+          note: 0,
+          commentaire: ''
+        };
+        
         services: any[] = [];
      
           constructor(private fileService: FileService, 
             private router: Router,
          private toastr: ToastrService,
-            private reservationService: ReservationService) {}
+            private reservationService: ReservationService,
+          private utilisateurservice:UtilisateurService) {}
           ngOnInit(): void {
             this.loadUserData();
          
@@ -124,11 +132,66 @@ export class HistoriqueComponent {
       }
       gererDemande(idDemande: string) {
         this.router.navigate(['/gerer-demande'], { queryParams: { id: idDemande } });
-        console.log('Réservation annulée', idDemande);
+       
       }
-}   
-  
-  
+      ouvrirModal(reservation: any): void {
+        this.selectedReservation = reservation;
+        this.avis = {
+          note: 0,
+          commentaire: ''
+        };
+        this.showModal = true;
+      
+       
+
+      }
+      
+      
+      closeModal(): void {
+        this.showModal = false;
+      }
+      envoyerAvis(): void {
+        const idUtilisateur = this.userId;
+        const idAvisUtilisateur = this.selectedReservation?.prestataire?.idUtilisateur;
+      
+      
+      
+       
+        if (
+          idUtilisateur == null ||
+          idAvisUtilisateur == null ||
+          this.avis.note == null ||
+          this.avis.note < 1 || this.avis.note > 5 ||
+          !this.avis.commentaire || this.avis.commentaire.trim() === ''
+        ) {
+          this.toastr.warning("Tous les champs sont requis et la note doit être entre 1 et 5 !");
+          return;
+        }
+      
+       
+        this.utilisateurservice.donnerAvis(idUtilisateur, idAvisUtilisateur, this.avis)
+          .subscribe({
+            next: (response) => {
+              this.toastr.success('Avis envoyé avec succès !');
+              this.showModal = false;
+      
+             
+              this.avis = {
+                note: 0,
+                commentaire: ''
+              };
+            },
+            error: (error) => {
+              this.toastr.error("Erreur lors de l'envoi de l'avis !");
+              console.error(error);
+            }
+          });
+      }
+      setNote(note: number): void {
+        this.avis.note = note;  
+      }
+      
+    }      
   
 
 

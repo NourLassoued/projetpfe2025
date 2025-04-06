@@ -26,6 +26,8 @@
                    
                     <li routerLink="/Reservationcours">📅 Réservations en cours</li>
                     <li routerLink="/Historique">📜Mon historique</li>
+            
+                    <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
                     <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
                 </ul>
                 
@@ -68,7 +70,7 @@
             
               <div class="action-buttons">
 
-                <button class="btn reserver" >📝 Laissez votre avis</button>
+                <button  (click)="ouvrirModal(reservation)" class="btn reserver" >📝 Laissez votre avis</button>
               </div>
               
             </div>
@@ -76,5 +78,48 @@
         </ng-container>
       </div>
       </div>
-      
+      <!-- MODAL D’AVIS -->
+<div class="modal" [class.show]="showModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Donner un avis sur {{ selectedReservation?.prestataire?.nom }}</h2>
+    
+    <label>Note (sur 5) :</label>
+    <div class="stars">
+      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+        <!-- Icône d'étoile pleine (si star <= avis.note) -->
+        <svg
+          *ngIf="star <= (avis?.note || 0)"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-4 w-4 cursor-pointer text-yellow-400"
+          (click)="setNote(star)">
+          <path d="M9.049 2.927C9.3 2.3 10.7 2.3 10.951 2.927l1.11 2.24c.19.386.573.661 1.016.744l2.47.358c.358.052.692.318.819.663.248.445.158.99-.217 1.267l-1.786 1.738c-.347.338-.497.832-.414 1.305l.445 2.475c.062.359-.167.724-.529.832-.363.108-.75-.053-.976-.348l-2.217-1.17a1.09 1.09 0 0 0-1.072 0l-2.217 1.17c-.226.295-.613.456-.976.348-.363-.108-.591-.473-.529-.832l.445-2.475a1.09 1.09 0 0 0-.414-1.305l-1.786-1.738c-.375-.277-.465-.822-.217-1.267.127-.345.461-.611.819-.663l2.47-.358c.444-.083.826-.358 1.016-.744l1.11-2.24z"/>
+        </svg>
+    
+        <!-- Icône d'étoile vide (si star > avis.note) -->
+        <svg
+          *ngIf="star > (avis?.note || 0)"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-4 w-4 cursor-pointer text-gray-300"
+          (click)="setNote(star)">
+          <path d="M9.049 2.927C9.3 2.3 10.7 2.3 10.951 2.927l1.11 2.24c.19.386.573.661 1.016.744l2.47.358c.358.052.692.318.819.663.248.445.158.99-.217 1.267l-1.786 1.738c-.347.338-.497.832-.414 1.305l.445 2.475c.062.359-.167.724-.529.832-.363.108-.75-.053-.976-.348l-2.217-1.17a1.09 1.09 0 0 0-1.072 0l-2.217 1.17c-.226.295-.613.456-.976.348-.363-.108-.591-.473-.529-.832l.445-2.475a1.09 1.09 0 0 0-.414-1.305l-1.786-1.738c-.375-.277-.465-.822-.217-1.267.127-.345.461-.611.819-.663l2.47-.358c.444-.083.826-.358 1.016-.744l1.11-2.24z"/>
+        </svg>
+      </ng-container>
+    </div>
+    
+    
+    
+
+    <label>Commentaire :</label>
+    <textarea [(ngModel)]="avis.commentaire"></textarea>
+<br>
+
+    <button class="btnenvoyer" (click)="envoyerAvis()">✅ Envoyer</button>
+  </div>
+</div>
+
     

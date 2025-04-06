@@ -2,19 +2,23 @@
     <app-navbarcompte></app-navbarcompte>
     
     <div class="container">
-        <aside class="sidebar">
+      <aside class="sidebar">
+        <ul>
             <ul>
-                <ul>
-                    <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
-                   <li> 📩 Mes postulations</li>
-                    <li>📋 Mes jobs</li>
-                    <li routerLink="/reservationprestataire">📅 Mes réservations</li>
-                    <li>📜 Mon historique</li>
-                   <li (click)="logout()">🚪 Se déconnecter</li>
-                </ul>
+                <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
+                <li routerLink="/Postulation"> 📩 Mes postulations</li>
+ 
                 
+               
+                <li routerLink="/reservationprestataire">📅 Mes réservations</li>
+                <li>📜Mon historique</li>
+        
+                <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
+                <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
             </ul>
-        </aside>
+            
+        </ul>
+    </aside>
 
         <main class="content">
           <h2>📅 Mes réservations</h2>

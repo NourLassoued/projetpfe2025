@@ -1,0 +1,73 @@
+
+<body>
+    <app-navbarcompte></app-navbarcompte>
+    
+    
+    
+    
+       
+        <div class="container">
+          <aside class="sidebar">
+            <ul>
+                <ul>
+                    <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
+                    <li routerLink="/Postulation"> 📩 Mes postulations</li>
+     
+                    
+                   
+                    <li routerLink="/reservationprestataire">📅 Mes réservations</li>
+                    <li>📜Mon historique</li>
+            
+                    <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
+                    <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
+                </ul>
+                
+            </ul>
+        </aside>
+    
+      
+            <main class="content">
+                <p class="score-moyen">
+                    <strong><i class="fa fa-trophy trophy-icon"></i>Votre score : </strong>{{ scoreMoyen | number:'1.0-2' }} / 5
+                  </p>
+                  
+                <h2>⭐ Mes évolutions</h2>
+                <div>
+                  <table class="postulation-table">
+                    <thead>
+                      <tr>
+                        <th>Note</th>
+                        <th>Commentaire</th>
+                        <th>Date</th>
+                        <th>Utilisateur</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let avis of avisList">
+                        <td>
+                          <!-- Affichage des étoiles en fonction de la note -->
+                          
+                            <span style="color: gold;" class="star" *ngFor="let s of getFullStars(avis.note)">★</span>
+                            <span style="color: lightgray;" class="star" *ngFor="let s of getEmptyStars(avis.note)">☆</span>
+                          
+                        </td>
+          
+                        <td>
+                       
+                            {{ avis.commentaire }}
+                          
+                        </td>
+          
+                        <td>{{ avis.dateAvis | date: 'short' }}</td>
+                        <td>{{ avis.utilisateur?.nom }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+          
+                <ng-template #noAvis>
+                  <p>Aucun avis trouvé</p>
+                </ng-template>
+              </main>
+            </div>
+          </body>

@@ -23,7 +23,7 @@ export class CompteprestaitreComponent implements OnInit{
   showModal: boolean = false;
   selectedDemande!: Demande;
   commentaire: string = '';;
-
+  showDemandes = false;
   constructor(private fileService: FileService,
      private sanitizer: DomSanitizer, 
      private utilisateurService:UtilisateurService,
@@ -183,6 +183,11 @@ envoyerPostulation(): void {
   
     localStorage.removeItem('accessToken')
     this.router.navigate(['/Front']); 
+  }
+  
+ 
+  toggleDemandes() {
+    this.showDemandes = !this.showDemandes;
   }
 
 }

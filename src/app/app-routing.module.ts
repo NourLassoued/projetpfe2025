@@ -54,6 +54,8 @@ import { ReservationcoursComponent } from './reservationcours/reservationcours.c
 import { HistoriqueComponent } from './historique/historique.component';
 import { PostulationComponent } from './postulation/postulation.component';
 import { ReservationprestaitreComponent } from './reservationprestaitre/reservationprestaitre.component';
+import { MesevolutiosComponent } from './mesevolutios/mesevolutios.component';
+import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevolutiosprestaitre.component';
 
 
 const routes: Routes = [
@@ -252,7 +254,16 @@ component:InformatiqueComponent
   {
     path: 'reservationprestataire',
     component:ReservationprestaitreComponent 
+  },
+  {
+    path: 'Mesévolutions',
+    component:MesevolutiosComponent 
+  },
+  {
+    path: 'Mesevolutions',
+    component:MesevolutiosprestaitreComponent 
   }
+
 
 
 
