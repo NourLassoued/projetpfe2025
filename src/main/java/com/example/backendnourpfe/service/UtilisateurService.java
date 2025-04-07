@@ -335,32 +335,7 @@ public List<Utilisateur> getAllPrestataires() {
                 })
                 .collect(Collectors.toList());
     }
-    /*
-    public Reservation creerReservation(Long idParticulier, Long idPrestataire, Reservation reservation) {
 
-        Utilisateur particulier = utilisateurRepository.findById(idParticulier)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        if (particulier.getRole() != UserRole.PARTICULIER) {
-            throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut réserver.");
-        }
-
-
-        Utilisateur prestataire = utilisateurRepository.findById(idPrestataire)
-                .orElseThrow(() -> new RuntimeException("Prestataire/Entreprise non trouvé"));
-        if (prestataire.getRole() != UserRole.PRESTATAIRE && prestataire.getRole() != UserRole.ENTREPRISE) {
-            throw new RuntimeException("L'utilisateur cible doit être un prestataire ou une entreprise.");
-        }
-
-
-        reservation.setParticulier(particulier);
-        reservation.setPrestataire(prestataire);
-        reservation.setDateReservation(new Date());
-        reservation.setStatusReservation(StatusReservation.EN_ATTENTE);
-
-
-        return reservationRepository.save(reservation);
-    }
-*/
     public boolean checkEmailExists(String email) {
         return utilisateurRepository.existsByEmail(email);
     }
@@ -469,6 +444,9 @@ public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
 
     public Optional<Utilisateur> getUtilisateurById(Long id) {
         return utilisateurRepository.findById(id);
+    }
+    public List<Avis> getAvisParUtilisateur(Utilisateur avisUtilisateur) {
+        return avisRepository.findByAvisUtilisateur(avisUtilisateur);
     }
 }
 

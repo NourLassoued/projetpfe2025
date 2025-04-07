@@ -26,4 +26,5 @@ public interface UtlisateurInterface {
     public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) ;
 
     public List<Utilisateur> getAllUsers();
+
 }

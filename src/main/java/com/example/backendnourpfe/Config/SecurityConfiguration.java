@@ -34,6 +34,7 @@ public class SecurityConfiguration {
             "/demandes/**",
             "/reservation/**",
             "/postulation/**",
+            "/avis/**"
 
     };
 
@@ -57,7 +58,7 @@ public class SecurityConfiguration {
 
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                   .anyRequest().authenticated()
+                  .anyRequest().authenticated()
                       //  .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

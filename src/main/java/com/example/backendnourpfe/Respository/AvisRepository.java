@@ -11,10 +11,10 @@ import java.util.List;
 
 @Repository
 public interface AvisRepository extends JpaRepository<Avis,Long> {
-    //List<Avis> findByAvisUtilisateur(Utilisateur avisUtilisateur);
-  /*  @Query("SELECT a FROM Avis a WHERE a.avisUtilisateur.idUtilisateur = :idAvisUtilisateur")
-    List<Avis> findAvisByAvisUtilisateurId(@Param("idAvisUtilisateur") Long idAvisUtilisateur);
-*/
+    List<Avis> findByAvisUtilisateur(Utilisateur avisUtilisateur);
+    List<Avis> findByUtilisateur(Utilisateur utilisateur);
+    List<Avis> findByAvisUtilisateurIdUtilisateur(Long utilisateurId);
+
     @Query("SELECT a.idAvis, a.note, a.commentaire, a.dateAvis, a.utilisateur.nom " +
             "FROM Avis a WHERE a.avisUtilisateur.idUtilisateur = :idAvisUtilisateur")
     List<Object[]> findAvisByAvisUtilisateurId(Long idAvisUtilisateur);
