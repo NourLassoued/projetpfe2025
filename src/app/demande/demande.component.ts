@@ -1,14 +1,12 @@
 import { Component, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
-import { MatCalendar } from '@angular/material/datepicker';
-import { Moment } from 'moment';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+
 import { Location } from '@angular/common';
 
 import { Adresse } from 'src/models/Adresse';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { Servicee } from 'src/models/Servicee';
 import { UtilisateurService } from '../service/utilisateur.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdresseService } from '../service/adresse.service';
 import { FileService } from '../service/file.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -72,39 +70,11 @@ private router: Router, private location: Location,
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
    
-    /*this.demandeForm = this.fb.group({
-      emailUtilisateur: ['', [Validators.required, Validators.email]],
-      description: ['', Validators.required],
-      date: ['', Validators.required],
-      heureTravail: ['', Validators.required],
-      idService: ['', Validators.required], 
-      idAdresse: ['', Validators.required] ,
-      title: ['', Validators.required],  
-  telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
-  password: ['', [Validators.required, Validators.minLength(6)]], 
-    });
-
-    this.resetPasswordForm = this.fb.group({
-      emailUtilisateur: ['', [Validators.required, Validators.email]]
-    });}*/
-  
-
    
   }
 }
   ngOnInit() {
-    /*
-    this.route.queryParams.subscribe(params => {
-      const idService = params['idservice'];  
-      if (idService) {
-        
-        this.serviceSelectionné = { idservice: idService, nomservice: '' }; 
-       
-        this.demandeForm.patchValue({
-          idService: idService
-        });
-      }
-    });*/
+    
  
     this.demandeForm = this.fb.group({
       emailUtilisateur: ['', [Validators.required, Validators.email]],
@@ -122,7 +92,7 @@ private router: Router, private location: Location,
       if (idService) {
         this.serviceSelectionné = { idservice: idService, nomservice: '' };
         
-        if (this.demandeForm) {  // Vérifie si le formulaire est bien initialisé
+        if (this.demandeForm) {  
           this.demandeForm.patchValue({
             idService: idService
           });
@@ -185,7 +155,7 @@ this.resetPasswordForm = this.fb.group({
         console.log("Envoi de la demande :", demande);
         this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
           (response) => {
-            console.log("Demande créée avec succès :", response);
+           
             if (decodedToken.role === 'PARTICULIER') {
               this.router.navigate(['/Compteparticulier']);
             }

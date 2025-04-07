@@ -149,7 +149,7 @@ export class ComptepartuculierComponent  implements OnInit{
         this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe(
           (data: Demande[]) => {
             this.demandes = data;
-            console.log('Demandes récupérées :', this.demandes);
+           
           },
           (error) => {
             console.error('Erreur lors de la récupération des demandes', error);

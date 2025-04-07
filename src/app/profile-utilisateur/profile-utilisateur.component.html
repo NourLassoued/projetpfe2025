@@ -12,16 +12,18 @@
               <!-- Bloc des informations de notation -->
               <div class="rating-info">
                   <div>
-                      <strong>33</strong> <span>⭐</span>
+                      <strong>{{ avisList.length }}</strong> <span>⭐</span>
                       <p>Évaluations</p>
                   </div>
-                  <div class="rating">
-                      <strong class="strong">4,97</strong> <span>❤️</span>
+                  <div >
+                      <strong >{{ getAverageRating() }}</strong> <span>❤️</span>
                       <p class="rating-text">Note sur 5</p>
                   </div>
-                  <div>
-                      <strong>3</strong>
-                      <p>mois chez Yoojo</p>
+                 
+                  <div class="experience">
+                    
+                      <strong>🎖️{{ user?.workExperience }} ans</strong>
+                      <p> d'expérience</p>
                   </div>
               </div>
           </div>
@@ -32,9 +34,7 @@
           <button (click)="afficherNumero()">
               Contacter
           </button>
-          <button>
-              <i class="fa-solid fa-calendar-check"></i> Réserver moi
-          </button>
+          
       </div>
   </div>
   <div class="notification-box" *ngIf="showNotification">
@@ -87,10 +87,7 @@
           {{ user.adresse?.governoate }}
       </div>
 
-      <!-- Expérience -->
-      <div class="section">
-          <label>🎖️ {{ user?.WorkExerience }} ans d'expérience</label>
-      </div>
+     
 
       <!-- Compétences -->
       
@@ -127,41 +124,63 @@
       </div>
        </div>
       <!-- Avis clients -->
-       <div class="content">
-      <div class="section">
-          <label class="sectionn">Avis clients</label>
-          <div class="rating">★ 5,0 (20 avis)</div>
-          <div class="bar-container"><span>5★</span> <div class="bar"><div class="bar-fill" style="width: 100%;"></div></div> <span>20</span></div>
-          <div class="bar-container"><span>4★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
-          <div class="bar-container"><span>3★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
-          <div class="bar-container"><span>2★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
-          <div class="bar-container"><span>1★</span> <div class="bar"><div class="bar-fill" style="width: 0%;"></div></div> <span>0</span></div>
-
-          <div class="reviews">
-              <div class="review-card">
-                  <img src="assets/img/nour.JPG" alt="User" class="user-image"><label>Nom</label>
-                  <div class="review-header"><span>6 jours sur Yoojo</span></div>
-                  <div class="stars">★★★★★</div>
-                  <div class="review-text">Bonjour Mr Louis, merci pour votre prestation à distance...</div>
-              </div>
-              <div class="review-card">
-                  <img src="assets/img/nour.JPG" alt="User" class="user-image"><label>Nom</label>
-                  <div class="review-header"><span>19 jours sur Yoojo</span></div>
-                  <div class="stars">★★★★★</div>
-                  <div class="review-text">Super disponible, minutieux, je recommande fortement.</div>
-              </div>
-              <div class="review-card">
-                  <img src="assets/img/nour.JPG" alt="User" class="user-image"><label>Nom</label>
-                  <div class="review-header"><span>2 mois sur Yoojo</span></div>
-                  <div class="stars">★★★★★</div>
-                  <div class="review-text">Très professionnel, je recommande...</div>
-              </div>
+    <!-- Avis clients -->
+<!-- Avis clients -->
+<div class="content">
+    <div class="section">
+      <label class="sectionn">Avis clients</label>
+  
+      <!-- Note moyenne -->
+      <div class="rating">
+        ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
+      </div>
+  
+      <!-- Barres de répartition des notes -->
+      <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
+        <span>{{ note }}★</span>
+        <div class="bar">
+          <div class="bar-fill" [style.width.%]="getRatingPercentage(note)"></div>
+        </div>
+        <span>{{ getRatingCount(note) }}</span>
+      </div>
+  
+      <!-- Liste des avis (pagination) -->
+      <div class="reviews">
+        <div class="review-card" *ngFor="let avis of avisAffiches">
+          <img
+            *ngIf="avis.utilisateur?.image"
+            [src]="avis.utilisateur?.image"
+            alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
+            class="user-image"
+          />
+          <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+  
+          <div class="review-header">
+            <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
           </div>
+  
+          <!-- Affichage des étoiles -->
+          <div class="stars">
+            <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
+              ★
+            </ng-container>
+          </div>
+  
+          <div class="review-text">
+            {{ avis.commentaire }}
+          </div>
+        </div>
       </div>
+  
+      <!-- Boutons de navigation -->
+      <div class="navigation-buttons">
+        <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
+        <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant ➡</button>
       </div>
+    </div>
+  </div>
   </div>
 </div>
-
 <!-- Pied de page -->
 <app-footer></app-footer>
 </body>

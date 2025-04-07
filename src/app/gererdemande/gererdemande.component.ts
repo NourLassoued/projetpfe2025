@@ -2,8 +2,8 @@ import { Component, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { FileService } from '../service/file.service';
-import { formatDistanceToNow, parseISO } from 'date-fns';
-import { fr } from 'date-fns/locale'; // Pour afficher en français
+import { formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale'; 
 import { jwtDecode } from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
@@ -37,6 +37,8 @@ prestataireImageUrls: string[] = [];
   postulations: Postulation[] = [];
   utilisateurs: Utilisateur[] = [];
   user1: Utilisateur = { servicesOfferts: [] };
+  avisVisiblesParUtilisateur: { [id: number]: number } = {};
+
   demandeDetails: {
     idDemande: number | null;
     title: string;
@@ -79,7 +81,12 @@ prestataireImageUrls: string[] = [];
     this.minDate = today.toISOString().slice(0, 16); 
    }
   ngOnInit() {
-   
+    this.utilisateurs.forEach(utilisateur => {
+      if (utilisateur.idUtilisateur !== undefined) {
+        this.avisVisiblesParUtilisateur[utilisateur.idUtilisateur] = 2;
+      }
+    });
+    
   
    
     const token = localStorage.getItem('accessToken');
@@ -184,7 +191,7 @@ prestataireImageUrls: string[] = [];
             (utilisateurs: any[]) => {  
               this.utilisateurs = utilisateurs;
               this.utilisateurs.forEach((utilisateur, index) => {
-                console.log(`🔎 Vérification des services pour ${utilisateur.nom}`, utilisateur);
+              
   
                 if (utilisateur['services'] && Array.isArray(utilisateur['services'])) {
                   utilisateur.servicesOfferts = utilisateur['services'].map((service: string) => ({
@@ -382,6 +389,10 @@ reserver(prestataireId: number) {
         this.toastr.error("Échec de la réservation !", "Erreur");
       }
     });
+}
+toggleAvis(idUtilisateur: number, totalAvis: number): void {
+  const current = this.avisVisiblesParUtilisateur[idUtilisateur];
+  this.avisVisiblesParUtilisateur[idUtilisateur] = current > 2 ? 2 : totalAvis;
 }
 
 }

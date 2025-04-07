@@ -1,28 +1,29 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Servicee } from 'src/models/Servicee';
-import { CategorieService } from '../service/categorie.service';
-import { FileService } from '../service/file.service';
-import { ServiceeService } from '../service/servicee.service';
+import { CategorieService } from '../../service/categorie.service';
+import { FileService } from '../../service/file.service';
+import { ServiceeService } from '../../service/servicee.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-demenagement',
-  templateUrl: './demenagement.component.html',
-  styleUrls: ['./demenagement.component.css']
+  selector: 'app-enfants',
+  templateUrl: './enfants.component.html',
+  styleUrls: ['./enfants.component.css']
 })
-export class DemenagementComponent {
-    services: Servicee[] = [];
+export class EnfantsComponent {
+   services: Servicee[] = [];
       imageUrls: string[] = [];
       showModal=false;
       filteredServices: Servicee[] = [];
       searchQuery: string = '';
       selectedServiceId!: number;
       categoryName: string = '';
-      constructor(private file:FileService,
+      constructor(private categorieService:CategorieService,private file:FileService,
           private service:ServiceeService,
          
+         
           private router: Router,
-          ) {}
+          private cdr: ChangeDetectorRef) {}
           ngOnInit(): void {
                 
             this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');  
@@ -96,7 +97,7 @@ export class DemenagementComponent {
         getServicesByCategoryName(categorieName: string): void {
           this.service.getServicesByCategoryName(categorieName).subscribe(
             (services: Servicee[]) => {
-           
+              console.log('Services récupérés pour la catégorie:', categorieName, services);
               if (services && services.length > 0) {
                 this.services = services;
     
@@ -125,12 +126,15 @@ export class DemenagementComponent {
         }
       
           placeholders: string[] = [
-            "Transport et manutention 📦",
-            "Location de camion avec chauffeur 🚚",
-            "Emballage et protection des objets 🏠",
-            "Montage et démontage de meubles 🔧",
-            "Chargement et déchargement efficace 💪",
-            "Déménagement en toute sérénité ✅"
+           
+              "Trouvez une baby-sitter de confiance !",
+              "Garde périscolaire, fiable et rapide.",
+              "Garde d'enfants pour week-end et vacances.",
+              "Réservez une garde ponctuelle en toute sérénité.",
+              "Garde longue durée, pour vos enfants.",
+              "Assistante maternelle de confiance ici."
+          
+            
            
           ];
         

@@ -103,7 +103,7 @@ export class MesdemandesComponent {
       getPostulationsByDemande(idDemande: number): void {
         this.demandeService.getPostulationsByDemande(idDemande).subscribe(
             (postulationsData) => {
-                this.demandesAvecPostulations[idDemande] = postulationsData.length; // Stocke le nombre de postulations
+                this.demandesAvecPostulations[idDemande] = postulationsData.length; 
             },
             (error) => {
                 console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
@@ -114,7 +114,7 @@ export class MesdemandesComponent {
       gererDemande(demande: any) {
       
         if (!demande || !demande.idDemande) {
-            console.error("Erreur : L'ID de la demande est invalide.");
+          
             return;
         }
         this.router.navigate(['/gerer-demande'], { queryParams: { id: demande.idDemande } });

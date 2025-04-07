@@ -9,7 +9,7 @@ import { FileService } from '../service/file.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthServiceService } from '../service/auth-service.service';
 import { Demande } from 'src/models/Demande';
-import { jwtDecode } from 'jwt-decode';
+
 
 @Component({
   selector: 'app-demandecompte',
@@ -57,9 +57,9 @@ export class DemandecompteComponent {
   constructor(private fb: FormBuilder, 
     private utilisateurservice:UtilisateurService,
   private adresse:AdresseService,
-private file:FileService,
+
 private route: ActivatedRoute,
-private authService: AuthServiceService,
+
 private router: Router
  ) {
   
@@ -92,8 +92,6 @@ private router: Router
       this.email = params['email'];  
   
 
-      console.log('Email récupéré:', this.email);
-      console.log('ID Service récupéré:', this.serviceId);
   
       
       this.demandeForm.patchValue({

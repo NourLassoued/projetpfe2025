@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { FileService } from '../service/file.service';
@@ -8,6 +8,12 @@ import { jwtDecode } from 'jwt-decode';
 import { ReservationService } from '../service/reservation.service';
 import { ToastrService } from 'ngx-toastr';
 import { Reservation } from 'src/models/Reservation';
+import { AvisService } from '../service/avis.service';
+
+import { fr } from 'date-fns/locale'; // Pour afficher en français
+import { Avis } from 'src/models/Avis';
+
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-profil',
@@ -25,26 +31,30 @@ export class ProfilComponent {
   prestataireId!: number;
   utilisateurId!: number;
   demandeId!: number;
+      avisAffiches: any[] = [];
+  indexDebut: number = 0;
+  avisParPage: number = 3;
+   avisList: Avis[] = []; 
   constructor(private fileService: FileService, 
   private sanitizer: DomSanitizer,
   private activatedRoute: ActivatedRoute,
   private utilisateurservice:UtilisateurService ,
   private reservationService: ReservationService,
+  private cdr: ChangeDetectorRef,
+  private avisService: AvisService,
     private toastr: ToastrService){}
 
       ngOnInit(): void {
         this.loadUserData();
 
         this.activatedRoute.paramMap.subscribe(params => {
-          this.prestataireId = +params.get('prestataireId')!; // ID Prestataire
+          this.prestataireId = +params.get('prestataireId')!; 
         });
         
         this.activatedRoute.queryParamMap.subscribe(params => {
-          this.utilisateurId = +params.get('utilisateurId')!; // ID Utilisateur
-          this.demandeId = +params.get('demandeId')!; // ID Demande
-          console.log("Prestataire ID:", this.prestataireId);
-          console.log("Utilisateur ID:", this.utilisateurId);
-          console.log("Demande ID:", this.demandeId);
+          this.utilisateurId = +params.get('utilisateurId')!;
+          this.demandeId = +params.get('demandeId')!; 
+          
         });
         
         this.activatedRoute.paramMap.subscribe(params => {
@@ -96,19 +106,25 @@ export class ProfilComponent {
         });
       }
 
-      loadProfileImage(filename: string): void {
-        this.fileService.getImage(filename).subscribe({
-          next: (imageBlob) => {
-            const objectURL = URL.createObjectURL(imageBlob); 
-            this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-          },
-          error: (err) => {
-            console.error('Erreur de chargement de l\'image', err);
-            this.profileImageUrl = null; 
-          }
-        });
+      mettreAJourAffichage() {
+        this.avisAffiches = this.avisList.slice(this.indexDebut, this.indexDebut + this.avisParPage);
       }
-  
+      
+      suivant() {
+        if (this.indexDebut + this.avisParPage < this.avisList.length) {
+          this.indexDebut += this.avisParPage;
+          this.mettreAJourAffichage();
+        }
+      }
+      
+      precedent() {
+        if (this.indexDebut > 0) {
+          this.indexDebut -= this.avisParPage;
+          this.mettreAJourAffichage();
+        }
+      
+      }
+       
 
       loadUserData(): void {
         const token = localStorage.getItem('accessToken'); 
@@ -151,6 +167,54 @@ export class ProfilComponent {
       closeNotification() {
         this.showNotification = false;
       }
+
+      loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
+        this.fileService.getImage(filename).subscribe(
+          (imageBlob) => {
+            const imageUrl = URL.createObjectURL(imageBlob);
+      
+            if (type === 'utilisateur') {
+    
+              const utilisateur = this.avisList?.[index]?.utilisateur;
+      
+              if (utilisateur) {
+                utilisateur.image = imageUrl;
+              } else {
+                console.error('Utilisateur à l\'index ' + index + ' ou utilisateur est undefined.');
+              }
+            } else if (type === 'user') {
+              this.profileImageUrl = imageUrl;
+            }
+          },
+          (error) => {
+            console.error('Erreur de chargement de l\'image', error);
+          }
+        );
+      }
+      
+      loadAvis(userId: number): void {
+        this.avisService.getAvisParprestatitr(userId).subscribe(
+          (avisdata) => {
+            this.avisList = avisdata;
+      
+            this.avisList?.forEach((avis, index) => {
+              // Vérification que l'utilisateur et l'image existent
+              if (avis.utilisateur?.image) {
+                this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
+                this.mettreAJourAffichage();
+                console.log(`Image de l'utilisateur à l'index ${index}:`, avis.utilisateur.image);
+              } else {
+                console.log(`Utilisateur à l'index ${index} est undefined ou n'a pas d'image`);
+              }
+            });
+            this.cdr.detectChanges();
+          },
+          (error) => {
+            console.error('Erreur lors de la récupération des avis:', error);
+          }
+        );
+      }
+      
       
 reserver(prestataireId: number) {
   if (!this.utilisateurId || !this.demandeId || !prestataireId) {
@@ -175,5 +239,29 @@ reserver(prestataireId: number) {
       }
     });
 }
+  getRatingCount(star: number): number {
+                return this.avisList.filter((a) => a.note === star).length;
+              }
+              
+              getRatingPercentage(star: number): number {
+                const total = this.avisList.length;
+                if (total === 0) return 0;
+                return (this.getRatingCount(star) / total) * 100;
+              }
+              
+              getAverageRating(): string {
+                const total = this.avisList.length;
+                if (total === 0) return '0.0';
+                const sum = this.avisList.reduce((acc, avis) => acc + (avis.note ?? 0), 0);
+                return (sum / total).toFixed(1);
+              }
+                getTempsEcoule(date?: Date): string {
+                  if (!date) {
+                    return 'Date inconnue'; 
+                  }
+                
+                  return formatDistanceToNow(date, { addSuffix: true, locale: fr });
+                }
+              
 
     }

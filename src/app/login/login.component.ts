@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServiceService } from '../service/auth-service.service';
 import { Router } from '@angular/router';
-import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
+
 import { ForgetPasswordService } from '../service/forget-password.service';
 import { jwtDecode } from 'jwt-decode';
 
@@ -51,8 +51,8 @@ export class LoginComponent {
   }
   resetPassword() {
     if (this.resetPasswordForm.valid) {
-      console.log("🔑 Email envoyé à:", this.resetPasswordForm.value.email);
-      alert("Un e-mail de réinitialisation a été envoyé !");
+    
+   
       this.closeModal();
     }
   }verifyAndSendEmail() {
@@ -125,8 +125,8 @@ authenticate(): void {
     private hideNotification(): void {
       setTimeout(() => {
         this.notificationMessage = "";
-        this.cdr.detectChanges(); // Mise à jour de l'affichage pour cacher le message
-      }, 3000); // Masquer après 3 secondes
+        this.cdr.detectChanges(); 
+      }, 3000); 
     }
   
   getImageUrl(filename: string): string {

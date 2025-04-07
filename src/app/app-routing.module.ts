@@ -7,15 +7,14 @@ import { AppComponent } from './app.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
-import { AllTemplateFrontComponent } from './all-template-front/all-template-front.component';
+import { AllTemplateFrontComponent } from './Front/all-template-front/all-template-front.component';
 import { FooterComponent } from './footer/footer.component';
-import { InscriptionComponent } from './inscription/inscription.component';
+import { InscriptionComponent } from './gestionUtilisateur/inscription/inscription.component';
 import { InscriptionprestaitreComponent } from './inscriptionprestaitre/inscriptionprestaitre.component';
-import { InscriptionProfessionnelComponent } from './inscription-professionnel/inscription-professionnel.component';
-import { InscriptionEntrpriseComponent } from './inscription-entrprise/inscription-entrprise.component';
+import { InscriptionEntrpriseComponent } from './gestionUtilisateur/inscription-entrprise/inscription-entrprise.component';
 import { LoginComponent } from './login/login.component';
-import { NewinstructionssendComponent } from './newinstructionssend/newinstructionssend.component';
-import { EditpasswordComponent } from './editpassword/editpassword.component';
+import { NewinstructionssendComponent } from './Front/newinstructionssend/newinstructionssend.component';
+import { EditpasswordComponent } from './gestionUtilisateur/editpassword/editpassword.component';
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
@@ -23,24 +22,24 @@ import { ProfileUtilisateurComponent } from './profile-utilisateur/profile-utili
 import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculier.component';
 import { ProfileparticulierComponent } from './profileparticulier/profileparticulier.component';
 import { UpdateparticulierComponent } from './updateparticulier/updateparticulier.component';
-import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
+import { AdmindashboardComponent } from '../backadmin/admindashboard/admindashboard.component';
 
-import { UserComponent } from './user/user.component';
+import { UserComponent } from '../backadmin/user/user.component';
 import { ProfiletrpriseComponent } from './profiletrprise/profiletrprise.component';
 import { UpdateEtrepriseComponent } from './update-etreprise/update-etreprise.component';
-import { CatogoriesComponent } from './catogories/catogories.component';
+import { CatogoriesComponent } from '../backadmin/catogories/catogories.component';
 import { ServiceComponent } from './service/service.component';
-import { BricolageComponent } from './bricolage/bricolage.component';
-import { MenageComponent } from './menage/menage.component';
-import { JardinageComponent } from './jardinage/jardinage.component';
-import { EnfantsComponent } from './enfants/enfants.component';
+import { BricolageComponent } from './Front/bricolage/bricolage.component';
+import { MenageComponent } from './Front/menage/menage.component';
+import { JardinageComponent } from './Front/jardinage/jardinage.component';
+import { EnfantsComponent } from './Front/enfants/enfants.component';
 import { DemenagementComponent } from './demenagement/demenagement.component';
-import { AidedomicileComponent } from './aidedomicile/aidedomicile.component';
-import { AnimauxComponent } from './animaux/animaux.component';
-import { InformatiqueComponent } from './informatique/informatique.component';
-import { CoursparticuliersComponent } from './coursparticuliers/coursparticuliers.component';
-import { ConstructionetGrosoeuvreComponent } from './constructionet-grosoeuvre/constructionet-grosoeuvre.component';
-import { DecorationComponent } from './decoration/decoration.component';
+import { AidedomicileComponent } from './Front/aidedomicile/aidedomicile.component';
+import { AnimauxComponent } from './Front/animaux/animaux.component';
+import { InformatiqueComponent } from './Front/informatique/informatique.component';
+import { CoursparticuliersComponent } from './Front/coursparticuliers/coursparticuliers.component';
+import { ConstructionetGrosoeuvreComponent } from './Front/constructionet-grosoeuvre/constructionet-grosoeuvre.component';
+import { DecorationComponent } from './Front/decoration/decoration.component';
 import { SecuriteComponent } from './securite/securite.component';
 import { DemandeComponent } from './demande/demande.component';
 import { DemandecompteComponent } from './demandecompte/demandecompte.component';
@@ -56,6 +55,7 @@ import { PostulationComponent } from './postulation/postulation.component';
 import { ReservationprestaitreComponent } from './reservationprestaitre/reservationprestaitre.component';
 import { MesevolutiosComponent } from './mesevolutios/mesevolutios.component';
 import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevolutiosprestaitre.component';
+import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
 
 
 const routes: Routes = [

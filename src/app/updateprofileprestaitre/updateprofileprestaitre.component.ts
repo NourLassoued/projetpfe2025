@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { Utilisateur } from 'src/models/Utilisateur';
 
 import { UtilisateurService } from '../service/utilisateur.service';
-import {  AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { Calendar, CalendarOptions, EventClickArg } from '@fullcalendar/core';
+import {  ChangeDetectorRef } from '@angular/core';
+import {CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -31,15 +31,15 @@ import { catchError, of } from 'rxjs';
 })
 export class UpdateprofileprestaitreComponent implements OnInit ,AfterViewInit {
   @ViewChild('calendarComponent') calendarComponent!: FullCalendarComponent;
-  //@ViewChild('fileInput') fileInput!: ElementRef;
+ 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-// lie pour la methode de menu
+
 triggerFileInput() {
   this.fileInput.nativeElement.click(); 
 }
   calendarApi: any;
-    // Initialisation de la référence au calendrier
+   
   ngAfterViewInit() {
     if (this.calendarComponent) {
       this.calendarApi = this.calendarComponent.getApi();
@@ -119,7 +119,7 @@ ngOnInit(): void {
  
   this.loadAdresses();
     this.loadUserData();
-    console.log("Données utilisateur :", this.user);
+ 
     this.loadDisponibilites();
     
   // Mise à jour de l'URL de l'image du profil si un changement est détecté
@@ -151,13 +151,13 @@ ngOnInit(): void {
     }
   }
  
-  //loadAdresses
+
   loadAdresses(): void {
     this.adreesse.getAllAdresses().subscribe((data) => {
       this.adresses = data;
     });
   }
-//loadProfileImage
+
   loadProfileImage(filename: string): void {
     this.fileService.getImage(filename).subscribe({
       next: (imageBlob) => {
@@ -171,7 +171,7 @@ ngOnInit(): void {
     });
   }
 
-//loadUserData
+
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');
   
@@ -221,14 +221,14 @@ ngOnInit(): void {
  
 
   
-  // Démarre l'édition d'un champ de l'utilisateur
+ 
   startEditing(field: string, currentValue: string) {
     this.isEditing[field] = true;
     this.editedValues[field] = currentValue;
   }
 
 
-   // Sauvegarde les modifications d'un champ de l'utilisateur
+   
  saveChanges(field: string) {
   if (!this.userId) {
     console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
@@ -316,7 +316,7 @@ ngOnInit(): void {
     this.utilisateurService.affecterAdresse(this.userId, adresseObjet.idAdresse)
       .subscribe({
         next: (response) => {
-          console.log(` ${field} mis à jour avec succès :`, response);
+         
   
           if (response.token) {
             localStorage.removeItem('accessToken'); 
@@ -341,7 +341,7 @@ ngOnInit(): void {
   this.utilisateurService.updateUser(this.userId, updatedData)
     .subscribe({
       next: (response) => {
-        console.log(` ${field} mis à jour avec succès :`, response);
+       
 
         if (response.token) {
           localStorage.removeItem('accessToken'); 
@@ -358,7 +358,7 @@ ngOnInit(): void {
       }
     });
 }
-//// / Gestion de la modification des disponibilités
+
 loadDisponibilites() {
   const daysOfWeek: { [key: string]: number } = {
     'Dimanche': 0, 'Lundi': 1, 'Mardi': 2, 'Mercredi': 3, 'Jeudi': 4, 'Vendredi': 5, 'Samedi': 6
@@ -412,7 +412,7 @@ fermerEdition() {
   this.editionActive = false;
   this.disponibiliteSelectionnee = null;
 }
-//update dispoblite
+
 updateDisponibilite() {
   if (!this.disponibiliteSelectionnee || !this.disponibiliteSelectionnee.id) {
    

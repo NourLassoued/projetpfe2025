@@ -115,7 +115,8 @@
         
           <div *ngIf="utilisateur.avisRecus && utilisateur.avisRecus.length > 0">
             <ul class="avis">
-                <li *ngFor="let avis of utilisateur.avisRecus">
+              <li *ngFor="let avis of utilisateur.avisRecus | slice:0:(avisVisiblesParUtilisateur[utilisateur.idUtilisateur!] || 2)">
+
                     <blockquote>
                         {{ avis.commentaire }} 
                         <br>
@@ -126,6 +127,13 @@
                     </blockquote>
                 </li>
             </ul>
+            <div class="actions">
+            <button 
+            *ngIf="utilisateur.avisRecus.length > 2"
+            (click)="toggleAvis(utilisateur.idUtilisateur!, utilisateur.avisRecus.length)">
+            {{ (avisVisiblesParUtilisateur[utilisateur.idUtilisateur!] || 2) > 2 ? 'Voir moins' : 'Voir plus d\'avis' }}
+          </button>
+            </div>
         </div>
           </div>
         

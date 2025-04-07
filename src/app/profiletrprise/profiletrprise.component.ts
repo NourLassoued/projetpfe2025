@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
+import { AvisService } from '../service/avis.service';
+import { Avis } from 'src/models/Avis';
+import { fr } from 'date-fns/locale'; 
 
+import { formatDistanceToNow, parseISO } from 'date-fns';
 @Component({
   selector: 'app-profiletrprise',
   templateUrl: './profiletrprise.component.html',
   styleUrls: ['./profiletrprise.component.css']
 })
 export class ProfiletrpriseComponent {
+  indexDebut: number = 0;
+  avisParPage: number = 3;
+   avisList: Avis[] = []; 
+   avisAffiches: any[] = [];
    showNotification = false;
     profileImage: string | null = null; 
     user: any;
@@ -17,12 +25,16 @@ export class ProfiletrpriseComponent {
   
    user1: Utilisateur = { servicesOfferts: [] };
      
-    constructor(private fileService: FileService, private sanitizer: DomSanitizer){}
+    constructor(private fileService: FileService, 
+      private sanitizer: DomSanitizer,
+
+          private cdr: ChangeDetectorRef,
+     private avisService: AvisService ,){}
     
      
     ngOnInit(): void {
       this.loadUserData();
-    
+      this.mettreAJourAffichage();
       const token = localStorage.getItem('accessToken');
       if (token) {
         const decodedToken: any = jwtDecode(token);
@@ -45,7 +57,23 @@ export class ProfiletrpriseComponent {
     }
   }
     
-    
+  suivant() {
+    if (this.indexDebut + this.avisParPage < this.avisList.length) {
+      this.indexDebut += this.avisParPage;
+      this.mettreAJourAffichage();
+    }
+  }
+  
+  precedent() {
+    if (this.indexDebut > 0) {
+      this.indexDebut -= this.avisParPage;
+      this.mettreAJourAffichage();
+    }
+  
+  }
+  mettreAJourAffichage() {
+    this.avisAffiches = this.avisList.slice(this.indexDebut, this.indexDebut + this.avisParPage);
+  }
   
     loadUserData(): void {
       const token = localStorage.getItem('accessToken'); 
@@ -82,18 +110,7 @@ export class ProfiletrpriseComponent {
       }
     }
   
-    loadProfileImage(filename: string): void {
-      this.fileService.getImage(filename).subscribe({
-        next: (imageBlob) => {
-          const objectURL = URL.createObjectURL(imageBlob); 
-          this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        },
-        error: (err) => {
-          console.error('Erreur de chargement de l\'image', err);
-          this.profileImageUrl = null; 
-        }
-      });
-    }
+    
     afficherNumero() {
       this.showNotification = true;
     }
@@ -101,6 +118,80 @@ export class ProfiletrpriseComponent {
     closeNotification() {
       this.showNotification = false;
     }
+    
+  loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
+    this.fileService.getImage(filename).subscribe(
+      (imageBlob) => {
+        const imageUrl = URL.createObjectURL(imageBlob);
+  
+        if (type === 'utilisateur') {
+
+          const utilisateur = this.avisList?.[index]?.utilisateur;
+  
+          if (utilisateur) {
+            utilisateur.image = imageUrl;
+          } else {
+            console.error('Utilisateur à l\'index ' + index + ' ou utilisateur est undefined.');
+          }
+        } else if (type === 'user') {
+          this.profileImageUrl = imageUrl;
+        }
+      },
+      (error) => {
+        console.error('Erreur de chargement de l\'image', error);
+      }
+    );
+  }
+  
+  loadAvis(userId: number): void {
+    this.avisService.getAvisParprestatitr(userId).subscribe(
+      (avisdata) => {
+        this.avisList = avisdata;
+  
+        this.avisList?.forEach((avis, index) => {
+          // Vérification que l'utilisateur et l'image existent
+          if (avis.utilisateur?.image) {
+            this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
+            this.mettreAJourAffichage();
+            console.log(`Image de l'utilisateur à l'index ${index}:`, avis.utilisateur.image);
+          } else {
+            console.log(`Utilisateur à l'index ${index} est undefined ou n'a pas d'image`);
+          }
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des avis:', error);
+      }
+    );
+  }
+  
+  
+    
+    
+                getRatingCount(star: number): number {
+                  return this.avisList.filter((a) => a.note === star).length;
+                }
+                
+                getRatingPercentage(star: number): number {
+                  const total = this.avisList.length;
+                  if (total === 0) return 0;
+                  return (this.getRatingCount(star) / total) * 100;
+                }
+                
+                getAverageRating(): string {
+                  const total = this.avisList.length;
+                  if (total === 0) return '0.0';
+                  const sum = this.avisList.reduce((acc, avis) => acc + (avis.note ?? 0), 0);
+                  return (sum / total).toFixed(1);
+                }
+                  getTempsEcoule(date?: Date): string {
+                    if (!date) {
+                      return 'Date inconnue'; 
+                    }
+                  
+                    return formatDistanceToNow(date, { addSuffix: true, locale: fr });
+                  }
     
   
 

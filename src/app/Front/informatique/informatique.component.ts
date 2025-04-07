@@ -1,22 +1,22 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Servicee } from 'src/models/Servicee';
-import { CategorieService } from '../service/categorie.service';
-import { FileService } from '../service/file.service';
-import { ServiceeService } from '../service/servicee.service';
+import { CategorieService } from '../../service/categorie.service';
+import { FileService } from '../../service/file.service';
+import { ServiceeService } from '../../service/servicee.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-demenagement',
-  templateUrl: './demenagement.component.html',
-  styleUrls: ['./demenagement.component.css']
+  selector: 'app-informatique',
+  templateUrl: './informatique.component.html',
+  styleUrls: ['./informatique.component.css']
 })
-export class DemenagementComponent {
+export class InformatiqueComponent {
     services: Servicee[] = [];
       imageUrls: string[] = [];
       showModal=false;
+      selectedServiceId!: number;
       filteredServices: Servicee[] = [];
       searchQuery: string = '';
-      selectedServiceId!: number;
       categoryName: string = '';
       constructor(private file:FileService,
           private service:ServiceeService,
@@ -96,7 +96,7 @@ export class DemenagementComponent {
         getServicesByCategoryName(categorieName: string): void {
           this.service.getServicesByCategoryName(categorieName).subscribe(
             (services: Servicee[]) => {
-           
+             
               if (services && services.length > 0) {
                 this.services = services;
     
@@ -125,12 +125,12 @@ export class DemenagementComponent {
         }
       
           placeholders: string[] = [
-            "Transport et manutention 📦",
-            "Location de camion avec chauffeur 🚚",
-            "Emballage et protection des objets 🏠",
-            "Montage et démontage de meubles 🔧",
-            "Chargement et déchargement efficace 💪",
-            "Déménagement en toute sérénité ✅"
+           "💻 Besoin d’assistance informatique ?",
+    "🖥️ Installation et dépannage PC",
+    "⚡ Réparation rapide et efficace",
+    "📡 Installation de votre box Internet",
+    "🖨️ Installation d’imprimantes et périphériques",
+    "🎓 Cours et formations en informatique"
            
           ];
         

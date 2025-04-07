@@ -532,3 +532,29 @@ button.close-btn {
     color: #0056b3; /* Changer la couleur lors du survol */
     text-decoration: underline; /* Ajoute un souligné lors du survol */
 }
+
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .navigation-buttons button {
+    margin: 0 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .navigation-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .experience{
+    margin-top: 5px;
+  }  
+  

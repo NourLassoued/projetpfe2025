@@ -68,9 +68,9 @@ export class CompteprestaitreComponent implements OnInit{
     if (this.userId) {
       this.demandeService.getDemandesDisponibles(this.userId).subscribe(
         (data: Demande[]) => {
-          this.demandesDisponibles = data || []; // Assure-toi de ne pas avoir de null, sinon un tableau vide
+          this.demandesDisponibles = data || []; 
   
-          // Initialisation des détails de la demande
+         
           this.demandesDisponibles.forEach(demande => {
             if (demande.idDemande !== undefined) {
               this.showDetailsMap[demande.idDemande] = false;
@@ -170,7 +170,7 @@ envoyerPostulation(): void {
 
   }
   openModal(demande: Demande): void {
-    console.log('Ouverture du modal pour la demande :', demande); 
+    
     this.selectedDemande = demande;  
     this.commentaire = '';           
     this.showModal = true;          

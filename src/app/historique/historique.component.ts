@@ -127,7 +127,7 @@ export class HistoriqueComponent {
         toggleDemandes() {
           this.showDemandes = !this.showDemandes;
         }
-        goToProfile(prestataireId: number, utilisateurId: number, demandeId: number): void {
+        goToProfile(prestataireId: number): void {
           this.router.navigate([`/profile/${prestataireId}`]);
       }
       gererDemande(idDemande: string) {
