@@ -9,6 +9,7 @@ import { UtilisateurService } from '../service/utilisateur.service';
 import { Postulation } from 'src/models/Postulation';
 
 import { ToastrService } from 'ngx-toastr'
+import { WebsocketServiceService } from '../service/websocket-service.service';
 @Component({
   selector: 'app-compteprestaitre',
   templateUrl: './compteprestaitre.component.html',
@@ -23,17 +24,18 @@ export class CompteprestaitreComponent implements OnInit{
   showModal: boolean = false;
   selectedDemande!: Demande;
   commentaire: string = '';;
+  notificationMessage: string = '';
   showDemandes = false;
   constructor(private fileService: FileService,
      private sanitizer: DomSanitizer, 
      private utilisateurService:UtilisateurService,
      private toastr: ToastrService,
      private demandeService: DemandeService,
-     private router: Router,) {}
+     private router: Router,
+    ) {}
   ngOnInit(): void {
     this.loadUserData();
     this.getDemandesDisponibles();
-  
   }
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');

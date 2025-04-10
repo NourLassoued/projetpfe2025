@@ -1,7 +1,11 @@
 import { NgModule ,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+
 import { DateFnsModule } from 'ngx-date-fns';
+import { Stomp } from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -86,7 +90,8 @@ import { ReservationprestaitreComponent } from './reservationprestaitre/reservat
 import { MesevolutiosComponent } from './mesevolutios/mesevolutios.component';
 import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevolutiosprestaitre.component';
 import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
-
+import { WebsocketServiceService } from './service/websocket-service.service';
+import { StompServiceService } from './service/stomp-service.service';
 
 
 
@@ -165,6 +170,7 @@ import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscript
     MatIconModule,
     FullCalendarModule,
     MatSelectModule,
+   
     MatOptionModule,
     MatFormFieldModule,
     MatSnackBarModule,
@@ -172,7 +178,7 @@ import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscript
     DateFnsModule,
     BsDatepickerModule.forRoot() ,
    
-    BrowserAnimationsModule, // ✅ Obligatoire pour Toastr
+    BrowserAnimationsModule, 
     ToastrModule.forRoot({
       timeOut: 3000, 
       positionClass: 'toast-top-right',
@@ -184,7 +190,12 @@ import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscript
  
   
   providers: [  { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
-     NotificationService],
+     NotificationService,
+     WebsocketServiceService
+     
+
+     
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

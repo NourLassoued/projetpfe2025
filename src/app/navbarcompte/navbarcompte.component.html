@@ -53,7 +53,17 @@
     
     <div class="nav-icons">
         <a href="#"><i class="fas fa-envelope"></i></a>
-        <a href="#"><i class="fas fa-bell"></i></a>
+        <div class="notification-container">
+          <a href="#" (click)="toggleNotification()">
+            <i class="fas fa-bell"></i>  <!-- Icône de cloche -->
+          </a>
+        
+          <!-- Notification -->
+          <div *ngIf="notificationMessage" class="notification">
+            <p>{{ notificationMessage }}</p>
+          </div>
+        </div>
+        
         <div id="profile-container">
             <ng-container *ngIf="profileImageUrl; else defaultIcon">
                 <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>

@@ -1,20 +1,25 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../service/auth-service.service';
-import { I } from '@fullcalendar/core/internal-common';
+
 import { CategorieService } from '../service/categorie.service';
 import { ServiceeService } from '../service/servicee.service';
 import { Servicee } from 'src/models/Servicee';
+
+import { WebsocketServiceService } from '../service/websocket-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbarcompte',
   templateUrl: './navbarcompte.component.html',
   styleUrls: ['./navbarcompte.component.css']
 })
-export class NavbarcompteComponent implements    AfterViewInit {
+export class NavbarcompteComponent implements OnInit , AfterViewInit {
+  
+  messages: string[] = [];
     selectedServiceId!: number;  
     displayedCategories: any[] = []; 
     currentIndex: number = 0; 
@@ -22,16 +27,17 @@ export class NavbarcompteComponent implements    AfterViewInit {
     totalCategories: number = 0; 
     categories: any[] = [];
     imageUrls: string[] = [];
-  
+    notificationMessage: string = '';
     services: any[] = []; 
     selectedCategory: any = null;  
     allCategories: any[] = []; 
     Categories: any[] = [];
     filteredCategories: any[] = []; 
-     
+    private notificationsSubscription: any;
     
     itemsPerPage = 4; 
-  
+    notifications: string[] = [];
+
    
     newFilteredCategories: any[] = []
     searchQuery: string = '';
@@ -40,19 +46,24 @@ export class NavbarcompteComponent implements    AfterViewInit {
     showModal = false;
     showServiceModal = false; 
     selectedServices: any[] = [];
-    
+    notification: string | null = null;
+    showNotification: boolean = false;
   isMenuOpen: boolean = true;
      user: any = null;
     profileImageUrl: SafeUrl | null = null; 
     userRole: string | null = null;
-    
+   
+    private subscription: Subscription = new Subscription();
     constructor(private fileService: FileService, 
       private sanitizer: DomSanitizer, 
      
+   
       private authServiceService:AuthServiceService,
     private categorieService:CategorieService,private file:FileService,
         private service:ServiceeService,
         private router: Router,
+        private websocketService: WebsocketServiceService,
+        private cdr: ChangeDetectorRef
        ) {}
     
     ngAfterViewInit(): void {
@@ -61,13 +72,26 @@ export class NavbarcompteComponent implements    AfterViewInit {
     }
 
 
+
     ngOnInit(): void {
+      this.notificationsSubscription = this.websocketService.getNotifications().subscribe((message: string) => {
+        this.notificationMessage = message;  // Met à jour le message de notification
+      });
+      this.websocketService.connect(); // Connexion au service WebSocket
+    
+    
+    
+  
+   
+  
+
       this.userRole = this.authServiceService.getUserRole();
       this.loadUserData();
       this.getAllCategories();
+     
       this.redirectBasedOnRole();
-   
-    
+      
+     
       this.fileService.profileImage$.subscribe((newImageUrl) => {
         if (newImageUrl) {
           this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(newImageUrl);
@@ -76,7 +100,18 @@ export class NavbarcompteComponent implements    AfterViewInit {
       });
     
     }
-   
+
+    ngOnDestroy(): void {
+      // Se désabonner lors de la destruction du composant pour éviter les fuites de mémoire
+      if (this.notificationsSubscription) {
+        this.notificationsSubscription.unsubscribe();
+      }
+    }
+  
+  
+    toggleNotification(): void {
+      this.showNotification = !this.showNotification;
+    }
     redirectBasedOnRole(): void {
       if (this.userRole === 'prestataire') {
         this.router.navigate(['/Compteprestaitre']);
