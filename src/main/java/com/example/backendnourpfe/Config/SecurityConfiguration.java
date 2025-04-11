@@ -34,7 +34,12 @@ public class SecurityConfiguration {
             "/demandes/**",
             "/reservation/**",
             "/postulation/**",
-            "/avis/**"
+            "/avis/**",
+            "/notifications/**",
+            "/message/**",
+            "/ws/**",
+
+
 
     };
 
@@ -47,6 +52,7 @@ public class SecurityConfiguration {
 
         http
 
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
 
@@ -55,11 +61,11 @@ public class SecurityConfiguration {
 
                        .requestMatchers(HttpMethod.PUT, "/demandes/**").permitAll()
 
-
+                        .requestMatchers("/ws/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                  .anyRequest().authenticated()
-                      //  .anyRequest().permitAll()
+                     //          .anyRequest().authenticated()
+                    .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -77,67 +83,6 @@ public class SecurityConfiguration {
 
 
 }
-    //2versoin
-/*
-        private static final String[] WHITE_LIST_URL = {
-                "/api/v1/auth/**", // On autorise toutes les requêtes d'authentification
-                "/forgetPassword/**",
-                        "/api/v1/auth/upload",
-                         "/categories/**",
-                           "/services/**",
-
-
-
-
-
-        };
-
-        private final JwtAuthenticat jwtAuthFilter;
-        private final AuthenticationProvider authenticationProvider;
-        private final LogoutHandler logoutHandler;
-      @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-            http
-                    .csrf(AbstractHttpConfigurer::disable)
-                    .authorizeHttpRequests(req -> req
-
-                            .requestMatchers(WHITE_LIST_URL).permitAll()
-                            .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-
-                            .anyRequest().authenticated()
-                    )
-                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .authenticationProvider(authenticationProvider)
-                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                    .logout(logout -> logout
-                            .logoutUrl("/api/v1/auth/logout")
-                            .addLogoutHandler(logoutHandler)
-                            .logoutSuccessHandler((request, response, authentication) ->
-                                    SecurityContextHolder.clearContext()
-                            )
-                    );
-            return http.build();
-        }*/
-    /*
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(req -> req.anyRequest().permitAll()) // 🔥 Désactive toutes les restrictions
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .logout(logout -> logout
-                    .logoutUrl("/api/v1/auth/logout")
-                    .addLogoutHandler(logoutHandler)
-                    .logoutSuccessHandler((request, response, authentication) ->
-                            SecurityContextHolder.clearContext()
-                    )
-            );
-    return http.build();
-}
-*/
 
 
 

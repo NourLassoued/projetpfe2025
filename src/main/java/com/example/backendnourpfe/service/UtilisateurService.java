@@ -2,23 +2,22 @@ package com.example.backendnourpfe.service;
 
 
 import com.example.backendnourpfe.Config.JwtService;
+import com.example.backendnourpfe.Controlleur.NotificationController;
 import com.example.backendnourpfe.Respository.*;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.Hibernate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.management.ServiceNotFoundException;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -29,6 +28,8 @@ import java.util.stream.Collectors;
 
 public class UtilisateurService implements UtlisateurInterface {
     @Autowired
+    private NotificationController notificationController;
+    @Autowired
     private UtilisateurRepository utilisateurRepository;
 
     @Autowired
@@ -37,8 +38,7 @@ public class UtilisateurService implements UtlisateurInterface {
     private ServiceRepository serviceRepository;
     @Autowired
     private AvisRepository avisRepository;
-    @Autowired
-    private ReservationRepository reservationRepository;
+
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -51,6 +51,7 @@ public class UtilisateurService implements UtlisateurInterface {
     @Autowired
     private
     PostulationRepository postulationRepository;
+
 
 
     @Override
@@ -127,57 +128,6 @@ public List<Utilisateur> getAllPrestataires() {
     }
 
 
-/*
-    @Override
-    public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
-
-        Utilisateur utilisateur = utilisateurRepository.findByEmail(emailUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-
-        if (utilisateur.getRole() != UserRole.PARTICULIER) {
-            throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
-        }
-
-
-        Servicee service = serviceRepository.findById(idService)
-                .orElseThrow(() -> new RuntimeException("Service non trouvé"));
-
-
-        Adresse adresse = adresseRepository.findById(idAdresse)
-                .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
-
-
-        demande.setUtilisateur(utilisateur);
-        demande.setServicee(service);
-        demande.setAdressedemande(adresse);
-
-        demande.setStatusDemande(StatusDemande.EN_COURS);
-
-
-        Demande savedDemande = demandeRepository.save(demande);
-
-
-        List<Utilisateur> prestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idService);
-
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("demande", savedDemande);
-        response.put("prestataires", prestataires);
-
-        return response;
-    }
-
-
-
-
-
-
-
-
-
-
-*/
-
     @Override
     public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
 
@@ -201,20 +151,20 @@ public List<Utilisateur> getAllPrestataires() {
 
         Demande savedDemande = demandeRepository.save(demande);
 
-        // ⚙️ Partie filtrage des prestataires valides
+
         List<Utilisateur> tousPrestataires = utilisateurRepository.findUtilisateursByServiceOrderedByRating(idService);
         List<Utilisateur> prestatairesFiltres = new ArrayList<>();
 
         for (Utilisateur prestataire : tousPrestataires) {
 
-            // Adresse doit correspondre
+
             if (prestataire.getAdressee() == null || !prestataire.getAdressee().getIdAdresse().equals(idAdresse)) continue;
 
             for (Disponibilite dispo : prestataire.getDisponibilites()) {
 
                 String jourDemande = convertirJourEnAnglais(dispo.getJour());
                 LocalDateTime demandeDateTime = convertDateToLocalDateTime(savedDemande.getDate());
-                String jourDemandeFormate = demandeDateTime.getDayOfWeek().toString(); // ex: MONDAY
+                String jourDemandeFormate = demandeDateTime.getDayOfWeek().toString();
 
                 if (!jourDemandeFormate.equalsIgnoreCase(jourDemande)) continue;
 
@@ -253,16 +203,27 @@ public List<Utilisateur> getAllPrestataires() {
                                         "<p>Merci de votre collaboration,<br>L'équipe de la plateforme.</p>" +
                                         "</div>"
                         );
-
-                        ;
+                        String notifMessage = "📢 Nouvelle demande disponible pour le service : " + service.getNomservice();
+                        notificationController.sendNotificationToPrestataire(prestataire.getIdUtilisateur(), notifMessage);
                     }
                 }
-            }
-        }
+
+
+
+                    }
+                }
+
+
+
+
+
+
+
 
         Map<String, Object> response = new HashMap<>();
         response.put("demande", savedDemande);
         response.put("prestatairesNotifiés", prestatairesFiltres);
+
 
         return response;
     }
@@ -371,7 +332,7 @@ public List<Utilisateur> getAllPrestataires() {
                 dispo.setPrestataire(user); // Associer à l'utilisateur
 
                 if (dispo.getId() != null) {
-                    // Vérifier si la disponibilité existe en base
+
                     Optional<Disponibilite> existingDispo = disponibiliteRepository.findById(dispo.getId());
                     if (existingDispo.isPresent()) {
                         // Mise à jour de la disponibilité existante
@@ -386,7 +347,7 @@ public List<Utilisateur> getAllPrestataires() {
                         user.getDisponibilites().add(dispo);
                     }
                 } else {
-                    // Si pas d'ID, c'est une nouvelle disponibilité à ajouter
+
                     disponibiliteRepository.save(dispo);
                     user.getDisponibilites().add(dispo);
                 }
