@@ -46,10 +46,11 @@
         <h2>Quel jour vous convient le mieux ?</h2>
         <div class="calendar-container">
           <div class="calendar-header">
-            <button mat-icon-button (click)="prevMonth()">
+            <button mat-icon-button (click)="prevMonth()" [disabled]="isCurrentMonth()" >
               <mat-icon>chevron_left</mat-icon>
             </button>
             <span>{{ currentMonth | date: 'MMMM yyyy' }}</span>
+            
             <button mat-icon-button (click)="nextMonth()">
               <mat-icon>chevron_right</mat-icon>
             </button>
@@ -149,7 +150,7 @@
       <div class="footer">
           <button class="link" (click)="previousStepe()">Retour</button>
 
-          <button class="link-button"  type="submit" >Voir les prestataires</button>
+          <button class="link-button"   type="submit" >Voir les prestataires</button>
       </div>
   </div>
   

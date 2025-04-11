@@ -1,6 +1,6 @@
-import { Component, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component} from '@angular/core';
 
-import { Location } from '@angular/common';
+
 
 import { Adresse } from 'src/models/Adresse';
 import { Utilisateur } from 'src/models/Utilisateur';
@@ -25,7 +25,8 @@ export class DemandeComponent  {
 
   adresses: Adresse[] = [];
   demandeForm!: FormGroup;
-  currentMonth: Date = new Date(2025, 2, 1);
+  currentMonth: Date = new Date(); 
+  
   unknownHours: boolean = false;
   selectedAdresse: any = '';
   step: number = 1;
@@ -34,6 +35,7 @@ export class DemandeComponent  {
   selectedTimee: string = "";
   services: Servicee[] = []; 
   showModal: boolean = false;
+  
   utilisateurs: Utilisateur[] = []; 
   weekDays: string[] = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
   hours: string[] = [
@@ -56,25 +58,26 @@ export class DemandeComponent  {
   utilisateurActuel!: Utilisateur;
   isterForm: FormGroup | undefined;
    selectedFile: File | null = null;
-   selectedTime: number = 4;  
+   selectedTime: number = 4;
+   showCalendar: boolean = false;
+   
   constructor(private fb: FormBuilder, 
     private utilisateurservice:UtilisateurService,
   private adresse:AdresseService,
 private file:FileService,
 private route: ActivatedRoute,
 private authService: AuthServiceService,
-private router: Router, private location: Location,
+private router: Router,
  private forgetPasswordService:ForgetPasswordService, ) {
   
-  {
-    this.today = new Date();
-    this.today.setHours(0, 0, 0, 0);
-   
-   
-  }
+  
 }
   ngOnInit() {
-    
+    this.today.setHours(0, 0, 0, 0); // normaliser "today"
+    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1); // TOUJOURS le 1er jour du mois actuel
+    console.log("Mois actuel : ", this.currentMonth); // <== ça doit loguer avril
+  
+    this.updateCalendar();
  
     this.demandeForm = this.fb.group({
       emailUtilisateur: ['', [Validators.required, Validators.email]],
@@ -105,7 +108,11 @@ this.resetPasswordForm = this.fb.group({
 });
 
     this.loadAdresses();
-    this.updateCalendar();
+
+
+
+
+
     
   }
 
@@ -118,8 +125,11 @@ this.resetPasswordForm = this.fb.group({
     this.showModal = false;
   }
   submitDemande() {
+    
     if (this.demandeForm.invalid) {
+      console.warn(" Formulaire invalide", this.demandeForm.value);
       return;
+      
     }
   
     const emailUtilisateur = this.demandeForm.value.emailUtilisateur;
@@ -135,10 +145,14 @@ this.resetPasswordForm = this.fb.group({
     const utilisateur = this.utilisateurs.find(u => u.email === emailUtilisateur);
     const service = this.services.find(s => s.idservice === idService);
     const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
-  
+
     this.authService.authenticate(emailUtilisateur, password).subscribe(
       (authResponse) => {
+      
         const decodedToken: any = jwtDecode(authResponse.access_token);
+        const emailUtilisateur = decodedToken.sub;
+      
+
   
         const demande: Demande = {
           description: description,
@@ -151,8 +165,8 @@ this.resetPasswordForm = this.fb.group({
           title: title, 
           telephoneNumber: telephoneNumber  
         };
-  
-        console.log("Envoi de la demande :", demande);
+      
+       
         this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
           (response) => {
            
@@ -259,7 +273,9 @@ this.resetPasswordForm = this.fb.group({
     if (this.step > 0) {
       this.step--;
     }
-  }updateCalendar() {
+  }
+  /*
+  updateCalendar() {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
   
@@ -287,20 +303,62 @@ this.resetPasswordForm = this.fb.group({
     console.log('Today:', today); 
   }
   
+ 
+  /*
   
   prevMonth() {
     this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
     this.currentMonth = new Date(this.currentMonth);
     this.updateCalendar();
-  }
+  }*/
+    updateCalendar() {
+      const year = this.currentMonth.getFullYear();
+      const month = this.currentMonth.getMonth();
+    
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDayOfWeek = new Date(year, month, 1).getDay();
+      const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+    
+      this.daysInMonth = [];
+    
+      for (let i = 0; i < offset; i++) {
+        this.daysInMonth.push({ day: 0, date: new Date(year, month, i - offset + 1) });
+      }
+    
+      for (let i = 1; i <= daysInMonth; i++) {
+        this.daysInMonth.push({ day: i, date: new Date(year, month, i) });
+      }
+    }
+    
+    prevMonth() {
+      const prev = new Date(this.currentMonth);
+      prev.setMonth(prev.getMonth() - 1);
+    
+      // Vérifie si le mois précédent est avant le mois actuel
+      const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
+      
+      if (prev < currentMonthStart) {
+        return; // Stop, on ne va pas plus loin
+      }
+    
+      this.currentMonth = prev;
+      this.updateCalendar();
+    }
+    
 
   nextMonth() {
     this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
     this.currentMonth = new Date(this.currentMonth);
     this.updateCalendar();
   }
+  isCurrentMonth(): boolean {
+    return (
+      this.currentMonth.getFullYear() === this.today.getFullYear() &&
+      this.currentMonth.getMonth() === this.today.getMonth()
+    );
+  }
+  
 
-  showCalendar: boolean = false;
  
 
   nextStep() {

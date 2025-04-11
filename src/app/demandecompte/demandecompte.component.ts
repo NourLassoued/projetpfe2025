@@ -27,6 +27,7 @@ export class DemandecompteComponent {
   step: number = 1;
   showResetForm = false; 
  
+  showCalendar: boolean = false;
   selectedTimee: string = "";
   services: Servicee[] = [];
   showModal: boolean = false;
@@ -53,21 +54,20 @@ export class DemandecompteComponent {
   utilisateurActuel!: Utilisateur;
   isterForm: FormGroup | undefined;
    selectedFile: File | null = null;
-   selectedTime: number = 4;  
+   selectedTime: number = 4; 
+   
+   
   constructor(private fb: FormBuilder, 
-    private utilisateurservice:UtilisateurService,
+  private utilisateurservice:UtilisateurService,
   private adresse:AdresseService,
-
-private route: ActivatedRoute,
-
-private router: Router
+  private route: ActivatedRoute,
+  private router: Router
  ) {
   
   {
     this.today = new Date();
-    this.today.setHours(0, 0, 0, 0);
-   
-    this.demandeForm = this.fb.group({
+   this.today.setHours(0, 0, 0, 0);
+   this.demandeForm = this.fb.group({
       
       description: ['', Validators.required],
       date: ['', Validators.required],
@@ -77,7 +77,7 @@ private router: Router
       title: ['', Validators.required],  
       emailUtilisateur: ['', [Validators.required, Validators.email]],
       
-  telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
+      telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
  
     });
 
@@ -85,16 +85,13 @@ private router: Router
   
 
    
-  }ngOnInit(): void {
+  }
+  ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
     
       this.serviceId = +params['idservice'];  
       this.email = params['email'];  
-  
-
-  
-      
-      this.demandeForm.patchValue({
+       this.demandeForm.patchValue({
         emailUtilisateur: this.email,
         idService: this.serviceId
       });
@@ -106,7 +103,12 @@ private router: Router
   
   
     this.loadAdresses();
+    this.today.setHours(0, 0, 0, 0); 
+    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1); 
+  
+  
     this.updateCalendar();
+  
   }
   
   
@@ -117,7 +119,8 @@ private router: Router
   closeModal() {
    
     this.showModal = false;
-  }  submitDemande(): void {
+  }  
+  submitDemande(): void {
     if (this.demandeForm.invalid) {
       return;
     }
@@ -240,48 +243,51 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
 
   previousStepe() {
     this.step = 1;
-  }updateCalendar() {
+  }
+  updateCalendar() {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
   
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDay = new Date(year, month, 1).getDay();
-    const offset = firstDay === 0 ? 6 : firstDay - 1;
-  
-   
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
   
     this.daysInMonth = [];
-    
   
     for (let i = 0; i < offset; i++) {
       this.daysInMonth.push({ day: 0, date: new Date(year, month, i - offset + 1) });
     }
   
-  
     for (let i = 1; i <= daysInMonth; i++) {
-      const dayDate = new Date(year, month, i);
-      this.daysInMonth.push({ day: i, date: dayDate });
+      this.daysInMonth.push({ day: i, date: new Date(year, month, i) });
     }
-  
-    console.log('Today:', today); 
   }
-  
   
   prevMonth() {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
-    this.currentMonth = new Date(this.currentMonth);
+    const prev = new Date(this.currentMonth);
+    prev.setMonth(prev.getMonth() - 1);
+  
+    // Vérifie si le mois précédent est avant le mois actuel
+    const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
+    
+    if (prev < currentMonthStart) {
+      return; // Stop, on ne va pas plus loin
+    }
+  
+    this.currentMonth = prev;
     this.updateCalendar();
   }
-
   nextMonth() {
     this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
     this.currentMonth = new Date(this.currentMonth);
     this.updateCalendar();
   }
-
-  showCalendar: boolean = false;
+  isCurrentMonth(): boolean {
+    return (
+      this.currentMonth.getFullYear() === this.today.getFullYear() &&
+      this.currentMonth.getMonth() === this.today.getMonth()
+    );
+  }
  
 
   nextStep() {

@@ -53,16 +53,24 @@
     
     <div class="nav-icons">
         <a href="#"><i class="fas fa-envelope"></i></a>
-        <div class="notification-container">
-          <a href="#" (click)="toggleNotification()">
-            <i class="fas fa-bell"></i>  <!-- Icône de cloche -->
-          </a>
-        
-          <!-- Notification -->
-          <div *ngIf="notificationMessage" class="notification">
-            <p>{{ notificationMessage }}</p>
-          </div>
-        </div>
+      <!-- Icône de notification -->
+<div class="notification-container">
+  <a href="#" (click)="toggleNotification()" class="notification-icon">
+    <i class="fas fa-bell"></i>
+    <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+  </a>
+
+  <!-- Liste déroulante des notifications -->
+  <div *ngIf="showNotification" class="notification-dropdown">
+    <div *ngIf="notifications.length === 0">
+      <p>Aucune notification</p>
+    </div>
+    <div *ngFor="let message of notifications"   (click)="goToComptePrestataireAvecMessage(message)" class="notification-item">
+      {{ message }}
+    </div>
+  </div>
+</div>
+
         
         <div id="profile-container">
             <ng-container *ngIf="profileImageUrl; else defaultIcon">

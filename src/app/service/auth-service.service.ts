@@ -111,7 +111,7 @@ authenticate(email: string, password: string): Observable<any> {
       });
     }
   }
-  private isAdmin: boolean = false;
+
 } 
 
   

@@ -345,49 +345,44 @@
       font-size: 24px; /* taille de l'icône */
     }
     
-    .notification-bubble {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      width: 12px;
-      height: 12px;
-      background-color: red;
-      color: white;
-      font-size: 10px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 12px;
+    .notification-container {
+      position: relative;
+      display: inline-block;
     }
     
-    .notification-toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: #28a745;
-      color: white;
-      padding: 15px;
-      border-radius: 8px;
-      z-index: 1000;
+    .notification-icon {
+      position: relative;
+      color: black;
+      font-size: 24px;
+      text-decoration: none;
     }
-    /* Style de la notification */
-.notification {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #f8d7da;  /* Rouge clair */
-  color: #721c24;              /* Rouge sombre */
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: 1px solid #f5c6cb;   /* Rouge plus pâle pour la bordure */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 9999;               /* Assurer que la notification soit au-dessus des autres éléments */
-  font-size: 1rem;
-  transition: opacity 0.5s ease-in-out;
-  opacity: 1;
-}
-
-/* Animation de disparition après quelques secondes */
-.notification.fade-out {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
+    
+    .badge {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 3px 6px;
+      font-size: 12px;
+    }
+    
+    .notification-dropdown {
+      position: absolute;
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 10px;
+      width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .notification-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+    

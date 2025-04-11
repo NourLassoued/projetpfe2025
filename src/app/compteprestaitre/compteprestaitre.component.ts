@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import {jwtDecode } from 'jwt-decode';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { Demande } from 'src/models/Demande';
 import { UtilisateurService } from '../service/utilisateur.service';
@@ -26,16 +26,27 @@ export class CompteprestaitreComponent implements OnInit{
   commentaire: string = '';;
   notificationMessage: string = '';
   showDemandes = false;
+  notifMessage: string | null = null;
   constructor(private fileService: FileService,
      private sanitizer: DomSanitizer, 
      private utilisateurService:UtilisateurService,
      private toastr: ToastrService,
      private demandeService: DemandeService,
      private router: Router,
+     private route: ActivatedRoute
     ) {}
   ngOnInit(): void {
     this.loadUserData();
     this.getDemandesDisponibles();
+    this.route.queryParams.subscribe(params => {
+      this.notifMessage = params['notif'];
+      if (this.notifMessage) {
+        console.log('📬 Message reçu via queryParams :', this.notifMessage);
+        // tu peux maintenant l'afficher ou déclencher une action
+      }
+    });
+  
+ 
   }
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');

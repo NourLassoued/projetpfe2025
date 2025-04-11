@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
@@ -10,7 +10,6 @@ import { ServiceeService } from '../service/servicee.service';
 import { Servicee } from 'src/models/Servicee';
 
 import { WebsocketServiceService } from '../service/websocket-service.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbarcompte',
@@ -32,12 +31,13 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
     selectedCategory: any = null;  
     allCategories: any[] = []; 
     Categories: any[] = [];
+    
     filteredCategories: any[] = []; 
     private notificationsSubscription: any;
     
     itemsPerPage = 4; 
     notifications: string[] = [];
-
+    isConnected: boolean = false; 
    
     newFilteredCategories: any[] = []
     searchQuery: string = '';
@@ -53,7 +53,9 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
     profileImageUrl: SafeUrl | null = null; 
     userRole: string | null = null;
    
-    private subscription: Subscription = new Subscription();
+unreadCount: number = 0;
+   
+   
     constructor(private fileService: FileService, 
       private sanitizer: DomSanitizer, 
      
@@ -64,28 +66,62 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
         private router: Router,
         private websocketService: WebsocketServiceService,
         private cdr: ChangeDetectorRef
+       
        ) {}
-    
+       ngOnDestroy(): void {
+       
+        if (this.notificationsSubscription) {
+          this.notificationsSubscription.unsubscribe();
+        }
+      }
+     
     ngAfterViewInit(): void {
+      const user = this.authServiceService.getCurrentUser();
+      this.user = user;
+      this.isConnected = !!user;
+    
+    
     this.toggleMenu();
+    this.cdr.detectChanges();
       
     }
 
 
 
-    ngOnInit(): void {
-      this.notificationsSubscription = this.websocketService.getNotifications().subscribe((message: string) => {
-        this.notificationMessage = message;  // Met à jour le message de notification
-      });
-      this.websocketService.connect(); // Connexion au service WebSocket
-    
-    
-    
+   
+      ngOnInit(): void {
+        setTimeout(() => {
+          const user = this.authServiceService.getCurrentUser();
+          this.user = user;
+          this.isConnected = !!user;
+        });
+
+
+       
+        this.userRole = this.authServiceService.getUserRole();
+     
+        this.user = this.authServiceService.getCurrentUser(); 
+        
+        if (this.userRole === 'PRESTATAIRE') {
+          this.websocketService.connect(this.user.idUtilisateur, this.userRole);
+          this.notificationsSubscription = this.websocketService.getNotifications().subscribe((message: string) => {
+        
+            if (message && !this.notifications.includes(message)) {
+              this.notifications.unshift(message); // Ajout en haut
+              this.unreadCount++;
+           
+            }
+          });
+        }
+        
+          
+          this.cdr.detectChanges(); 
+      
   
    
   
 
-      this.userRole = this.authServiceService.getUserRole();
+     
       this.loadUserData();
       this.getAllCategories();
      
@@ -100,25 +136,41 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
       });
     
     }
-
-    ngOnDestroy(): void {
-      // Se désabonner lors de la destruction du composant pour éviter les fuites de mémoire
-      if (this.notificationsSubscription) {
-        this.notificationsSubscription.unsubscribe();
+    goToComptePrestataireAvecMessage(message: string): void {
+  
+    
+      if (this.router.url.startsWith('/Compteprestaitre')) {
+      
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/Compteprestaitre'], {
+            queryParams: { notif: message }
+          });
+        });
+      } else {
+      
+        this.router.navigate(['/Compteprestaitre'], {
+          queryParams: { notif: message }
+        });
       }
     }
+   
+   
   
-  
-    toggleNotification(): void {
+    toggleNotification() {
       this.showNotification = !this.showNotification;
-    }
+    
+      if (this.showNotification) {
+      
+        this.unreadCount = 0;
+      }
+    }    
     redirectBasedOnRole(): void {
       if (this.userRole === 'prestataire') {
         this.router.navigate(['/Compteprestaitre']);
       } else if (this.userRole === 'entreprise') {
         this.router.navigate(['/Compteprestaitre']);
       } else {
-        console.error('Rôle inconnu');
+       
       }
     }
     
@@ -130,7 +182,7 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
        
       },
       (error) => {
-       // console.error('Erreur lors du chargement de l\'image', error);
+     
       }
     );
   }
@@ -155,7 +207,7 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
           console.error(' Erreur lors du décodage du token:', error);
         }
       } else {
-        console.warn("⚠ Aucun token trouvé dans localStorage !");
+        console.warn(" Aucun token trouvé dans localStorage !");
       }
     }
   
@@ -252,7 +304,8 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
           this.showServiceModal = true;
         } else {
           console.error('Catégorie non trouvée');
-        }}
+        }
+      }
       getAllServicesByCategorie(categorieId: number) {
         this.service.getAllServicesByCategorie(categorieId).subscribe(
           (services: Servicee[]) => {

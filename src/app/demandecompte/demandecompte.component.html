@@ -46,7 +46,7 @@
           <h2>Quel jour vous convient le mieux ?</h2>
           <div class="calendar-container">
             <div class="calendar-header">
-              <button mat-icon-button (click)="prevMonth()">
+              <button mat-icon-button (click)="prevMonth()" [disabled]="isCurrentMonth()" >
                 <mat-icon>chevron_left</mat-icon>
               </button>
               <span>{{ currentMonth | date: 'MMMM yyyy' }}</span>
