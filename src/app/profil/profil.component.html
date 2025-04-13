@@ -54,9 +54,16 @@
         <button class="contact-btn message-btn">
             <i class="fas fa-envelope"></i> Message
         </button>
+        
         <a [href]="'tel:' + user?.telephoneNumber" class="contact-btn phone-btn">
             <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
         </a>
+    </div>
+    <div class="message-form">
+      <textarea [(ngModel)]="contenuMessage" placeholder="📧 Écrivez votre message ici..." rows="3"></textarea>
+      <button class="contact-btn send-btn" (click)="envoyerMessage()">
+        <i class="fas fa-paper-plane"></i> Envoyer
+      </button>
     </div>
     
   

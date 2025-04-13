@@ -80,13 +80,13 @@ export class ReservationcoursComponent {
               
                 if (reservation.prestataire?.image) {
                   this.getImage(reservation.prestataire.image, index, 'prestataire');
-                  console.log(reservation.prestataire.image);
+                 
                 }
 
               });
             },
             (error) => {
-              console.error('Erreur lors de la récupération des réservations en attente', error);
+              
             }
           );
         }

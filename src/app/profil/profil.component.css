@@ -361,9 +361,10 @@ body {
   button i {
     margin-right: 8px; /* Espacement entre l'icône et le texte */
     font-size: 18px; /* Taille de l'icône */
-  }.notification-box {
+  }
+  .notification-box {
     position: fixed;
-    top: 370px;
+    top: 250px;
 
     transform: translateX(-50%);
     background: #ffffff;
@@ -448,6 +449,7 @@ body {
 
 .notification-box {
     margin-left: 420px;
+  
 }
 
 /* Style du bouton Fermer */
@@ -544,3 +546,36 @@ button.close-btn {
   .experience{
     margin-top: 5px;
   }  
+
+  .message-form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-form textarea {
+    resize: none;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+  }
+  
+  .message-form .send-btn {
+   
+    background-color: #4CAF50;
+    color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  width: 250px;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin: 15px auto 0;
+  transition: background 0.2s;
+  }
+ 
+ 

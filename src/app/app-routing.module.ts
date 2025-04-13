@@ -56,6 +56,7 @@ import { ReservationprestaitreComponent } from './reservationprestaitre/reservat
 import { MesevolutiosComponent } from './mesevolutios/mesevolutios.component';
 import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevolutiosprestaitre.component';
 import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 const routes: Routes = [
@@ -262,7 +263,12 @@ component:InformatiqueComponent
   {
     path: 'Mesevolutions',
     component:MesevolutiosprestaitreComponent 
+  },
+  {
+    path: 'Chat',
+    component:ChatComponent 
   }
+
 
 
 

@@ -10,10 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 import { Reservation } from 'src/models/Reservation';
 import { AvisService } from '../service/avis.service';
 
-import { fr } from 'date-fns/locale'; // Pour afficher en français
+import { fr } from 'date-fns/locale'; 
 import { Avis } from 'src/models/Avis';
 
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
+import { MessageService } from '../service/message.service';
+import { UserRole } from 'src/models/UserRole';
+
 
 @Component({
   selector: 'app-profil',
@@ -35,30 +38,44 @@ export class ProfilComponent {
   indexDebut: number = 0;
   avisParPage: number = 3;
    avisList: Avis[] = []; 
+   userRole: string = '';
+   contenuMessage: string = ''; 
   constructor(private fileService: FileService, 
-  private sanitizer: DomSanitizer,
+ 
   private activatedRoute: ActivatedRoute,
   private utilisateurservice:UtilisateurService ,
   private reservationService: ReservationService,
   private cdr: ChangeDetectorRef,
   private avisService: AvisService,
-    private toastr: ToastrService){}
+    private toastr: ToastrService,
+    private messageService: MessageService,){}
 
       ngOnInit(): void {
         this.loadUserData();
-
+      
+   
+      
         this.activatedRoute.paramMap.subscribe(params => {
-          this.prestataireId = +params.get('prestataireId')!; 
+          const id = params.get('id');
+          if (id) {
+            this.prestataireId = +id;
+            this.loadAvis(this.prestataireId); 
+          } else {
+            console.error("ID du prestataire manquant dans les paramètres de l'URL !");
+          }
         });
-        
+      
+       
         this.activatedRoute.queryParamMap.subscribe(params => {
           this.utilisateurId = +params.get('utilisateurId')!;
           this.demandeId = +params.get('demandeId')!; 
+         
           
         });
         
         this.activatedRoute.paramMap.subscribe(params => {
           const userIdParam = params.get('id');  
+       
       
           if (userIdParam) {
             this.userId = +userIdParam;
@@ -104,6 +121,7 @@ export class ProfilComponent {
             );
           }
         });
+      
       }
 
       mettreAJourAffichage() {
@@ -143,6 +161,8 @@ export class ProfilComponent {
           }
     
           this.user = decodedToken;
+          this.userId = decodedToken.id;
+          
           if (this.user.image) {
             this.loadProfileImage(this.user.image);
         
@@ -187,24 +207,29 @@ export class ProfilComponent {
             }
           },
           (error) => {
-            console.error('Erreur de chargement de l\'image', error);
+            
           }
         );
       }
       
-      loadAvis(userId: number): void {
-        this.avisService.getAvisParprestatitr(userId).subscribe(
+      loadAvis(prestataireId: number): void {
+
+        if (!prestataireId) {
+          console.error("ID du prestataire manquant !");
+          return;
+        }
+        this.avisService.getAvisParprestatitr(prestataireId).subscribe(
           (avisdata) => {
             this.avisList = avisdata;
       
             this.avisList?.forEach((avis, index) => {
-              // Vérification que l'utilisateur et l'image existent
+           
               if (avis.utilisateur?.image) {
                 this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
                 this.mettreAJourAffichage();
-                console.log(`Image de l'utilisateur à l'index ${index}:`, avis.utilisateur.image);
+                
               } else {
-                console.log(`Utilisateur à l'index ${index} est undefined ou n'a pas d'image`);
+               
               }
             });
             this.cdr.detectChanges();
@@ -262,6 +287,41 @@ reserver(prestataireId: number) {
                 
                   return formatDistanceToNow(date, { addSuffix: true, locale: fr });
                 }
-              
+
+
+                envoyerMessage(): void {
+                  if (!this.contenuMessage || !this.contenuMessage.trim()) {
+                    console.error("Champs requis manquants.");
+                    return;
+                  }
+                  const sender = new Utilisateur();
+                  sender.idUtilisateur = this.utilisateurId;
+                  sender.role = UserRole.PARTICULIER;
+                
+                
+                  const receiver = new Utilisateur();
+                  receiver.idUtilisateur = this.user.idUtilisateur;
+                  receiver.role = UserRole.PRESTATAIRE;
+                  const message = {
+               
+                  sender: sender,
+                 receiver: receiver,
+                    content: this.contenuMessage,
+                    timestamp: new Date(),
+                    delivered: false
+                  };
+
+                  this.messageService.sendMessage(message).subscribe({
+                    next: () => {
+                      console.log("Message envoyé avec succès");
+                      this.contenuMessage = ''; 
+                    },
+                    error: (err) => {
+                      console.error("Erreur lors de l'envoi du message :", err);
+                    }
+                  });
+                }
+         
+                
 
     }

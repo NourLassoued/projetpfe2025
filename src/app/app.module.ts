@@ -92,6 +92,8 @@ import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevo
 import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
 import { WebsocketServiceService } from './service/websocket-service.service';
 import { StompServiceService } from './service/stomp-service.service';
+import { ChatComponent } from './chat/chat.component';
+
 
 
 
@@ -150,7 +152,8 @@ import { StompServiceService } from './service/stomp-service.service';
     ReservationprestaitreComponent,
     MesevolutiosComponent,
     MesevolutiosprestaitreComponent,
-
+    ChatComponent,
+ 
    
 
   ],

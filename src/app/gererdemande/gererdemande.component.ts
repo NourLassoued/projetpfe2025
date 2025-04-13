@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { FileService } from '../service/file.service';
@@ -200,7 +200,7 @@ prestataireImageUrls: string[] = [];
                     nomservice: service.replace(/[\r\n]+/g, '').trim()
                   }));
                 } else {
-                  console.warn(`⚠ Aucun service trouvé pour ${utilisateur.nom} !`);
+                  console.warn(`Aucun service trouvé pour ${utilisateur.nom} !`);
                   utilisateur.servicesOfferts = [];
                 }
   
@@ -316,7 +316,7 @@ updateDemande(): void {
     },
     (error) => {
       console.error('Erreur lors de la mise à jour:', error);
-      alert('Erreur lors de la mise à jour de la demande');
+     
     }
   );
 }

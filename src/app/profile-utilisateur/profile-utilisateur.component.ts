@@ -184,8 +184,10 @@ loadUserData(): void {
         this.avisList?.forEach((avis, index) => {
           // Vérification que l'utilisateur et l'image existent
           if (avis.utilisateur?.image) {
+
             this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
             this.mettreAJourAffichage();
+          
             console.log(`Image de l'utilisateur à l'index ${index}:`, avis.utilisateur.image);
           } else {
             console.log(`Utilisateur à l'index ${index} est undefined ou n'a pas d'image`);
