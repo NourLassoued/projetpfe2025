@@ -18,6 +18,9 @@ public interface AvisRepository extends JpaRepository<Avis,Long> {
     @Query("SELECT a.idAvis, a.note, a.commentaire, a.dateAvis, a.utilisateur.nom " +
             "FROM Avis a WHERE a.avisUtilisateur.idUtilisateur = :idAvisUtilisateur")
     List<Object[]> findAvisByAvisUtilisateurId(Long idAvisUtilisateur);
+
+    @Query("SELECT COUNT(a) FROM Avis a WHERE a.avisUtilisateur.idUtilisateur = :idUtilisateur")
+    long countByUtilisateurId(@Param("idUtilisateur") Long idUtilisateur);
 }
 
 

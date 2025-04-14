@@ -149,11 +149,10 @@ public class Utilisateur  implements UserDetails  {
     @JsonIgnoreProperties("prestataire")
     private List<Postulation> postulations;
     @JsonIgnore
-    @OneToMany(mappedBy = "sendere", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender")
     private List<Message> messagesEnvoyes;
 @JsonIgnore
-
-    @OneToMany(mappedBy = "recipiente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver")
     private List<Message> messagesRecus;
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
@@ -172,7 +171,7 @@ public class Utilisateur  implements UserDetails  {
         this.adressee = adressee;
     }
 
-
+@JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return  List.of(new SimpleGrantedAuthority(role.name()));
@@ -217,4 +216,5 @@ public class Utilisateur  implements UserDetails  {
             return dispoMap;
         }).collect(Collectors.toList()) : Collections.emptyList();
     }
+
 }
