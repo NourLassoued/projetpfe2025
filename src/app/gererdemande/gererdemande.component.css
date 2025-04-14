@@ -263,11 +263,7 @@ textarea {
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
 }
-.profile img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-}
+
 .user-info {
   display: flex;
   flex-direction: column;
@@ -373,4 +369,56 @@ blockquote {
  color: black;
 
  
+}
+
+.score {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+
+  display: flex;
+  align-items: center;
+}
+.score img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+.score span {
+  font-size: 14px;
+  color: #666;
+ 
+}
+
+.score span.avis {
+  font-size: 14px;
+  color: #888;
+  font-style: italic;
+}
+
+.score .loading {
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.score .star {
+  color: #f39c12; /* Star color (golden yellow) */
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.score .score-value {
+
+  font-weight: bold;
+  color: #1d1d1d;
+
+  font-size: 17px;
+
+}
+
+.score .score-value.non-note {
+  font-style: italic;
+  color: #e74c3c; /* Red color for 'Non noté' */
 }

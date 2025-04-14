@@ -93,6 +93,7 @@ import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscript
 import { WebsocketServiceService } from './service/websocket-service.service';
 import { StompServiceService } from './service/stomp-service.service';
 import { ChatComponent } from './chat/chat.component';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
 
 
@@ -153,6 +154,7 @@ import { ChatComponent } from './chat/chat.component';
     MesevolutiosComponent,
     MesevolutiosprestaitreComponent,
     ChatComponent,
+    TimeAgoPipe,
  
    
 
@@ -166,6 +168,7 @@ import { ChatComponent } from './chat/chat.component';
     MatDialogModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
+    
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,

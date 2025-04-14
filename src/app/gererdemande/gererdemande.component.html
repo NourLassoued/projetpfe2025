@@ -91,11 +91,23 @@
     <div  *ngFor="let utilisateur of utilisateurs  ;let i = index" class="card">
       <div  class="profile">
         
-        <img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
-        <div class="user-info" *ngFor="let avis of utilisateur.avisRecus">
-          <h4>{{ utilisateur.nom }}</h4>
-          <p class="rating">⭐ {{ avis.note }}  /5 </p>
-      </div>
+        
+        <p class="score">
+          <img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
+          <span class="score-value" *ngIf="scoreMap[utilisateur.idUtilisateur!] !== undefined">
+            ⭐ {{ scoreMap[utilisateur.idUtilisateur!] || 'Non noté' }}
+            <span class="avis" *ngIf="nombreAvisMap[utilisateur.idUtilisateur!] !== undefined">
+              ({{ nombreAvisMap[utilisateur.idUtilisateur!] }})
+            </span>
+          </span>
+          <span class="loading" *ngIf="scoreMap[utilisateur.idUtilisateur!] === undefined">
+            Chargement...
+          </span>
+        </p>
+        
+        
+        
+       
           
           <p class="price">{{ utilisateur.tarifs }}dt</p>
       </div>

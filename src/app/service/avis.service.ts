@@ -28,5 +28,8 @@ export class AvisService {
   getScoreMoyen(utilisateurId: number): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/score/${utilisateurId}`);
   }
+  getNombreAvisPourUtilisateur(idUtilisateur: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count/${idUtilisateur}`);
+  }
   
 }

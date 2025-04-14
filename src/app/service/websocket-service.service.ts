@@ -19,7 +19,8 @@ export class WebsocketServiceService {
   private messagesSubject: Subject<IMessage> = new Subject(); 
   private userRole: string | null = null; // Récupère le rôle de l'utilisateur
   user: any = null;
-  
+
+  private connected: boolean = false;
 
   constructor(private authServiceService: AuthServiceService,
     private http: HttpClient
@@ -28,6 +29,8 @@ export class WebsocketServiceService {
   }
 
   connect(userId: number, role: string): void {
+    this.connected = true;
+
     const token = localStorage.getItem('accessToken');
   
     if (token) {
@@ -43,10 +46,7 @@ export class WebsocketServiceService {
     this.userRole = this.authServiceService.getUserRole();
     this.user = this.authServiceService.getCurrentUser();
   
-    if (role !== 'PRESTATAIRE') {
-      console.log('L’utilisateur n’est pas un prestataire, pas de connexion WebSocket.');
-      return;
-    }
+ 
   
     this.client = new Client({
       brokerURL: 'ws://localhost:8088/nour/ws/websocket',
@@ -60,9 +60,18 @@ export class WebsocketServiceService {
   
         // 2️Récupération des anciennes notifications
         this.http.get<string[]>(`http://localhost:8088/nour/notifications/${userId}`)
+        /*
           .subscribe(oldMessages => {
             oldMessages.forEach(msg => this.notificationsSubject.next(msg));
+          });*/
+          .subscribe(oldMessages => {
+            if (Array.isArray(oldMessages)) {
+              oldMessages.forEach(msg => this.notificationsSubject.next(msg));
+            } else {
+           
+            }
           });
+
           this.client.subscribe(`/topic/messages/${userId}`, (message: IMessage) => {
             // Envoi du message reçu au sujet messagesSubject
             this.messagesSubject.next(message);
@@ -91,5 +100,34 @@ export class WebsocketServiceService {
      
     }
   }
+  
+  sendMessagetempsreel(message: any): void {
+    if (this.client && this.connected) {
+      this.client.publish({
+        destination: '/app/chat',
+        body: JSON.stringify(message)
+      });
+    } else {
+      console.error('STOMP client not connected!');
+    }
+  }
+  isConnected(): boolean {
+    return this.client && this.client.connected;
+  }
+  
+  waitUntilConnected(callback: () => void): void {
+    if (this.isConnected()) {
+      callback();
+    } else {
+      const interval = setInterval(() => {
+        if (this.isConnected()) {
+          clearInterval(interval);
+          callback();
+        }
+      }, 200); // essaie toutes les 200ms
+    }
+  }
+  
+  
   
 }

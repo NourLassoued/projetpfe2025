@@ -30,5 +30,8 @@ export class MessageService {
   getConversation(senderId: number, receiverId: number): Observable<Message[]> {
     return this.http.get<Message[]>(`${this.apiUrl}/conversation/${senderId}/${receiverId}`);
   }
+  getLastMessagesByUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/last/${userId}`);
+  }
 
 }

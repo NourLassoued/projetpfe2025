@@ -38,7 +38,7 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
     itemsPerPage = 4; 
     notifications: string[] = [];
     isConnected: boolean = false; 
-   
+    newMessage: boolean = false;
     newFilteredCategories: any[] = []
     searchQuery: string = '';
     filteredServices: Servicee[] = [];
@@ -95,7 +95,12 @@ unreadCount: number = 0;
           this.user = user;
           this.isConnected = !!user;
         });
-
+        this.websocketService.getMessages().subscribe((message) => {
+          this.newMessage = true;
+      
+          
+        });
+      
 
        
         this.userRole = this.authServiceService.getUserRole();

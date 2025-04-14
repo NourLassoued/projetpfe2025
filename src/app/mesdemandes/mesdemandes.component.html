@@ -45,7 +45,7 @@
                     <img [src]="imageUrls[i]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
                    
                         <div class="postulations-section" *ngIf="demande.idDemande !== undefined">
-                            <span class="notification-text"><i class="fas fa-bell notification-icon"></i>  Vous avez reçu {{ demandesAvecPostulations[demande.idDemande] ?? 0 }} offres</span>
+                            <span class="notification-text"><i class="fas fa-bell notification-icon"></i>  Vous avez reçu {{ demandesAvecPostulations[demande.idDemande] }} offres</span>
             
                             <!-- Vérification que postulations existe avant de boucler dessus -->
                             <div class="prestataire-avatars" *ngIf="(postulations[demande.idDemande] ?? []).length > 0">

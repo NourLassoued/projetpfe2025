@@ -52,7 +52,8 @@
   
     
     <div class="nav-icons">
-        <a  [routerLink]="['/Chat']" ><i class="fas fa-envelope"></i></a>
+        <a  [routerLink]="['/Chat']" ><i class="fas fa-envelope"></i>
+          <span *ngIf="newMessage" class="badge">1</span></a>
       <!-- Icône de notification -->
 <div class="notification-container">
   <a href="#" (click)="toggleNotification()" class="notification-icon">

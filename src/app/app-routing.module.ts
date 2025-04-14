@@ -277,7 +277,7 @@ component:InformatiqueComponent
 
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })], // 🔥 Ajout de cette option
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })], 
     exports: [RouterModule]
   })
   export class AppRoutingModule { }

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {  SafeUrl } from '@angular/platform-browser';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { FileService } from '../service/file.service';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +18,7 @@ import { MessageService } from '../service/message.service';
 import { UserRole } from 'src/models/UserRole';
 
 
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',
@@ -30,6 +31,8 @@ export class ProfilComponent {
     profileImageUrl: SafeUrl | null = null; 
     reservation: Reservation = new Reservation();
   user1: Utilisateur = { servicesOfferts: [] };
+  
+  utilisateurConnecteId!: number;
   userId: number | undefined;
   prestataireId!: number;
   utilisateurId!: number;
@@ -40,6 +43,7 @@ export class ProfilComponent {
    avisList: Avis[] = []; 
    userRole: string = '';
    contenuMessage: string = ''; 
+   utilisateurConnecte: any;
   constructor(private fileService: FileService, 
  
   private activatedRoute: ActivatedRoute,
@@ -73,6 +77,7 @@ export class ProfilComponent {
           
         });
         
+        
         this.activatedRoute.paramMap.subscribe(params => {
           const userIdParam = params.get('id');  
        
@@ -96,7 +101,7 @@ export class ProfilComponent {
                     nomservice: service.replace(/[\r\n]+/g, '').trim()
                   }));
                 } else {
-                  console.warn("Aucun service trouvé !");
+             
                   this.user.servicesOfferts = [];
                 }
       
@@ -160,18 +165,14 @@ export class ProfilComponent {
             return;
           }
     
-          this.user = decodedToken;
-          this.userId = decodedToken.id;
+     
+        this.utilisateurConnecte = decodedToken;
+          this.utilisateurConnecteId = decodedToken.id;
+        
           
-          if (this.user.image) {
-            this.loadProfileImage(this.user.image);
+          
         
-          } 
         
-          else {
-            console.warn("Aucune image trouvée dans le token !");
-          }
-    
     
           
     
@@ -259,7 +260,7 @@ reserver(prestataireId: number) {
 , "Succès");
       },
       error: (err) => {
-        console.error("Erreur lors de la réservation :", err);
+       
         this.toastr.error("Échec de la réservation !", "Erreur");
       }
     });
@@ -280,7 +281,11 @@ reserver(prestataireId: number) {
                 const sum = this.avisList.reduce((acc, avis) => acc + (avis.note ?? 0), 0);
                 return (sum / total).toFixed(1);
               }
-                getTempsEcoule(date?: Date): string {
+
+
+
+
+            getTempsEcoule(date?: Date): string {
                   if (!date) {
                     return 'Date inconnue'; 
                   }
@@ -291,16 +296,19 @@ reserver(prestataireId: number) {
 
                 envoyerMessage(): void {
                   if (!this.contenuMessage || !this.contenuMessage.trim()) {
-                    console.error("Champs requis manquants.");
+                    this.toastr.error("Veuillez entrer un message avant de l'envoyer.", "Erreur");
                     return;
                   }
                   const sender = new Utilisateur();
-                  sender.idUtilisateur = this.utilisateurId;
+                   
+                sender.idUtilisateur = this.utilisateurConnecteId;
+
                   sender.role = UserRole.PARTICULIER;
                 
                 
                   const receiver = new Utilisateur();
-                  receiver.idUtilisateur = this.user.idUtilisateur;
+               
+                  receiver.idUtilisateur = this.prestataireId;
                   receiver.role = UserRole.PRESTATAIRE;
                   const message = {
                
@@ -310,14 +318,15 @@ reserver(prestataireId: number) {
                     timestamp: new Date(),
                     delivered: false
                   };
-
+                
                   this.messageService.sendMessage(message).subscribe({
                     next: () => {
-                      console.log("Message envoyé avec succès");
+                      this.toastr.success("Message envoyé avec succès !", "Succès");
                       this.contenuMessage = ''; 
                     },
                     error: (err) => {
-                      console.error("Erreur lors de l'envoi du message :", err);
+                   
+                      this.toastr.error("Échec de l'envoi du message !", "Erreur");
                     }
                   });
                 }

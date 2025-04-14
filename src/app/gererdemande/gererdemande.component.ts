@@ -13,6 +13,8 @@ import { ServiceeService } from '../service/servicee.service';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { ReservationService } from '../service/reservation.service';
 import { Reservation } from 'src/models/Reservation';
+import { AvisService } from '../service/avis.service';
+
 
 @Component({
   selector: 'app-gererdemande',
@@ -38,6 +40,11 @@ prestataireImageUrls: string[] = [];
   utilisateurs: Utilisateur[] = [];
   user1: Utilisateur = { servicesOfferts: [] };
   avisVisiblesParUtilisateur: { [id: number]: number } = {};
+  nombreAvisMap: { [key: number]: number } = {};
+
+  scoreMap: { [key: number]: number } = {};  
+
+
 
   demandeDetails: {
     idDemande: number | null;
@@ -69,7 +76,8 @@ prestataireImageUrls: string[] = [];
     private router: Router,
     private serviceeService:ServiceeService,
     private reservationService: ReservationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private  avisService:AvisService
    ) 
    {
     const today = new Date();
@@ -200,15 +208,51 @@ prestataireImageUrls: string[] = [];
                     nomservice: service.replace(/[\r\n]+/g, '').trim()
                   }));
                 } else {
-                  console.warn(`Aucun service trouvé pour ${utilisateur.nom} !`);
+                  
                   utilisateur.servicesOfferts = [];
                 }
   
                 if (utilisateur.image) {
                   this.getImage(utilisateur.image, index, 'utilisateur');
                 }
+                if (utilisateur.idUtilisateur !== undefined && utilisateur.idUtilisateur !== null) {
+                  this.avisService.getScoreMoyen(utilisateur.idUtilisateur).subscribe({
+                    next: (score) => {
+                      // Si score est valide, l'ajouter dans scoreMap
+                      if (score !== undefined && score !== null) {
+                        if (utilisateur.idUtilisateur !== undefined) {
+                            this.scoreMap[utilisateur.idUtilisateur] = score;
+                        
+                        
+                        } else {
+                            console.warn('idUtilisateur is undefined for a user.');
+                        }
+                      
+                      }
+                    },
+                  });
+                } 
+                else {
+                  console.error('idUtilisateur est undefined pour l\'utilisateur:', utilisateur);
+                }
+                if (utilisateur.idUtilisateur !== undefined) {
+                  const idUtilisateur = utilisateur.idUtilisateur;
+                
+                
+                  this.avisService.getNombreAvisPourUtilisateur(idUtilisateur).subscribe({
+                    next: (nombreAvis) => {
+                      this.nombreAvisMap[idUtilisateur] = nombreAvis;
+                     
+                    },
+                  error: (error) => {
+                    console.error('Erreur lors de la récupération du nombre d\'avis pour l\'utilisateur', utilisateur.idUtilisateur, ':', error);
+                  }
+                });
+              }
+                
               });
             },
+            
             (error) => {
               console.error('Erreur lors de la récupération des utilisateurs:', error);
             }
