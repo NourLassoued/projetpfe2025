@@ -36,51 +36,62 @@ conversation: any[] = [];
   ) {}
 
   ngOnInit(): void {
- this.loadUserData();
- this.websocketService.connect(this.userId, this.authService.getUserRole()!);
+    this.loadUserData();
+ if (this.userId) {
+   
+    this.websocketService.connect(this.userId, this.authService.getUserRole()!);
 
- this.websocketService.getMessages().subscribe((msg) => {
-  const received = JSON.parse(msg.body);
+   
+    this.websocketService.getMessages().subscribe((msg) => {
+      const received = JSON.parse(msg.body);
+    
+     
+      
 
-  // Si c’est pour la conversation active
-  if (
-    received.sender.idUtilisateur === this.selectedContactId ||
-    received.receiver.idUtilisateur === this.selectedContactId
+      // Ajout des messages reçus à la conversation en cours
+      if (
+        received.sender.idUtilisateur === this.selectedContactId ||
+        received.receiver.idUtilisateur === this.selectedContactId
+      ){
+        this.conversation.push(received);
+        this.markMessageAsRead(this.selectedContactId)
+        this.getLastMessages();
+   
+      }
 
-  ) {
-    this.conversation.push(received);
-  }
-  if (received.sender.idUtilisateur !== this.userId) {
-    this.playNotificationSound();
-  }
-
-});
-this.getLastMessages();
+      // Jouer un son si le message n'est pas de l'utilisateur actuel
+      if (received.sender.idUtilisateur !== this.userId) {
+        this.playNotificationSound();
+      }
+    });
 
   
-    
+  }
+  
+  else {
+    console.warn("userId non défini après chargement du token !");
+  }
 }
-loadUserData(): void {
+loadUserData(): boolean {
   const token = localStorage.getItem('accessToken');
 
   if (token) {
     try {
       const decodedToken: any = jwtDecode(token);
       this.user = decodedToken;
-
-    
-
       this.userId = this.user.id;
-     
-      
       this.getLastMessages();
+      return true;
     } catch (error) {
-      console.error(' Erreur lors du décodage du token:', error);
+      console.error('Erreur lors du décodage du token:', error);
     }
   } else {
-    console.warn(" Aucun token trouvé dans localStorage !");
+    console.warn("Aucun token trouvé dans localStorage !");
   }
-} 
+
+  return false;
+}
+
  getLastMessages(): void {
   this.messageService.getLastMessagesByUser(this.userId).subscribe({
     next: (messages) => {
@@ -93,9 +104,12 @@ loadUserData(): void {
 
         if (contact?.idUtilisateur && contact?.image) {
           this.loadProfileImage(contact.idUtilisateur, contact.image);
+
          
         }
+        
       });
+
     },
     error: (err) => {
       console.error("Erreur de récupération des messages :", err);
@@ -147,10 +161,18 @@ getConversationWith(contactId: number): void {
         this.nombreAvisMap[this.selectedContact?.idUtilisateur] = 0;
       }
     });
+
   
   this.messageService.getConversation(this.userId, contactId).subscribe({
     next: (messages) => {
       this.conversation = messages || [];
+      this.conversation.forEach(msg => {
+        if (!msg.delivered && msg.receiver.idUtilisateur === this.userId) {
+          this.markMessageAsRead(msg.id);
+        }
+      });
+    
+
     },
     error: (err) => {
       console.error('Erreur lors de la récupération de la conversation :', err);
@@ -176,6 +198,7 @@ sendMessage(): void {
   // Ajoute localement le message
   this.conversation.push(message);
   this.newMessage = '';
+
 }
 playNotificationSound(): void {
   const audio = new Audio();
@@ -185,5 +208,52 @@ playNotificationSound(): void {
     console.warn("Erreur de lecture audio :", error);
   });
 }
+getUndeliveredMessages(): void {
+  this.messageService.getUndeliveredMessages(this.userId).subscribe({
+    next: (undeliveredMessages) => {
+
+     
+    },
+    error: (err) => {
+      console.error("Erreur lors de la récupération des messages non lus", err);
+    }
+  });
+}
+markMessageAsRead(messageId: number): void {
+  if (!messageId) {
+    console.warn("ID du message introuvable !");
+    return;
+  }
+
+  // Marquer le message comme "vu" dans la conversation
+  const message = this.conversation.find(m => m.id === messageId);
+  if (message) {
+    message.readTimestamp = new Date().toISOString(); // Marque le message comme "vu"
+    message.delivered = true; // Le message est livré et vu
+  }
+
+  // Envoie un message WebSocket de type "seen"
+  this.websocketService.waitUntilConnected(() => {
+    const seenMessage = {
+      type: 'seen',
+      messageId: messageId,
+      receiverId: message?.receiver.idUtilisateur,  // L'ID du destinataire
+      senderId: this.userId,  // L'ID de l'utilisateur actuel
+    };
+    this.websocketService.sendMessagetempsreel(seenMessage);
+  });
+
+  // Appel au backend pour marquer comme lu
+  this.messageService.markAsRead(messageId).subscribe({
+    next: () => {
+      
+    },
+    error: (err) => {
+      console.error("Erreur lors du marquage comme lu :", err);
+    }
+  });
+}
+
+
 
 }

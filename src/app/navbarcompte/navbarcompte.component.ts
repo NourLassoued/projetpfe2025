@@ -10,6 +10,7 @@ import { ServiceeService } from '../service/servicee.service';
 import { Servicee } from 'src/models/Servicee';
 
 import { WebsocketServiceService } from '../service/websocket-service.service';
+import { MessageService } from '../service/message.service';
 
 @Component({
   selector: 'app-navbarcompte',
@@ -18,7 +19,10 @@ import { WebsocketServiceService } from '../service/websocket-service.service';
 })
 export class NavbarcompteComponent implements OnInit , AfterViewInit {
   
-  messages: string[] = [];
+  
+  
+  
+    messages: string[] = [];
     selectedServiceId!: number;  
     displayedCategories: any[] = []; 
     currentIndex: number = 0; 
@@ -48,59 +52,72 @@ export class NavbarcompteComponent implements OnInit , AfterViewInit {
     selectedServices: any[] = [];
     notification: string | null = null;
     showNotification: boolean = false;
-  isMenuOpen: boolean = true;
+    isMenuOpen: boolean = true;
      user: any = null;
     profileImageUrl: SafeUrl | null = null; 
     userRole: string | null = null;
    
-unreadCount: number = 0;
+    unreadCount: number = 0;
+    newMessageCount: number = 0;
+
    
-   
-    constructor(private fileService: FileService, 
+constructor(private fileService: FileService, 
       private sanitizer: DomSanitizer, 
-     
-   
-      private authServiceService:AuthServiceService,
-    private categorieService:CategorieService,private file:FileService,
+       private authServiceService:AuthServiceService,
+       private categorieService:CategorieService,private file:FileService,
         private service:ServiceeService,
         private router: Router,
         private websocketService: WebsocketServiceService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private messageservice:MessageService
        
        ) {}
-       ngOnDestroy(): void {
+ ngOnDestroy(): void {
        
         if (this.notificationsSubscription) {
           this.notificationsSubscription.unsubscribe();
         }
       }
      
-    ngAfterViewInit(): void {
+ngAfterViewInit(): void {
       const user = this.authServiceService.getCurrentUser();
       this.user = user;
       this.isConnected = !!user;
     
     
-    this.toggleMenu();
+     this.toggleMenu();
     this.cdr.detectChanges();
       
     }
-
-
-
-   
-      ngOnInit(): void {
+ngOnInit(): void {
         setTimeout(() => {
           const user = this.authServiceService.getCurrentUser();
           this.user = user;
           this.isConnected = !!user;
-        });
-        this.websocketService.getMessages().subscribe((message) => {
-          this.newMessage = true;
-      
+
+       
           
         });
-      
+        this.loadUserData();   
+        if (this.user) {
+         
+          this.messageservice.getUndeliveredMessages(this.user.id).subscribe(
+            (messages) => {
+              this.newMessageCount = messages.length;  
+              this.newMessage = true;
+            
+             
+            },
+            (err) => {
+              console.error("Erreur récupération des messages non délivrés :", err);
+            }
+          );
+        }
+        this.websocketService.getMessages().subscribe((message) => {
+          this.newMessageCount++; 
+          this.newMessage = true;
+        })
+       
 
        
         this.userRole = this.authServiceService.getUserRole();
@@ -112,7 +129,7 @@ unreadCount: number = 0;
           this.notificationsSubscription = this.websocketService.getNotifications().subscribe((message: string) => {
         
             if (message && !this.notifications.includes(message)) {
-              this.notifications.unshift(message); // Ajout en haut
+              this.notifications.unshift(message); 
               this.unreadCount++;
            
             }
@@ -120,17 +137,13 @@ unreadCount: number = 0;
         }
         
           
-          this.cdr.detectChanges(); 
-      
-  
-   
-  
-
+          
+        
+        
+      this.cdr.detectChanges(); 
      
-      this.loadUserData();
       this.getAllCategories();
-     
-      this.redirectBasedOnRole();
+     this.redirectBasedOnRole();
       
      
       this.fileService.profileImage$.subscribe((newImageUrl) => {
@@ -141,9 +154,13 @@ unreadCount: number = 0;
       });
     
     }
-    goToComptePrestataireAvecMessage(message: string): void {
-  
+
+
+
+
+
     
+    goToComptePrestataireAvecMessage(message: string): void {
       if (this.router.url.startsWith('/Compteprestaitre')) {
       
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -158,7 +175,13 @@ unreadCount: number = 0;
         });
       }
     }
-   
+
+
+
+   resetNewMessageCount() {
+  this.newMessageCount = 0;
+}
+
    
   
     toggleNotification() {
@@ -168,7 +191,9 @@ unreadCount: number = 0;
       
         this.unreadCount = 0;
       }
-    }    
+    }  
+    
+    
     redirectBasedOnRole(): void {
       if (this.userRole === 'prestataire') {
         this.router.navigate(['/Compteprestaitre']);
@@ -327,11 +352,7 @@ unreadCount: number = 0;
         );
       }
 
-  logout(): void {
-  
-    localStorage.removeItem('accessToken')
-    this.router.navigate(['/Front']); 
-  }
+
   selectService(service: any) {
     this.selectedServiceId = service.idservice;  
   
@@ -358,7 +379,11 @@ unreadCount: number = 0;
     });  
   }
   
+  logout(): void {
   
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']); 
+  }
   
  }
   

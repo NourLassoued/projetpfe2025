@@ -18,6 +18,7 @@ export class WebsocketServiceService {
   private serverUrl = 'http://localhost:8088/nour/ws';  // URL du serveur WebSocket
   private messagesSubject: Subject<IMessage> = new Subject(); 
   private userRole: string | null = null; // Récupère le rôle de l'utilisateur
+  
   user: any = null;
 
   private connected: boolean = false;
@@ -60,10 +61,7 @@ export class WebsocketServiceService {
   
         // 2️Récupération des anciennes notifications
         this.http.get<string[]>(`http://localhost:8088/nour/notifications/${userId}`)
-        /*
-          .subscribe(oldMessages => {
-            oldMessages.forEach(msg => this.notificationsSubject.next(msg));
-          });*/
+       
           .subscribe(oldMessages => {
             if (Array.isArray(oldMessages)) {
               oldMessages.forEach(msg => this.notificationsSubject.next(msg));
@@ -76,6 +74,7 @@ export class WebsocketServiceService {
             // Envoi du message reçu au sujet messagesSubject
             this.messagesSubject.next(message);
           });
+          
         },
       
       onStompError: (frame) => {

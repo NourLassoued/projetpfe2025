@@ -52,8 +52,10 @@
   
     
     <div class="nav-icons">
-        <a  [routerLink]="['/Chat']" ><i class="fas fa-envelope"></i>
-          <span *ngIf="newMessage" class="badge">1</span></a>
+      <a [routerLink]="['/Chat']" (click)="resetNewMessageCount()">
+        <i class="fas fa-envelope"></i>
+        <span *ngIf="newMessageCount > 0" class="badge">{{ newMessageCount }}</span>
+      </a>
       <!-- Icône de notification -->
 <div class="notification-container">
   <a href="#" (click)="toggleNotification()" class="notification-icon">
@@ -91,7 +93,7 @@
             📌 Tableau de bord 
           </li>
             <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : userRole === 'ENTREPRISE' ? '/Profileentreprise' : '/Profileparticulier'">👤 Voir mon profil</li>
-            <li>✉️ Mes messages</li>
+            <li  [routerLink]="['/Chat']"  >✉️ Mes messages</li>
             <li [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : (userRole === 'ENTREPRISE' ? '/UpdateEntreprise' : '/Updateparticulier')">
                 ⚙️ Mon compte
               </li>
