@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { AuthServiceService } from './auth-service.service';
 import { Observable } from 'rxjs';
 import { Avis } from 'src/models/Avis';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvisService {
 
- private apiUrl = 'http://localhost:8088/nour/avis'; 
-
+// private apiUrl = 'http://localhost:8088/nour/avis'; 
+private apiUrl = `${environment.apiUrl}/avis`;
   constructor(private http: HttpClient,private auth:AuthServiceService) {}
   getAvisParUtilisateur(id: number): Observable<Avis[]> {
     return this.http.get<Avis[]>(`${this.apiUrl}/parparticulier/${id}`);

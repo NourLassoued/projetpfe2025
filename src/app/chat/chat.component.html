@@ -110,7 +110,8 @@
                             
                           </div>
                           <div   *ngFor="let msg of conversation; let i = index"  >
-                          <div   *ngIf="msg.sender.idUtilisateur === userId && msg.readTimestamp && i === conversation.length - 1" class="seen">
+                          <div   *ngIf="msg.sender.idUtilisateur === userId && msg.delivered  && msg.readTimestamp && i === conversation.length - 1" class="seen">
+                           
                             ✅ Vu : {{ msg.readTimestamp | timeAgo }}
                           </div>
                           </div>

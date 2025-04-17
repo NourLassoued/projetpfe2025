@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from '../service/message.service';
 import { jwtDecode } from 'jwt-decode';
 
@@ -22,7 +22,7 @@ conversation: any[] = [];
   user: any;
   selectedContact: any = null;
   scoreMap: { [key: number]: number } = {};
-
+  refreshInterval: any;
     profileImageUrl: SafeUrl | null = null; 
   lastMessages: any[] = [];
   imageUrls: { [key: number]: SafeUrl | null } = {};
@@ -32,10 +32,17 @@ conversation: any[] = [];
      private sanitizer: DomSanitizer, 
       private websocketService: WebsocketServiceService,
       private authService: AuthServiceService,
-      private avisService:AvisService
+      private avisService:AvisService,
+      private cdr: ChangeDetectorRef
+      
   ) {}
 
+  
+
   ngOnInit(): void {
+   // this.startAutoRefresh();
+
+  
     this.loadUserData();
  if (this.userId) {
    
@@ -54,7 +61,7 @@ conversation: any[] = [];
         received.receiver.idUtilisateur === this.selectedContactId
       ){
         this.conversation.push(received);
-        this.markMessageAsRead(this.selectedContactId)
+        
         this.getLastMessages();
    
       }
@@ -64,7 +71,16 @@ conversation: any[] = [];
         this.playNotificationSound();
       }
     });
+    this.startAutoRefresh();
 
+    setInterval(() => {
+      this.getLastMessages();
+    
+  
+
+  
+    }, 2000);
+  
   
   }
   
@@ -72,6 +88,14 @@ conversation: any[] = [];
     console.warn("userId non défini après chargement du token !");
   }
 }
+startAutoRefresh(): void {
+  this.refreshInterval = setInterval(() => {
+    if (this.selectedContactId) {
+      this.getConversationWith(this.selectedContactId);
+    }
+  }, 2000); // toutes les 5 secondes
+}
+
 loadUserData(): boolean {
   const token = localStorage.getItem('accessToken');
 
@@ -91,6 +115,7 @@ loadUserData(): boolean {
 
   return false;
 }
+
 
  getLastMessages(): void {
   this.messageService.getLastMessagesByUser(this.userId).subscribe({
@@ -219,14 +244,15 @@ getUndeliveredMessages(): void {
     }
   });
 }
-markMessageAsRead(messageId: number): void {
-  if (!messageId) {
+/*
+markMessageAsRead(id: number): void {
+  if (!id) {
     console.warn("ID du message introuvable !");
     return;
   }
 
   // Marquer le message comme "vu" dans la conversation
-  const message = this.conversation.find(m => m.id === messageId);
+  const message = this.conversation.find(m => m.id === id);
   if (message) {
     message.readTimestamp = new Date().toISOString(); // Marque le message comme "vu"
     message.delivered = true; // Le message est livré et vu
@@ -235,16 +261,16 @@ markMessageAsRead(messageId: number): void {
   // Envoie un message WebSocket de type "seen"
   this.websocketService.waitUntilConnected(() => {
     const seenMessage = {
-      type: 'seen',
-      messageId: messageId,
-      receiverId: message?.receiver.idUtilisateur,  // L'ID du destinataire
-      senderId: this.userId,  // L'ID de l'utilisateur actuel
+   
+      id: message.id,
+      receiver: message?.receiver.idUtilisateur,  // L'ID du destinataire
+      sender: this.userId,  // L'ID de l'utilisateur actuel
     };
     this.websocketService.sendMessagetempsreel(seenMessage);
   });
 
   // Appel au backend pour marquer comme lu
-  this.messageService.markAsRead(messageId).subscribe({
+  this.messageService.markAsRead(id).subscribe({
     next: () => {
       
     },
@@ -254,6 +280,51 @@ markMessageAsRead(messageId: number): void {
   });
 }
 
+
+*/
+markMessageAsRead(id: number): void {
+
+
+  // Recherche du message dans la conversation
+  const message = this.conversation.find(m => m.id === id);
+    // Debugging : vérifier l'ID du message
+    if (!message.id) {
+      console.warn("ID du message introuvable !");
+      return;
+    }
+  if (!message) {
+
+    console.warn("Message non trouvé dans la conversation !");
+    console.log(this.conversation);  // Debugging : vérifier la structure des messages
+    return;
+  }
+
+  // Vérifie que le message a un destinataire valide
+  if (!message.receiver || !message.receiver.idUtilisateur) {
+    console.warn("Le destinataire du message est introuvable !");
+    return;
+  }
+
+  // Marquer le message comme "vu"
+  message.readTimestamp = new Date().toISOString();
+  message.delivered = true;
+
+
+
+  this.messageService.markAsRead(message.id).subscribe({
+    next: () => {
+      this.getLastMessages(); 
+     
+     
+  
+      
+     
+    },
+    error: (err) => {
+      console.error("Erreur lors du marquage comme lu :", err);
+    }
+  });
+}
 
 
 }

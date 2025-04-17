@@ -4,6 +4,7 @@ import { Utilisateur } from 'src/models/Utilisateur';
 import {BehaviorSubject, map, Observable, tap} from "rxjs";
 import { Router } from '@angular/router';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthServiceService {
   public userSubject: BehaviorSubject<Utilisateur | null>;
   public user: Observable<Utilisateur | null>;
   isconn: any=false;
-  private baseUrl = 'http://localhost:8088/nour/api/v1/auth';
+ // private baseUrl = 'http://localhost:8088/nour/api/v1/auth';
+private baseUrl = `${environment.apiUrl}/api/v1/auth`
 
   constructor(private http: HttpClient, private router: Router) {
     this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user')!));

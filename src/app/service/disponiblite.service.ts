@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { Disponibilite } from 'src/models/Disponibilite';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DisponibliteService {
-  private apiUrl = 'http://localhost:8088/nour/disponibilites'; 
+  ///private apiUrl = 'http://localhost:8088/nour/disponibilites'; 
+  private apiUrl = `${environment.apiUrl}/disponibilites`;
 
   constructor(private http: HttpClient) {}
 

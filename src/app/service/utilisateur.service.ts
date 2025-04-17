@@ -7,11 +7,13 @@ import { Utilisateur } from 'src/models/Utilisateur';
 
 import { Observable } from 'rxjs/internal/Observable';
 import { Postulation } from 'src/models/Postulation';
+import { environment } from '../environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UtilisateurService {
-  private apiUrl = 'http://localhost:8088/nour/utilisateurss'; 
+  //private apiUrl = 'http://localhost:8088/nour/utilisateurss'; 
+   private apiUrl = `${environment.apiUrl}/utilisateurss`;
   constructor(private http: HttpClient) {}
 
 

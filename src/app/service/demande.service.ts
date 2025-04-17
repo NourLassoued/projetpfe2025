@@ -4,12 +4,14 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Demande } from 'src/models/Demande';
 import { AuthServiceService } from './auth-service.service';
 import { Postulation } from 'src/models/Postulation';
+import { environment } from '../environment';
 @Injectable({
   providedIn: 'root'
 })
 export class DemandeService {
 
-  private apiUrl = 'http://localhost:8088/nour/demandes'; 
+ // private apiUrl = 'http://localhost:8088/nour/demandes'; 
+    private apiUrl = `${environment.apiUrl}/demandes`;
 
   constructor(private http: HttpClient,private auth:AuthServiceService) {}
 

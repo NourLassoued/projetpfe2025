@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Message } from 'src/models/Message';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
   [x: string]: any;
-  private apiUrl = 'http://localhost:8088/nour/message'; 
+  //private apiUrl = 'http://localhost:8088/nour/message'; 
+   private apiUrl = `${environment.apiUrl}/message`;
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +20,8 @@ export class MessageService {
   }
 
   
-  markAsRead(messageId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/mark-as-read/${messageId}`, {});
+  markAsRead(id: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/mark-as-read/${id}`, {});
   }
 
 

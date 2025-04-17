@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Servicee } from 'src/models/Servicee';
 import { Observable } from 'rxjs/internal/Observable';
 import { Utilisateur } from 'src/models/Utilisateur';
+import { environment } from '../environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceeService {
 
-  private apiUrl = 'http://localhost:8088/nour/services'; // Remplace par l'URL de ton backend
-
+  //private apiUrl = 'http://localhost:8088/nour/services'; // Remplace par l'URL de ton backend
+ private apiUrl = `${environment.apiUrl}/services`;
   constructor(private http: HttpClient) {}
 
 
