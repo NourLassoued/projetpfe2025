@@ -97,6 +97,7 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
 import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
 import { AvissectionComponent } from './Front/avissection/avissection.component';
+import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.component';
 
 
 
@@ -161,6 +162,7 @@ import { AvissectionComponent } from './Front/avissection/avissection.component'
     FrontprofilComponent,
     FrontprofilshowComponent,
     AvissectionComponent,
+    FrontpresayitrComponent,
  
    
 

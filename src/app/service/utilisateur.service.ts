@@ -12,7 +12,7 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class UtilisateurService {
-  //private apiUrl = 'http://localhost:8088/nour/utilisateurss'; 
+
    private apiUrl = `${environment.apiUrl}/utilisateurss`;
   constructor(private http: HttpClient) {}
 

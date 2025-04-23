@@ -60,6 +60,7 @@ import { ChatComponent } from './chat/chat.component';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
 import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
 import { AvissectionComponent } from './Front/avissection/avissection.component';
+import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.component';
 
 
 const routes: Routes = [
@@ -71,6 +72,14 @@ const routes: Routes = [
   {
     path: 'Front',
     component: AllTemplateFrontComponent
+  },
+  {
+    path: 'avisection',
+    component:AvissectionComponent 
+  },
+  {
+    path: 'devenirprestataire',
+    component:FrontpresayitrComponent 
   },
   {
     path: 'Frontprofil',
@@ -279,10 +288,7 @@ component:InformatiqueComponent
     path: 'Chat',
     component:ChatComponent 
   },
-  {
-    path: 'avisection',
-    component:AvissectionComponent 
-  },
+ 
   
 
 

@@ -1,558 +1,686 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>soFFer - Software Landing Page Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-  <link href="/assets/img/favicon.ico" rel="icon">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet"> 
- <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <link href="/assets/img/favicon.ico" rel="icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Libraries Stylesheet -->
-    <link href="/assets/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/assets/lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
- <!-- Template Stylesheet -->
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Template Stylesheet -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
 </head>
 
 <app-navbar></app-navbar>
 <section class="heroo">
-  
     <div class="containere">
-      
-
         <!-- Texte à droite -->
         <div class="heroo-text">
             <h1>Réservez le prestataire idéal</h1>
             <p>Améliorez votre qualité de vie avec les services à domicile.</p>
-            
+
             <!-- Champ email + bouton sur la même ligne -->
-            <div class="input-containere" >
-               
-                <input  type="text" [placeholder]="currentPlaceholder">
-                <button (click)="showSkillModal()"> 
+            <div class="input-containere">
+                <input type="text" [placeholder]="currentPlaceholder" />
+                <button (click)="showSkillModal()">
                     <i class="fas fa-search"></i>
                 </button>
-                <div    (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
-                    <div class="modal-content"  >
-                      <span class="close" (click)="showModal = false">&times;</span>
-                      <h2>Demander un service</h2>
-              
-                  
-                      <!-- Barre de recherche -->
-                      <input   type="text" id="search-docs" name="searchdocs"
-                      [(ngModel)]="searchQuery"
-                      (ngModelChange)="onSearch()"   placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
-                  
-                      <!-- Affichage des catégories en grille -->
-                      <div class="grid-container">
-                        <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom) ">
-                          <img  [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
-                          <label>{{ category.nom }}</label>
-                          <span class="icon">➜</span>
-                        </div>
-                      
-                      </div>
-                    </div>
-                   
-                  </div>
-                  <div class="modal" *ngIf="showServiceModal">
+                <div (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
                     <div class="modal-content">
-                      <span class="close"(click)="closeServiceModal()" >&times;</span>
-                      <h2> {{ selectedCategory?.nom }}</h2>
-                      <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
-                      [(ngModel)]="searchQuery"
-                      (input)="filterServices()">
-                      
-                   <div class="grid-container">
-                    
-                    <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)">
-                        <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
-                        <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
-                      
-              
-                          <input 
-                            class="iconn" 
-                            type="checkbox" 
-                            id="service-{{ service.idservice }}" 
-                            
-                            >
+                        <span class="close" (click)="showModal = false">&times;</span>
+                        <h2>Demander un service</h2>
+
+                        <!-- Barre de recherche -->
+                        <input type="text" id="search-docs" name="searchdocs" [(ngModel)]="searchQuery"
+                            (ngModelChange)="onSearch()" placeholder="🔍 De quel service avez-vous besoin ?"
+                            class="search-bar" />
+
+                        <!-- Affichage des catégories en grille -->
+                        <div class="grid-container">
+                            <div class="category-card" *ngFor="let category of filteredCategories; let i = index"
+                                (click)="selectCategory(category.nom)">
+                                <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]" />
+                                <label>{{ category.nom }}</label>
+                                <span class="icon">➜</span>
+                            </div>
                         </div>
-                        </div>
-                      </div>
                     </div>
-                
+                </div>
+                <div class="modal" *ngIf="showServiceModal">
+                    <div class="modal-content">
+                        <span class="close" (click)="closeServiceModal()">&times;</span>
+                        <h2>{{ selectedCategory?.nom }}</h2>
+                        <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
+                            [(ngModel)]="searchQuery" (input)="filterServices()" />
+
+                        <div class="grid-container">
+                            <div class="category-card" *ngFor="let service of filteredServices; let i = index"
+                                (click)="selectService(service)">
+                                <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}"
+                                    class="service-image" />
+                                <label for="service-{{ service.idservice }}">{{
+                                    service.nomservice
+                                    }}</label>
+
+                                <input class="iconn" type="checkbox" id="service-{{ service.idservice }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<br>
-<br>
-<br>
+<br />
+<br />
+<br />
 <h1>Prestataires de service à domicile évalués et qualifiés</h1>
 
 <app-frontprofil></app-frontprofil>
 <!-- Feature End -->
 
- <div class="container-xxl py-6">
-  
+<div class="container-xxl py-6">
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="feature-item bg-light rounded text-center p-5">
                     <i class="fa fa-4x fa-hands-helping text-primary mb-4"></i>
                     <h5 class="mb-3">+40.000 Services Livrés</h5>
-                    <p class="m-0">Services livrés à nos clients en toute simplicité.</p>
+                    <p class="m-0">
+                        Services livrés à nos clients en toute simplicité.
+                    </p>
                 </div>
             </div>
             <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="feature-item bg-light rounded text-center p-5">
                     <i class="fa fa-4x fa-users text-primary mb-4"></i>
                     <h5 class="mb-3">106.000 Clients</h5>
-                    <p class="m-0">Plus de 100.000 clients satisfaits partout en Tunisie.</p>
+                    <p class="m-0">
+                        Plus de 100.000 clients satisfaits partout en Tunisie.
+                    </p>
                 </div>
             </div>
             <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
                 <div class="feature-item bg-light rounded text-center p-5">
                     <i class="fa fa-4x fa-briefcase text-primary mb-4"></i>
                     <h5 class="mb-3">11.677 Prestataires</h5>
-                    <p class="m-0">Plus de 11.677 prestataires de service partout en Tunisie.</p>
+                    <p class="m-0">
+                        Plus de 11.677 prestataires de service partout en Tunisie.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-    
-        </div>
-        <!-- Feature End -->
-
-
-        <!-- About Start -->
-      <!-- About Start -->
-       <h1>Facilitez votre quotidien grâce à nos services à domicile</h1>
-      <div class="container-xxl py-7" id="about">
-        <div class="services-container">
-            <!-- Bouton Précédent -->
-            
-          
-    
-            <!-- Liste des services -->
-            <div class="services-list">
-                <button (click)="prevCategory()" class="scroll-btn left" [disabled]="currentIndex === 0"> <i class="fa fa-angle-left"></i></button>
-                <div class="category-carde" *ngFor="let category of visibleCategories; let i = index">
-                    <img [src]="category.imageCategorie" [alt]="category.nom">
-                    <div class="category-content">
-                        <h3>{{ category.nom }}</h3>
-                        <p>{{ category.description }}</p>
-                        <button class="discover-btn" (click)="navigateToCategory(category.nom)">Découvrir →</button>
-
-                    </div>
-                </div>
-                <button (click)="nextCategory()" class="scroll-btn right" [disabled]="currentIndex + itemsPerPage >= categories.length"> <i class="fa fa-angle-right"></i></button>
-            </div>
-    
-            <!-- Bouton Suivant -->
-           
-            
     </div>
 </div>
+<!-- Feature End -->
+
+<!-- About Start -->
+<!-- About Start -->
+<h1>Facilitez votre quotidien grâce à nos services à domicile</h1>
+<div class="container-xxl py-7" id="about">
+    <div class="services-container">
+        <!-- Bouton Précédent -->
+
+        <!-- Liste des services -->
+        <div class="services-list">
+            <button (click)="prevCategory()" class="scroll-btn left" [disabled]="currentIndex === 0">
+                <i class="fa fa-angle-left"></i>
+            </button>
+            <div class="category-carde" *ngFor="let category of visibleCategories; let i = index">
+                <img [src]="category.imageCategorie" [alt]="category.nom" />
+                <div class="category-content">
+                    <h3>{{ category.nom }}</h3>
+                    <p>{{ category.description }}</p>
+                    <button class="discover-btn" (click)="navigateToCategory(category.nom)">
+                        Découvrir →
+                    </button>
+                </div>
+            </div>
+            <button (click)="nextCategory()" class="scroll-btn right"
+                [disabled]="currentIndex + itemsPerPage >= categories.length">
+                <i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+
+        <!-- Bouton Suivant -->
+    </div>
+</div>
+<br />
+<br />
+
+<h1>Découvrez ce que disent nos clients !</h1>
+<app-avissection></app-avissection>
+
 <br>
 <br>
+<app-frontpresayitr> </app-frontpresayitr>
+<!-- Overview Start -->
+<div class="container-xxl bg-light my-6 py-5" id="overview">
+    <div class="container">
+        <div class="row g-5 py-5 align-items-center">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <img class="img-fluid rounded" src="assets/img/overview-1.jpg" />
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="mb-0">01</h1>
+                    <span class="bg-primary mx-2" style="width: 30px; height: 2px"></span>
+                    <h5 class="mb-0">App Integration</h5>
+                </div>
+                <p class="mb-4">
+                    Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                    labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem
+                    sit clita duo justo eirmod magna dolore erat amet
+                </p>
+                <p>
+                    <i class="fa fa-check-circle text-primary me-3"></i>Fully
+                    customizable
+                </p>
+                <p>
+                    <i class="fa fa-check-circle text-primary me-3"></i>User friendly
+                    interface
+                </p>
+                <p class="mb-0">
+                    <i class="fa fa-check-circle text-primary me-3"></i>More effective &
+                    poerwfull
+                </p>
+            </div>
+        </div>
+        <div class="row g-5 py-5 align-items-center flex-column-reverse flex-lg-row">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="mb-0">02</h1>
+                    <span class="bg-primary mx-2" style="width: 30px; height: 2px"></span>
+                    <h5 class="mb-0">App Customization</h5>
+                </div>
+                <p class="mb-4">
+                    Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                    labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem
+                    sit clita duo justo eirmod magna dolore erat amet
+                </p>
+                <p>
+                    <i class="fa fa-check-circle text-primary me-3"></i>Fully
+                    customizable
+                </p>
+                <p>
+                    <i class="fa fa-check-circle text-primary me-3"></i>User friendly
+                    interface
+                </p>
+                <p class="mb-0">
+                    <i class="fa fa-check-circle text-primary me-3"></i>More effective &
+                    poerwfull
+                </p>
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <img class="img-fluid rounded" src="assets/img/overview-2.jpg" />
+            </div>
+        </div>
+        <div class="row g-5 py-5 align-items-center">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <img class="img-fluid rounded" src="assets/img/overview-3.jpg" />
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="mb-0">03</h1>
+                    <span class="bg-primary mx-2" style="width: 30px; height: 2px"></span>
+                    <h5 class="mb-0">App Modification</h5>
+                </div>
+                <p class="mb-4">
+                    Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                    labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem
+                    sit clita duo justo eirmod magna dolore erat amet
+                </p>
+                <p>
+                    <i class="fa fa-check-circle text-primary me-3"></i>Fully
+                    customizable
+                </p>
+                <p>
+                    <i class="fa fa-check-circle text-primary me-3"></i>User friendly
+                    interface
+                </p>
+                <p class="mb-0">
+                    <i class="fa fa-check-circle text-primary me-3"></i>More effective &
+                    poerwfull
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Overview End -->
 
-      <h1>Découvrez ce que disent nos clients !</h1>
-      <app-avissection></app-avissection>
+<!-- Advanced Feature Start -->
+<div class="container-xxl py-6" id="features">
+    <div class="container">
+        <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px">
+            <h1 class="mb-3">Advanced Features</h1>
+            <p class="mb-5">
+                Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit
+                clita duo justo
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="advanced-feature-item text-center rounded py-5 px-4">
+                    <i class="fa fa-edit fa-3x text-primary mb-4"></i>
+                    <h5 class="mb-3">Fully Customizable</h5>
+                    <p class="m-0">
+                        Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem
+                        sed diam stet.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="advanced-feature-item text-center rounded py-5 px-4">
+                    <i class="fa fa-sync fa-3x text-primary mb-4"></i>
+                    <h5 class="mb-3">App Integration</h5>
+                    <p class="m-0">
+                        Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem
+                        sed diam stet.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="advanced-feature-item text-center rounded py-5 px-4">
+                    <i class="fa fa-laptop fa-3x text-primary mb-4"></i>
+                    <h5 class="mb-3">High Resolution</h5>
+                    <p class="m-0">
+                        Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem
+                        sed diam stet.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="advanced-feature-item text-center rounded py-5 px-4">
+                    <i class="fa fa-draw-polygon fa-3x text-primary mb-4"></i>
+                    <h5 class="mb-3">Drag And Drop</h5>
+                    <p class="m-0">
+                        Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem
+                        sed diam stet.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Advanced Feature End -->
 
-        <!-- Overview Start -->
-        <div class="container-xxl bg-light my-6 py-5" id="overview">
-            <div class="container">
-                <div class="row g-5 py-5 align-items-center">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <img class="img-fluid rounded" src="assets/img/overview-1.jpg">
-                    </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="d-flex align-items-center mb-4">
-                            <h1 class="mb-0">01</h1>
-                            <span class="bg-primary mx-2" style="width: 30px; height: 2px;"></span>
-                            <h5 class="mb-0">App Integration</h5>
+<!-- Facts Start -->
+<div class="container-xxl bg-primary my-6 py-6 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                <i class="fa fa-cogs fa-3x text-white mb-3"></i>
+                <h1 class="mb-2" data-toggle="counter-up">7264</h1>
+                <p class="text-white mb-0">Active Install</p>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
+                <i class="fa fa-users fa-3x text-white mb-3"></i>
+                <h1 class="mb-2" data-toggle="counter-up">6521</h1>
+                <p class="text-white mb-0">Satisfied Clients</p>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
+                <i class="fa fa-certificate fa-3x text-white mb-3"></i>
+                <h1 class="mb-2" data-toggle="counter-up">729</h1>
+                <p class="text-white mb-0">Award Wins</p>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
+                <i class="fa fa-quote-left fa-3x text-white mb-3"></i>
+                <h1 class="mb-2" data-toggle="counter-up">5917</h1>
+                <p class="text-white mb-0">Clients Reviews</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Facts End -->
+
+<!-- Process Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <img class="img-fluid rounded" src="assets/img/process.jpg" />
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <h1 class="mb-4">Three Simple Steps To Start Working With</h1>
+                <p class="mb-4">
+                    Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                    labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem
+                    sit clita duo justo eirmod magna dolore erat amet
+                </p>
+                <ul class="process mb-0">
+                    <li>
+                        <span><i class="fa fa-cog"></i></span>
+                        <div>
+                            <h5>Install the Software</h5>
+                            <p>
+                                Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
+                                Aliqu diam amet diam et eos erat ipsum et lorem et sit
+                            </p>
                         </div>
-                        <p class="mb-4">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo eirmod magna dolore erat amet</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Fully customizable</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>User friendly interface</p>
-                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-3"></i>More effective & poerwfull</p>
+                    </li>
+                    <li>
+                        <span><i class="fa fa-address-card"></i></span>
+                        <div>
+                            <h5>Setup Your Profile</h5>
+                            <p>
+                                Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita
+                                erat ipsum et lorem et sit, sed stet lorem sit clita duo
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <span><i class="fa fa-check"></i></span>
+                        <div>
+                            <h5>Enjoy The Features</h5>
+                            <p>
+                                Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
+                                sed stet lorem sit clita duo justo magna
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Process End -->
+
+<!-- Pricing Start -->
+<div class="container-xxl py-6" id="pricing">
+    <div class="container">
+        <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px">
+            <h1 class="mb-3">Pricing Plan</h1>
+            <p class="mb-5">
+                Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit
+                clita duo justo
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="price-item rounded overflow-hidden">
+                    <div class="bg-dark p-4">
+                        <h4 class="text-white mt-2">Standard</h4>
+                        <div class="text-white">
+                            <span class="align-top fs-4 fw-bold">$</span>
+                            <h1 class="d-inline display-6 text-primary mb-0">29.99</h1>
+                            <span class="align-baseline">/ Month</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>HTML5 & CSS3</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Bootstrap v5</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Responsive Layout</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Cross-browser Support</span><i class="fa fa-times text-danger pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Remove Author's Credit</span><i class="fa fa-times text-danger pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>PHP & Ajax Contact Form</span><i class="fa fa-times text-danger pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>6 Months Free Support</span><i class="fa fa-times text-danger pt-1"></i>
+                        </div>
+                        <a href="" class="btn btn-dark rounded-pill py-2 px-4 mt-3">Get Started</a>
                     </div>
                 </div>
-                <div class="row g-5 py-5 align-items-center flex-column-reverse flex-lg-row">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="d-flex align-items-center mb-4">
-                            <h1 class="mb-0">02</h1>
-                            <span class="bg-primary mx-2" style="width: 30px; height: 2px;"></span>
-                            <h5 class="mb-0">App Customization</h5>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="price-item rounded overflow-hidden">
+                    <div class="bg-primary p-4">
+                        <h4 class="text-white mt-2">Professional</h4>
+                        <div class="text-white">
+                            <span class="align-top fs-4 fw-bold">$</span>
+                            <h1 class="d-inline display-6 text-dark mb-0">49.99</h1>
+                            <span class="align-baseline">/ Month</span>
                         </div>
-                        <p class="mb-4">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo eirmod magna dolore erat amet</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Fully customizable</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>User friendly interface</p>
-                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-3"></i>More effective & poerwfull</p>
                     </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <img class="img-fluid rounded" src="assets/img/overview-2.jpg">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>HTML5 & CSS3</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Bootstrap v5</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Responsive Layout</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Cross-browser Support</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Remove Author's Credit</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>PHP & Ajax Contact Form</span><i class="fa fa-times text-danger pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>6 Months Free Support</span><i class="fa fa-times text-danger pt-1"></i>
+                        </div>
+                        <a href="" class="btn btn-primary rounded-pill py-2 px-4 mt-3">Get Started</a>
                     </div>
                 </div>
-                <div class="row g-5 py-5 align-items-center">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <img class="img-fluid rounded" src="assets/img/overview-3.jpg">
-                    </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="d-flex align-items-center mb-4">
-                            <h1 class="mb-0">03</h1>
-                            <span class="bg-primary mx-2" style="width: 30px; height: 2px;"></span>
-                            <h5 class="mb-0">App Modification</h5>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="price-item rounded overflow-hidden">
+                    <div class="bg-dark p-4">
+                        <h4 class="text-white mt-2">Ultimate</h4>
+                        <div class="text-white">
+                            <span class="align-top fs-4 fw-bold">$</span>
+                            <h1 class="d-inline display-6 text-primary mb-0">79.99</h1>
+                            <span class="align-baseline">/ Month</span>
                         </div>
-                        <p class="mb-4">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo eirmod magna dolore erat amet</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Fully customizable</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>User friendly interface</p>
-                        <p class="mb-0"><i class="fa fa-check-circle text-primary me-3"></i>More effective & poerwfull</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>HTML5 & CSS3</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Bootstrap v5</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Responsive Layout</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Cross-browser Support</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Remove Author's Credit</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>PHP & Ajax Contact Form</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>6 Months Free Support</span><i class="fa fa-check text-success pt-1"></i>
+                        </div>
+                        <a href="" class="btn btn-dark rounded-pill py-2 px-4 mt-3">Get Started</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Overview End -->
+    </div>
+</div>
+<!-- Pricing End -->
 
-
-        <!-- Advanced Feature Start -->
-        <div class="container-xxl py-6" id="features">
-            <div class="container">
-                <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Advanced Features</h1>
-                    <p class="mb-5">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo</p>
+<!-- Testimonial Start -->
+<div class="container-xxl py-6" id="testimonial">
+    <div class="container">
+        <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px">
+            <h1 class="mb-3">What Our Clients Say</h1>
+            <p class="mb-5">
+                Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
+                labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit
+                clita duo justo
+            </p>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+            <div class="testimonial-item bg-light rounded my-4">
+                <p class="fs-5">
+                    <i class="fa fa-quote-left fa-4x text-primary mt-n4 me-3"></i>Diam
+                    dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum
+                    et lorem et sit sed stet lorem sit clita duo justo.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-1.jpg"
+                        style="width: 65px; height: 65px" />
+                    <div class="ps-4">
+                        <h5 class="mb-1">Client Name</h5>
+                        <span>Profession</span>
+                    </div>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="advanced-feature-item text-center rounded py-5 px-4">
-                            <i class="fa fa-edit fa-3x text-primary mb-4"></i>
-                            <h5 class="mb-3">Fully Customizable</h5>
-                            <p class="m-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet.</p>
-                        </div>
+            </div>
+            <div class="testimonial-item bg-light rounded my-4">
+                <p class="fs-5">
+                    <i class="fa fa-quote-left fa-4x text-primary mt-n4 me-3"></i>Diam
+                    dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum
+                    et lorem et sit sed stet lorem sit clita duo justo.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-2.jpg"
+                        style="width: 65px; height: 65px" />
+                    <div class="ps-4">
+                        <h5 class="mb-1">Client Name</h5>
+                        <span>Profession</span>
                     </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="advanced-feature-item text-center rounded py-5 px-4">
-                            <i class="fa fa-sync fa-3x text-primary mb-4"></i>
-                            <h5 class="mb-3">App Integration</h5>
-                            <p class="m-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="advanced-feature-item text-center rounded py-5 px-4">
-                            <i class="fa fa-laptop fa-3x text-primary mb-4"></i>
-                            <h5 class="mb-3">High Resolution</h5>
-                            <p class="m-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="advanced-feature-item text-center rounded py-5 px-4">
-                            <i class="fa fa-draw-polygon fa-3x text-primary mb-4"></i>
-                            <h5 class="mb-3">Drag And Drop</h5>
-                            <p class="m-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet.</p>
-                        </div>
+                </div>
+            </div>
+            <div class="testimonial-item bg-light rounded my-4">
+                <p class="fs-5">
+                    <i class="fa fa-quote-left fa-4x text-primary mt-n4 me-3"></i>Diam
+                    dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum
+                    et lorem et sit sed stet lorem sit clita duo justo.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-3.jpg"
+                        style="width: 65px; height: 65px" />
+                    <div class="ps-4">
+                        <h5 class="mb-1">Client Name</h5>
+                        <span>Profession</span>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Advanced Feature End -->
+    </div>
+</div>
+<!-- Testimonial End -->
 
-
-        <!-- Facts Start -->
-        <div class="container-xxl bg-primary my-6 py-6 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                        <i class="fa fa-cogs fa-3x text-white mb-3"></i>
-                        <h1 class="mb-2" data-toggle="counter-up">7264</h1>
-                        <p class="text-white mb-0">Active Install</p>
+<!-- Contact Start -->
+<div class="container-xxl py-6" id="contact">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-3">Get In Touch</h1>
+                <p class="mb-4">
+                    The contact form is currently inactive. Get a functional and working
+                    contact form with Ajax & PHP in a few minutes. Just copy and paste
+                    the files, add a little code and you're done.
+                    <a href="https://htmlcodex.com/contact-form">Download Now</a>.
+                </p>
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
+                        <i class="fa fa-phone-alt"></i>
                     </div>
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                        <i class="fa fa-users fa-3x text-white mb-3"></i>
-                        <h1 class="mb-2" data-toggle="counter-up">6521</h1>
-                        <p class="text-white mb-0">Satisfied Clients</p>
+                    <div class="ms-3">
+                        <p class="mb-2">Call Us</p>
+                        <h5 class="mb-0">+012 345 6789</h5>
                     </div>
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
-                        <i class="fa fa-certificate fa-3x text-white mb-3"></i>
-                        <h1 class="mb-2" data-toggle="counter-up">729</h1>
-                        <p class="text-white mb-0">Award Wins</p>
+                </div>
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
+                        <i class="fa fa-envelope"></i>
                     </div>
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                        <i class="fa fa-quote-left fa-3x text-white mb-3"></i>
-                        <h1 class="mb-2" data-toggle="counter-up">5917</h1>
-                        <p class="text-white mb-0">Clients Reviews</p>
+                    <div class="ms-3">
+                        <p class="mb-2">Mail Us</p>
+                        <h5 class="mb-0">info@example.com</h5>
+                    </div>
+                </div>
+                <div class="d-flex mb-0">
+                    <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
+                        <i class="fa fa-map-marker-alt"></i>
+                    </div>
+                    <div class="ms-3">
+                        <p class="mb-2">Our Office</p>
+                        <h5 class="mb-0">123 Street, New York, USA</h5>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Facts End -->
-
-
-        <!-- Process Start -->
-        <div class="container-xxl py-6">
-            <div class="container">
-                <div class="row g-5">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <img class="img-fluid rounded" src="assets/img/process.jpg">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" />
+                                <label for="name">Your Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="Your Email" />
+                                <label for="email">Your Email</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="subject" placeholder="Subject" />
+                                <label for="subject">Subject</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a message here" id="message"
+                                    style="height: 150px"></textarea>
+                                <label for="message">Message</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">
+                                Send Message
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <h1 class="mb-4">Three Simple Steps To Start Working With</h1>
-                        <p class="mb-4">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo eirmod magna dolore erat amet</p>
-                        <ul class="process mb-0">
-                            <li>
-                                <span><i class="fa fa-cog"></i></span>
-                                <div>
-                                    <h5>Install the Software</h5>
-                                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos erat ipsum et lorem et sit</p>
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-address-card"></i></span>
-                                <div>
-                                    <h5>Setup Your Profile</h5>
-                                    <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo</p>
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-check"></i></span>
-                                <div>
-                                    <h5>Enjoy The Features</h5>
-                                    <p>Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
-        <!-- Process End -->
+    </div>
+</div>
+<!-- Contact End -->
 
-
-        <!-- Pricing Start -->
-        <div class="container-xxl py-6" id="pricing">
-            <div class="container">
-                <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Pricing Plan</h1>
-                    <p class="mb-5">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo</p>
-                </div>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="price-item rounded overflow-hidden">
-                            <div class="bg-dark p-4">
-                                <h4 class="text-white mt-2">Standard</h4>
-                                <div class="text-white">
-                                    <span class="align-top fs-4 fw-bold">$</span>
-                                    <h1 class="d-inline display-6 text-primary mb-0"> 29.99</h1>
-                                    <span class="align-baseline">/ Month</span>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3"><span>HTML5 & CSS3</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Bootstrap v5</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Responsive Layout</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Cross-browser Support</span><i class="fa fa-times text-danger pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Remove Author's Credit</span><i class="fa fa-times text-danger pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>PHP & Ajax Contact Form</span><i class="fa fa-times text-danger pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>6 Months Free Support</span><i class="fa fa-times text-danger pt-1"></i></div>
-                                <a href="" class="btn btn-dark rounded-pill py-2 px-4 mt-3">Get Started</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="price-item rounded overflow-hidden">
-                            <div class="bg-primary p-4">
-                                <h4 class="text-white mt-2">Professional</h4>
-                                <div class="text-white">
-                                    <span class="align-top fs-4 fw-bold">$</span>
-                                    <h1 class="d-inline display-6 text-dark mb-0"> 49.99</h1>
-                                    <span class="align-baseline">/ Month</span>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3"><span>HTML5 & CSS3</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Bootstrap v5</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Responsive Layout</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Cross-browser Support</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Remove Author's Credit</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>PHP & Ajax Contact Form</span><i class="fa fa-times text-danger pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>6 Months Free Support</span><i class="fa fa-times text-danger pt-1"></i></div>
-                                <a href="" class="btn btn-primary rounded-pill py-2 px-4 mt-3">Get Started</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="price-item rounded overflow-hidden">
-                            <div class="bg-dark p-4">
-                                <h4 class="text-white mt-2">Ultimate</h4>
-                                <div class="text-white">
-                                    <span class="align-top fs-4 fw-bold">$</span>
-                                    <h1 class="d-inline display-6 text-primary mb-0"> 79.99</h1>
-                                    <span class="align-baseline">/ Month</span>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3"><span>HTML5 & CSS3</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Bootstrap v5</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Responsive Layout</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Cross-browser Support</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>Remove Author's Credit</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>PHP & Ajax Contact Form</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <div class="d-flex justify-content-between mb-3"><span>6 Months Free Support</span><i class="fa fa-check text-success pt-1"></i></div>
-                                <a href="" class="btn btn-dark rounded-pill py-2 px-4 mt-3">Get Started</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Pricing End -->
-
-
-        <!-- Testimonial Start -->
-        <div class="container-xxl py-6" id="testimonial">
-            <div class="container">
-                <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">What Our Clients Say</h1>
-                    <p class="mb-5">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo</p>
-                </div>
-                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="testimonial-item bg-light rounded my-4">
-                        <p class="fs-5"><i class="fa fa-quote-left fa-4x text-primary mt-n4 me-3"></i>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit sed stet lorem sit clita duo justo.</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-1.jpg" style="width: 65px; height: 65px;">
-                            <div class="ps-4">
-                                <h5 class="mb-1">Client Name</h5>
-                                <span>Profession</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded my-4">
-                        <p class="fs-5"><i class="fa fa-quote-left fa-4x text-primary mt-n4 me-3"></i>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit sed stet lorem sit clita duo justo.</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-2.jpg" style="width: 65px; height: 65px;">
-                            <div class="ps-4">
-                                <h5 class="mb-1">Client Name</h5>
-                                <span>Profession</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded my-4">
-                        <p class="fs-5"><i class="fa fa-quote-left fa-4x text-primary mt-n4 me-3"></i>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit sed stet lorem sit clita duo justo.</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-3.jpg" style="width: 65px; height: 65px;">
-                            <div class="ps-4">
-                                <h5 class="mb-1">Client Name</h5>
-                                <span>Profession</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
-
-
-        <!-- Contact Start -->
-        <div class="container-xxl py-6" id="contact">
-            <div class="container">
-                <div class="row g-5">
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="mb-3">Get In Touch</h1>
-                        <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                        <div class="d-flex mb-4">
-                            <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
-                                <i class="fa fa-phone-alt"></i>
-                            </div>
-                            <div class="ms-3">
-                                <p class="mb-2">Call Us</p>
-                                <h5 class="mb-0">+012 345 6789</h5>
-                            </div>
-                        </div>
-                        <div class="d-flex mb-4">
-                            <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
-                                <i class="fa fa-envelope"></i>
-                            </div>
-                            <div class="ms-3">
-                                <p class="mb-2">Mail Us</p>
-                                <h5 class="mb-0">info@example.com</h5>
-                            </div>
-                        </div>
-                        <div class="d-flex mb-0">
-                            <div class="flex-shrink-0 btn-square rounded-circle bg-primary text-white">
-                                <i class="fa fa-map-marker-alt"></i>
-                            </div>
-                            <div class="ms-3">
-                                <p class="mb-2">Our Office</p>
-                                <h5 class="mb-0">123 Street, New York, USA</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                        <label for="name">Your Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                        <label for="email">Your Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                        <label for="subject">Subject</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
-                                        <label for="message">Message</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Contact End -->
-        
 <app-footer></app-footer>
 
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/lib/wow/wow.min.js"></script>
+<script src="/assets/lib/easing/easing.min.js"></script>
+<script src="/assets/lib/waypoints/waypoints.min.js"></script>
+<script src="/assets/lib/counterup/counterup.min.js"></script>
+<script src="/assets/lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/lib/wow/wow.min.js"></script>
-    <script src="/assets/lib/easing/easing.min.js"></script>
-    <script src="/assets/lib/waypoints/waypoints.min.js"></script>
-    <script src="/assets/lib/counterup/counterup.min.js"></script>
-    <script src="/assets/lib/owlcarousel/owl.carousel.min.js"></script>
-  
-
-    <!-- Template Javascript -->
-    <script src="/assets/js/main.js"></script>
+<!-- Template Javascript -->
+<script src="/assets/js/main.js"></script>
 
 </html>

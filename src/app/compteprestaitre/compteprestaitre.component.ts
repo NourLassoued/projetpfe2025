@@ -1,101 +1,99 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
-import {jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DemandeService } from '../service/demande.service';
 import { Demande } from 'src/models/Demande';
 import { UtilisateurService } from '../service/utilisateur.service';
 import { Postulation } from 'src/models/Postulation';
 
-import { ToastrService } from 'ngx-toastr'
+import { ToastrService } from 'ngx-toastr';
 import { WebsocketServiceService } from '../service/websocket-service.service';
 @Component({
   selector: 'app-compteprestaitre',
   templateUrl: './compteprestaitre.component.html',
-  styleUrls: ['./compteprestaitre.component.css']
+  styleUrls: ['./compteprestaitre.component.css'],
 })
-export class CompteprestaitreComponent implements OnInit{
+export class CompteprestaitreComponent implements OnInit {
   user: any = null;
-  profileImageUrl: SafeUrl | null = null; 
+  profileImageUrl: SafeUrl | null = null;
   userId!: number;
-  showDetailsMap: { [key: number]: boolean } = {}; 
+  showDetailsMap: { [key: number]: boolean } = {};
   demandesDisponibles: Demande[] = [];
   showModal: boolean = false;
   selectedDemande!: Demande;
-  commentaire: string = '';;
+  commentaire: string = '';
   notificationMessage: string = '';
   showDemandes = false;
   notifMessage: string | null = null;
-  constructor(private fileService: FileService,
-     private sanitizer: DomSanitizer, 
-     private utilisateurService:UtilisateurService,
-     private toastr: ToastrService,
-     private demandeService: DemandeService,
-     private router: Router,
-     private route: ActivatedRoute
-    ) {}
+  constructor(
+    private fileService: FileService,
+    private sanitizer: DomSanitizer,
+    private utilisateurService: UtilisateurService,
+    private toastr: ToastrService,
+    private demandeService: DemandeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
   ngOnInit(): void {
     this.loadUserData();
     this.getDemandesDisponibles();
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.notifMessage = params['notif'];
       if (this.notifMessage) {
-      
       }
     });
-  
- 
   }
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');
-  
+
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
         this.user = decodedToken;
         this.userId = decodedToken.id;
-      
-  
+
         if (this.user.image) {
-         
           this.loadProfileImage(this.user.image);
         } else {
-          console.warn(" Aucune image trouvée dans le token !");
+          console.warn(' Aucune image trouvée dans le token !');
         }
-        if (this.userId) { 
-         
-         
+        if (this.userId) {
         } else {
-          console.error(" Erreur : ID utilisateur non défini !");
+          console.error(' Erreur : ID utilisateur non défini !');
         }
       } catch (error) {
         console.error(' Erreur lors du décodage du token:', error);
       }
     } else {
-      console.warn(" Aucun token trouvé dans localStorage !");
+      console.warn(' Aucun token trouvé dans localStorage !');
     }
   }
   getDemandesDisponibles(): void {
     if (this.userId) {
       this.demandeService.getDemandesDisponibles(this.userId).subscribe(
         (data: Demande[]) => {
-          this.demandesDisponibles = data || []; 
-  
-         
-          this.demandesDisponibles.forEach(demande => {
+          this.demandesDisponibles = data || [];
+
+          this.demandesDisponibles.forEach((demande) => {
             if (demande.idDemande !== undefined) {
               this.showDetailsMap[demande.idDemande] = false;
             }
           });
         },
-        error => {
-          console.error('Erreur lors de la récupération des demandes disponibles', error);
+        (error) => {
+          console.error(
+            'Erreur lors de la récupération des demandes disponibles',
+            error
+          );
           this.demandesDisponibles = []; // Si erreur, on initialise demandesDisponibles en tableau vide
         }
       );
     } else {
-      console.warn("Impossible de récupérer les demandes : utilisateur non identifié !");
+      console.warn(
+        'Impossible de récupérer les demandes : utilisateur non identifié !'
+      );
       this.demandesDisponibles = []; // Si l'utilisateur n'est pas trouvé, initialisation de demandesDisponibles
     }
   }
@@ -112,95 +110,87 @@ export class CompteprestaitreComponent implements OnInit{
         this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       },
       error: (err) => {
-        console.error(' Erreur de chargement de l\'image', err);
-        this.profileImageUrl = null; 
-      }
+        console.error(" Erreur de chargement de l'image", err);
+        this.profileImageUrl = null;
+      },
     });
   }
 
- 
-envoyerPostulation(): void {
+  envoyerPostulation(): void {
+    if (!this.commentaire || this.commentaire.trim() === '') {
+      console.error('Le commentaire est requis.');
+      return;
+    }
 
-  if (!this.commentaire || this.commentaire.trim() === '') {
-    console.error('Le commentaire est requis.');
-    return;  
-  }
+    if (!this.selectedDemande || !this.selectedDemande.idDemande) {
+      console.error('La demande sélectionnée est invalide.');
+      return;
+    }
 
-
-  if (!this.selectedDemande || !this.selectedDemande.idDemande) {
-    console.error('La demande sélectionnée est invalide.');
-    return;  
-  }
-
-
-  if (!this.user || !this.user.id) {
-    console.error('L\'utilisateur est invalide.');
-    return;
-  }
-
+    if (!this.user || !this.user.id) {
+      console.error("L'utilisateur est invalide.");
+      return;
+    }
 
     const postulation: Postulation = {
       commentaire: this.commentaire,
       datePostulation: new Date(),
-      demande: { idDemande: this.selectedDemande.idDemande }, 
-      prestataire: { idUtilisateur: this.user.id }
+      demande: { idDemande: this.selectedDemande.idDemande },
+      prestataire: { idUtilisateur: this.user.id },
     };
 
-  this.utilisateurService.postuler(this.selectedDemande.idDemande, this.user.id, postulation)
-    .subscribe({
-      next: (response) => {
-       
-        this.closeModal(); 
-        this.toastr.success('Votre postulation a été envoyée avec succès !', 'Succès');
-        this.getDemandesDisponibles();
-      },
-      error: (error) => {
-       
-        console.error('Erreur lors de l\'envoi de la postulation', error);
-        if (error.status === 400) {
-          alert('Une erreur de validation s\'est produite. Veuillez vérifier les données et réessayer.');
-        } else {
-          alert('Une erreur inconnue est survenue. Veuillez réessayer plus tard.');
-        }
-      }
-    });
-}
+    this.utilisateurService
+      .postuler(this.selectedDemande.idDemande, this.user.id, postulation)
+      .subscribe({
+        next: (response) => {
+          this.closeModal();
+          this.toastr.success(
+            'Votre postulation a été envoyée avec succès !',
+            'Succès'
+          );
+          this.getDemandesDisponibles();
+        },
+        error: (error) => {
+          console.error("Erreur lors de l'envoi de la postulation", error);
+          if (error.status === 400) {
+            alert(
+              "Une erreur de validation s'est produite. Veuillez vérifier les données et réessayer."
+            );
+          } else {
+            alert(
+              'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
+            );
+          }
+        },
+      });
+  }
 
-
-  
-  
   setupMenuToggle(): void {
     const menuIcon = document.getElementById('menu-icon');
     const profileMenu = document.getElementById('profile-menu');
-    const logoutButton = document.getElementById('logout-btn'); 
+    const logoutButton = document.getElementById('logout-btn');
 
     if (menuIcon && profileMenu) {
       menuIcon.addEventListener('click', () => {
         profileMenu.classList.toggle('active');
       });
     }
-
   }
   openModal(demande: Demande): void {
-    
-    this.selectedDemande = demande;  
-    this.commentaire = '';           
-    this.showModal = true;          
+    this.selectedDemande = demande;
+    this.commentaire = '';
+    this.showModal = true;
   }
   closeModal(): void {
     this.showModal = false;
   }
 
   logout(): void {
-  
-    localStorage.removeItem('accessToken')
-    this.router.navigate(['/Front']); 
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/Front']);
   }
-  
- 
+
   toggleDemandes() {
     this.showDemandes = !this.showDemandes;
   }
-
 }
-
