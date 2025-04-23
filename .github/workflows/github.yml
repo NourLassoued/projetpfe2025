@@ -17,7 +17,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/Nourlassoued/nourFront/nourangular
+          images: ghcr.io/nourlassoued/nourangular
           tags: |
             type=ref,event=branch
             type=ref,event=pr
