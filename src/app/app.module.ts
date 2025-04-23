@@ -94,6 +94,9 @@ import { WebsocketServiceService } from './service/websocket-service.service';
 import { StompServiceService } from './service/stomp-service.service';
 import { ChatComponent } from './chat/chat.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
+import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
+import { AvissectionComponent } from './Front/avissection/avissection.component';
 
 
 
@@ -155,6 +158,9 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
     MesevolutiosprestaitreComponent,
     ChatComponent,
     TimeAgoPipe,
+    FrontprofilComponent,
+    FrontprofilshowComponent,
+    AvissectionComponent,
  
    
 

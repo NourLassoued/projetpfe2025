@@ -18,10 +18,8 @@ import { MessageService } from '../service/message.service';
   styleUrls: ['./navbarcompte.component.css']
 })
 export class NavbarcompteComponent implements OnInit , AfterViewInit {
-  
-  
-  
-  
+  showMessageModal: boolean = false;
+  unreadMessages: any[] = [];
     messages: string[] = [];
     selectedServiceId!: number;  
     displayedCategories: any[] = []; 
@@ -384,6 +382,8 @@ ngOnInit(): void {
     localStorage.removeItem('accessToken')
     this.router.navigate(['/Front']); 
   }
+  
+
   
  }
   

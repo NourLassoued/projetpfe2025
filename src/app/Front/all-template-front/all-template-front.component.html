@@ -24,14 +24,11 @@
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 
-
+<app-navbar></app-navbar>
 <section class="heroo">
-    <app-navbar></app-navbar>
+  
     <div class="containere">
-        <!-- Image à gauche -->
-        <div class="heroo-image">
-            <img src="assets/img/professional-img.png" alt="Dashboard">
-        </div>
+      
 
         <!-- Texte à droite -->
         <div class="heroo-text">
@@ -60,7 +57,7 @@
                       <div class="grid-container">
                         <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom) ">
                           <img  [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
-                          <span>{{ category.nom }}</span>
+                          <label>{{ category.nom }}</label>
                           <span class="icon">➜</span>
                         </div>
                       
@@ -98,8 +95,12 @@
         </div>
     </div>
 </section>
+<br>
+<br>
+<br>
+<h1>Prestataires de service à domicile évalués et qualifiés</h1>
 
-
+<app-frontprofil></app-frontprofil>
 <!-- Feature End -->
 
  <div class="container-xxl py-6">
@@ -136,6 +137,7 @@
 
         <!-- About Start -->
       <!-- About Start -->
+       <h1>Facilitez votre quotidien grâce à nos services à domicile</h1>
       <div class="container-xxl py-7" id="about">
         <div class="services-container">
             <!-- Bouton Précédent -->
@@ -162,8 +164,11 @@
             
     </div>
 </div>
+<br>
+<br>
 
-          
+      <h1>Découvrez ce que disent nos clients !</h1>
+      <app-avissection></app-avissection>
 
         <!-- Overview Start -->
         <div class="container-xxl bg-light my-6 py-5" id="overview">

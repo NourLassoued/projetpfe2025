@@ -33,14 +33,14 @@ conversation: any[] = [];
       private websocketService: WebsocketServiceService,
       private authService: AuthServiceService,
       private avisService:AvisService,
-      private cdr: ChangeDetectorRef
+   
       
   ) {}
 
   
 
   ngOnInit(): void {
-   // this.startAutoRefresh();
+  
 
   
     this.loadUserData();
@@ -71,6 +71,8 @@ conversation: any[] = [];
         this.playNotificationSound();
       }
     });
+
+
     this.startAutoRefresh();
 
     setInterval(() => {
@@ -88,12 +90,15 @@ conversation: any[] = [];
     console.warn("userId non défini après chargement du token !");
   }
 }
+
+
+
 startAutoRefresh(): void {
   this.refreshInterval = setInterval(() => {
     if (this.selectedContactId) {
       this.getConversationWith(this.selectedContactId);
     }
-  }, 2000); // toutes les 5 secondes
+  }, 2000); 
 }
 
 loadUserData(): boolean {
@@ -244,44 +249,7 @@ getUndeliveredMessages(): void {
     }
   });
 }
-/*
-markMessageAsRead(id: number): void {
-  if (!id) {
-    console.warn("ID du message introuvable !");
-    return;
-  }
 
-  // Marquer le message comme "vu" dans la conversation
-  const message = this.conversation.find(m => m.id === id);
-  if (message) {
-    message.readTimestamp = new Date().toISOString(); // Marque le message comme "vu"
-    message.delivered = true; // Le message est livré et vu
-  }
-
-  // Envoie un message WebSocket de type "seen"
-  this.websocketService.waitUntilConnected(() => {
-    const seenMessage = {
-   
-      id: message.id,
-      receiver: message?.receiver.idUtilisateur,  // L'ID du destinataire
-      sender: this.userId,  // L'ID de l'utilisateur actuel
-    };
-    this.websocketService.sendMessagetempsreel(seenMessage);
-  });
-
-  // Appel au backend pour marquer comme lu
-  this.messageService.markAsRead(id).subscribe({
-    next: () => {
-      
-    },
-    error: (err) => {
-      console.error("Erreur lors du marquage comme lu :", err);
-    }
-  });
-}
-
-
-*/
 markMessageAsRead(id: number): void {
 
 
@@ -326,5 +294,8 @@ markMessageAsRead(id: number): void {
   });
 }
 
+isUnread(message: any): boolean {
+  return !message.readTimestamp;
+}
 
 }

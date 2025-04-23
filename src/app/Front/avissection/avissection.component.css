@@ -1,0 +1,95 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background-color: #ececec;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: none;
+
+}
+
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: flex-start;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espace entre nom et image */
+  cursor: pointer;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.badge.bg-secondary {
+  background-color: #c9c6c6 !important;
+  color: #333;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+
+
+.user-info h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-content h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.card-content p {
+  font-size: 17px;
+  color: #202020;
+
+    margin: 0;
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+.rating {
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.star {
+  color: #f5b50a;
+  font-size: 20px;
+  margin-right: 2px;
+}

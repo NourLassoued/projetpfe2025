@@ -33,7 +33,7 @@ export class UserComponent implements OnInit ,DoCheck {
   newValue: any = '';
 
   constructor(private utilisateurService: UtilisateurService, public dialog: MatDialog,private fileservice:FileService, 
-     private snackBar: MatSnackBar, 
+  
      private cdr: ChangeDetectorRef,
     private router :Router ) {}
   ngDoCheck() {

@@ -26,8 +26,9 @@
                   <h3>Messagerie</h3>
                   <li *ngFor="let message of lastMessages"  (click)="getConversationWith(message.sender.idUtilisateur === userId ? message.receiver.idUtilisateur : message.sender.idUtilisateur)">
                  
-                    <div class="message-box">
-                   
+                    
+                      <div class="message-box" 
+                      [ngClass]="{ 'unread-message': message.receiver.idUtilisateur === userId && !message.readTimestamp }">
                         <img
                        *ngIf="imageUrls[message.sender.idUtilisateur === userId ? message.receiver.idUtilisateur : message.sender.idUtilisateur]"
                           [src]="imageUrls[message.sender.idUtilisateur === userId ? message.receiver.idUtilisateur : message.sender.idUtilisateur]"
@@ -41,10 +42,16 @@
                                     : message.sender.nom
                                 }}
                               </strong>
+                           
                    
-                      <p>{{ message.content }}</p>
-                      <small>🕒 {{ message.timestamp | timeAgo }}</small>
-
+                            
+                              <p>
+                                {{ message.content }}
+                                <span *ngIf="message.receiver.idUtilisateur === userId && !message.readTimestamp"> ●</span>
+                              </p>
+                              
+                        
+                              <small>🕒 {{ message.timestamp | timeAgo }}</small>
 
                    
                     </div>

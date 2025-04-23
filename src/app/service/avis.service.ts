@@ -33,4 +33,8 @@ private apiUrl = `${environment.apiUrl}/avis`;
     return this.http.get<number>(`${this.apiUrl}/count/${idUtilisateur}`);
   }
   
+  getTopAvisByUtilisateur(): Observable<Avis[]> {
+    return this.http.get<Avis[]>(`${this.apiUrl}/best-by-user`);
+  }
+  
 }

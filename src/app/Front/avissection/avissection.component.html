@@ -1,0 +1,48 @@
+<div class="container" *ngIf="!isLoading && topAvisList.length > 0; else loading">
+  <div class="card" *ngFor="let avis of topAvisList.slice(0, 9)">
+<div class="user-info">
+ 
+    <img [src]="avis.avisUtilisateur?.image"
+    [alt]="avis.avisUtilisateur?.nom"
+    class="profile-img"
+    (click)="goToCompte(avis.avisUtilisateur?.idUtilisateur)">
+    <h3>{{ avis.avisUtilisateur?.nom }} </h3>
+</div>
+    <div class="tags mt-2">
+      <span 
+        class="badge bg-secondary me-1"  
+        *ngFor="let servicee of avis.avisUtilisateur?.competence">
+        {{ servicee }}
+      </span>
+    </div>
+
+      
+      
+    
+      <div class="card-content">
+       
+        <p>{{ avis.commentaire }}</p>
+        <div class="rating">
+            <ng-container *ngIf="avis.note as note">
+                <ng-container *ngFor="let star of getStarsArray(note)">
+                  <span class="star">★</span>
+                </ng-container>
+              </ng-container>
+              
+            ({{ avis.note }}) – Par {{ avis.utilisateur?.nom }}
+          </div>
+          <h3>
+            {{ avis.dateAvis ? (avis.dateAvis | timeAgo) : '' }}
+
+          </h3>
+          
+        
+          
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <p style="text-align: center;">Chargement des avis...</p>
+  </ng-template>
+  

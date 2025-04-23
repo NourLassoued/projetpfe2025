@@ -245,7 +245,8 @@ width: 750px;
       @keyframes bounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-10px); }
-      }.empty-messages {
+      }
+      .empty-messages {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -279,4 +280,17 @@ width: 750px;
         font-size: 1rem;
         color: #666;
       }
+      
+        .unread-message {
+          color: #212121;
+          font-weight: bold;
+          
+          border-left: 6px solid #007bff; /* Rouge doux pour attirer l’attention */
+          padding: 10px;
+          border-radius: 15px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+      
+      
       

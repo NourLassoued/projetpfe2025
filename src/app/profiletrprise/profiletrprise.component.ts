@@ -96,7 +96,7 @@ export class ProfiletrpriseComponent {
           this.loadProfileImage(this.user.image);
         } 
         if (this.user.telephoneNumber) {
-          console.log(" numéro de téléphone trouvé !",this.user.telephoneNumber);
+       
         }
         else {
           console.warn("Aucune image trouvée dans le token !");

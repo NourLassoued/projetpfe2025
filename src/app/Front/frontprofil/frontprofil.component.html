@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let prestataire of prestataires">
+        <div class="card mb-4">
+          <img 
+            [src]="prestataire.image || 'assets/images/user.png'" 
+            class="card-img-top" 
+            alt="{{ prestataire.nom }}"    (click)="goToProfil(prestataire.idUtilisateur!)" >
+                 
+          <div class="card-body">
+            <h2 class="card-title">
+              {{ prestataire.nom }} 
+             
+            </h2>
+  
+            <p class="card-text">
+           
+            </p>
+  
+            <p class="card-text">
+              <strong>Adresse :</strong> {{ prestataire.adressee?.governoate }}
+            </p>
+  
+            <p class="card-text">
+              <strong>Tarif : {{prestataire.tarifs }} dt</strong> 
+            </p>
+  
+             <p  class="card-text rating" *ngIf="prestataire.idUtilisateur">
+                ⭐ {{ scoreMap[prestataire.idUtilisateur] || 0 }} 
+                ({{ (nombreAvisMap[prestataire.idUtilisateur] || 0) > 0 ? nombreAvisMap[prestataire.idUtilisateur] + ' avis' : 'Aucun avis' }})
+              </p>
+              
+  
+            <div class="tags mt-2">
+              <span 
+                class="badge bg-secondary me-1"  
+                *ngFor="let servicee of prestataire?.competence">
+                {{ servicee }}
+              </span>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

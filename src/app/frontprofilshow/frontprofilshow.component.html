@@ -1,0 +1,165 @@
+<app-navbar></app-navbar>
+<body>
+
+  <div class="container">
+      <!-- Sidebar contenant l'image de profil -->
+      <div class="sidebar">
+          <div id="profile-container">
+              <div class="image-wrapper">
+                  <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                  <div class="price">
+                      {{ user?.tarifs }} dt
+                  </div>
+                  <!-- Bloc des informations de notation -->
+                  <div class="rating-info">
+                      <div>
+                          <strong>{{ avisList.length }}</strong> <span>⭐</span>
+                          <p>Évaluations</p>
+                      </div>
+                      <div >
+                          <strong >{{ getAverageRating() }}</strong> <span>❤️</span>
+                          <p class="rating-text">Note sur 5</p>
+                      </div>
+                     
+                      <div class="experience">
+                        
+                          <strong>🎖️{{ user?.workExperience }} ans</strong>
+                          <p> d'expérience</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- Boutons de contact -->
+          <div class="button-container">
+              <h4>
+                Contactez moi!
+              </h4>
+              <button [routerLink]="['/login']" >
+                <i class="fa-solid fa-phone"></i> Afficher le numéro
+              </button>
+          </div>
+      </div>
+     
+    
+      
+      
+    
+      <!-- Contenu du profil -->
+      <div class="container-profile">
+          <!-- Nom et vérifications -->
+          <div class="section">
+              <label>{{ user?.nom }}</label>
+              <div class="verification-container">
+                  <span class="verification-item">
+                      <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
+                  </span>
+                  <span class="verification-item">
+                      <i class="fa-solid fa-circle-check"></i> Numéro de téléphone vérifié
+                  </span>
+              </div>
+          </div>
+    
+          <!-- Localisation -->
+          <div class="section">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              {{ user?.adressee.governoate }}
+          </div>
+    
+          
+    
+          <!-- Compétences -->
+          
+          <div class="section">
+              <label>💼 Mes compétences</label>
+              <div class="competences-container">
+                  <div class="competence" *ngFor="let servicee of user?.competence">
+                      <p>{{ servicee }}</p> 
+                  
+                  </div>
+              </div>
+          </div>
+    <div class="content">
+  
+          <div class="section">
+            
+              <h3>À propos de moi</h3>
+              <p>{{ user?.description }}</p>
+          </div>
+    </div>
+          <!-- Disponibilités -->
+           <div class="content">
+          <div class="section">
+              <ng-container *ngIf="user?.disponibilite && user.disponibilite.length > 0">
+                  <h3>Disponibilité</h3>
+                  <ul class="disponibilites-list">
+                      <li *ngFor="let dispo of user.disponibilite">
+                        <!-- Icône pour l'heure -->
+                        <i class="fa-solid fa-clock"></i>
+                        <!-- Affichage du jour et des horaires -->
+                        {{ dispo.jour }} : {{ dispo.heureDebut }} h - {{ dispo.heureFin }} h
+                      </li>
+                    </ul>
+              </ng-container>
+              
+          </div>
+           </div>
+          <!-- Avis clients -->
+          <div class="content">
+              <div class="section">
+                <label class="sectionn">Avis clients</label>
+            
+                <!-- Note moyenne -->
+                <div class="rating">
+                  ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
+                </div>
+            
+                <!-- Barres de répartition des notes -->
+                <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
+                  <span>{{ note }}★</span>
+                  <div class="bar">
+                    <div class="bar-fill" [style.width.%]="getRatingPercentage(note)"></div>
+                  </div>
+                  <span>{{ getRatingCount(note) }}</span>
+                </div>
+            
+                <!-- Liste des avis (pagination) -->
+                <div class="reviews">
+                  <div class="review-card" *ngFor="let avis of avisAffiches">
+                    <img
+                      *ngIf="avis.utilisateur?.image"
+                      [src]="avis.utilisateur?.image"
+                      alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
+                      class="user-image"
+                    />
+                    <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+            
+                    <div class="review-header">
+                      <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
+                    </div>
+            
+                    <!-- Affichage des étoiles -->
+                    <div class="stars">
+                      <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
+                        ★
+                      </ng-container>
+                    </div>
+            
+                    <div class="review-text">
+                      {{ avis.commentaire }}
+                    </div>
+                  </div>
+                </div>
+            
+                
+                <div class="navigation-buttons">
+                  <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
+                  <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant ➡</button>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        
+    <app-footer></app-footer>
+    </body>
+  

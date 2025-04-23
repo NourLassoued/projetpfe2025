@@ -10,7 +10,7 @@ import { environment } from '../environment';
 })
 export class DemandeService {
 
- // private apiUrl = 'http://localhost:8088/nour/demandes'; 
+
     private apiUrl = `${environment.apiUrl}/demandes`;
 
   constructor(private http: HttpClient,private auth:AuthServiceService) {}

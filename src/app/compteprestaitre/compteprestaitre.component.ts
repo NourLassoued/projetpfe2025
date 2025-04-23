@@ -41,8 +41,7 @@ export class CompteprestaitreComponent implements OnInit{
     this.route.queryParams.subscribe(params => {
       this.notifMessage = params['notif'];
       if (this.notifMessage) {
-        console.log('📬 Message reçu via queryParams :', this.notifMessage);
-        // tu peux maintenant l'afficher ou déclencher une action
+      
       }
     });
   

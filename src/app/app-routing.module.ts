@@ -57,6 +57,9 @@ import { MesevolutiosComponent } from './mesevolutios/mesevolutios.component';
 import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevolutiosprestaitre.component';
 import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
 import { ChatComponent } from './chat/chat.component';
+import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
+import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
+import { AvissectionComponent } from './Front/avissection/avissection.component';
 
 
 const routes: Routes = [
@@ -68,6 +71,14 @@ const routes: Routes = [
   {
     path: 'Front',
     component: AllTemplateFrontComponent
+  },
+  {
+    path: 'Frontprofil',
+    component:FrontprofilComponent 
+  },
+  {
+    path: 'Compte/:id',
+    component:FrontprofilshowComponent 
   },
   {
     path: 'prestataire',
@@ -267,7 +278,14 @@ component:InformatiqueComponent
   {
     path: 'Chat',
     component:ChatComponent 
-  }
+  },
+  {
+    path: 'avisection',
+    component:AvissectionComponent 
+  },
+  
+
+
 
 
 

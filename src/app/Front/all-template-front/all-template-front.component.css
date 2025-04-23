@@ -4,6 +4,13 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-image: url('/assets/img/Front.png');
+    background-size: cover;
+    background-position: top; 
+    background-repeat: no-repeat;
+   
+    z-index: 1;
+    opacity: 0.9;
 }
 
 .containere {
@@ -28,7 +35,9 @@
 /* Texte à droite */
 .heroo-text {
     max-width: 50%;
-    color: rgb(8, 8, 8);
+    color: rgb(252, 252, 252);
+    margin-left: 350px;
+    margin-top: 300px;
 }
 
 .heroo-text h1 {
@@ -49,6 +58,7 @@
     padding: 5px 10px;
     width: 450px;
     height: 70px;
+    margin-left: 50px;
     border: 3px solid #007bff;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -84,6 +94,17 @@ height: 50px;
 .input-containere i {
     font-size: 16px;
 }
+.modal-content h2 {
+  color: #000;
+}
+.modal-content label{
+  color: #121212;
+  font-size: 18px;
+  font-weight: bold;
+
+}
+
+
 
 
 .title-container {
@@ -133,6 +154,7 @@ h2 {
   font-size: 22px;
   text-align: center;
   margin-bottom: 15px;
+ 
 }
 
 
@@ -177,6 +199,7 @@ background: white;
 padding: 20px;
 border-radius: 10px;
 width: 60%;
+margin-top: 70px;
 height: 80%;
 max-height: 80%;
 overflow-y: auto;
@@ -209,9 +232,10 @@ color: #555;
 
 
 }
+
 .category-card {
 display: flex;
-justify-content: space-between; /* Alignement des éléments avec un espace entre */
+justify-content: space-between; 
 align-items: center;
 background: white;
 padding: 10px;
@@ -262,12 +286,12 @@ flex-direction: column;
   
  
   
-.iconn {
+.grid-container .iconn {
   margin-left: 90px;
-  max-width: 5px; /* Taille de la case à cocher */
-  
+  max-width: 5px; 
+ 
   max-height: 5px;
-  -webkit-appearance: none; /* Supprimer l'apparence par défaut sur Safari */
+  -webkit-appearance: none;
   -moz-appearance: none; /* Supprimer l'apparence par défaut sur Firefox */
   appearance: none; /* Supprimer l'apparence par défaut */
   border: 2px solid #ccc; /* Bordure de la case à cocher */
@@ -280,24 +304,24 @@ flex-direction: column;
 
 .iconn:checked {
 
-border-color: #4CAF50; /* Bordure verte lorsqu'il est coché */
+border-color: #4CAF50; 
 }
 
 .iconn:checked::before {
-  content: ''; /* Création du checkmark */
+  content: ''; 
   position: absolute;
   top: 4px;
   left: 7px;
   width: 6px;
   height: 6px;
   border: solid  #247df0;
-  border-width: 0 3px 3px 0; /* Style du checkmark */
-  transform: rotate(45deg); /* Rotation du checkmark */
+  border-width: 0 3px 3px 0; 
+  transform: rotate(45deg); 
 }
 
 .iconn:hover {
-background-color: #f1f1f1; /* Changement de fond au survol */
-border-color: #247df0; /* Changement de bordure au survol */
+background-color: #f1f1f1; 
+border-color: #247df0; 
 }.services-container {
   display: flex;
   justify-content: center;
@@ -373,7 +397,7 @@ border-color: #247df0; /* Changement de bordure au survol */
   background: #f0f0f0;
 }
 
-/* Style des boutons de défilement */
+
 .scroll-btn {
   background: rgba(0, 0, 0, 0.5);
   color: white;
@@ -395,4 +419,7 @@ border-color: #247df0; /* Changement de bordure au survol */
 .scroll-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+h1{
+  text-align: center;
 }
