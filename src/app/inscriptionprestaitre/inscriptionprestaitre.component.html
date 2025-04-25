@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,14 @@
         <app-navbar></app-navbar>
         <div class="text-section">
             <h1><span class="highlight">Gagnez de l'argent</span> grâce à vos compétences</h1>
-            <p>Plus de <strong>4.000 jobs</strong> chaque semaine, que vous soyez un <strong>particulier</strong> ou <strong>professionnel</strong>, dans plus de <a href="#">120 catégories</a>.</p>
+            <p>Plus de <strong>4.000 jobs</strong> chaque semaine, que vous soyez un <strong>particulier</strong> ou
+                <strong>professionnel</strong>, dans plus de <a href="#">120 catégories</a>.</p>
             <button class="btn" (click)="openModal()">S'inscrire</button>
         </div>
 
         <div class="phone-section">
             <div class="phone">
-              
+
                 <div class="service-container">
                     <div class="service">
                         <img src="assets/img/pelouse.png" alt="Tonte de pelouse">
@@ -49,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
@@ -60,35 +62,36 @@
             <div class="cards">
                 <div class="card">
                     <div class="icon">
-                        <i class="fas fa-user-tie"></i> 
+                        <i class="fas fa-user-tie"></i>
                     </div>
                     <h2>Professionnel</h2>
                     <p>Employé, étudiant, chercheur d’emploi, pensionné.</p>
                     <ul class="list">
                         <li><i class="fas fa-check"></i> Inscription gratuite</li>
-                        
-                        <li><i class="fas fa-check"></i>  Une app super facile</li>
+
+                        <li><i class="fas fa-check"></i> Une app super facile</li>
                         <li><i class="fas fa-check"></i>Revenus illimités</li>
                         <li><i class="fas fa-check"></i> travailler à votre rythme</li>
                     </ul>
-                    <button class="btn btn-green" [routerLink]="['/InscriptionProfessionnel']">S'inscrire maintenant</button>
+                    <button class="btn btn-green" [routerLink]="['/InscriptionProfessionnel']">S'inscrire
+                        maintenant</button>
                 </div>
-    
+
                 <div class="or">ou</div>
-    
+
                 <div class="card">
                     <div class="icon">
-                     
-                       <i class="fas fa-building"></i>
+
+                        <i class="fas fa-building"></i>
 
                     </div>
                     <h2>Entreprise</h2>
                     <p>Développez votre activité facilement</p>
                     <ul class="list">
                         <li><i class="fas fa-check"></i> Accès à plus de clients</li>
-                        <li><i class="fas fa-check"></i>  Plus de visibilité</li>
+                        <li><i class="fas fa-check"></i> Plus de visibilité</li>
                         <li><i class="fas fa-check"></i> Une app super facile</li>
-                        <li><i class="fas fa-check"></i>  Maximisation des profits</li>
+                        <li><i class="fas fa-check"></i> Maximisation des profits</li>
                         <li><i class="fas fa-check"></i> travailler à votre rythme</li>
                     </ul>
                     <button class="btn btn-blue" [routerLink]="['/InscriptionEntrprise']">S'inscrire maintenant</button>
@@ -97,6 +100,99 @@
         </div>
     </div>
 
+    <h1 class="text-center text-2xl font-semibold my-12 max-w-3xl mx-auto px-4">
+        Utilisez SOS Service Tunisie pour lancer ou développer votre activité de service à domicile.
+    </h1>
+    <div class="containere max-w-7xl mx-auto px-4 py-8">
+        <div class="flex flex-col sm:flex-row justify-between gap-8 text-gray-900">
+            <div class="flex items-start space-x-3 sm:w-1/3">
+                <i class="fas fa-bullseye text-blue-600 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-base leading-tight">
+                        Ton professionnel
+                    </h3>
+                    <p class="text-gray-700 text-sm leading-relaxed mt-1 max-w-xs">
+                        Attirez des clients sans dépenser un centime en marketing : nous nous chargeons gratuitement de votre visibilité.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-3 sm:w-1/3">
+                <i class="fas fa-rocket text-blue-600 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-base leading-tight">
+                        Obtenez vos premières réservations en un rien de temps
+                    </h3>
+                    <p class="text-gray-700 text-sm leading-relaxed mt-1 max-w-xs">
+                        Nous optimisons gratuitement votre profil pour attirer rapidement vos premiers clients.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-3 sm:w-1/3">
+                <i class="fas fa-shield-alt text-blue-600 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-base leading-tight">
+                        Nous sécurisons vos prestations du début à la fin
+                    </h3>
+                    <p class="text-gray-700 text-sm leading-relaxed mt-1 max-w-xs">
+                       En cas de problème, nous intervenons directement avec le client et prenons en charge les éventuels frais.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="signup-steps">
+        <!-- Étape 1 (image gauche, texte droite) -->
+        <div class="step step-reverse">
+          <div class="step-image">
+            <img src="assets/img/sicrire.png" alt="Inscription">
+          </div>
+          <div class="step-content">
+            <h2>Étape 1 : Inscription sur la plateforme</h2>
+            <p>Cliquez sur ce lien pour vous inscrire à la plateforme.</p>
+          </div>
+        </div>
+      
+        <!-- Étape 2 (texte gauche, image droite) -->
+        <div class="step">
+            <div class="step-image">
+                <img src="assets/img/ahmedpng.png" alt="Email de confirmation">
+              </div>
+          <div class="step-content">
+            <h2>Étape 2 : Vous recevrez un email</h2>
+            <p>Un e-mail vous sera envoyé pour vous informer que votre compte sera activé après avoir passé l'entretien en ligne.</p>
+          </div>
+         *
+        </div>
+      
+        <!-- Étape 3 (image gauche, texte droite) -->
+        <div class="step step-reverse">
+          <div class="step-image">
+            <img src="assets/img/ahmedpng.png" alt="Réunion">
+          </div>
+          <div class="step-content">
+            <h2>Étape 3 : Lien pour la réunion</h2>
+            <p>Un lien de réunion vous sera envoyé pour vérifier vos compétences.</p>
+          </div>
+        </div>
+      
+        <!-- Étape 4 (texte gauche, image droite) -->
+        <div class="step">
+            <div class="step-image">
+                <img src="assets/img/ahmedpng.png" alt="Activation de compte">
+              </div>
+          <div class="step-content">
+            <h2>Étape 4 : Activation de votre compte</h2>
+            <p>
+                Une fois que nous aurons accepté votre service, votre compte sera activé. Vous recevrez alors un e-mail d'acception.
+                
+                </p>
+          </div>
+          
+        </div>
+      </div>
+      
 </body>
 <app-footer></app-footer>
+
 </html>

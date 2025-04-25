@@ -1,12 +1,13 @@
 .container {
-    border-radius: 50px;
-   
-    background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+    width: 100%;
+    border-radius: 70px;
+       background: linear-gradient(to right, #e0f7fa, #f1f8e9);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
     padding: 2rem;
+    height: 500px;
     font-family: Arial, sans-serif;
 }
 
@@ -31,19 +32,26 @@
 }
 
 .left li {
+    color: #6f6f6f;
     margin-bottom: 8px;
     position: relative;
     padding-left: 24px;
    font-weight: bold;
 }
-
+.catoegories{
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    font-size: 14px;
+}
 .left button {
     padding: 10px 20px;
     border: 1px solid #28a745;
     background-color: white;
     color: #28a745;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight: bold;
+
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -65,7 +73,7 @@
     width: 250px;
     height: 250px;
     margin-bottom: 70px;
-    margin-right: 70px;
+    margin-right: 140px;
 }
 
 .profile {
@@ -75,3 +83,27 @@
     object-fit: cover;
    
 }
+.tags {
+    margin-top: 20px ;
+    display: flex;
+    gap: 12px; /* Espace horizontal entre les badges */
+  }
+
+    .badge.bg-secondary {
+           
+            background-color: #dcd6d6 !important;
+            color: #333;
+            font-size: 12px;
+            padding: 5px 15px;
+            border-radius: 12px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+          
+          
+      
+      
+  }
+  

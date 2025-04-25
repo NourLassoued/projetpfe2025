@@ -218,7 +218,7 @@ prestataireImageUrls: string[] = [];
                 if (utilisateur.idUtilisateur !== undefined && utilisateur.idUtilisateur !== null) {
                   this.avisService.getScoreMoyen(utilisateur.idUtilisateur).subscribe({
                     next: (score) => {
-                      // Si score est valide, l'ajouter dans scoreMap
+                    
                       if (score !== undefined && score !== null) {
                         if (utilisateur.idUtilisateur !== undefined) {
                             this.scoreMap[utilisateur.idUtilisateur] = score;

@@ -7,4 +7,5 @@ export class Avis {
     dateAvis?: Date;
     utilisateur?: Utilisateur;
     avisUtilisateur?: Utilisateur;
+    showFullcommentaire?: boolean; 
   }

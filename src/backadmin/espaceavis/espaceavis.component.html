@@ -192,7 +192,7 @@
 						</li><!--//nav-item-->
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-							<a class="nav-link active" routerLink="/scores-badges">
+							<a class="nav-link active" routerLink="/Scorebadage">
 								<span class="nav-icon">
 									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"   viewBox="0 0 1024 1024"><path fill="currentColor" d="M1021.06 839.968L833.798 493.664c19.104-43.36 29.792-91.28 29.792-141.696C863.59 157.664 706.07.16 511.782.16c-194.336 0-351.84 157.52-351.84 351.808c0 51.632 11.216 100.624 31.184 144.784L3.03 839.808c-6.065 11.024-5.057 24.624 2.527 34.688c7.6 10.033 20.432 14.752 32.687 11.873l160.624-36.848l54.976 153.12c4.288 11.904 15.152 20.16 27.744 21.088c.817.064 1.6.096 2.368.096a32.002 32.002 0 0 0 28.192-16.88L475.844 701.97a355.152 355.152 0 0 0 35.92 1.808c11.12 0 22.095-.576 32.943-1.6l167.248 305.008a31.984 31.984 0 0 0 30.56 16.527c12.56-1.008 23.376-9.248 27.631-21.088l54.976-153.12l160.624 36.848c12.32 2.975 25.024-1.809 32.624-11.809c7.632-9.984 8.656-23.52 2.688-34.576zm-731.282 73.376L249.52 801.183c-5.504-15.248-21.471-24.128-37.28-20.368l-118.8 27.248l135.41-246.976c44.592 60.24 107.952 105.68 181.44 127.793zm-65.553-561.377c0-158.544 129.009-287.536 287.568-287.536c158.544 0 287.536 128.992 287.536 287.536S670.337 639.535 511.793 639.535c-158.576 0-287.568-129.024-287.568-287.568zm587.52 428.847c-15.872-3.744-31.776 5.12-37.28 20.367l-40.529 112.976l-123.152-224.56c75.44-22.096 140.337-68.735 185.505-130.735L931.137 808.19z"/></svg>
 								</span>
@@ -234,321 +234,85 @@
 			</div><!--//sidepanel-inner-->
 		</div><!--//app-sidepanel-->
 	</header><!--//app-header-->
-
-	<div class="app-wrapper">
-
-		<div class="app-content pt-3 p-md-3 p-lg-4">
-			<div class="container-xl">
-				<div class="row g-3 mb-4 align-items-center justify-content-between">
-					<div class="col-auto">
-						<h1 class="app-page-title mb-0">Catégories</h1>
-					</div>
-					<div class="col-auto">
-						<div class="page-utilities">
-							<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-								<div class="col-auto">
-									<form class="docs-search-form row gx-1 align-items-center" (ngSubmit)="onSearch()">
-										<div class="col-auto">
-
-											<!-- Lier la valeur de l'input à searchQuery -->
-											<input type="text" id="search-docs" name="searchdocs"
-												[(ngModel)]="searchQuery" (ngModelChange)="onSearch()"
-												class="form-control search-docs" placeholder="Rechercher">
-
-										</div>
-
-									</form>
-
-								</div><!--//col-->
-								
-								<div class="col-auto">
-									<a class="btn app-btn-primary" href="#" (click)="openModal()">
-										<!-- Icône SVG avec effet de gras -->
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-											fill="currentColor" class="bi bi-plus me-2 icon-bold" viewBox="0 0 16 16">
-											<path
-												d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-										</svg>
-										Ajouter
-									</a>
-								</div>
-
-								<div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;"
-									aria-hidden="false">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">Ajouter une Catégorie</h5>
-												<button type="button" class="btn-close" (click)="closeModal()"
-													aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<!-- Formulaire à l'intérieur de la fenêtre modale -->
-												<form *ngIf="registerForm" [formGroup]="registerForm"
-													(ngSubmit)="onSubmit()">
-													<!-- Nom de la catégorie -->
-													<div class="mb-3">
-														<label for="nom" class="form-label">Nom de la catégorie</label>
-														<input type="text" id="nom" formControlName="nom"
-															class="form-control" required>
-														<div *ngIf="registerForm?.get('nom')?.invalid && registerForm?.get('nom')?.touched"
-															class="text-danger">
-															Le nom est requis.
-														</div>
-													</div>
-
-													<!-- Description de la catégorie -->
-													<div class="mb-3">
-														<label for="description" class="form-label">Description</label>
-														<input type="text" id="description"
-															formControlName="description" class="form-control" required>
-														<div *ngIf="registerForm?.get('description')?.invalid && registerForm?.get('description')?.touched"
-															class="text-danger">
-															La description est requise.
-														</div>
-													</div>
-
-													<!-- Tarif de la catégorie -->
-													<div class="mb-3">
-														<label for="tarif" class="form-label">Tarif</label>
-														<input type="number" id="tarif" formControlName="tarif"
-															class="form-control" required min="1">
-														<div *ngIf="registerForm?.get('tarif')?.invalid && registerForm?.get('tarif')?.touched"
-															class="text-danger">
-															Le tarif est requis et doit être supérieur à 0.
-														</div>
-													</div>
-
-													<!-- Image de la catégorie -->
-													<div class="mb-3">
-														<label for="imageCategorie" class="form-label">Image de la
-															catégorie</label>
-														<input type="file" id="imageCategorie"
-															(change)="onFileSelected($event)" class="form-control">
-													</div>
-
-													<!-- Prévisualisation de l'image -->
-													<div *ngIf="imagePreview" class="mb-3">
-														<img [src]="imagePreview" alt="Prévisualisation"
-															class="img-fluid">
-													</div>
-
-													<!-- Message de notification -->
-													<div *ngIf="notificationMessage" class="alert alert-success">
-														{{ notificationMessage }}
-													</div>
-
-													<!-- Bouton pour soumettre le formulaire -->
-													<button type="submit" class="btn app-btn-primary">Ajouter la
-														catégorie</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-
-
-							</div><!--//row-->
-						</div><!--//page-utilities-->
-					</div><!--//col-auto-->
-				</div><!--//row-->
-				<!-- Modal de modification -->
-				<div class="modal-overlay" *ngIf="isEditModalOpen">
-					<div class="modal-container">
-						<h2>Modifier la Catégorie</h2>
-
-						<form (ngSubmit)="updateCategory()">
-							<!-- Nom -->
-							<label for="nom">Nom:</label>
-							<input type="text" id="nom" [(ngModel)]="selectedCategory.nom" name="nom" required>
-
-							<!-- Description -->
-							<label for="description">Description:</label>
-							<textarea id="description" [(ngModel)]="selectedCategory.description" name="description"
-								required></textarea>
-
-							<!-- Tarif -->
-							<label for="tarif">Tarif (DT):</label>
-							<input type="number" id="tarif" [(ngModel)]="selectedCategory.tarif" name="tarif" required>
-
-							<!-- Affichage de l'image actuelle -->
-							<div class="image-preview">
-								<img *ngIf="selectedCategory.imageCategorie" [src]="selectedCategory.imageCategorie"
-									alt="Image actuelle">
-
-							</div>
-
-							<!-- Nouvelle Image -->
-							<label for="imageCategorie">Changer l'image:</label>
-							<input type="file" id="imageCategorie" (change)="onFileSelected($event)">
-
-							<!-- Boutons -->
-							<div class="modal-buttons">
-								<button type="submit" class="btn btn-success">Enregistrer</button>
-								<button type="button" class="btn btn-danger" (click)="closeEditModal()">Annuler</button>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-overlay" *ngIf="showServiceModal" [ngClass]="{ 'show': showServiceModal }">
-					<div class="new-modal-content">
-						<span class="new-close" (click)="closeServiceModal()">&times;</span>
-
-						<h2>{{ selectedCategory.nom }}</h2>
-
-						<div *ngIf="services.length > 0">
-							<div class="category-card" *ngFor="let service of services ; let i = index">
-								<div class="service-item">
-									<!-- Image du service -->
-
-
-									<!-- Nom du service -->
-									<h3>{{ service.nomservice }}</h3>
-
-									<!-- Icône de suppression -->
-
-
-								</div>
-							</div>
-						</div>
-
-						<div *ngIf="services.length === 0">
-							<p>Aucun service disponible pour cette catégorie.</p>
-						</div>
-					</div>
-				</div>
-
-
-
-				<div class="row g-4">
-
-					<div *ngFor="let category of categories; let i = index" class="col-6 col-md-4 col-xl-3 col-xxl-2">
-
-						<div class="app-card app-card-doc shadow-sm h-100">
-
-							<div class="app-card-thumb-holder ">
-
-								<img [src]="imageUrls[i] || 'assets/images/default-category.png'"
-									alt="{{ category.nom }}" class="img-fluid">
-
-							</div>
-							<div class="app-card-body p-3 has-card-actions">
-
-								<h4 class="app-doc-title truncate mb-0">
-
-									<a href="#">{{ category.nom }}</a>
-								</h4>
-								<div class="app-doc-meta">
-									<ul class="list-unstyled mb-0">
-										<li><span class="text-muted">Description:</span>{{ category.description }}</li>
-										<li><span class="text-muted">Tarif:</span>{{ category.tarif }}dt</li>
-
-									</ul>
-								</div><!--//app-doc-meta-->
-
-								<div class="app-card-actions">
-									<div class="dropdown">
-										<div class="dropdown-toggle no-toggle-arrow" data-bs-toggle="dropdown"
-											aria-expanded="false">
-											<svg width="1em" height="1em" viewBox="0 0 16 16"
-												class="bi bi-three-dots-vertical" fill="currentColor"
-												xmlns="http://www.w3.org/2000/svg">
-												<path fill-rule="evenodd"
-													d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-											</svg>
-										</div><!--//dropdown-toggle-->
-										<ul class="dropdown-menu">
-											<li> <a class="dropdown-item" href="#"
-													(click)="showModalForCategory(category.id)"><svg width="1em"
-														height="1em" viewBox="0 0 16 16" class="bi bi-eye me-2"
-														fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-														<path fill-rule="evenodd"
-															d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
-														<path fill-rule="evenodd"
-															d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-													</svg>Voir</a></li>
-											<li><a (click)="openEditModal(category)" class="dropdown-item" href="#"><svg
-														width="1em" height="1em" viewBox="0 0 16 16"
-														class="bi bi-pencil me-2" fill="currentColor"
-														xmlns="http://www.w3.org/2000/svg">
-														<path fill-rule="evenodd"
-															d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-													</svg>Modifier</a></li>
-
-											<li>
-												<hr class="dropdown-divider">
-											</li>
-											<li><a (click)="deleteCategory(category.id)" class="dropdown-item"
-													href="#"><svg width="1em" height="1em" viewBox="0 0 16 16"
-														class="bi bi-trash me-2" fill="currentColor"
-														xmlns="http://www.w3.org/2000/svg">
-														<path
-															d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-														<path fill-rule="evenodd"
-															d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-													</svg>Supprimer</a></li>
-										</ul>
-									</div><!--//dropdown-->
-								</div><!--//app-card-actions-->
-
-							</div><!--//app-card-body-->
-
-						</div><!--//app-card-->
-					</div><!--//col-->
-				</div>
-
-				<nav class="app-pagination mt-5">
-					<ul class="pagination justify-content-center">
-						<!-- Previous Button -->
-						<li class="page-item" [class.disabled]="currentPage === 1">
-							<a class="page-link" href="#" (click)="changePage(currentPage - 1)" aria-label="Previous"
-								[attr.tabindex]="currentPage === 1 ? '-1' : '0'"
-								[attr.aria-disabled]="currentPage === 1 ? 'true' : 'false'">Previous</a>
-						</li>
-
-						<!-- Page Numbers -->
-						<li *ngFor="let page of pages" class="page-item" [class.active]="currentPage === page">
-							<a class="page-link" href="#" (click)="changePage(page)">{{ page }}</a>
-						</li>
-
-						<!-- Next Button -->
-						<li class="page-item" [class.disabled]="currentPage === totalPages">
-							<a class="page-link" href="#" (click)="changePage(currentPage + 1)" aria-label="Next"
-								[attr.tabindex]="currentPage === totalPages ? '-1' : '0'"
-								[attr.aria-disabled]="currentPage === totalPages ? 'true' : 'false'">Next</a>
-						</li>
-					</ul>
-				</nav>
-
-
-			</div><!--//container-fluid-->
-		</div><!--//app-content-->
-
-
-		<footer class="app-footer">
-			<div class="container text-center py-3">
-				<!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-				<small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"
-						style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com"
-						target="_blank">Xiaoying Riley</a> for developers</small>
-
-			</div>
-		</footer><!--//app-footer-->
-
-	</div><!--//app-wrapper-->
-
-
-	<!-- Javascript -->
-	<script src="assetsadmin/plugins/popper.min.js"></script>
-	<script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>
-
-	<!-- Charts JS -->
-	<script src="assetsadmin/plugins/chart.js/chart.min.js"></script>
-	<script src="assetsadmin/js/index-charts.js"></script>
-
-	<!-- Page Specific JS -->
-	<script src="assetsadmin/js/app.js"></script>
-
-</body>
-
-</html>
+	<div class="avis-container">
+		<div class="search-container">
+			<mat-form-field appearance="outline">
+			  <mat-label>Rechercher par nom</mat-label>
+			  <input class="input" matInput [(ngModel)]="searchTerm" (input)="filterAvis()" placeholder="Nom du prestataire ou particulier" />
+			</mat-form-field>
+		  </div>
+		  
+		<h2 class="avis-title">Espace Avis</h2>
+	  
+		<table mat-table [dataSource]="paginatedAvis">
+			<ng-container matColumnDef="commentaire">
+				<th class="heder" mat-header-cell *matHeaderCellDef>Commentaire</th>
+				<td mat-cell *matCellDef="let avis">
+				  <div class="commentaire-container">
+					<span *ngIf="!avis.showFullcommentaire">{{ avis.commentaire | slice: 0:50 }}...</span>
+					<span *ngIf="avis.showFullcommentaire">{{ avis.commentaire }}</span>
+					
+					<button *ngIf="avis.commentaire.length > 50" 
+							(click)="toggleCommaintre(avis)" 
+							class="show-more-btn">
+					  {{ avis.showFullcommentaire ? 'Show less' : 'Show more' }}
+					</button>
+				  </div>
+				</td>
+			  </ng-container>
+			  
+	  
+		  <ng-container matColumnDef="note">
+			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('note')">
+				Note 
+				<span *ngIf="sortField === 'note'">
+				  {{ sortDirection === 'asc' ? '↑' : '↓' }}
+				</span>
+			  </th>
+			<td mat-cell *matCellDef="let avis">
+			  <ng-container *ngIf="avis.note">
+				<ng-container *ngFor="let star of getStarsArray(avis.note)">
+				  <span class="star">★</span>
+				</ng-container>
+			  </ng-container>
+			</td>
+		  </ng-container>
+	  
+		  <ng-container matColumnDef="date">
+			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('dateAvis')">
+				Date
+				<span *ngIf="sortField === 'dateAvis'">
+				  {{ sortDirection === 'asc' ? '↑' : '↓' }}
+				</span>
+			  </th>
+			<td mat-cell *matCellDef="let avis">{{ avis.dateAvis | date: 'dd/MM/yyyy' }}</td>
+		  </ng-container>
+	  
+		  <ng-container matColumnDef="prestataire">
+			<th  class="heder" mat-header-cell *matHeaderCellDef>Prestataire</th>
+			<td mat-cell *matCellDef="let avis">{{ avis.utilisateur?.nom }}</td>
+		  </ng-container>
+	  
+		  <ng-container class="heder"  matColumnDef="particulier">
+			<th class="heder"  mat-header-cell *matHeaderCellDef>Particulier</th>
+			<td mat-cell *matCellDef="let avis">{{ avis.avisUtilisateur?.nom }}</td>
+		  </ng-container>
+	  
+		  <ng-container matColumnDef="actions">
+			<th class="heder" mat-header-cell *matHeaderCellDef>Actions</th>
+			<td mat-cell *matCellDef="let avis">
+			  <button mat-icon-button (click)="deleteAvis(avis.idAvis)">
+				<mat-icon>delete</mat-icon>
+			  </button>
+			</td>
+		  </ng-container>
+	  
+		  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+	  
+		<!-- Pagination -->
+		<mat-paginator [length]="totalAvisCount" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="pageChanged($event)">
+		</mat-paginator>
+	  </div>
+	  

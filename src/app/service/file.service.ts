@@ -28,11 +28,7 @@ export class FileService {
     const url = `${this.apiUrl}/get-image/${encodeURIComponent(filename)}`;
     return this.http.get(url, { responseType: 'blob' });
   }
-/*
 
-  getImage(filename: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/get-image/${filename}`, { responseType: 'blob' });
-  }*/
   updateProfileImage(newImageUrl: string) {
     this.profileImageSubject.next(newImageUrl);
   }

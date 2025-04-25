@@ -1,630 +1,557 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
+
 <head>
-    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
-    
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-    <link rel="shortcut icon" href="favicon.ico"> 
-    
-    <!-- FontAwesome JS-->
-    <script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
-	
-    
-    <!-- App CSS -->  
-    <link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
 
-</head> 
 
-<body class="app">   	
-    <header class="app-header fixed-top">	   	            
-        <div class="app-header-inner">  
-	        <div class="container-fluid py-2">
-		        <div class="app-header-content"> 
-		            <div class="row justify-content-between align-items-center">
-			        
-				    <div class="col-auto">
-					    <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
-						    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
-					    </a>
-				    </div><!--//col-->
-		            <div class="search-mobile-trigger d-sm-none col">
-			            <i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
-			        </div><!--//col-->
-		            <div class="app-search-box col">
-		                <form class="app-search-form">   
-							<input type="text" placeholder="Search..." name="search" class="form-control search-input">
-							<button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button> 
-				        </form>
-		            </div><!--//app-search-box-->
-		            
-		            <div class="app-utilities col-auto">
-			            <div class="app-utility-item app-notifications-dropdown dropdown">    
-				            <a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="Notifications">
-					            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
-  <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-</svg>
-					            <span class="icon-badge">3</span>
-					        </a><!--//dropdown-toggle-->
-					        
-					        <div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
-					            <div class="dropdown-menu-header p-3">
-						            <h5 class="dropdown-menu-title mb-0">Notifications</h5>
-						        </div><!--//dropdown-menu-title-->
-						        <div class="dropdown-menu-content">
-							       <div class="item p-3">
-								        <div class="row gx-2 justify-content-between align-items-center">
-									        <div class="col-auto">
-												<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
-									        </div><!--//col-->
-									        <div class="col">
-										        <div class="info"> 
-											        <div class="desc">Amy shared a file with you. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </div>
-											        <div class="meta"> 2 hrs ago</div>
-										        </div>
-									        </div><!--//col--> 
-								        </div><!--//row-->
-								        <a class="link-mask" href="notifications.html"></a>
-							       </div><!--//item-->
-							       <div class="item p-3">
-								        <div class="row gx-2 justify-content-between align-items-center">
-									        <div class="col-auto">
-										        <div class="app-icon-holder">
-											        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-receipt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
-	  <path fill-rule="evenodd" d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
-	</svg>
-										        </div>
-									        </div><!--//col-->
-									        <div class="col">
-										        <div class="info"> 
-											        <div class="desc">You have a new invoice. Proin venenatis interdum est.</div>
-											        <div class="meta"> 1 day ago</div>
-										        </div>
-									        </div><!--//col-->
-								        </div><!--//row-->
-								        <a class="link-mask" href="notifications.html"></a>
-							       </div><!--//item-->
-							       <div class="item p-3">
-								        <div class="row gx-2 justify-content-between align-items-center">
-									        <div class="col-auto">
-										        <div class="app-icon-holder icon-holder-mono">
-											        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
-</svg>
-										        </div>
-									        </div><!--//col-->
-									        <div class="col">
-										        <div class="info"> 
-											        <div class="desc">Your report is ready. Proin venenatis interdum est.</div>
-											        <div class="meta"> 3 days ago</div>
-										        </div>
-									        </div><!--//col-->
-								        </div><!--//row-->
-								        <a class="link-mask" href="notifications.html"></a>
-							       </div><!--//item-->
-							       <div class="item p-3">
-								        <div class="row gx-2 justify-content-between align-items-center">
-									        <div class="col-auto">
-												<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
-									        </div><!--//col-->
-									        <div class="col">
-										        <div class="info"> 
-											        <div class="desc">James sent you a new message.</div>
-											        <div class="meta"> 7 days ago</div>
-										        </div>
-									        </div><!--//col--> 
-								        </div><!--//row-->
-								        <a class="link-mask" href="notifications.html"></a>
-							       </div><!--//item-->
-						        </div><!--//dropdown-menu-content-->
-						        
-						        <div class="dropdown-menu-footer p-2 text-center">
-							        <a href="notifications.html">View all</a>
-						        </div>
-															
-							</div><!--//dropdown-menu-->					        
-				        </div><!--//app-utility-item-->
-			            <div class="app-utility-item">
-				            <a href="settings.html" title="Settings">
-					            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"/>
-  <path fill-rule="evenodd" d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"/>
-</svg>
-					        </a>
-					    </div><!--//app-utility-item-->
-			            
-			            <div class="app-utility-item app-user-dropdown dropdown">
-				            <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><ng-container *ngIf="profileImageUrl; else defaultIcon">
-								<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
-							</ng-container>
-							<ng-template #defaultIcon>
-								<i class="fas fa-user-circle profile-icon"></i> <!-- Icône utilisateur -->
-							</ng-template></a>
-				            <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-								<li><a class="dropdown-item" href="account.html">Account</a></li>
-								<li><a class="dropdown-item" href="settings.html">Settings</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
-							</ul>
-			            </div><!--//app-user-dropdown--> 
-		            </div><!--//app-utilities-->
-		        </div><!--//row-->
-	            </div><!--//app-header-content-->
-	        </div><!--//container-fluid-->
-        </div><!--//app-header-inner-->
-        <div id="app-sidepanel" class="app-sidepanel"> 
-	        <div id="sidepanel-drop" class="sidepanel-drop"></div>
-	        <div class="sidepanel-inner d-flex flex-column">
-		        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-		        <div class="app-branding">
-		            <a class="app-logo" routerLink="/Admindashboard"> 	<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span class="logo-text">PORTAL</span></a>
-	
-		        </div><!--//app-branding-->  
-		        
-			    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
-				    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
-					    <li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" routerLink="/Admindashboard">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
-		  <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-		</svg>
-						         </span>
-		                         <span class="nav-link-text">Overview</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- FontAwesome JS-->
+	<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+
+
+	<!-- App CSS -->
+	<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div><!--//col-->
+						<div class="search-mobile-trigger d-sm-none col">
+							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
+						</div><!--//col-->
+						<div class="app-search-box col">
+							<form class="app-search-form">
+								<input type="text" placeholder="Search..." name="search"
+									class="form-control search-input">
+								<button type="submit" class="btn search-btn btn-primary" value="Search"><i
+										class="fa-solid fa-magnifying-glass"></i></button>
+							</form>
+						</div><!--//app-search-box-->
+
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
+									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+									title="Notifications">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+										<path fill-rule="evenodd"
+											d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+									</svg>
+									<span class="icon-badge">3</span>
+								</a><!--//dropdown-toggle-->
+
+								<div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
+									<div class="dropdown-menu-header p-3">
+										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
+									</div><!--//dropdown-menu-title-->
+									<div class="dropdown-menu-content">
+										
+										
+									
+										
+									</div><!--//dropdown-menu-content-->
+
+
+
+								</div><!--//dropdown-menu-->
+							</div><!--//app-utility-item-->
+							<div class="app-utility-item">
+								<a href="settings.html" title="Settings">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
+										<path fill-rule="evenodd"
+											d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
+									</svg>
+								</a>
+							</div><!--//app-utility-item-->
+
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><ng-container
+										*ngIf="profileImageUrl; else defaultIcon">
+										<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+									</ng-container>
+									<ng-template #defaultIcon>
+										<i class="fas fa-user-circle profile-icon"></i> <!-- Icône utilisateur -->
+									</ng-template></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Account</a></li>
+									<li><a class="dropdown-item" href="settings.html">Settings</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+								</ul>
+							</div><!--//app-user-dropdown-->
+						</div><!--//app-utilities-->
+					</div><!--//row-->
+				</div><!--//app-header-content-->
+			</div><!--//container-fluid-->
+		</div><!--//app-header-inner-->
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+				<div class="app-branding">
+					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
+							[src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span
+							class="logo-text">SOS service Tunisie</span></a>
+
+				</div><!--//app-branding-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+					
 						<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" routerLink="/user">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-  <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
-  <circle cx="3.5" cy="5.5" r=".5"/>
-  <circle cx="3.5" cy="8" r=".5"/>
-  <circle cx="3.5" cy="10.5" r=".5"/>
-</svg>
-						         </span>
-		                         <span class="nav-link-text">Utilisateurs</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-					    <li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link active" routerLink="/catogories">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
-  <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
-</svg>
-						         </span>
-		                         <span class="nav-link-text">Catégories</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/Admindashboard">
+								<span class="nav-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 20 20"><path fill="currentColor" d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z"/></svg>
+								</span>
+								<span class="nav-link-text">Tableau de bord</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+
 						<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link active" routerLink="/Service">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
-  <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
-</svg>
-						         </span>
-		                         <span class="nav-link-text">Services</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-					  
-					    <li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z"/>
-	  <path d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z"/>
-	</svg>
-						         </span>
-		                         <span class="nav-link-text">Pages</span>
-		                         <span class="submenu-arrow">
-		                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-	</svg>
-	                             </span><!--//submenu-arrow-->
-					        </a><!--//nav-link-->
-					        <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
-						        <ul class="submenu-list list-unstyled">
-							        <li class="submenu-item"><a class="submenu-link" href="notifications.html">Notifications</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="account.html">Account</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="settings.html">Settings</a></li>
-							        
-						        </ul>
-					        </div>
-					    </li><!--//nav-item-->
-					    <li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-columns-gap" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M6 1H1v3h5V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12h-5v3h5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8H1v7h5V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6h-5v7h5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z"/>
-	</svg>
-						         </span>
-		                         <span class="nav-link-text">External</span>
-		                         <span class="submenu-arrow">
-		                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-	</svg>
-	                             </span><!--//submenu-arrow-->
-					        </a><!--//nav-link-->
-					        <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
-						        <ul class="submenu-list list-unstyled">
-							        <li class="submenu-item"><a class="submenu-link" href="login.html">Login</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="signup.html">Signup</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="reset-password.html">Reset password</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="404.html">404 page</a></li>
-						        </ul>
-					        </div>
-					    </li><!--//nav-item-->
-					    
-					    <li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="charts.html">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
-	</svg>
-						         </span>
-		                         <span class="nav-link-text">Charts</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-					    
-					    <li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="help.html">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-</svg>
-						         </span>
-		                         <span class="nav-link-text">Help</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->					    
-				    </ul><!--//app-menu-->
-			    </nav><!--//app-nav-->
-			    <div class="app-sidepanel-footer">
-				    <nav class="app-nav app-nav-footer">
-					    <ul class="app-menu footer-menu list-unstyled">
-						    <li class="nav-item">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						        <a class="nav-link" href="settings.html">
-							        <span class="nav-icon">
-							            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"/>
-	  <path fill-rule="evenodd" d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"/>
-	</svg>
-							        </span>
-			                        <span class="nav-link-text">Settings</span>
-						        </a><!--//nav-link-->
-						    </li><!--//nav-item-->
-						    <li class="nav-item">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						        <a class="nav-link" href="https://themes.3rdwavemedia.com/bootstrap-templates/admin-dashboard/portal-free-bootstrap-admin-dashboard-template-for-developers/">
-							        <span class="nav-icon">
-							            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-	  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-	</svg>
-							        </span>
-			                        <span class="nav-link-text">Download</span>
-						        </a><!--//nav-link-->
-						    </li><!--//nav-item-->
-						    <li class="nav-item">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						        <a class="nav-link" href="https://themes.3rdwavemedia.com/bootstrap-templates/admin-dashboard/portal-free-bootstrap-admin-dashboard-template-for-developers/">
-							        <span class="nav-icon">
-							            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M12 1H4a1 1 0 0 0-1 1v10.755S4 11 8 11s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
-	  <path fill-rule="evenodd" d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-	</svg>
-							        </span>
-			                        <span class="nav-link-text">License</span>
-						        </a><!--//nav-link-->
-						    </li><!--//nav-item-->
-					    </ul><!--//footer-menu-->
-				    </nav>
-			    </div><!--//app-sidepanel-footer-->
-		       
-	        </div><!--//sidepanel-inner-->
-	    </div><!--//app-sidepanel-->
-    </header><!--//app-header-->
-    
-    <div class="app-wrapper">
-	    
-	    <div class="app-content pt-3 p-md-3 p-lg-4">
-		    <div class="container-xl">
-			    <div class="row g-3 mb-4 align-items-center justify-content-between">
-				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">Service</h1>
-				    </div>
-				    <div class="col-auto">
-					     <div class="page-utilities">
-						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center" (ngSubmit)="onSearch()">
-							    <div class="col-auto">
-									<form class="docs-search-form row gx-1 align-items-center" >
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/user">
+								<span class="nav-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C2.4 0 5.1 7.3 5.1 7.3c.6 1 1.4.8 1.4 1.5c0 .6-.7.8-1.4.9C4 9.7 3 9.5 2 11.3c-.6 1.1-.9 4.7-.9 4.7h13.7s-.3-3.6-.8-4.7c-1-1.9-2-1.6-3.1-1.7c-.7-.1-1.4-.3-1.4-.9s.8-.4 1.4-1.5C10.9 7.3 13.6 0 8 0z"/></svg>
+								</span>
+								<span class="nav-link-text">Utilisateurs</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/catogories">
+								<span class="nav-icon">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z" />
+										<path fill-rule="evenodd"
+											d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Catégories</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/Service">
+								<span class="nav-icon">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z" />
+										<path fill-rule="evenodd"
+											d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Services</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/espaceavis">
+								<span class="nav-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M17.562 21.56a1.003 1.003 0 0 1-.465-.115L12 18.765l-5.097 2.68a1 1 0 0 1-1.451-1.054l.973-5.676l-4.123-4.02a1 1 0 0 1 .554-1.705l5.699-.828l2.548-5.164a1.042 1.042 0 0 1 1.794 0l2.548 5.164l5.699.828a1 1 0 0 1 .554 1.706l-4.123 4.019l.973 5.676a1 1 0 0 1-.986 1.169Z"/></svg>
+								</span>
+								<span class="nav-link-text">Espace Avis</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/scores-badges">
+								<span class="nav-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"   viewBox="0 0 1024 1024"><path fill="currentColor" d="M1021.06 839.968L833.798 493.664c19.104-43.36 29.792-91.28 29.792-141.696C863.59 157.664 706.07.16 511.782.16c-194.336 0-351.84 157.52-351.84 351.808c0 51.632 11.216 100.624 31.184 144.784L3.03 839.808c-6.065 11.024-5.057 24.624 2.527 34.688c7.6 10.033 20.432 14.752 32.687 11.873l160.624-36.848l54.976 153.12c4.288 11.904 15.152 20.16 27.744 21.088c.817.064 1.6.096 2.368.096a32.002 32.002 0 0 0 28.192-16.88L475.844 701.97a355.152 355.152 0 0 0 35.92 1.808c11.12 0 22.095-.576 32.943-1.6l167.248 305.008a31.984 31.984 0 0 0 30.56 16.527c12.56-1.008 23.376-9.248 27.631-21.088l54.976-153.12l160.624 36.848c12.32 2.975 25.024-1.809 32.624-11.809c7.632-9.984 8.656-23.52 2.688-34.576zm-731.282 73.376L249.52 801.183c-5.504-15.248-21.471-24.128-37.28-20.368l-118.8 27.248l135.41-246.976c44.592 60.24 107.952 105.68 181.44 127.793zm-65.553-561.377c0-158.544 129.009-287.536 287.568-287.536c158.544 0 287.536 128.992 287.536 287.536S670.337 639.535 511.793 639.535c-158.576 0-287.568-129.024-287.568-287.568zm587.52 428.847c-15.872-3.744-31.776 5.12-37.28 20.367l-40.529 112.976l-123.152-224.56c75.44-22.096 140.337-68.735 185.505-130.735L931.137 808.19z"/></svg>
+								</span>
+								<span class="nav-link-text">Scores et Badges</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/scores-badges">
+								<span class="nav-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 20 20"><path fill="currentColor" d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z"/></svg>
+								</span>
+								<span class="nav-link-text">Réservation</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+
+
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link active" routerLink="/scores-badges">
+								<span class="nav-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 717 672"><path fill="currentColor" d="M0 151v391c0 36 15 68 39 93c24 24 55 37 91 37h196v-81H130c-27 0-48-22-48-49V151c0-27 21-48 48-48h196V21H130c-36 0-67 14-91 38c-24 25-39 56-39 92zm215 118v156c0 18 16 33 34 33h181v123c0 11 6 20 16 25c4 1 8 1 10 1c7 0 13-2 18-7l235-235c11-9 10-27 0-37L474 94c-14-15-44-6-44 18v124H249c-18 0-34 15-34 33z"/></svg>
+								</span>
+								<span class="nav-link-text">logout</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+						 
+						 
+						  
+						
+						
+
+
+						
+					</ul>
+				</nav>
+			
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header><!--//app-header-->
+
+	<div class="app-wrapper">
+
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col-auto">
+						<h1 class="app-page-title mb-0">Service</h1>
+					</div>
+					<div class="col-auto">
+						<div class="page-utilities">
+							<div class="row g-2 justify-content-start justify-content-md-end align-items-center"
+								(ngSubmit)="onSearch()">
+								<div class="col-auto">
+									<form class="docs-search-form row gx-1 align-items-center">
 										<div class="col-auto">
-											
-										  <!-- Lier la valeur de l'input à searchQuery -->
-										  <input type="text" id="search-docs" name="searchdocs"
-										  [(ngModel)]="searchQuery"
-										  (ngModelChange)="onSearch()"
-										  class="form-control search-docs" placeholder="Rechercher">
+
+											<!-- Lier la valeur de l'input à searchQuery -->
+											<input type="text" id="search-docs" name="searchdocs"
+												[(ngModel)]="searchQuery" (ngModelChange)="onSearch()"
+												class="form-control search-docs" placeholder="Rechercher">
 
 										</div>
-										
-									  </form>
-					                
-							    </div><!--//col-->
-							    <div class="col-auto">
-								    
-								    <select class="form-select w-auto">
-										  <option selected="" value="option-1">All</option>
-										  <option value="option-2">Text file</option>
-										  <option value="option-3">Image</option>
-										  <option value="option-4">Spreadsheet</option>
-										  <option value="option-5">Presentation</option>
-										  <option value="option-6">Zip file</option>
-										  
+
+									</form>
+
+								</div><!--//col-->
+								<div class="col-auto">
+
+									<select class="form-select w-auto">
+										<option selected="" value="option-1">All</option>
+										<option value="option-2">Text file</option>
+										<option value="option-3">Image</option>
+										<option value="option-4">Spreadsheet</option>
+										<option value="option-5">Presentation</option>
+										<option value="option-6">Zip file</option>
+
 									</select>
-							    </div>
+								</div>
 								<div class="col-auto">
 									<a class="btn app-btn-primary" (click)="openModal()" href="#">
 										<!-- Icône SVG avec effet de gras -->
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus me-2 icon-bold" viewBox="0 0 16 16">
-											<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-plus me-2 icon-bold" viewBox="0 0 16 16">
+											<path
+												d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
 										</svg>
 										Ajouter
 									</a>
 								</div>
-								<div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;" aria-hidden="false">
-                                    <div class="modal-dialog">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">Ajouter un Service</h5>
-                                          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <!-- Formulaire pour ajouter un service -->
-                                          <form *ngIf="registerForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                                            <!-- Nom du service -->
-                                            <div class="mb-3">
-                                              <label for="nomservice" class="form-label">Nom du service</label>
-                                              <input type="text" id="nomservice" formControlName="nomservice" class="form-control" required>
-                                              <div *ngIf="registerForm?.get('nomservice')?.invalid && registerForm?.get('nomservice')?.touched" class="text-danger">
-                                                Le nom du service est requis.
-                                              </div>
-                                            </div>
-                                  
-                                            <!-- Description du service -->
-                                            <div class="mb-3">
-                                              <label for="description" class="form-label">Description</label>
-                                              <input type="text" id="description" formControlName="description" class="form-control" required>
-                                              <div *ngIf="registerForm?.get('description')?.invalid && registerForm?.get('description')?.touched" class="text-danger">
-                                                La description est requise.
-                                              </div>
-                                            </div>
-											<div class="mb-3">
-												<label for="tarif" class="form-label">Tarif</label>
-												<input type="number" id="tarif" formControlName="tarif" class="form-control" required min="1">
-												<div *ngIf="registerForm?.get('tarif')?.invalid && registerForm?.get('tarif')?.touched" class="text-danger">
-												  Le tarif est requis et doit être supérieur à 0.
-												</div>
-											  </div>
-                                  
-                                            <!-- Image du service -->
-                                            <div class="mb-3">
-                                              <label for="imageService" class="form-label">Image du service</label>
-                                              <input type="file" id="imageService" (change)="onFileSelected($event)" class="form-control">
-                                            </div>
-                                  
-                                            <!-- Prévisualisation de l'image -->
-                                            <div *ngIf="imagePreview" class="mb-3">
-                                              <img [src]="imagePreview" alt="Prévisualisation" class="img-fluid">
-                                            </div>
-                                  
-                                            <!-- Sélection de la catégorie -->
-                                            <div class="mb-3">
-                                              <label for="categorie" class="form-label">Catégorie</label>
-                                              <select id="categorie" formControlName="categorie" class="form-control" required>
-                                                <option value="">Choisir une catégorie</option>
-                                                <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
-                                              </select>
-                                              <div *ngIf="registerForm?.get('categorie')?.invalid && registerForm?.get('categorie')?.touched" class="text-danger">
-                                                La catégorie est requise.
-                                              </div>
-                                            </div>
-                                  
-                                            <!-- Message de notification -->
-                                            <div *ngIf="notificationMessage" class="alert alert-success">
-                                              {{ notificationMessage }}
-                                            </div>
-                                  
-                                            <!-- Bouton pour soumettre le formulaire -->
-                                            <button type="submit" class="btn app-btn-primary">Ajouter le service</button>
-                                          </form>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  
-								
-								  
-						    </div><!--//row-->
-					    </div><!--//page-utilities-->
-				    </div><!--//col-auto-->
-			    </div><!--//row-->
-	<!-- Modal de modification -->
+								<div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;"
+									aria-hidden="false">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">Ajouter un Service</h5>
+												<button type="button" class="btn-close" (click)="closeModal()"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<!-- Formulaire pour ajouter un service -->
+												<form *ngIf="registerForm" [formGroup]="registerForm"
+													(ngSubmit)="onSubmit()">
+													<!-- Nom du service -->
+													<div class="mb-3">
+														<label for="nomservice" class="form-label">Nom du
+															service</label>
+														<input type="text" id="nomservice" formControlName="nomservice"
+															class="form-control" required>
+														<div *ngIf="registerForm?.get('nomservice')?.invalid && registerForm?.get('nomservice')?.touched"
+															class="text-danger">
+															Le nom du service est requis.
+														</div>
+													</div>
+
+													<!-- Description du service -->
+													<div class="mb-3">
+														<label for="description" class="form-label">Description</label>
+														<input type="text" id="description"
+															formControlName="description" class="form-control" required>
+														<div *ngIf="registerForm?.get('description')?.invalid && registerForm?.get('description')?.touched"
+															class="text-danger">
+															La description est requise.
+														</div>
+													</div>
+													<div class="mb-3">
+														<label for="tarif" class="form-label">Tarif</label>
+														<input type="number" id="tarif" formControlName="tarif"
+															class="form-control" required min="1">
+														<div *ngIf="registerForm?.get('tarif')?.invalid && registerForm?.get('tarif')?.touched"
+															class="text-danger">
+															Le tarif est requis et doit être supérieur à 0.
+														</div>
+													</div>
+
+													<!-- Image du service -->
+													<div class="mb-3">
+														<label for="imageService" class="form-label">Image du
+															service</label>
+														<input type="file" id="imageService"
+															(change)="onFileSelected($event)" class="form-control">
+													</div>
+
+													<!-- Prévisualisation de l'image -->
+													<div *ngIf="imagePreview" class="mb-3">
+														<img [src]="imagePreview" alt="Prévisualisation"
+															class="img-fluid">
+													</div>
+
+													<!-- Sélection de la catégorie -->
+													<div class="mb-3">
+														<label for="categorie" class="form-label">Catégorie</label>
+														<select id="categorie" formControlName="categorie"
+															class="form-control" required>
+															<option value="">Choisir une catégorie</option>
+															<option *ngFor="let categorie of categories"
+																[value]="categorie.id">{{ categorie.nom }}</option>
+														</select>
+														<div *ngIf="registerForm?.get('categorie')?.invalid && registerForm?.get('categorie')?.touched"
+															class="text-danger">
+															La catégorie est requise.
+														</div>
+													</div>
+
+													<!-- Message de notification -->
+													<div *ngIf="notificationMessage" class="alert alert-success">
+														{{ notificationMessage }}
+													</div>
+
+													<!-- Bouton pour soumettre le formulaire -->
+													<button type="submit" class="btn app-btn-primary">Ajouter le
+														service</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
 
 
-	<div class="modal-overlay" *ngIf="isEditModalOpen">
-		<div class="modal-container">
-			<h2>Modifier le service</h2>
- <form (ngSubmit)="updateCategory()">
-	<!-- Nom -->
-			<label for="nomservice">Nom:</label>
-			<input type="text" id="nomservice" [(ngModel)]="selectedservice.nomservice" name="nomservice" required>
-	  
-			<!-- Description -->
-			<label for="description">Description:</label>
-			<textarea id="description" [(ngModel)]="selectedservice.description" name="description" required></textarea>
-	  
-			<!-- Tarif -->
-			 	<!-- Tarif -->
-			<label for="tarif">Tarif (DT):</label>
-			<input type="number" id="tarif" [(ngModel)]="selectedservice.tarif" name="tarif" required>
-			
-			<div class="image-preview">
-				<img *ngIf="selectedservice.imageService" [src]="selectedservice.imageService" alt="Image actuelle">
 
-			</div>
-	  
-			<!-- Nouvelle Image -->
-			<label for="imageService">Changer l'image:</label>
-			<input type="file" id="imageService" (change)="onFileSelected($event)">
-	  
-			<!-- Boutons -->
-			<div class="modal-buttons">
-			  <button type="submit" class="btn btn-success">Enregistrer</button>
-			  <button type="button" class="btn btn-danger" (click)="closeEditModal()">Annuler</button>
-			</div>
-		  </form>
-		</div>
-	  </div>
-  
-	
-			    <div class="row g-4">
-					
-				    <div *ngFor="let service of servicee; let i = index" class="col-6 col-md-4 col-xl-3 col-xxl-2">
-					  
-						<div class="app-card app-card-doc shadow-sm h-100">
-							
-							<div class="app-card-thumb-holder ">
-								
-									<img [src]="imageUrls[i] || 'assets/images/default-category.png'" 
-										 alt="{{ service.nomservice }}" 
-										 class="img-fluid"
-										 >
-								
+							</div><!--//row-->
+						</div><!--//page-utilities-->
+					</div><!--//col-auto-->
+				</div><!--//row-->
+				<!-- Modal de modification -->
+
+
+				<div class="modal-overlay" *ngIf="isEditModalOpen">
+					<div class="modal-container">
+						<h2>Modifier le service</h2>
+						<form (ngSubmit)="updateCategory()">
+							<!-- Nom -->
+							<label for="nomservice">Nom:</label>
+							<input type="text" id="nomservice" [(ngModel)]="selectedservice.nomservice"
+								name="nomservice" required>
+
+							<!-- Description -->
+							<label for="description">Description:</label>
+							<textarea id="description" [(ngModel)]="selectedservice.description" name="description"
+								required></textarea>
+
+							<!-- Tarif -->
+							<!-- Tarif -->
+							<label for="tarif">Tarif (DT):</label>
+							<input type="number" id="tarif" [(ngModel)]="selectedservice.tarif" name="tarif" required>
+
+							<div class="image-preview">
+								<img *ngIf="selectedservice.imageService" [src]="selectedservice.imageService"
+									alt="Image actuelle">
+
 							</div>
-						    <div class="app-card-body p-3 has-card-actions">
-							    
-							    <h4 class="app-doc-title truncate mb-0">
-									
-										<a href="#">{{ service.nomservice }}</a>
-									</h4>
-							    <div class="app-doc-meta">
-								    <ul class="list-unstyled mb-0">
-									    <li><span class="text-muted">Description:</span>{{ service.description }}</li>
+
+							<!-- Nouvelle Image -->
+							<label for="imageService">Changer l'image:</label>
+							<input type="file" id="imageService" (change)="onFileSelected($event)">
+
+							<!-- Boutons -->
+							<div class="modal-buttons">
+								<button type="submit" class="btn btn-success">Enregistrer</button>
+								<button type="button" class="btn btn-danger" (click)="closeEditModal()">Annuler</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+
+				<div class="row g-4">
+
+					<div *ngFor="let service of servicee; let i = index" class="col-6 col-md-4 col-xl-3 col-xxl-2">
+
+						<div class="app-card app-card-doc shadow-sm h-100">
+
+							<div class="app-card-thumb-holder ">
+
+								<img [src]="imageUrls[i] || 'assets/images/default-category.png'"
+									alt="{{ service.nomservice }}" class="img-fluid">
+
+							</div>
+							<div class="app-card-body p-3 has-card-actions">
+
+								<h4 class="app-doc-title truncate mb-0">
+
+									<a href="#">{{ service.nomservice }}</a>
+								</h4>
+								<div class="app-doc-meta">
+									<ul class="list-unstyled mb-0">
+										<li><span class="text-muted">Description:</span>{{ service.description }}</li>
 
 										<li><span class="text-muted">Tarif:</span>{{ service.tarif }}dt/h</li>
-								    </ul>
-							    </div><!--//app-doc-meta-->
-							    
-							    <div class="app-card-actions">
-								    <div class="dropdown">
-									    <div class="dropdown-toggle no-toggle-arrow" data-bs-toggle="dropdown" aria-expanded="false">
-										    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-			  <path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-			</svg>
-									    </div><!--//dropdown-toggle-->
-									    <ul class="dropdown-menu">
-										  
-											<li><a   (click)="openEditModal(service)" class="dropdown-item" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-	</svg>Modifier</a></li>
-				
-	                                        <li><hr class="dropdown-divider"></li>
-											<li><a  (click)="deleteservice(service.idservice)" class="dropdown-item" href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-	  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-	</svg>Supprimer</a></li>
+									</ul>
+								</div><!--//app-doc-meta-->
+
+								<div class="app-card-actions">
+									<div class="dropdown">
+										<div class="dropdown-toggle no-toggle-arrow" data-bs-toggle="dropdown"
+											aria-expanded="false">
+											<svg width="1em" height="1em" viewBox="0 0 16 16"
+												class="bi bi-three-dots-vertical" fill="currentColor"
+												xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd"
+													d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+											</svg>
+										</div><!--//dropdown-toggle-->
+										<ul class="dropdown-menu">
+
+											<li><a (click)="openEditModal(service)" class="dropdown-item" href="#"><svg
+														width="1em" height="1em" viewBox="0 0 16 16"
+														class="bi bi-pencil me-2" fill="currentColor"
+														xmlns="http://www.w3.org/2000/svg">
+														<path fill-rule="evenodd"
+															d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+													</svg>Modifier</a></li>
+
+											<li>
+												<hr class="dropdown-divider">
+											</li>
+											<li><a (click)="deleteservice(service.idservice)" class="dropdown-item"
+													href="#"><svg width="1em" height="1em" viewBox="0 0 16 16"
+														class="bi bi-trash me-2" fill="currentColor"
+														xmlns="http://www.w3.org/2000/svg">
+														<path
+															d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+														<path fill-rule="evenodd"
+															d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+													</svg>Supprimer</a></li>
 										</ul>
-								    </div><!--//dropdown-->
-						        </div><!--//app-card-actions-->
-								    
-						    </div><!--//app-card-body-->
+									</div><!--//dropdown-->
+								</div><!--//app-card-actions-->
+
+							</div><!--//app-card-body-->
 
 						</div><!--//app-card-->
-				    </div><!--//col-->
+					</div><!--//col-->
 				</div>
-				
+
 				<nav class="app-pagination mt-5">
 					<ul class="pagination justify-content-center">
-					  <!-- Previous Button -->
-					  <li class="page-item" [class.disabled]="currentPage === 1">
-						<a class="page-link" href="#" (click)="changePages(currentPage - 1)" aria-label="Previous" [attr.tabindex]="currentPage === 1 ? '-1' : '0'" [attr.aria-disabled]="currentPage === 1 ? 'true' : 'false'">Previous</a>
-					  </li>
-				  
-					  <!-- Page Numbers -->
-					  <li *ngFor="let page of pages" class="page-item" [class.active]="currentPage === page">
-						<a class="page-link" href="#" (click)="changePages(page)">{{ page }}</a>
-					  </li>
-				  
-					  <!-- Next Button -->
-					  <li class="page-item" [class.disabled]="currentPage === totalPages">
-						<a class="page-link" href="#" (click)="changePages(currentPage + 1)" aria-label="Next" [attr.tabindex]="currentPage === totalPages ? '-1' : '0'" [attr.aria-disabled]="currentPage === totalPages ? 'true' : 'false'">Next</a>
-					  </li>
+						<!-- Previous Button -->
+						<li class="page-item" [class.disabled]="currentPage === 1">
+							<a class="page-link" href="#" (click)="changePages(currentPage - 1)" aria-label="Previous"
+								[attr.tabindex]="currentPage === 1 ? '-1' : '0'"
+								[attr.aria-disabled]="currentPage === 1 ? 'true' : 'false'">Previous</a>
+						</li>
+
+						<!-- Page Numbers -->
+						<li *ngFor="let page of pages" class="page-item" [class.active]="currentPage === page">
+							<a class="page-link" href="#" (click)="changePages(page)">{{ page }}</a>
+						</li>
+
+						<!-- Next Button -->
+						<li class="page-item" [class.disabled]="currentPage === totalPages">
+							<a class="page-link" href="#" (click)="changePages(currentPage + 1)" aria-label="Next"
+								[attr.tabindex]="currentPage === totalPages ? '-1' : '0'"
+								[attr.aria-disabled]="currentPage === totalPages ? 'true' : 'false'">Next</a>
+						</li>
 					</ul>
-				  </nav>
-				  
-				  
-				  
-				  <!-- Ajoute ce test pour voir si Angular détecte bien les pages -->
-				
-				  
+				</nav>
 
-				  
-				  
-				  
-				  
-				  
-							  
-		    </div><!--//container-fluid-->
-	    </div><!--//app-content-->
-	
-	    
+
+
+				<!-- Ajoute ce test pour voir si Angular détecte bien les pages -->
+
+
+
+
+
+
+
+
+
+			</div><!--//container-fluid-->
+		</div><!--//app-content-->
+
+
 		<footer class="app-footer">
-		    <div class="container text-center py-3">
-		         <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-            <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-		       
-		    </div>
-	    </footer><!--//app-footer-->
-	    
-    </div><!--//app-wrapper-->    					
+			<div class="container text-center py-3">
+				<!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+				<small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"
+						style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com"
+						target="_blank">Xiaoying Riley</a> for developers</small>
 
- 
-    <!-- Javascript -->          
-    <script src="assetsadmin/plugins/popper.min.js"></script>
-    <script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>  
+			</div>
+		</footer><!--//app-footer-->
 
-    <!-- Charts JS -->
-    <script src="assetsadmin/plugins/chart.js/chart.min.js"></script> 
-    <script src="assetsadmin/js/index-charts.js"></script> 
-    
-    <!-- Page Specific JS -->
-    <script src="assetsadmin/js/app.js"></script> 
+	</div><!--//app-wrapper-->
+
+
+	<!-- Javascript -->
+	<script src="assetsadmin/plugins/popper.min.js"></script>
+	<script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Charts JS -->
+	<script src="assetsadmin/plugins/chart.js/chart.min.js"></script>
+	<script src="assetsadmin/js/index-charts.js"></script>
+
+	<!-- Page Specific JS -->
+	<script src="assetsadmin/js/app.js"></script>
 
 </body>
-</html> 
 
+</html>

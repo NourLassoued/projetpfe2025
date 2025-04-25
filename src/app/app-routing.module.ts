@@ -60,7 +60,10 @@ import { ChatComponent } from './chat/chat.component';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
 import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
 import { AvissectionComponent } from './Front/avissection/avissection.component';
-import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.component';
+import { FrontpresayitrComponent } from './Front/frontpresayitr/frontpresayitr.component';
+import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.component';
+import { MeunuadminComponent } from 'src/backadmin/meunuadmin/meunuadmin.component';
+import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
 
 
 const routes: Routes = [
@@ -72,6 +75,57 @@ const routes: Routes = [
   {
     path: 'Front',
     component: AllTemplateFrontComponent
+  },
+  // /////////////////////Front//////////////////
+  {
+    path: 'Bricolage',
+    component:BricolageComponent
+  },
+  {
+    path: 'Ménage',
+    component:MenageComponent
+  },
+  
+
+  {
+    path: 'Jardinage',
+    component:JardinageComponent
+  },
+  {
+    path: 'Enfants',
+    component:EnfantsComponent
+  },
+  {
+  path: 'Demenagement',
+  component:DemenagementComponent
+},
+{
+  path: 'aide-a-domicile',
+  component:AidedomicileComponent
+},
+{
+  path: 'Animaux',
+  component:AnimauxComponent
+},
+{
+path: 'Informatique',
+component:InformatiqueComponent
+},
+{
+  path: 'Coursparticuliers',
+  component:CoursparticuliersComponent  
+  },
+  {
+    path: 'Decoration',
+    component:DecorationComponent  
+  },
+  {
+    path: 'Construction',
+    component:ConstructionetGrosoeuvreComponent  
+  },
+  {
+    path: 'Domotique',
+    component:SecuriteComponent 
   },
   {
     path: 'avisection',
@@ -151,9 +205,24 @@ const routes: Routes = [
     path: 'Updateparticulier',
     component:UpdateparticulierComponent
   },
+
+  //////espace admin
   {
     path: 'Admindashboard',
     component:AdmindashboardComponent
+  },
+  {
+    path: 'espaceavis',
+    component:EspaceavisComponent 
+  },
+  
+  {
+    path: 'adminmenu',
+    component:MeunuadminComponent 
+  },
+  {
+    path: 'Scorebadage',
+    component:ScorebadageComponent 
   },
   {
     path: 'catogories',
@@ -165,6 +234,12 @@ const routes: Routes = [
     component:UserComponent
   },
   {
+    path: 'Service',
+    component:ServiceComponent
+  },
+
+
+  {
     path: 'Profileentreprise',
     component:ProfiletrpriseComponent
   },
@@ -172,60 +247,7 @@ const routes: Routes = [
     path: 'UpdateEntreprise',
     component:UpdateEtrepriseComponent
   },
-  {
-    path: 'Service',
-    component:ServiceComponent
-  },
-  {
-    path: 'Bricolage',
-    component:BricolageComponent
-  },
-  {
-    path: 'Ménage',
-    component:MenageComponent
-  },
-  
-
-  {
-    path: 'Jardinage',
-    component:JardinageComponent
-  },
-  {
-    path: 'Enfants',
-    component:EnfantsComponent
-  },
-  {
-  path: 'Demenagement',
-  component:DemenagementComponent
-},
-{
-  path: 'aide-a-domicile',
-  component:AidedomicileComponent
-},
-{
-  path: 'Animaux',
-  component:AnimauxComponent
-},
-{
-path: 'Informatique',
-component:InformatiqueComponent
-},
-{
-  path: 'Coursparticuliers',
-  component:CoursparticuliersComponent  
-  },
-  {
-    path: 'Decoration',
-    component:DecorationComponent  
-  },
-  {
-    path: 'Construction',
-    component:ConstructionetGrosoeuvreComponent  
-  },
-  {
-    path: 'Domotique',
-    component:SecuriteComponent 
-  },
+ 
   {
     path: 'Demande',
     component:DemandeComponent 
@@ -239,6 +261,7 @@ component:InformatiqueComponent
     path: 'Mesdemandes',
     component:MesdemandesComponent 
   },
+  //////////////////////////////gestion de partculier//////////////////
   {
         path: 'Mesdemandesarchivees',
         component: DemandeterminneComponent 
@@ -268,6 +291,7 @@ component:InformatiqueComponent
     path: 'Historique',
     component:HistoriqueComponent 
   },
+
   {
     path: 'Postulation',
     component:PostulationComponent 

@@ -36,5 +36,11 @@ private apiUrl = `${environment.apiUrl}/avis`;
   getTopAvisByUtilisateur(): Observable<Avis[]> {
     return this.http.get<Avis[]>(`${this.apiUrl}/best-by-user`);
   }
+  getAllAvis(): Observable<Avis[]> {
+    return this.http.get<Avis[]>(`${this.apiUrl}/getAllAvis`);
+  }
+  getScoresMoyens(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/scores-moyens`);
+  }
   
 }

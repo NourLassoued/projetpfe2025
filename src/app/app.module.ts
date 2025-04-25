@@ -1,11 +1,10 @@
 import { NgModule ,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-
+ 
 import { DateFnsModule } from 'ngx-date-fns';
-import { Stomp } from '@stomp/stompjs';
-import * as SockJS from 'sockjs-client';
 
+import { MatPaginatorModule } from '@angular/material/paginator'; 
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -36,14 +35,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
 
 import { MatSnackBarModule } from '@angular/material/snack-bar'; // Importer MatSnackBar
-
+import { MatTableModule } from '@angular/material/table'; 
 import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+
+
 import { ToastrModule } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
-import timeGridWeek from '@fullcalendar/timegrid';
+
+
 import { ProfileUtilisateurComponent } from './profile-utilisateur/profile-utilisateur.component';
 import { NotificationService } from './service/notification.service';
 import { ComptepartuculierComponent } from './comptepartuculier/comptepartuculier.component';
@@ -97,7 +95,10 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
 import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
 import { AvissectionComponent } from './Front/avissection/avissection.component';
-import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.component';
+import { FrontpresayitrComponent } from './Front/frontpresayitr/frontpresayitr.component';
+import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.component';
+import { MeunuadminComponent } from '../backadmin/meunuadmin/meunuadmin.component';
+import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
 
 
 
@@ -163,6 +164,9 @@ import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.compone
     FrontprofilshowComponent,
     AvissectionComponent,
     FrontpresayitrComponent,
+    EspaceavisComponent,
+    MeunuadminComponent,
+    ScorebadageComponent,
  
    
 
@@ -176,7 +180,7 @@ import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.compone
     MatDialogModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    
+    MatTableModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -184,6 +188,7 @@ import { FrontpresayitrComponent } from './frontpresayitr/frontpresayitr.compone
     MatIconModule,
     FullCalendarModule,
     MatSelectModule,
+    MatPaginatorModule,
    
     MatOptionModule,
     MatFormFieldModule,

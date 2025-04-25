@@ -1,0 +1,384 @@
+/* Style pour le texte de la description */
+
+  
+  /* Style pour le lien "Show More / Show Less" */
+  .cell a {
+    font-size: 15px;
+    color: #007bff; /* Couleur bleue pour le lien */
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 5px;
+    display: inline-block;
+  }
+  
+  .cell a:hover {
+    text-decoration: underline; /* Souligner le lien au survol */
+  }
+  
+  /* Si la description est bien longue, vous pouvez ajouter un effet de transition */
+  .cell a {
+    transition: color 0.3s ease;
+  }
+  
+  .cell a:hover {
+    color: #0056b3; /* Change la couleur du lien quand il est survolé */
+  }
+/* Style personnalisé pour centrer la boîte de dialogue */
+
+
+.fas.fa-calendar-alt.clickable-icon {
+  font-size: 24px;          /* Taille de l'icône */
+  color: #3f51b5;           /* Couleur de l'icône */
+  cursor: pointer;         /* Changer le curseur lorsque l'icône est cliquée */
+}
+.disponibilites-box {
+  position: absolute;  /* Position absolue pour afficher au-dessus du tableau */
+  margin-top: 70px;  /* Ajustez selon la hauteur souhaitée au-dessus du tableau */
+  left: 50%;  /* Centrer horizontalement */
+  transform: translateX(-50%);  /* Centrer parfaitement */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  width: 30%;  /* Ajustez la largeur de la boîte */
+  z-index: 10;  /* Assurez-vous que la boîte de disponibilité soit au-dessus du tableau */
+  transition: all 0.3s ease;
+}
+
+/* Titre et bouton */
+.disponibilites-box h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.disponibilites-box button {
+  background-color: #6200ea;
+  color: white;
+  font-size: 1rem;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left:80px;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.disponibilites-box button:hover {
+  background-color: #3700b3;
+}
+.profile-pic {
+  width: 50px; /* Largeur de l'image */
+  height: 50px; /* Hauteur de l'image */
+  object-fit: cover; /* Assure que l'image garde son ratio sans déformer */
+  border-radius: 50%; /* Pour arrondir l'image, si c'est une photo de profil */
+}
+.profile-pic {
+  font-size: 40px; /* Ajuste la taille de l'icône */
+  color: gray; /* Change la couleur de l'icône */
+}
+/* Style général pour les liens de téléchargement */
+/* Style général pour les liens de téléchargement */
+.app-btn-secondary {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  
+  border: none; /* Supprimer le cadre du bouton */
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+
+/* Style lorsque le lien est désactivé ou non disponible */
+.app-btn-secondary[disabled] {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Style pour les liens dans les cellules du tableau */
+td.cell a {
+  text-decoration: none;
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px 12px;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+/* Effet au focus pour input et select */
+input:focus, select:focus {
+  border-color: #007bff;
+  outline: none; /* Enlève le contour bleu par défaut dans certains navigateurs */
+  background-color: #fff;
+}
+
+/* Optionnal: Améliorer le survol des champs de saisie */
+input:hover, select:hover {
+  border-color: #007bff;
+  background-color: #fafafa;
+}
+
+/* Style des options dans les selects */
+select {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Transition fluide pour les changements de focus et hover */
+input, select {
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.status-accepte {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.status-refuse {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.app-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 10px; 
+}
+
+.profile-img {  
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #c9caca; 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); 
+}
+.profile-icon {
+  font-size: 40px; 
+  border: 2px solid #c9caca; 
+  transition: transform 0.3s ease-in-out, opacity 0.3s;
+}
+
+.profile-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.app-logo:hover .logo-text {
+  color: #007bff; 
+}
+
+
+.status-attente {
+
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.avis-container {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  margin: auto;
+}
+
+
+
+
+
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.description-container a {
+  color: #5cb377;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color 0.3s ease;
+}
+
+.description-container a:hover {
+  color: #5cb377;
+  text-decoration: underline;
+}
+
+
+
+
+.star {
+  font-size: 1.5rem;  
+  color: #ffd700;  
+  margin-right: 4px; 
+  display: inline-block; 
+  cursor: pointer;  
+}
+
+
+.star:hover {
+  color: #ffcc00;  
+}
+
+
+.star.empty {
+  color: #e0e0e0;  
+}
+.avis-container {
+  margin-left: 250px;
+width: 80%;
+  padding: 20px;
+
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.avis-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+table.mat-table {
+ 
+  width: 50%;
+    
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+  
+}
+
+
+
+
+
+
+.mat-paginator-icon {
+  color: #4CAF50;
+}
+
+.mat-paginator-page-size-label {
+  color: #333;
+}
+
+.mat-paginator-page-size {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  color: #333;
+}
+
+.mat-paginator-page-size:hover {
+  background-color: #f1f1f1;
+}
+:host ::ng-deep .mat-header-cell {
+  background-color: #15a362;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.avis-container .heder{
+  background-color: #15a362;
+  color: white;
+
+}
+
+.show-more-btn {
+  background: none;
+  border: none;
+  color: #007bff; 
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0;
+  text-decoration: underline;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.show-more-btn:hover {
+  color: #0056b3; 
+}
+.clickable-header {
+  cursor: pointer;
+  user-select: none;
+}
+
+.show-more-btn:focus {
+  outline: none;
+}
+.search-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  
+}
+
+mat-form-field {
+  width: 300px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  
+}
+.avis-container .search-container input{
+  border: 2px solid #4caf50;
+
+}
+
+mat-form-field input {
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #4caf50;
+}
+
