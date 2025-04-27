@@ -234,85 +234,39 @@
 			</div><!--//sidepanel-inner-->
 		</div><!--//app-sidepanel-->
 	</header><!--//app-header-->
+
 	<div class="avis-container">
-		<div class="search-container">
-			<mat-form-field appearance="outline">
-			  <mat-label>Rechercher par nom</mat-label>
-			  <input class="input" matInput [(ngModel)]="searchTerm" (input)="filterAvis()" placeholder="Nom du prestataire ou particulier" />
-			</mat-form-field>
-		  </div>
-		  
-		<h2 class="avis-title">Espace Avis</h2>
+		<select (change)="onStatusFilterChange($event)">
+			<option value="">Tous</option> 
+			<option value="EN_ATTENTE">En attente</option>
+			<option value="CONFORME">Conforme</option>
+			<option value="ANNULEE">Annulée</option>
+		  </select>
+	<div class="reservation-container">
+		<h2>Liste des Réservations</h2>
 	  
-		<table mat-table [dataSource]="paginatedAvis">
-			<ng-container matColumnDef="commentaire">
-				<th class="heder" mat-header-cell *matHeaderCellDef>Commentaire</th>
-				<td mat-cell *matCellDef="let avis">
-				  <div class="commentaire-container">
-					<span *ngIf="!avis.showFullcommentaire">{{ avis.commentaire | slice: 0:50 }}...</span>
-					<span *ngIf="avis.showFullcommentaire">{{ avis.commentaire }}</span>
-					
-					<button *ngIf="avis.commentaire.length > 50" 
-							(click)="toggleCommaintre(avis)" 
-							class="show-more-btn">
-					  {{ avis.showFullcommentaire ? 'Show less' : 'Show more' }}
-					</button>
-				  </div>
-				</td>
-			  </ng-container>
-			  
-	  
-		  <ng-container matColumnDef="note">
-			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('note')">
-				Note 
-				<span *ngIf="sortField === 'note'">
-				  {{ sortDirection === 'asc' ? '↑' : '↓' }}
-				</span>
-			  </th>
-			<td mat-cell *matCellDef="let avis">
-			  <ng-container *ngIf="avis.note">
-				<ng-container *ngFor="let star of getStarsArray(avis.note)">
-				  <span class="star">★</span>
-				</ng-container>
-			  </ng-container>
-			</td>
-		  </ng-container>
-	  
-		  <ng-container matColumnDef="date">
-			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('dateAvis')">
-				Date
-				<span *ngIf="sortField === 'dateAvis'">
-				  {{ sortDirection === 'asc' ? '↑' : '↓' }}
-				</span>
-			  </th>
-			<td mat-cell *matCellDef="let avis">{{ avis.dateAvis | date: 'dd/MM/yyyy' }}</td>
-		  </ng-container>
-	  
-		  <ng-container matColumnDef="particulier">particulier
-			<th  class="heder" mat-header-cell *matHeaderCellDef>Particulier</th>
-			<td mat-cell *matCellDef="let avis">{{ avis.utilisateur?.nom }}</td>
-		  </ng-container>
-	  
-		  <ng-container class="heder"  matColumnDef="prestataire">
-			<th class="heder"  mat-header-cell *matHeaderCellDef>Prestataire</th>
-			<td mat-cell *matCellDef="let avis">{{ avis.avisUtilisateur?.nom }}</td>
-		  </ng-container>
-	  
-		  <ng-container matColumnDef="actions">
-			<th class="heder" mat-header-cell *matHeaderCellDef>Actions</th>
-			<td mat-cell *matCellDef="let avis">
-			  <button mat-icon-button (click)="deleteAvis(avis.idAvis)">
-				<mat-icon>delete</mat-icon>
-			  </button>
-			</td>
-		  </ng-container>
-	  
-		  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-		  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		<table>
+		  <thead>
+			<tr>
+			
+			  <th>Date Réservation</th>
+			  <th>Status</th>
+			  <th>Particulier</th>
+			  <th>Prestataire</th>
+			  <th>Demande</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr *ngFor="let reservation of filteredReservations">
+			 
+			  <td>{{ reservation.dateReservation | date:'short' }}</td> <!-- convertit le timestamp en date lisible -->
+			  <td>{{ reservation.statusReservation }}</td>
+			  <td>{{ reservation.particulier?.nom }}</td> 
+			  <td>{{ reservation.prestataire?.nom }}</td> 
+			  <td>{{ reservation.demande?.title }}</td>
+			</tr>
+		  </tbody>
 		</table>
-	  
-		<!-- Pagination -->
-		<mat-paginator [length]="totalAvisCount" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="pageChanged($event)">
-		</mat-paginator>
 	  </div>
-	  
+	</div>
+

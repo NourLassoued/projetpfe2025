@@ -1,10 +1,10 @@
-/* Style pour le texte de la description */
+
 
   
-  /* Style pour le lien "Show More / Show Less" */
+
   .cell a {
     font-size: 15px;
-    color: #007bff; /* Couleur bleue pour le lien */
+    color: #007bff; 
     cursor: pointer;
     text-decoration: none;
     margin-top: 5px;
@@ -12,40 +12,40 @@
   }
   
   .cell a:hover {
-    text-decoration: underline; /* Souligner le lien au survol */
+    text-decoration: underline; 
   }
   
-  /* Si la description est bien longue, vous pouvez ajouter un effet de transition */
+
   .cell a {
     transition: color 0.3s ease;
   }
   
   .cell a:hover {
-    color: #0056b3; /* Change la couleur du lien quand il est survolé */
+    color: #0056b3; 
   }
-/* Style personnalisé pour centrer la boîte de dialogue */
+
 
 
 .fas.fa-calendar-alt.clickable-icon {
-  font-size: 24px;          /* Taille de l'icône */
-  color: #3f51b5;           /* Couleur de l'icône */
-  cursor: pointer;         /* Changer le curseur lorsque l'icône est cliquée */
+  font-size: 24px;         
+  color: #3f51b5;         
+  cursor: pointer;        
 }
 .disponibilites-box {
-  position: absolute;  /* Position absolue pour afficher au-dessus du tableau */
-  margin-top: 70px;  /* Ajustez selon la hauteur souhaitée au-dessus du tableau */
-  left: 50%;  /* Centrer horizontalement */
-  transform: translateX(-50%);  /* Centrer parfaitement */
+  position: absolute;  
+  margin-top: 70px; 
+  left: 50%;  
+  transform: translateX(-50%);  
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  width: 30%;  /* Ajustez la largeur de la boîte */
-  z-index: 10;  /* Assurez-vous que la boîte de disponibilité soit au-dessus du tableau */
+  width: 30%;  
+  z-index: 10;  
   transition: all 0.3s ease;
 }
 
-/* Titre et bouton */
+
 .disponibilites-box h3 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -70,17 +70,16 @@
   background-color: #3700b3;
 }
 .profile-pic {
-  width: 50px; /* Largeur de l'image */
-  height: 50px; /* Hauteur de l'image */
-  object-fit: cover; /* Assure que l'image garde son ratio sans déformer */
-  border-radius: 50%; /* Pour arrondir l'image, si c'est une photo de profil */
+  width: 50px; 
+  height: 50px; 
+  object-fit: cover; 
+  border-radius: 50%; 
 }
 .profile-pic {
-  font-size: 40px; /* Ajuste la taille de l'icône */
-  color: gray; /* Change la couleur de l'icône */
+  font-size: 40px;
+  color: gray;
 }
-/* Style général pour les liens de téléchargement */
-/* Style général pour les liens de téléchargement */
+
 .app-btn-secondary {
   display: inline-block;
   padding: 6px 12px;
@@ -88,7 +87,7 @@
   font-weight: 600;
   color: #fff;
   
-  border: none; /* Supprimer le cadre du bouton */
+  border: none; 
   border-radius: 4px;
   text-decoration: none;
   text-align: center;
@@ -96,14 +95,14 @@
 }
 
 
-/* Style lorsque le lien est désactivé ou non disponible */
+
 .app-btn-secondary[disabled] {
   background-color: #6c757d;
   border-color: #6c757d;
   cursor: not-allowed;
 }
 
-/* Style pour les liens dans les cellules du tableau */
+
 td.cell a {
   text-decoration: none;
   display: block;
@@ -123,26 +122,26 @@ input, select {
   background-color: #f9f9f9;
 }
 
-/* Effet au focus pour input et select */
+
 input:focus, select:focus {
   border-color: #007bff;
-  outline: none; /* Enlève le contour bleu par défaut dans certains navigateurs */
+  outline: none; 
   background-color: #fff;
 }
 
-/* Optionnal: Améliorer le survol des champs de saisie */
+
 input:hover, select:hover {
   border-color: #007bff;
   background-color: #fafafa;
 }
 
-/* Style des options dans les selects */
+
 select {
   background-color: #fff;
   cursor: pointer;
 }
 
-/* Transition fluide pour les changements de focus et hover */
+
 input, select {
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
@@ -480,7 +479,7 @@ td img {
 }
 
 .icon-trophy::before {
-  content: "\f091"; /* Code pour l'icône trophée */
+  content: "\f091";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }

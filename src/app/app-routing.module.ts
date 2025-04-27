@@ -64,6 +64,7 @@ import { FrontpresayitrComponent } from './Front/frontpresayitr/frontpresayitr.c
 import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.component';
 import { MeunuadminComponent } from 'src/backadmin/meunuadmin/meunuadmin.component';
 import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
+import { EspacereservationComponent } from '../backadmin/espacereservation/espacereservation.component';
 
 
 const routes: Routes = [
@@ -237,8 +238,13 @@ component:InformatiqueComponent
     path: 'Service',
     component:ServiceComponent
   },
+  
+  {
+    path: 'escpacereservation',
+    component:EspacereservationComponent
+  },
 
-
+/////////////////////////////////////
   {
     path: 'Profileentreprise',
     component:ProfiletrpriseComponent

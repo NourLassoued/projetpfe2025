@@ -8,7 +8,7 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class ReservationService {
- //private apiUrl = 'http://localhost:8088/nour/reservation';
+
   private apiUrl = `${environment.apiUrl}/reservation`;
  
 
@@ -42,4 +42,8 @@ export class ReservationService {
   getReservationsConfirmées(prestataireId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/prestataire/${prestataireId}/reservations/confirmées`);
   }
+  getAllReservations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
+
 }

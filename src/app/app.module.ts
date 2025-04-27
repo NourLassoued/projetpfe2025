@@ -99,6 +99,7 @@ import { FrontpresayitrComponent } from './Front/frontpresayitr/frontpresayitr.c
 import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.component';
 import { MeunuadminComponent } from '../backadmin/meunuadmin/meunuadmin.component';
 import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
+import { EspacereservationComponent } from '../backadmin/espacereservation/espacereservation.component';
 
 
 
@@ -167,6 +168,7 @@ import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.compo
     EspaceavisComponent,
     MeunuadminComponent,
     ScorebadageComponent,
+    EspacereservationComponent,
  
    
 
