@@ -3,7 +3,7 @@ package com.example.backendnourpfe.Controlleur;
 
 
 
-import com.example.backendnourpfe.Respository.ReservationRepository;
+
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
@@ -165,7 +165,7 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
     @GetMapping("/email-exists/{email}")
     public ResponseEntity<Boolean> checkEmailExists(@PathVariable String email) {
         boolean exists = utilisateurService.checkEmailExists(email);
-        return ResponseEntity.ok(exists);  // Retourne "true" si l'email existe, "false" sinon
+        return ResponseEntity.ok(exists);
     }
     @GetMapping("/users")
     public ResponseEntity<List<Utilisateur>> getAllUsers() {

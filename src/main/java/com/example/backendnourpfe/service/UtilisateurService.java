@@ -363,9 +363,7 @@ public List<Utilisateur> getAllPrestataires() {
 
 
 
-        System.out.println("Utilisateur mis à jour avec succès: " + updatedUser.getNom());
-        System.out.println("Total disponibilités après mise à jour: " + updatedUser.getDisponibilites().size())
-        ;
+
 
         String newToken = jwtService.generateToken(updatedUser);
         System.out.println(" Nouveau token généré : " + newToken);

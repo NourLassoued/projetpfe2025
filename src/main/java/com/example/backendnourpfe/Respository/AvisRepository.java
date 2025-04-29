@@ -21,6 +21,18 @@ public interface AvisRepository extends JpaRepository<Avis,Long> {
 
     @Query("SELECT COUNT(a) FROM Avis a WHERE a.avisUtilisateur.idUtilisateur = :idUtilisateur")
     long countByUtilisateurId(@Param("idUtilisateur") Long idUtilisateur);
+    @Query(value = """
+    SELECT * FROM (
+        SELECT a.*, 
+               ROW_NUMBER() OVER (PARTITION BY a.avis_utilisateur_id 
+                                  ORDER BY a.note DESC, a.date_avis DESC) AS rn
+        FROM avis a
+    ) ranked
+    WHERE ranked.rn = 1
+    """, nativeQuery = true)
+    List<Avis> findTopAvisByAvisUtilisateur();
+
+
 }
 
 

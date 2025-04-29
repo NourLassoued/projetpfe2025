@@ -19,6 +19,9 @@ import java.util.Optional;
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
     Optional<Utilisateur> findByEmail(String email);
     boolean existsByEmail(String email);
+    @Query("SELECT u FROM Utilisateur u WHERE u.role = :role")
+    List<Utilisateur> findByRole(@Param("role") UserRole role);
+
 
     @Transactional
     @Modifying

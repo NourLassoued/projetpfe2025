@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,12 +69,15 @@ public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long i
     try {
         List<Demande> demandesDisponibles = demandeService.getAvailableDemandesForUtilisateur(id);
 
-
+        Date today = new Date();
+        List<Demande> demandesFiltrees = demandesDisponibles.stream()
+                .filter(d -> d.getDate() != null && d.getDate().after(today))
+                .toList();
         if (demandesDisponibles.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(demandesDisponibles, HttpStatus.OK);
+        return new ResponseEntity<>(demandesFiltrees, HttpStatus.OK);
 
     } catch (RuntimeException e) {
 

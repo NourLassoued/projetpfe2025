@@ -1,8 +1,8 @@
 package com.example.backendnourpfe.classes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,6 +43,8 @@ public class Reservation {
     @JoinColumn(name = "demande_id", nullable = false)
     @JsonIgnoreProperties("reservations")
     private Demande demande;
-
-
+    @OneToMany(mappedBy = "reservation")
+    @JsonIgnoreProperties("reservation")
+    private List<Payment> payments;
 }
+

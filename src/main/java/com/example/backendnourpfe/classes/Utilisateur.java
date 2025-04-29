@@ -36,7 +36,7 @@ public class Utilisateur  implements UserDetails  {
     private String image;
     @JsonProperty("telephoneNumber")
     private Integer telephoneNumber;
-
+    private String badge;
 
     @Enumerated(EnumType.STRING)
     @JsonProperty("role")
@@ -85,7 +85,14 @@ public class Utilisateur  implements UserDetails  {
     @Nullable
     @JsonProperty("doucument_CIN")
     private  String doucument_CIN;
-
+    @ElementCollection
+    private List<Long> demandesDejaPostulees = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "particulier")
+    private List<Payment> paymentsAsParticulier;
+@JsonIgnore
+    @OneToMany(mappedBy = "prestataire")
+    private List<Payment> paymentsAsPrestataire;
 
 @JsonIgnore
     @OneToOne(mappedBy = "user")

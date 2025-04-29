@@ -37,6 +37,7 @@ public class SecurityConfiguration {
             "/avis/**",
             "/notifications/**",
             "/message/**",
+            "/payment/**",
             "/ws/**",
 
 
@@ -64,8 +65,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/ws/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                        .anyRequest().authenticated()
-                   // .anyRequest().permitAll()
+                       .anyRequest().authenticated()
+              // .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
