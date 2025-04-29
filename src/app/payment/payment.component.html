@@ -1,0 +1,23 @@
+<div class="payment-container">
+    <h2>Payment</h2>
+    
+    <div>
+      <label for="amount">Amount (in cents):</label>
+      <input type="number" id="amount" [(ngModel)]="amount" />
+      <button >Create Payment</button>
+    </div>
+    
+    <div *ngIf="paymentId">
+      <p>Payment ID: {{paymentId}}</p>
+      <button >Verify Payment</button>
+    </div>
+  
+    <div *ngIf="paymentStatus">
+      <p>Status: {{paymentStatus}}</p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error">
+      <p>Error: {{errorMessage}}</p>
+    </div>
+  </div>
+  

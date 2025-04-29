@@ -47,6 +47,7 @@ export class AllTemplateFrontComponent {
       this.startTypingEffect(); 
     }
     ngOnInit(): void {
+;
    this.getAllCategories();
    this. getAllCategoriess() ;
  

@@ -28,6 +28,7 @@ export class EspaceavisComponent {
   displayedColumns: string[] = ['commentaire', 'note', 'date', 'prestataire', 'particulier', 'actions'];
   avisList: Avis[] = [];
   paginatedAvis: Avis[] = [];
+  filteredAvisList: Avis[] = [];
 
   page: number = 1;
   itemsPerPage: number = 3;
@@ -53,6 +54,9 @@ export class EspaceavisComponent {
       this.avisList = data;
       this.totalAvisCount = this.avisList.length;
       this.totalPages = Math.ceil(this.totalAvisCount / this.itemsPerPage);
+      this.filteredAvisList = this.avisList; // au début, pas de filtre
+
+
       this.paginate();
       this.loadUserData();
     });
@@ -61,8 +65,9 @@ export class EspaceavisComponent {
   paginate(): void {
     const start = this.pageIndex * this.pageSize;
     const end = start + this.pageSize;
-    this.paginatedAvis = this.avisList.slice(start, end);
+    this.paginatedAvis = this.filteredAvisList.slice(start, end);
   }
+  
 
   pageChanged(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
@@ -195,11 +200,18 @@ export class EspaceavisComponent {
     if (field === 'note') return obj.note;
     return obj[field];
   }
-  filterAvis() {
+  filterAvis(): void {
     const term = this.searchTerm.trim().toLowerCase();
-    this.paginatedAvis = this.avisList.filter(avis =>
+    
+    this.filteredAvisList = this.avisList.filter(avis =>
       avis.utilisateur?.nom?.toLowerCase().includes(term) ||
       avis.avisUtilisateur?.nom?.toLowerCase().includes(term)
     );
+    
+    this.totalAvisCount = this.filteredAvisList.length;
+    this.pageIndex = 0; 
+    this.paginate();
   }
+  
+  
 }

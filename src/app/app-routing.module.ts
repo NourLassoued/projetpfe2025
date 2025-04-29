@@ -65,6 +65,7 @@ import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.componen
 import { MeunuadminComponent } from 'src/backadmin/meunuadmin/meunuadmin.component';
 import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
 import { EspacereservationComponent } from '../backadmin/espacereservation/espacereservation.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 const routes: Routes = [
@@ -92,6 +93,8 @@ const routes: Routes = [
     path: 'Jardinage',
     component:JardinageComponent
   },
+  { path: 'create-payment',
+     component: PaymentComponent },
   {
     path: 'Enfants',
     component:EnfantsComponent
@@ -331,7 +334,11 @@ component:InformatiqueComponent
 
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })], 
+  imports: [  RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'enabled',  
+    anchorScrolling: 'enabled',           
+  })
+],
     exports: [RouterModule]
   })
   export class AppRoutingModule { }

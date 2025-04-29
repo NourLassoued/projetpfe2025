@@ -27,9 +27,9 @@
         <button (click)="annulerReservation(reservations[0].idReservation)" class="box">
           Annuler la réservation du prestataire
         </button>
-        <button  (click)="terminerReservation(reservations[0].idReservation)" class="box">Réservation de service terminée</button>
-       
-      </div>
+        <button (click)="ouvrirModal(reservations[0].idReservation)" class="box">
+          Réservation de service terminée
+        </button>      </div>
       
 
    
@@ -56,6 +56,40 @@
 
         </div>
       </div>
+    </div>
+  </div>
+</div><div class="modal-backdrop" *ngIf="showPaymentModal">
+  <div class="modal">
+    <h2>Choisissez votre mode de paiement</h2>
+
+    <div class="payment-options">
+      
+      <!-- Bloc Espèce -->
+      <div class="payment-option" *ngIf="modePaiement !== 'flouci'">
+        <div class="icon">
+          <img src="/assets/img/main.png" alt="Espèce" />
+        </div>
+        <button class="payment-button espece" (click)="choisirPaiement('espece')">Espèce</button>
+      </div>
+
+      <!-- Bloc Flouci -->
+      <div class="payment-option" *ngIf="modePaiement !== 'espece'">
+        <div class="icon">
+          <img src="/assets/img/flouci.png" alt="Flouci" />
+        </div>
+        <button class="payment-button flouci" (click)="choisirPaiement('flouci')">Flouci</button>
+
+        <!-- Champ pour entrer le montant -->
+        <div *ngIf="modePaiement === 'flouci'" class="payment-form">
+          <input type="number" [(ngModel)]="montantPaiement" placeholder="Montant à payer" class="payment-input" />
+
+          <div class="button-group">
+            <button (click)="payerAvecFlouci()" class="pay-button">Payer</button>
+            <button (click)="fermerModal()" class="cancel-button">Annuler</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

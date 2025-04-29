@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { environment } from '../environment';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PaymentService {
+  private apiUrl = `${environment.apiUrl}/payment`;
+  constructor(private http: HttpClient) { }
+
+  createPayment(montant: number, reservationId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/create/${reservationId}?amount=${montant}`,
+      {} 
+    );
+  }
+  
+
+
+  verifyPayment(paymentId: string): Observable<string> {
+    return this.http.get(`${this.apiUrl}/verify/${paymentId}`, { responseType: 'text' });
+  }
+}

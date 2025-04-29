@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./espacereservation.component.css']
 })
 export class EspacereservationComponent {
+  pageSize: number = 5; 
+pageIndex: number = 0; 
+paginatedReservations: any[] = []; 
+
   reservations: any[] = [];
  profileImageUrl: SafeUrl | null = null;
  user: any;
@@ -33,6 +37,7 @@ export class EspacereservationComponent {
         this.reservations = data;
 
         this.filteredReservations = [...this.reservations];
+        this.paginateReservations(); 
       },
       error: (error) => {
         console.error('Erreur lors du chargement des réservations:', error);
@@ -100,12 +105,26 @@ export class EspacereservationComponent {
   onStatusFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedStatus = selectElement.value;
-
+    this.pageIndex = 0; 
     if (this.selectedStatus) {
       this.filteredReservations = this.reservations.filter(reservation => reservation.statusReservation === this.selectedStatus);
     } else {
       this.filteredReservations = [...this.reservations];
     }
+  
+    this.paginateReservations();
   }
+  
+  paginateReservations(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedReservations = this.filteredReservations.slice(startIndex, endIndex);
+  }
+  onPageChange(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.paginateReservations();
+  }
+  
 
 }

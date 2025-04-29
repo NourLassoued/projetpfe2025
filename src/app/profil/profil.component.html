@@ -78,7 +78,13 @@
     <div class="container-profile">
         <!-- Nom et vérifications -->
         <div class="section">
+          <div *ngIf="getAverageRating() >= 4.5" class="badge-container">
+            <h6 class="badgebg-succes">
+              <i class="fas fa-heart me-2"></i> Top Prestataire
+            </h6>
+          </div>
             <label>{{ user?.nom }}</label>
+
             <div class="verification-container">
                 <span class="verification-item">
                     <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée

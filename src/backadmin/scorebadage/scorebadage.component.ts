@@ -163,16 +163,17 @@ export class ScorebadageComponent {
   }
   filterUtilisateursByBadge() {
     if (this.selectedBadge) {
-    
       this.filteredUtilisateurs = this.utilisateursScores.filter(
         (utilisateur) => utilisateur.badge === this.selectedBadge
       );
     } else {
-     
       this.filteredUtilisateurs = [...this.utilisateursScores];
     }
+    this.pageIndex = 0; 
+    this.paginateUtilisateurs();
     this.cdr.detectChanges(); 
   }
+  
   paginateUtilisateurs(): void {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;

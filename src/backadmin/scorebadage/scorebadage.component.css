@@ -521,14 +521,7 @@ select {
   outline: none;
   transition: border-color 0.3s ease;
   margin-bottom: 20px;
-  width: 150px;
+  width:120px;
 }
 
-select:hover {
-  border-color: #45a049;
-}
 
-select:focus {
-  border-color: #2e7d32;
-  box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);
-}

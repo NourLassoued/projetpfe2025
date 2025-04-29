@@ -4,12 +4,17 @@ import { ReservationService } from '../service/reservation.service';
 import { FileService } from '../service/file.service';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
+import { PaymentService } from '../service/payment.service';
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent {
+  modePaiement: string | null = null;
+  showPaymentInput: boolean = false;
+montantPaiement: number = 0;
+selectedReservationId: number | null = null;
   prestataireImageUrls: { [key: number]: string } = {}; 
 utilisateurs: any[] = [];  
   serviceImageUrls: { [key: number]: string } = {};
@@ -20,11 +25,14 @@ utilisateurs: any[] = [];
   demandes: any[] = []; 
   imageUrls: { [key: number]: string } = {};
   user: any = null;
+  showPaymentModal = false;
   constructor(private route: ActivatedRoute,
     private reservationService: ReservationService,
     private fileService: FileService,
     private toastr: ToastrService,
        private router: Router,
+       private payment:PaymentService
+      
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +45,26 @@ utilisateurs: any[] = [];
   
   }
   
+  ouvrirModal(idReservation: number): void {
+
+    this.selectedReservationId = idReservation;
+    console.log("ID de réservation sélectionné :", idReservation)
+    this.showPaymentModal = true;
+  
+      this.showPaymentInput = false; 
+    
+    
+  }
+  afficherChampMontant(): void {
+    this.showPaymentInput = true;
+  }
+  
+  
+  fermerModal() {
+    this.showPaymentModal = false;
+ 
+  
+  }
   
   loadUserData(): void {
      const token = localStorage.getItem('accessToken');
@@ -168,9 +196,33 @@ goToProfile(userId?: number) {
   } else {
     console.error("ID non défini !");
   }
+}payerAvecFlouci(): void {
+  if (this.selectedReservationId && this.montantPaiement) {
+    this.payment.createPayment(this.montantPaiement, this.selectedReservationId).subscribe({
+      next: (response: any) => {
+        try {
+          const jsonResponse = typeof response === 'string' ? JSON.parse(response) : response;
+          const redirectUrl = jsonResponse?.result?.link;
+          if (redirectUrl) {
+            window.location.href = redirectUrl;
+          } else {
+            alert('Erreur : lien de paiement introuvable.');
+          }
+        } catch (e) {
+          alert('Erreur : ' + response);
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erreur lors du paiement.');
+      }
+    });
+  } else {
+    alert('Veuillez entrer un montant.');
+  }
+}
+choisirPaiement(mode: string): void {
+  this.modePaiement = mode;
 }
 
 }
-
-
-

@@ -94,3 +94,29 @@ body {
 .me-1 {
   margin-right: 5px;
 }
+
+.card-img-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+.badge-inside-image {
+  position: absolute;
+  bottom: 10px;  
+  left: 10px;   
+  z-index: 5;    
+}
+
+.badge-inside-image .badge {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #9f28a7;
+}
+
+.badge-inside-image .badge i {
+  font-size: 14px;
+  margin-right: 5px;
+}

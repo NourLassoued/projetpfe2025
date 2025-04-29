@@ -1,11 +1,14 @@
 <div class="container" *ngIf="!isLoading && topAvisList.length > 0; else loading">
   <div class="card" *ngFor="let avis of topAvisList.slice(0, 9)">
 <div class="user-info">
- 
-    <img [src]="avis.avisUtilisateur?.image"
+  <a 
+  *ngIf="avis.avisUtilisateur?.idUtilisateur" 
+  routerLink="/Compte, avis.avisUtilisateur?.idUtilisateur">
+  <img 
+    [src]="avis.avisUtilisateur?.image"
     [alt]="avis.avisUtilisateur?.nom"
-    class="profile-img"
-    (click)="goToCompte(avis.avisUtilisateur?.idUtilisateur)">
+    class="profile-img">
+</a>
     <h3>{{ avis.avisUtilisateur?.nom }} </h3>
 </div>
     <div class="tags mt-2">

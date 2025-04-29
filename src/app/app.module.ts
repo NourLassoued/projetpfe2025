@@ -100,6 +100,7 @@ import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.componen
 import { MeunuadminComponent } from '../backadmin/meunuadmin/meunuadmin.component';
 import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
 import { EspacereservationComponent } from '../backadmin/espacereservation/espacereservation.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 
@@ -169,6 +170,7 @@ import { EspacereservationComponent } from '../backadmin/espacereservation/espac
     MeunuadminComponent,
     ScorebadageComponent,
     EspacereservationComponent,
+    PaymentComponent,
  
    
 

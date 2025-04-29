@@ -2,10 +2,24 @@
     <div class="row">
       <div class="col-md-4" *ngFor="let prestataire of prestataires">
         <div class="card mb-4">
-          <img 
-            [src]="prestataire.image || 'assets/images/user.png'" 
-            class="card-img-top" 
-            alt="{{ prestataire.nom }}"    (click)="goToProfil(prestataire.idUtilisateur!)" >
+      
+  
+  
+          <div class="card-img-container">
+            <img 
+              [src]="prestataire.image || 'assets/images/user.png'" 
+              class="card-img-top" 
+              alt="{{ prestataire.nom }}"  
+              (click)="goToProfil(prestataire.idUtilisateur!)" >
+  
+          
+            <div *ngIf="prestataire.idUtilisateur && scoreMap[prestataire.idUtilisateur] >= 4.5" class="badge-inside-image">
+              <span class="badge bg-succes">
+                <i class="fas fa-heart me-2"></i> Top Prestataire
+              </span>
+            </div>
+          </div>
+  
                  
           <div class="card-body">
             <h2 class="card-title">

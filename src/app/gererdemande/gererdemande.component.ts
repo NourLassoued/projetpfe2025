@@ -386,6 +386,7 @@ goToProfile(prestataireId?: number, utilisateurId?: number, demandeId?: number) 
     return;
   }
 
+  
 
   this.router.navigate(['/Profil', prestataireId], {
     queryParams: { utilisateurId: utilisateurId, demandeId: demandeId }

@@ -4,28 +4,27 @@ background-color: rgb(243, 243, 243);
   height: auto;
 }
 a, span {
-    display: inline; /* Affiche les éléments sur la même ligne */
-    margin-right: 10px; /* Espace entre les éléments */
+    display: inline; 
    
   }
   a {
-    color: #007bff;  /* Applique la couleur bleue au texte du lien */
+    color: #007bff;  
     text-decoration: none;  
    font-size: 20px;
 }
 
 a:hover {
-    text-decoration: underline;  /* Optionnel : Ajoute un soulignement lors du survol */
+    text-decoration: underline; 
 }
  
     .texte {
-        display: flex;  /* Aligne les éléments horizontalement */
-        align-items: center;  /* Centre les éléments verticalement */
+        display: flex; 
+        align-items: center;  
         margin-left: 140px;
     }
     
     .texte i {
-        margin: 0 10px;  /* Ajoute de l'espace autour de l'icône */
+        margin: 0 10px;  
     }
    
   
@@ -90,11 +89,11 @@ button {
     width: 250px;
 }
 .task-card p {
-    margin-bottom: 25px; /* Espace de 15px sous chaque paragraphe */
+    margin-bottom: 25px; 
 }
 
 button:last-child {
-    margin-right: 0; /* Enlève l'espace à droite du dernier bouton */
+    margin-right: 0; 
 }
 .notification-box {
   
@@ -119,14 +118,14 @@ button:last-child {
     margin-left: 370px;
 }
 mat-menu a {
-    margin-bottom: 15px; /* Adds space between the two items */
+    margin-bottom: 15px; 
   }
   
   mat-menu a:last-child {
-    margin-bottom: 0; /* Removes space after the last link */
+    margin-bottom: 0; 
   }
   .delete {
-    color: red;  /* Set the color to red */
+    color: red; 
  
   }
   
@@ -134,12 +133,12 @@ mat-menu a {
     color: red;  
   }
   .service-image {
-    width: 300px; /* L'image prend toute la largeur de son conteneur */
-    height: 200px; /* La hauteur s'ajuste automatiquement pour garder les proportions */
-    border-radius: 15px; /* Bord arrondi pour une présentation plus élégante */
-    object-fit: cover; /* Assure que l'image couvre l'espace sans déformation */
+    width: 300px; 
+    height: 200px; 
+    border-radius: 15px;
+    object-fit: cover;
   }
-  /* Modal Styles */
+
 .modal {
     display: block;
     position: fixed;
@@ -149,7 +148,7 @@ mat-menu a {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    background-color: rgba(0, 0, 0, 0.5); 
   }
   
   .modal-content {
@@ -370,7 +369,13 @@ blockquote {
 
  
 }
+.score-value{
+  margin-right: 90px;
+}
+.spane{
+margin-right: 15px;
 
+}
 .score {
   font-size: 16px;
   font-weight: 500;

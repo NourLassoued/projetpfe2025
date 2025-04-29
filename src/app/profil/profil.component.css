@@ -579,3 +579,22 @@ button.close-btn {
   }
  
  
+.badgebg-succes{
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: #9f28a7;
+  }
+  
+  .badgebg-succes i {
+    font-size: 15px;
+    margin-right: 5px;
+    color: #f1f1f1;
+  }
+   h6 {
+    font-size: 17px;
+ width: 150px;
+    color: #f1f1f1;
+  }
+  
+ 

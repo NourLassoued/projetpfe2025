@@ -2,7 +2,7 @@
 <body>
 
   <div class="container">
-      <!-- Sidebar contenant l'image de profil -->
+    
       <div class="sidebar">
           <div id="profile-container">
               <div class="image-wrapper">
@@ -10,7 +10,7 @@
                   <div class="price">
                       {{ user?.tarifs }} dt
                   </div>
-                  <!-- Bloc des informations de notation -->
+                
                   <div class="rating-info">
                       <div>
                           <strong>{{ avisList.length }}</strong> <span>⭐</span>
@@ -29,7 +29,7 @@
                   </div>
               </div>
           </div>
-          <!-- Boutons de contact -->
+      
           <div class="button-container">
               <h4>
                 Contactez moi!
@@ -44,11 +44,18 @@
       
       
     
-      <!-- Contenu du profil -->
+     
       <div class="container-profile">
-          <!-- Nom et vérifications -->
+        
           <div class="section">
               <label>{{ user?.nom }}</label>
+           
+<div *ngIf="getAverageRating() >= 4.5" class="badge-container">
+  <h6 class="badgebg-succes">
+    <i class="fas fa-heart me-2"></i> Top Prestataire
+  </h6>
+</div>
+
               <div class="verification-container">
                   <span class="verification-item">
                       <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
@@ -86,16 +93,16 @@
               <p>{{ user?.description }}</p>
           </div>
     </div>
-          <!-- Disponibilités -->
+        
            <div class="content">
           <div class="section">
               <ng-container *ngIf="user?.disponibilite && user.disponibilite.length > 0">
                   <h3>Disponibilité</h3>
                   <ul class="disponibilites-list">
                       <li *ngFor="let dispo of user.disponibilite">
-                        <!-- Icône pour l'heure -->
+                       
                         <i class="fa-solid fa-clock"></i>
-                        <!-- Affichage du jour et des horaires -->
+                      
                         {{ dispo.jour }} : {{ dispo.heureDebut }} h - {{ dispo.heureFin }} h
                       </li>
                     </ul>
@@ -103,12 +110,12 @@
               
           </div>
            </div>
-          <!-- Avis clients -->
+         
           <div class="content">
               <div class="section">
                 <label class="sectionn">Avis clients</label>
             
-                <!-- Note moyenne -->
+               
                 <div class="rating">
                   ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
                 </div>
