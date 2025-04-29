@@ -29,8 +29,10 @@
         </button>
         <button (click)="ouvrirModal(reservations[0].idReservation)" class="box">
           Réservation de service terminée
-        </button>      </div>
+        </button>     
+       </div>
       
+
 
    
     </div>
@@ -58,38 +60,65 @@
       </div>
     </div>
   </div>
-</div><div class="modal-backdrop" *ngIf="showPaymentModal">
+</div><!-- Modal Backdrop -->
+<div class="modal-backdrop" *ngIf="showPaymentModal">
   <div class="modal">
     <h2>Choisissez votre mode de paiement</h2>
 
     <div class="payment-options">
-      
       <!-- Bloc Espèce -->
-      <div class="payment-option" *ngIf="modePaiement !== 'flouci'">
+      <div class="payment-option">
         <div class="icon">
           <img src="/assets/img/main.png" alt="Espèce" />
         </div>
-        <button class="payment-button espece" (click)="choisirPaiement('espece')">Espèce</button>
+        <button class="payment-button espece" (click)="ouvrirModalEspace()">Espèce</button>
+        <div class="modal-backdropee" *ngIf="showEspaceForm">
+          <div class="modalee">
+            <h3>Saisissez le montant à payer DE espace:</h3>
+            <input
+              type="number"
+              [(ngModel)]="montantPaiement"
+              placeholder="Montant à payer"
+              class="payment-input"
+              min="0"
+            />
+            <div class="button-group">
+              <button (click)="payerAvecEspace()" class="pay-button">Payer</button>
+              <button (click)="fermerEspaceForm()" class="cancele-button">Annuler</button>
+            </div>
+          </div>
+        </div>
+        
       </div>
 
       <!-- Bloc Flouci -->
-      <div class="payment-option" *ngIf="modePaiement !== 'espece'">
+      <div class="payment-option">
         <div class="icon">
           <img src="/assets/img/flouci.png" alt="Flouci" />
         </div>
-        <button class="payment-button flouci" (click)="choisirPaiement('flouci')">Flouci</button>
+        <button class="payment-button flouci" (click)="ouvrirModalFlouci()">Flouci</button>
 
-        <!-- Champ pour entrer le montant -->
-        <div *ngIf="modePaiement === 'flouci'" class="payment-form">
-          <input type="number" [(ngModel)]="montantPaiement" placeholder="Montant à payer" class="payment-input" />
+    
+<div class="modal-backdrope" *ngIf="showFlouciForm">
+  <div class="modale">
+    <h3>Saisissez le montant à payer :</h3>
+    <input
+      type="number"
+      [(ngModel)]="montantPaiement"
+      placeholder="Montant à payer"
+      class="payment-input"
+      min="0"
+    />
+    <div class="button-group">
+      <button (click)="payerAvecFlouci()" class="pay-button">Payer</button>
+      <button (click)="fermerFlouciForm()" class="cancele-button">Annuler</button>
+    </div>
+  </div>
+</div>
 
-          <div class="button-group">
-            <button (click)="payerAvecFlouci()" class="pay-button">Payer</button>
-            <button (click)="fermerModal()" class="cancel-button">Annuler</button>
-          </div>
-        </div>
+
+
       </div>
-
     </div>
   </div>
 </div>

@@ -17,6 +17,13 @@ export class PaymentService {
     );
   }
   
+  createPaymentForReservationEspace(montant: number, reservationId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/create-payment/${reservationId}?amount=${montant}`,
+      {} 
+    );
+   
+  }
 
 
   verifyPayment(paymentId: string): Observable<string> {

@@ -11,9 +11,12 @@ import { PaymentService } from '../service/payment.service';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent {
+  showEspaceForm: boolean = false;
+  showFlouciForm: boolean = false;
   modePaiement: string | null = null;
   showPaymentInput: boolean = false;
 montantPaiement: number = 0;
+montantPaiementEspace: number = 0;
 selectedReservationId: number | null = null;
   prestataireImageUrls: { [key: number]: string } = {}; 
 utilisateurs: any[] = [];  
@@ -66,6 +69,8 @@ utilisateurs: any[] = [];
   
   }
   
+
+
   loadUserData(): void {
      const token = localStorage.getItem('accessToken');
    
@@ -196,7 +201,8 @@ goToProfile(userId?: number) {
   } else {
     console.error("ID non défini !");
   }
-}payerAvecFlouci(): void {
+}
+payerAvecFlouci(): void {
   if (this.selectedReservationId && this.montantPaiement) {
     this.payment.createPayment(this.montantPaiement, this.selectedReservationId).subscribe({
       next: (response: any) => {
@@ -221,8 +227,44 @@ goToProfile(userId?: number) {
     alert('Veuillez entrer un montant.');
   }
 }
-choisirPaiement(mode: string): void {
-  this.modePaiement = mode;
+payerAvecEspace(): void {
+  if (this.selectedReservationId && this.montantPaiement) {
+    this.payment.createPaymentForReservationEspace(this.montantPaiement, this.selectedReservationId).subscribe({
+      next: (response: any) => {
+      
+        this.toastr.success('Paiement effectué avec succès!', 'Succès');
+      },
+      error: (err) => {
+        console.error(err);
+        this.toastr.error('Erreur lors du paiement avec Espace.', 'Erreur');
+      },
+    });
+  } else {
+    alert('Veuillez entrer un montant et sélectionner une réservation.');
+  }
 }
+
+
+ouvrirModalFlouci() {
+  this.showPaymentModal = true;
+  this.showFlouciForm = true;    
+}
+
+
+fermerFlouciForm() {
+  this.showFlouciForm = false;  
+  this.showPaymentModal = false;  
+}
+ouvrirModalEspace() {
+  this.showPaymentModal = true;
+  this.showEspaceForm = true;    
+}
+
+
+fermerEspaceForm() {
+  this.showEspaceForm = false;  
+  this.showPaymentModal = false;  
+}
+
 
 }

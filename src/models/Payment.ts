@@ -7,6 +7,7 @@ export interface Payment {
     paymentId?: string;
     paymentStatus?: StatusPayment;
     amount: number;
+    modePaiement?:String;
     reservation: Reservation;
     particulier: Utilisateur;
     prestataire: Utilisateur;
