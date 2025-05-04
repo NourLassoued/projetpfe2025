@@ -7,6 +7,7 @@ package com.example.backendnourpfe.Controlleur;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 
+import com.example.backendnourpfe.service.DemandeService;
 import com.example.backendnourpfe.service.PostulationService;
 import com.example.backendnourpfe.service.UtilisateurService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,7 +43,8 @@ public class UtilisateurController {
     private PostulationService postulationService;
 
 
-
+@Autowired
+private DemandeService demandeService;
 
     @PostMapping("/ajouter")
     public ResponseEntity<Utilisateur> ajouterUtilisateur(@RequestBody Utilisateur utilisateur) {
@@ -194,6 +196,15 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
         return ResponseEntity.ok(savedPostulation);
     }
 
+    @GetMapping("/{id}/prestataires-compatibles")
+    public ResponseEntity<List<Utilisateur>> getPrestatairesCompatibles(@PathVariable Long id) {
+        try {
+            List<Utilisateur> prestataires = demandeService.getAvailablePrestatairesForDemande(id);
+            return ResponseEntity.ok(prestataires);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 
 }
 

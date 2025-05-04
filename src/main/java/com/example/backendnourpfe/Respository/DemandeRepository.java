@@ -36,5 +36,11 @@ List<Demande> findTermineesAvecReservationConforme(
             @Param("adresseId") Long adresseId,
             @Param("jour") String jour,
             @Param("servicesOfferts") List<Long> servicesOfferts);
+    @Query("SELECT u FROM Utilisateur u " +
+            "JOIN u.servicesOfferts s " +
+            "WHERE s.idservice = :serviceId " +
+            "AND u.adressee.idAdresse = :adresseId")
+    List<Utilisateur> findByServiceAndAdresse(@Param("serviceId") Long serviceId,
+                                              @Param("adresseId") Long adresseId);
 
 }

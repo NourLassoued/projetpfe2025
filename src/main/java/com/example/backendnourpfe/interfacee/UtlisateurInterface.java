@@ -4,13 +4,13 @@ package com.example.backendnourpfe.interfacee;
 import com.example.backendnourpfe.classes.*;
 import org.springframework.http.ResponseEntity;
 
-import javax.management.ServiceNotFoundException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public interface UtlisateurInterface {
-   // public Utilisateur affecterAdresse(Long utilisateurId, Long adresseId);
+
    public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId);
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur);
     public boolean checkEmailExists(String email);

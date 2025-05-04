@@ -39,6 +39,10 @@ public class SecurityConfiguration {
             "/message/**",
             "/payment/**",
             "/ws/**",
+            "/publications/**",
+            "/commentaires/**",
+            "/notification/**"
+
 
 
 

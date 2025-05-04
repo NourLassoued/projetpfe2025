@@ -1,9 +1,11 @@
 package com.example.backendnourpfe.Controlleur;
 
+import com.example.backendnourpfe.Respository.DemandeRepository;
 import com.example.backendnourpfe.Respository.PostulationRepository;
 import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.Postulation;
 
+import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.DemandeService;
 import com.example.backendnourpfe.service.PostulationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,15 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RequestMapping("/demandes")
 public class DemandeController {
-@Autowired
+    @Autowired
+    private DemandeRepository demandeRepository;
+    @Autowired
     private DemandeService demandeService;
     @Autowired
     private PostulationRepository postulationRepository;
     @Autowired
     private PostulationService postulationService;
+
     @DeleteMapping("deleteDemande/{idDemande}")
     public void deleteDemande(@PathVariable Long idDemande) {
         demandeService.deleteDemande(idDemande);
@@ -39,7 +44,6 @@ public class DemandeController {
             @RequestBody Demande demandeDetails) {
 
 
-
         try {
             Demande updatedDemande = demandeService.updateDemande(id, demandeDetails);
             return ResponseEntity.ok(updatedDemande);
@@ -48,7 +52,6 @@ public class DemandeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);  // Return a bad request status
         }
     }
-
 
 
     @GetMapping("/{id}")
@@ -64,26 +67,27 @@ public class DemandeController {
         return demandeService.getAllDemandesByUtilisateurId(idUtilisateur);
     }
 
-@GetMapping("/utilisateur/{id}")
-public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long id) {
-    try {
-        List<Demande> demandesDisponibles = demandeService.getAvailableDemandesForUtilisateur(id);
+    @GetMapping("/utilisateur/{id}")
+    public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long id) {
+        try {
+            List<Demande> demandesDisponibles = demandeService.getAvailableDemandesForUtilisateur(id);
 
-        Date today = new Date();
-        List<Demande> demandesFiltrees = demandesDisponibles.stream()
-                .filter(d -> d.getDate() != null && d.getDate().after(today))
-                .toList();
-        if (demandesDisponibles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Date today = new Date();
+            List<Demande> demandesFiltrees = demandesDisponibles.stream()
+                    .filter(d -> d.getDate() != null && d.getDate().after(today))
+                    .toList();
+            if (demandesDisponibles.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(demandesFiltrees, HttpStatus.OK);
+
+        } catch (RuntimeException e) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(demandesFiltrees, HttpStatus.OK);
-
-    } catch (RuntimeException e) {
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-}
+
     @GetMapping("/{id}/demandestermines")
     public ResponseEntity<List<Demande>> getDemandesTerminees(@PathVariable Long id) {
         List<Demande> demandesTerminees = demandeService.getAllDemandesByUtilisateurIdTerminees(id);
@@ -95,16 +99,19 @@ public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long i
         List<Demande> demandes = demandeService.getAllDemandesByUtilisateurIddDateBefore(id);
         return ResponseEntity.ok(demandes);
     }
+
     @GetMapping("/{idDemande}/postulations")
     public ResponseEntity<List<Postulation>> getPostulationsByDemande(@PathVariable Long idDemande) {
         List<Postulation> postulations = postulationRepository.findByDemande_IdDemande(idDemande);
         return ResponseEntity.ok(postulations);
     }
+
     @GetMapping("/{id}/postulationsutlisateure")
     public ResponseEntity<List<Postulation>> getPostulationsByPrestataire(@PathVariable Long id) {
         List<Postulation> postulations = postulationService.getPostulationsByPrestataire(id);
         return ResponseEntity.ok(postulations);
     }
+
     @PutMapping("/updatePostulation/{id}")
     public ResponseEntity<Postulation> updatePostulation(
             @PathVariable Long id,
@@ -117,6 +124,7 @@ public ResponseEntity<List<Demande>> getDemandesDisponibles(@PathVariable Long i
             return ResponseEntity.status(404).body(null);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePostulation(@PathVariable Long id) {
         try {

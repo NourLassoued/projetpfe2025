@@ -65,6 +65,7 @@ public class Utilisateur  implements UserDetails  {
     @ElementCollection
 
     private List<String> competence;
+    @Nullable
     @JsonProperty("solde")
 
     private Float solde;
@@ -90,11 +91,11 @@ public class Utilisateur  implements UserDetails  {
     @JsonIgnore
     @OneToMany(mappedBy = "particulier")
     private List<Payment> paymentsAsParticulier;
-@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "prestataire")
     private List<Payment> paymentsAsPrestataire;
 
-@JsonIgnore
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private ForgotPassword forgotPassword;
     @JsonIgnore
@@ -158,9 +159,19 @@ public class Utilisateur  implements UserDetails  {
     @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private List<Message> messagesEnvoyes;
-@JsonIgnore
+      @JsonIgnore
     @OneToMany(mappedBy = "receiver")
     private List<Message> messagesRecus;
+      @JsonIgnore
+    @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL)
+    private List<Publication> publications;
+@JsonIgnore
+
+    @OneToMany(mappedBy = "particulier", cascade = CascadeType.ALL)
+    private List<Commentaire> commentaires;
+@JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
         this.email = email;
@@ -183,6 +194,8 @@ public class Utilisateur  implements UserDetails  {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return  List.of(new SimpleGrantedAuthority(role.name()));
     }
+
+
 
     @Override
     public String getPassword() {

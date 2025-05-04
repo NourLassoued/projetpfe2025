@@ -22,45 +22,7 @@ public class FileControlleur {
 
     private static final String UPLOAD_DIR = "C:/xampppidev/htdocs/img/";
 
-    /*
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
-            return new ResponseEntity<>("The file is empty", HttpStatus.BAD_REQUEST);
-        }
 
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
-            Files.createDirectories(path.getParent());
-            Files.write(path, bytes);
-            return new ResponseEntity<>("File uploaded successfully: " + file.getOriginalFilename(), HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>("Failed to upload file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
-    */
-    /*
-    @GetMapping("/get-image/{filename:.+}")
-    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
-        try {
-            Path file = Paths.get(UPLOAD_DIR).resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
-
-            if (resource.exists() && resource.isReadable()) {
-                return ResponseEntity.ok()
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(resource);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(null); // or return a custom error message
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null); // or return a custom error message
-        }
-    }*/
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
