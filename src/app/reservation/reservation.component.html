@@ -1,125 +1,121 @@
 <app-navbarcompte></app-navbarcompte>
+
 <body>
   <div class="texte">
     <div class="header">
       <a routerLink="/Mesdemandeterminees">
         <i class="fas fa-arrow-left"></i> Retour
       </a>
-      <h1>Réservation de {{ reservations[0]?.prestataire?.nom }}</h1> 
+      <h1>Réservation de {{ reservations[0]?.prestataire?.nom }}</h1>
       <h4>📅 Jours restants : -{{ getDaysRemaining(reservations[0]?.demande?.date) }} jours</h4>
     </div>
   </div>
-  
-
-<div class="container">
-  <div class="content-wrapper">
-    <!-- Carte de la demande -->
-    <div *ngIf="reservations.length > 0" class="task-card">
-        <img *ngIf="serviceImageUrls[0]" [src]="serviceImageUrls[0]" 
-        alt="{{ reservations[0]?.demande?.servicee?.nomservice }}"  
-        class="service-image">
-      <h3>🛠 Service : {{ reservations[0]?.demande?.servicee?.nomservice }}</h3>
-
-      <p><strong>📅 Date de la demande :</strong> {{ reservations[0]?.demande?.date | date:'dd MMM yyyy HH:mm' }}</p>
-      <p><strong>📍 Localisation :</strong> {{ reservations[0]?.demande?.adressedemande?.governoate }}</p>
-      <p><strong>⏳ Durée :</strong> {{ reservations[0]?.demande?.heureTravail }} heures</p>
-      <div class="button-container">
-        <button (click)="annulerReservation(reservations[0].idReservation)" class="box">
-          Annuler la réservation du prestataire
-        </button>
-        <button (click)="ouvrirModal(reservations[0].idReservation)" class="box">
-          Réservation de service terminée
-        </button>     
-       </div>
-      
 
 
-   
-    </div>
-    
-    <!-- Section des prestataires -->
-    <div class="public-discussion">
-     
-      <h3>🧑‍💼 Prestataire</h3>
-      <div class="comment">
-        <div *ngFor="let reservation of reservations ;let i = index" class="reservation-card">
-          <div class="comment-header">
-            <img 
-            *ngIf="prestataireImageUrls[i]" 
-            [src]="prestataireImageUrls[i]" 
-            alt="Image du prestataire" 
-            class="profile-pic">
+  <div class="container">
+    <div class="content-wrapper">
+      <!-- Carte de la demande -->
+      <div *ngIf="reservations.length > 0" class="task-card">
+        <img *ngIf="serviceImageUrls[0]" [src]="serviceImageUrls[0]"
+          alt="{{ reservations[0]?.demande?.servicee?.nomservice }}" class="service-image">
+        <h3>🛠 Service : {{ reservations[0]?.demande?.servicee?.nomservice }}</h3>
+
+        <p><strong>📅 Date de la demande :</strong> {{ reservations[0]?.demande?.date | date:'dd MMM yyyy HH:mm' }}</p>
+        <p><strong>📍 Localisation :</strong> {{ reservations[0]?.demande?.adressedemande?.governoate }}</p>
+        <p><strong>⏳ Durée :</strong> {{ reservations[0]?.demande?.heureTravail }} heures</p>
+        <div class="button-container">
+          <button (click)="annulerReservation(reservations[0].idReservation)" class="box">
+            Annuler la réservation du prestataire
+          </button>
+          <button (click)="ouvrirModal(reservations[0].idReservation)" class="box">
+            Réservation de service terminée
+          </button>
+        </div>
+
+
+
+
+      </div>
+
+      <!-- Section des prestataires -->
+      <div class="public-discussion">
+
+        <h3>🧑‍💼 Prestataire</h3>
+        <div class="comment">
+          <div *ngFor="let reservation of reservations ;let i = index" class="reservation-card">
+            <div class="comment-header">
+              <img *ngIf="prestataireImageUrls[i]" [src]="prestataireImageUrls[i]" alt="Image du prestataire"
+                class="profile-pic">
+            </div>
+
+            <p><strong>Nom :</strong> {{ reservation.prestataire.nom }}</p>
+            <p><strong>Email :</strong> {{ reservation.prestataire.email }}</p>
+            <p><strong>Téléphone :</strong> {{ reservation.prestataire.telephoneNumber }}</p>
+            <button (click)="goToProfile(reservation.prestataire.idUtilisateur)" class="boxx">Voir le profil</button>
+
           </div>
-
-          <p><strong>Nom :</strong> {{ reservation.prestataire.nom }}</p>
-          <p><strong>Email :</strong> {{ reservation.prestataire.email }}</p>
-          <p><strong>Téléphone :</strong> {{ reservation.prestataire.telephoneNumber }}</p>
-          <button (click)="goToProfile(reservation.prestataire.idUtilisateur)" class="boxx">Voir le profil</button>
-
         </div>
       </div>
     </div>
   </div>
-</div><!-- Modal Backdrop -->
-<div class="modal-backdrop" *ngIf="showPaymentModal">
-  <div class="modal">
-    <h2>Choisissez votre mode de paiement</h2>
+  <div class="modal-backdrop" *ngIf="showPaymentModal">
+    <div class="modal">
+      <h2>Choisissez votre mode de paiement</h2>
 
-    <div class="payment-options">
-      <!-- Bloc Espèce -->
-      <div class="payment-option">
-        <div class="icon">
-          <img src="/assets/img/main.png" alt="Espèce" />
-        </div>
-        <button class="payment-button espece" (click)="ouvrirModalEspace()">Espèce</button>
-        <div class="modal-backdropee" *ngIf="showEspaceForm">
-          <div class="modalee">
-            <h3>Saisissez le montant à payer DE espace:</h3>
-            <input
-              type="number"
-              [(ngModel)]="montantPaiement"
-              placeholder="Montant à payer"
-              class="payment-input"
-              min="0"
-            />
-            <div class="button-group">
-              <button (click)="payerAvecEspace()" class="pay-button">Payer</button>
-              <button (click)="fermerEspaceForm()" class="cancele-button">Annuler</button>
+      <div class="payment-options">
+
+        <div class="payment-option">
+          <div class="icon">
+            <img src="/assets/img/cheque.png" alt="Espèce" />
+          </div>
+          <button class="payment-button espece" (click)="ouvrirModalEspace()">Espèce</button>
+
+
+
+          <div class="modal-backdropee" *ngIf="showEspaceForm">
+            <div class="modalee">
+              <h3>👉 Saisissez le montant à payer en espèces:</h3>
+              <input type="number" [(ngModel)]="montantPaiement" placeholder="Montant à payer" class="payment-input"
+                min="0" />
+              <div class="button-group">
+                <button (click)="payerAvecEspace()" class="pay-button">Payer</button>
+                <button (click)="fermerEspaceForm()" class="cancele-button">Annuler</button>
+              </div>
             </div>
           </div>
+
         </div>
-        
+
+        <!-- Bloc Flouci -->
+        <div class="payment-option">
+          <div class="icon">
+            <img src="/assets/img/flouci.png" alt="Flouci" />
+          </div>
+          <button class="payment-button flouci" (click)="ouvrirModalFlouci()">Application " Flouci "</button>
+
+
+          <div class="modal-backdrope" *ngIf="showFlouciForm">
+            <div class="modale">
+              <h3>👉 Saisissez le montant à payer par virement :</h3>
+              <input type="number" [(ngModel)]="montantPaiement" placeholder="Montant à payer" class="payment-input"
+                min="0" />
+              <div class="button-group">
+                <button (click)="payerAvecFlouci()" class="pay-button">Payer</button>
+                <button (click)="fermerFlouciForm()" class="cancele-button">Annuler</button>
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+
+        </div>
+
       </div>
-
-      <!-- Bloc Flouci -->
-      <div class="payment-option">
-        <div class="icon">
-          <img src="/assets/img/flouci.png" alt="Flouci" />
-        </div>
-        <button class="payment-button flouci" (click)="ouvrirModalFlouci()">Flouci</button>
-
-    
-<div class="modal-backdrope" *ngIf="showFlouciForm">
-  <div class="modale">
-    <h3>Saisissez le montant à payer :</h3>
-    <input
-      type="number"
-      [(ngModel)]="montantPaiement"
-      placeholder="Montant à payer"
-      class="payment-input"
-      min="0"
-    />
-    <div class="button-group">
-      <button (click)="payerAvecFlouci()" class="pay-button">Payer</button>
-      <button (click)="fermerFlouciForm()" class="cancele-button">Annuler</button>
+      <button class="cancelee-button" (click)="fermerEspaceForm()">Annuler</button>
     </div>
   </div>
-</div>
-
-
-
-      </div>
-    </div>
-  </div>
-</div>
 </body>

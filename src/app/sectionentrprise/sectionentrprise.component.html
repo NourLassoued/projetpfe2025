@@ -1,0 +1,25 @@
+
+<div class="container-xxl py-7" id="entreprises">
+  
+    <div class="services-container">
+       
+        <div class="services-list">
+            <button (click)="prevEntreprise()" class="scroll-btn left" [disabled]="currentIndex === 0">
+                <i class="fa fa-angle-left"></i>
+            </button>
+            <div class="category-carde" *ngFor="let entreprise of visibleEntreprises; let i = index">
+                <img [src]="entreprise.safeImageUrl" [alt]="entreprise.nom" *ngIf="entreprise.safeImageUrl" />
+                <div class="category-content">
+                    <h3>{{ entreprise.nomEntreprise }}</h3>
+
+
+                    <button class="discover-btn" (click)="navigateToEntreprise(entreprise.idUtilisateur)">                        Découvrir →</button>
+                </div>
+            </div>
+            <button (click)="nextEntreprise()" class="scroll-btn right" [disabled]="currentIndex + itemsPerPage >= entreprises.length">
+                <i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+
+    </div>
+</div>

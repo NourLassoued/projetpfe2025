@@ -9,6 +9,7 @@
     position: relative;
 }
 .logo {
+  color: #464646;
     font-size: 24px;
     font-weight: bold;
 }
@@ -125,6 +126,96 @@
 
 .middle-btn:hover {
     background-color: #0056b3;
+}
+/* Style global pour la dropdown des notifications */
+.notification-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 15px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Style pour la section quand il n'y a aucune notification */
+.notification-dropdown p {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Style pour les publications non vues */
+.notification-dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style pour chaque publication */
+.notification-dropdown li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Au survol des publications */
+.notification-dropdown li:hover {
+  background-color: #f1f1f1;
+}
+
+/* Style pour le nom de l'entreprise */
+.notification-dropdown li ul {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #555;
+  font-style: italic;
+}
+
+/* Style pour chaque élément de notification */
+.notification-item {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Au survol des notifications */
+.notification-item:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.05);
+}
+
+/* Pour les notifications vides, ajouter un fond spécifique */
+.notification-dropdown .no-notifications {
+  color: #bbb;
+  font-size: 16px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Ajouter des animations pour une meilleure transition */
+.notification-dropdown ul li,
+.notification-item {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .modal {

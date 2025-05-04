@@ -51,7 +51,8 @@ export class InscriptionEntrpriseComponent {
       nom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")], [this.emailAsyncValidator()] ],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], 
+      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8}$")]],
+
       competence: [[]],
       nomEntreprise: ['', Validators.required],
       siret: ['', [Validators.required, Validators.pattern("^[0-9]{14}$")]],
@@ -88,7 +89,7 @@ export class InscriptionEntrpriseComponent {
     this.categorieService.getAllCategories().subscribe(
       (data) => {
         this.categories = data;
-        console.log('Catégories chargées:', this.categories);
+       
         this.categories.forEach((category, index) => {
           this.getImage(category.imageCategorie, index);
         });
@@ -104,7 +105,7 @@ export class InscriptionEntrpriseComponent {
       (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-        console.log(`Image chargée pour la catégorie ${filename}`);
+       
       },
       (error) => {
         console.error('Erreur lors du chargement de l\'image', error);

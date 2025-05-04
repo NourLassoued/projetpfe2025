@@ -30,7 +30,8 @@ export class ComptepartuculierComponent  implements OnInit{
   services: any[] = [];
   demandes: Demande[] = [];
     constructor(private fileService: FileService, 
-      private sanitizer: DomSanitizer, private router:
+      private sanitizer: DomSanitizer,
+       private router:
        Router,private categorieService:CategorieService,
       private service:ServiceeService,
       private demandeService: DemandeService) {}

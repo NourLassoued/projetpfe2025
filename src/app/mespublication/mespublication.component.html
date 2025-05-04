@@ -1,0 +1,52 @@
+<app-navbarcompte></app-navbarcompte>
+<body>
+    <div class="container">
+      <aside class="sidebar">
+        <ul>
+          <ul>
+            <li routerLink="/Comptentreprise">📌Tableau de bord</li>
+            <li routerLink="/mes-publications">📰 Mes publications</li>
+            <li routerLink="/commentaires-recus">🧑‍💬 Commentaires reçus</li>
+
+            <li routerLink="/Chat">💬 Mes messages</li>
+
+            <li routerLink="">⭐Mes évolutions</li>
+  
+            <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
+          </ul>
+        </ul>
+      </aside>
+      <main class="content">
+        <h2>📰 Mes publications</h2>
+  
+      
+        <div *ngIf="publications.length === 0">
+          <p>Aucune publication trouvée.</p>
+        </div>
+  
+        <div *ngIf="publications.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date de publication</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let publication of publications">
+                <td>{{ publication.titre }}</td>
+                <td>{{ publication.description }}</td>
+                <td>{{ publication.datePublication | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                    <button *ngIf="publication.id" (click)="supprimerPublication(publication.id)" class="btn-supprimer"> <i class="fas fa-trash-alt"></i> Supprimer</button> <!-- Bouton de suppression -->
+                  </td>
+                  
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>

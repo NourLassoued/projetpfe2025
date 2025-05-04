@@ -36,15 +36,12 @@
                 <a href="#" (click)="openModal()" class="forgot-password">Mot de passe oublié ?</a>
     
                 <div class="divider">
-                    <hr> <span>ou</span> <hr>
+                   
                 </div>
     
-                <p>Se connecter avec</p>
-                <div class="social-login">
-                    <button class="social-btn">
-                        <i class="fab fa-google"></i> 
-                    </button>
-                </div>
+               
+              
+               
                 <div *ngIf="notificationMessage" class="alert alert-info mt-3">
                     {{ notificationMessage }}
                   </div>
@@ -54,7 +51,7 @@
         <!-- Bloc Inscription -->
         <div class="register-box">
             <h1>Vous êtes nouveau ici ?</h1>
-            <button routerLink="/inscription"  class="btn-register">Rejoindre Ring Twice</button>
+            <button routerLink="/inscription"  class="btn-register">Rejoindre SOS Service Tunisie</button>
         </div>
     </div>
     <div class="modal" *ngIf="showModal">

@@ -9,7 +9,7 @@ import { environment } from '../environment';
 })
 export class MessageService {
   [x: string]: any;
-  //private apiUrl = 'http://localhost:8088/nour/message'; 
+ 
    private apiUrl = `${environment.apiUrl}/message`;
 
   constructor(private http: HttpClient) {}

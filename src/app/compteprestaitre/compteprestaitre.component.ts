@@ -9,7 +9,6 @@ import { UtilisateurService } from '../service/utilisateur.service';
 import { Postulation } from 'src/models/Postulation';
 
 import { ToastrService } from 'ngx-toastr';
-import { WebsocketServiceService } from '../service/websocket-service.service';
 @Component({
   selector: 'app-compteprestaitre',
   templateUrl: './compteprestaitre.component.html',
@@ -87,14 +86,14 @@ export class CompteprestaitreComponent implements OnInit {
             'Erreur lors de la récupération des demandes disponibles',
             error
           );
-          this.demandesDisponibles = []; // Si erreur, on initialise demandesDisponibles en tableau vide
+          this.demandesDisponibles = []; 
         }
       );
     } else {
       console.warn(
         'Impossible de récupérer les demandes : utilisateur non identifié !'
       );
-      this.demandesDisponibles = []; // Si l'utilisateur n'est pas trouvé, initialisation de demandesDisponibles
+      this.demandesDisponibles = []; 
     }
   }
   toggleDetails(demandeId?: number): void {

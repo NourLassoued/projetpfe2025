@@ -101,6 +101,13 @@ import { MeunuadminComponent } from '../backadmin/meunuadmin/meunuadmin.componen
 import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
 import { EspacereservationComponent } from '../backadmin/espacereservation/espacereservation.component';
 import { PaymentComponent } from './payment/payment.component';
+import { MesrevunesComponent } from './mesrevunes/mesrevunes.component';
+import { MestransactionsComponent } from './mestransactions/mestransactions.component';
+import { SectionentrpriseComponent } from './sectionentrprise/sectionentrprise.component';
+import { EntrepriseconnecteComponent } from './entrepriseconnecte/entrepriseconnecte.component';
+import { ComptentrepriseComponent } from './comptentreprise/comptentreprise.component';
+import { MespublicationComponent } from './mespublication/mespublication.component';
+import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
 
 
 
@@ -171,6 +178,13 @@ import { PaymentComponent } from './payment/payment.component';
     ScorebadageComponent,
     EspacereservationComponent,
     PaymentComponent,
+    MesrevunesComponent,
+    MestransactionsComponent,
+    SectionentrpriseComponent,
+    EntrepriseconnecteComponent,
+    ComptentrepriseComponent,
+    MespublicationComponent,
+    ConsulterentrpriseComponent,
  
    
 

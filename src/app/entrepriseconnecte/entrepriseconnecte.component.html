@@ -1,0 +1,115 @@
+<body>
+   <app-navbar> </app-navbar>
+    <div class="container">
+      <div class="sidebar">
+          <div id="profile-container">
+              <div class="image-wrapper">
+                  <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                 
+                  <div class="rating-info">
+                   
+                 
+                   
+                    <div class="experience">
+                      
+                        <strong>🎖️{{ user?.workExperience }} ans</strong>
+                        <p> d'expérience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+          <!-- Boutons de contact -->
+          <div class="button-container">
+              <button (click)="afficherNumero()">
+                  Contacter
+              </button>
+             
+          </div>
+      </div>
+      <div class="notification-box" *ngIf="showNotification">
+        <div class="user-card">
+            <div class="profile-container">
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+            </div>
+            <div class="user-info">
+                <h3>{{ user?.nom || 'Utilisateur' }}</h3>
+                <p>Pour toutes questions</p>
+            </div>
+        </div>
+     
+        
+        <div class="contact-buttons">
+          <button class="contact-btn message-btn">
+              <i class="fas fa-envelope"></i> Message
+          </button>
+          <a [href]="'tel:' + user?.telephoneNumber" class="contact-btn phone-btn">
+              <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
+          </a>
+      </div>
+      
+    
+        <button  class="close-btn" (click)="closeNotification()">Fermer</button>
+    </div>
+    
+    
+      
+      
+    
+      <!-- Contenu du profil -->
+      <div class="container-profile">
+          <!-- Nom et vérifications -->
+          <div class="section">
+              <label>{{ user?.nomEntreprise }}</label>
+              <div class="verification-container">
+                  <span class="verification-item">
+                      <i class="fa-solid fa-circle-check"></i>Entreprise vérifiée
+                  </span>
+                  <span class="verification-item">
+                      <i class="fa-solid fa-circle-check"></i> Numéro de téléphone vérifié
+                  </span>
+              </div>
+          </div>
+       
+          <div class="section">
+            <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>
+        </div>
+      
+          <!-- Localisation -->
+          <div class="section">
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              {{ user.adresse?.governoate }}
+          </div>
+        
+    
+    
+          <!-- Compétences -->
+          
+          <div class="section">
+            <label><i class="fa-solid fa-briefcase"></i> Notre service</label>
+              <div class="competences-container">
+                  <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
+                      <p *ngIf="servicee?.nomservice">
+                          {{ servicee.nomservice }}
+                      </p>
+                  </div>
+              </div>
+          </div>
+    <div class="content">
+          <!-- À propos -->
+          <div class="section">
+            
+            <h3>Qui sommes-nous</h3>
+              <p>{{ user?.description }}</p>
+          </div>
+    </div>
+          <!-- Disponibilités -->
+          
+
+  </div>
+  
+</div>
+  
+    </body>
+      <!-- Pied de page -->
+      <app-footer></app-footer>

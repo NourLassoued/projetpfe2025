@@ -80,5 +80,9 @@ export class UtilisateurService {
     const url = `${this.apiUrl}/postuler/${demandeId}/${utilisateurId}`;
     return this.http.post<any>(url, postulation);
   }
+    getPrestatairesCompatibles(demandeId: number): Observable<Utilisateur[]> {
+      return this.http.get<Utilisateur[]>(`${this.apiUrl}/${demandeId}/prestataires-compatibles`);
+    }
+  
 }
 

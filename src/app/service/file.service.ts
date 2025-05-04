@@ -10,7 +10,7 @@ export class FileService {
 
   private profileImageSubject = new BehaviorSubject<string | null>(null);
   profileImage$ = this.profileImageSubject.asObservable();
-  //private apiUrl = 'http://localhost:8088/nour/api/v1/auth'; 
+
    private apiUrl = `${environment.apiUrl}/api/v1/auth`;
 
 

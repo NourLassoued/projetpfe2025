@@ -96,7 +96,7 @@ authenticate(): void {
                } else if (decodedToken.role === 'ADMINISTRATEUR') { 
                 this.router.navigate(['/Admindashboard']); 
                } else if (decodedToken.role === 'ENTREPRISE') { 
-                  this.router.navigate(['/Compteprestaitre']);}
+                  this.router.navigate(['/Comptentreprise']);}
               
               else {
                 this.router.navigate(['/Front']);

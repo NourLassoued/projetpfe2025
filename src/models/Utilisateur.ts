@@ -1,9 +1,11 @@
 import { Adresse } from "./Adresse";
 import { Avis } from "./Avis";
+import { Commentaire } from "./Commentaire";
 import { Disponibilite } from "./Disponibilite";
 import { Message } from "./Message";
 import { Payment } from "./Payment";
 import { Postulation } from "./Postulation";
+import { Publication } from "./Publication";
 import { Servicee } from "./Servicee";
 import { StatusUtilisateur } from "./StatusUtilisateur";
 import { UserRole } from "./UserRole";
@@ -46,6 +48,9 @@ export class Utilisateur {
     messagesRecus?: Message[];
     paymentsAsParticulier?: Payment[];  
     paymentsAsPrestataire?: Payment[]; 
+    publications?: Publication[];
+    commentaires?: Commentaire[];
+    notifications?: Notification[];
   }
 
   

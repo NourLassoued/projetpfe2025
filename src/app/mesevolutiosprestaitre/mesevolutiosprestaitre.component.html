@@ -1,29 +1,22 @@
+<app-navbarcompte></app-navbarcompte>
 
 <body>
-    <app-navbarcompte></app-navbarcompte>
-    
-    
-    
-    
-       
-        <div class="container">
-          <aside class="sidebar">
-            <ul>
-                <ul>
-                    <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
-                    <li routerLink="/Postulation"> 📩 Mes postulations</li>
-     
-                    
-                   
-                    <li routerLink="/reservationprestataire">📅 Mes réservations</li>
-                    <li>📜Mon historique</li>
-            
-                    <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
-                    <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-                </ul>
-                
-            </ul>
-        </aside>
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <ul>
+          <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
+          <li routerLink="/Postulation">📩 Mes postulations</li>
+
+          <li routerLink="/reservationprestataire">📅 Mes réservations</li>
+          <li>📜Mon historique</li>
+
+          <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
+          <li routerLink="/Mesrevunes">💰 Mes revenus</li>
+          <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
+        </ul>
+      </ul>
+    </aside>
     
       
             <main class="content">
@@ -43,7 +36,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let avis of avisList">
+                      <tr *ngFor="let avis of paginatedAvis">
                         <td>
                           <!-- Affichage des étoiles en fonction de la note -->
                           
@@ -69,5 +62,14 @@
                   <p>Aucun avis trouvé</p>
                 </ng-template>
               </main>
+            
             </div>
+            <div class="pagination">
+              <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Précédent</button>
+            
+              <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+            
+              <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Suivant</button>
+            </div>
+            
           </body>

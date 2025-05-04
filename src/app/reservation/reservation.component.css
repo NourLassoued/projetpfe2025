@@ -477,6 +477,7 @@ color: black;
   padding: 12px;
   font-size: 16px;
   border: none;
+  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
   color: white;
@@ -486,6 +487,7 @@ color: black;
 
 
 .payment-button.espece {
+
   background-color: #4CAF50;
 }
 
@@ -494,6 +496,7 @@ color: black;
 }
 
 .buttone {
+  font-weight: bold;
   background-color: #e74c3c;
   color: white;
   border: none;
@@ -533,12 +536,14 @@ color: black;
   background-color: #4CAF50;
   width: 100px;
   color: white;
+  font-weight: bold;
 
 }
 
 .cancele-button {
   background-color: #f44336;
   width: 100px;
+  font-weight: bold;
   color: white;
   
 
@@ -601,4 +606,13 @@ color: black;
  
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
+}
+
+.cancelee-button {
+  background-color: #f44336;
+  width: 140px;
+  color: white;
+  font-weight: bold;
+  
+
 }

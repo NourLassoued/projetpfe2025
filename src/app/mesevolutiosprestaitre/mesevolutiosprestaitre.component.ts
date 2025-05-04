@@ -11,6 +11,8 @@ import { Avis } from 'src/models/Avis';
   styleUrls: ['./mesevolutiosprestaitre.component.css']
 })
 export class MesevolutiosprestaitreComponent {
+  currentPage: number = 1;
+itemsPerPage: number = 6;
    avisList: Avis[] = []; 
    showDemandes = false;
    scoreMoyen: number = 0;
@@ -105,7 +107,15 @@ export class MesevolutiosprestaitreComponent {
       }
     );
   }
-
+  get paginatedAvis(): Avis[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.avisList.slice(start, end);
+  }
+  
+  get totalPages(): number {
+    return Math.ceil(this.avisList.length / this.itemsPerPage);
+  }
   }
   
 

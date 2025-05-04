@@ -1,23 +1,21 @@
+<app-navbarcompte></app-navbarcompte>
+
 <body>
-    <app-navbarcompte></app-navbarcompte>
-    
-    <div class="container">
-      <aside class="sidebar">
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
         <ul>
-            <ul>
-                <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
-                <li routerLink="/Postulation"> 📩 Mes postulations</li>
- 
-                
-               
-                <li routerLink="/reservationprestataire">📅 Mes réservations</li>
-                <li>📜Mon historique</li>
-        
-                <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
-                <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-            </ul>
-            
+          <li routerLink="/Compteprestaitre">📌Tableau de bord</li>
+          <li routerLink="/Postulation">📩 Mes postulations</li>
+
+          <li routerLink="/reservationprestataire">📅 Mes réservations</li>
+          <li>📜Mon historique</li>
+
+          <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
+          <li routerLink="/Mesrevunes">💰 Mes revenus</li>
+          <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
         </ul>
+      </ul>
     </aside>
 
         <main class="content">

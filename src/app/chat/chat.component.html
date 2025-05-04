@@ -61,7 +61,6 @@
               </div>
               
                     </div>
-                    <!-- Message par défaut quand aucune conversation n'est sélectionnée -->
 <div class="default-message" *ngIf="!selectedContactId">
   <div class="icon-container animated-icon">
     <svg class="message-icon pulse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="500px" height="500px">
@@ -98,7 +97,10 @@
                               ({{ nombreAvisMap[selectedContact.idUtilisateur] }} )
                             </span>
                             <br>
-                            <a  *ngIf="selectedContact?.role === 'PRESTATAIRE'"  [routerLink]="['/Profil', selectedContact?.idUtilisateur]" class="voir-profil">Voir le profil</a>
+                            <a *ngIf="selectedContact?.role === 'PRESTATAIRE'"  [routerLink]="['/Profil', selectedContact?.idUtilisateur]" class="voir-profil">Voir le profil</a>
+                            <a *ngIf="selectedContact?.role === 'ENTREPRISE'" [routerLink]="['/ConsulterEntreprise', '175']" class="voir-profil">
+                              Voir le profil
+                            </a>
                           </div>
                         </div>
                    

@@ -1,5 +1,5 @@
 <nav class="navbar">
-    <div class="logo">PrestatairePro</div>
+    <div class="logo">SOS service Tunisie</div>
     <button  (click)="showSkillModal()" class="middle-btn" *ngIf="userRole === 'PARTICULIER'" ><i class="fa fa-plus"></i> Demander un service</button>
     <div    (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
         <div class="modal-content"  >
@@ -56,18 +56,34 @@
         <i class="fas fa-envelope"></i>
         <span *ngIf="newMessageCount > 0" class="badge">{{ newMessageCount }}</span>
       </a>
-      <!-- Icône de notification -->
+
 <div class="notification-container">
   <a href="#" (click)="toggleNotification()" class="notification-icon">
     <i class="fas fa-bell"></i>
     <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
   </a>
 
-  <!-- Liste déroulante des notifications -->
   <div *ngIf="showNotification" class="notification-dropdown">
     <div *ngIf="notifications.length === 0">
-      <p>Aucune notification</p>
+   
     </div>
+    <ul *ngIf="unseenPublications.length > 0">
+      <li *ngFor="let publication of unseenPublications">
+        {{ publication.titre }}
+        <ul *ngIf="publication.entreprise && publication.entreprise.idUtilisateur">
+          <li>
+         
+            <a (click)="goToConsulterEntreprise(publication)">
+              {{ publication.entreprise.nomEntreprise }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    
+    
+    
+    
     <div *ngFor="let message of notifications"   (click)="goToComptePrestataireAvecMessage(message)" class="notification-item">
       {{ message }}
     </div>
@@ -89,7 +105,7 @@
 
     <div class="profile-menu" id="profile-menu"   [ngClass]="{'active': isMenuOpen}">
         <ul>
-          <li [routerLink]="userRole === 'PRESTATAIRE' ? '/Compteprestaitre' : userRole === 'ENTREPRISE' ? '/Compteprestaitre' : '/Compteparticulier'">
+          <li [routerLink]="userRole === 'PRESTATAIRE' ? '/Compteprestaitre' : userRole === 'ENTREPRISE' ? '/Comptentreprise' : '/Compteparticulier'">
             📌 Tableau de bord 
           </li>
             <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : userRole === 'ENTREPRISE' ? '/Profileentreprise' : '/Profileparticulier'">👤 Voir mon profil</li>

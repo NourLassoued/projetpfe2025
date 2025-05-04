@@ -1,0 +1,116 @@
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 40px;
+    border-radius: 20px;
+  
+ 
+    max-width: 90%;
+}
+
+/* Conteneur principal */
+.services-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.services-list {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.category-carde {
+    position: relative;
+    width: 320px;
+    height: 300px;
+    border-radius: 24px; 
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.category-carde:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    border-radius: 24px; 
+
+}
+
+.category-carde img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(80%);
+    transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+.category-carde:hover img {
+    transform: scale(1.05);
+    filter: brightness(100%);
+}
+
+
+.category-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent 90%);
+    color: #fff;
+}
+
+.category-content h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.category-content p {
+    margin: 10px 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+
+.discover-btn {
+   background-color:rgb(255, 254, 254);
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    color: #030303;
+    border-radius: 30px;
+    text-decoration: none;
+  
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+
+
+.scroll-btn {
+    background-color:rgb(255, 255, 255);
+    color: rgb(1, 1, 1);
+    border: none;
+    font-size: 22px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+
+.scroll-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

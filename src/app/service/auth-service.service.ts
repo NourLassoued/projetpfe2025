@@ -13,7 +13,7 @@ export class AuthServiceService {
   public userSubject: BehaviorSubject<Utilisateur | null>;
   public user: Observable<Utilisateur | null>;
   isconn: any=false;
- // private baseUrl = 'http://localhost:8088/nour/api/v1/auth';
+
 private baseUrl = `${environment.apiUrl}/api/v1/auth`
 
   constructor(private http: HttpClient, private router: Router) {

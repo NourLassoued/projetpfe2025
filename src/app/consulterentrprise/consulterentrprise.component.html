@@ -1,0 +1,233 @@
+<app-navbarcompte></app-navbarcompte>
+<body>
+<div class="container">
+    <!-- Sidebar contenant l'image de profil -->
+    <div class="sidebar">
+        <div id="profile-container">
+            <div class="image-wrapper">
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+             
+                <!-- Bloc des informations de notation -->
+                <div class="rating-info">
+                    <div>
+                        <strong>{{ avisList.length }}</strong> <span>⭐</span>
+                        <p>Évaluations</p>
+                    </div>
+                    <div >
+                        <strong >{{ getAverageRating() }}</strong> <span>❤️</span>
+                        <p class="rating-text">Note sur 5</p>
+                    </div>
+                   
+                    <div class="experience">
+                      
+                        <strong>🎖️{{ user?.workExperience }} ans</strong>
+                        <p> d'expérience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="button-container">
+            <button (click)="afficherNumero()">
+                Contacter
+            </button>
+            <button>
+              <i class="fa-solid fa-star" (click)="ouvrirModal(user)"></i> Ajouter un avis
+            </button>
+        </div>
+    </div>
+          <!-- MODAL D’AVIS -->
+<div class="modal" [class.show]="showModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Donner un avis sur {{ user?.prestataire?.nom }}</h2>
+    
+    <label>Note (sur 5) :</label>
+    <div class="stars">
+      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+        <!-- Icône d'étoile pleine (si star <= avis.note) -->
+        <svg
+          *ngIf="star <= (avis?.note || 0)"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-4 w-4 cursor-pointer text-yellow-400"
+          (click)="setNote(star)">
+          <path d="M9.049 2.927C9.3 2.3 10.7 2.3 10.951 2.927l1.11 2.24c.19.386.573.661 1.016.744l2.47.358c.358.052.692.318.819.663.248.445.158.99-.217 1.267l-1.786 1.738c-.347.338-.497.832-.414 1.305l.445 2.475c.062.359-.167.724-.529.832-.363.108-.75-.053-.976-.348l-2.217-1.17a1.09 1.09 0 0 0-1.072 0l-2.217 1.17c-.226.295-.613.456-.976.348-.363-.108-.591-.473-.529-.832l.445-2.475a1.09 1.09 0 0 0-.414-1.305l-1.786-1.738c-.375-.277-.465-.822-.217-1.267.127-.345.461-.611.819-.663l2.47-.358c.444-.083.826-.358 1.016-.744l1.11-2.24z"/>
+        </svg>
+    
+        <!-- Icône d'étoile vide (si star > avis.note) -->
+        <svg
+          *ngIf="star > (avis?.note || 0)"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-4 w-4 cursor-pointer text-gray-300"
+          (click)="setNote(star)">
+          <path d="M9.049 2.927C9.3 2.3 10.7 2.3 10.951 2.927l1.11 2.24c.19.386.573.661 1.016.744l2.47.358c.358.052.692.318.819.663.248.445.158.99-.217 1.267l-1.786 1.738c-.347.338-.497.832-.414 1.305l.445 2.475c.062.359-.167.724-.529.832-.363.108-.75-.053-.976-.348l-2.217-1.17a1.09 1.09 0 0 0-1.072 0l-2.217 1.17c-.226.295-.613.456-.976.348-.363-.108-.591-.473-.529-.832l.445-2.475a1.09 1.09 0 0 0-.414-1.305l-1.786-1.738c-.375-.277-.465-.822-.217-1.267.127-.345.461-.611.819-.663l2.47-.358c.444-.083.826-.358 1.016-.744l1.11-2.24z"/>
+        </svg>
+      </ng-container>
+    </div>
+    
+    
+    
+
+    <label>Commentaire :</label>
+    <textarea [(ngModel)]="avis.commentaire"></textarea>
+<br>
+
+    <button class="btnenvoyer" (click)="envoyerAvis()">✅ Envoyer</button>
+  </div>
+</div>
+
+    
+    <div class="notification-box" *ngIf="showNotification">
+      <div class="user-card">
+          <div class="profile-container">
+              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+          </div>
+          <div class="user-info">
+              <h3>{{ user?.nom || 'Utilisateur' }}</h3>
+              <p>Pour toutes questions</p>
+          </div>
+      </div>
+   
+      
+      <div class="contact-buttons">
+        <button class="contact-btn message-btn">
+            <i class="fas fa-envelope"></i> Message
+        </button>
+        
+        <a [href]="'tel:' + user?.telephoneNumber" class="contact-btn phone-btn">
+            <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
+        </a>
+    </div>
+    <div class="message-form">
+      <textarea [(ngModel)]="contenuMessage" placeholder="📧 Écrivez votre message ici..." rows="3"></textarea>
+      <button class="contact-btn send-btn" (click)="envoyerMessage()">
+        <i class="fas fa-paper-plane"></i> Envoyer
+      </button>
+    </div>
+    
+  
+      <button  class="close-btn" (click)="closeNotification()">Fermer</button>
+  </div>
+  
+  
+    
+    
+  
+ 
+    <div class="container-profile">
+     
+        <div class="section">
+          <div *ngIf="getAverageRating() >= 4.5" class="badge-container">
+            <h6 class="badgebg-succes">
+              <i class="fas fa-heart me-2"></i> Top Prestataire
+            </h6>
+          </div>
+            <label>{{ user?.nom }}</label>
+           
+            <div class="verification-container">
+                <span class="verification-item">
+                    <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
+                </span>
+                <span class="verification-item">
+                    <i class="fa-solid fa-circle-check"></i> Numéro de téléphone vérifié
+                </span>
+            </div>
+        </div>
+  
+       
+        <div class="section">
+            <i class="fas fa-map-marker-alt location-icon"></i>
+            {{ user?.adressee.governoate }}
+        </div>
+        <div class="section">
+        <label>{{user?.nomEntreprise}}</label>
+      </div>
+   
+      <div class="section">
+        <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>
+      </div>
+    
+        
+        <div class="section">
+            <label>💼 Mes compétences</label>
+            <div class="competences-container">
+                <div class="competence" *ngFor="let servicee of user?.competence">
+                    <p>{{ servicee }}</p> 
+                
+                </div>
+            </div>
+        </div>
+  <div class="content">
+
+        <div class="section">
+          
+            <h3>À propos de moi</h3>
+            <p>{{ user?.description }}</p>
+        </div>
+  </div>
+         <div class="content">
+      
+         </div>
+      
+        <div class="content">
+            <div class="section">
+              <label class="sectionn">Avis clients</label>
+          
+           
+              <div class="rating">
+                ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
+              </div>
+          
+         
+              <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
+                <span>{{ note }}★</span>
+                <div class="bar">
+                  <div class="bar-fill" [style.width.%]="getRatingPercentage(note)"></div>
+                </div>
+                <span>{{ getRatingCount(note) }}</span>
+              </div>
+          
+            
+              <div class="reviews">
+                <div class="review-card" *ngFor="let avis of avisAffiches">
+                  <img
+                    *ngIf="avis.utilisateur?.image"
+                    [src]="avis.utilisateur?.image"
+                    alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
+                    class="user-image"
+                  />
+                  <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+          
+                  <div class="review-header">
+                    <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
+                  </div>
+          
+               
+                  <div class="stars">
+                    <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
+                      ★
+                    </ng-container>
+                  </div>
+          
+                  <div class="review-text">
+                    {{ avis.commentaire }}
+                  </div>
+                </div>
+              </div>
+          
+              
+              <div class="navigation-buttons">
+                <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
+                <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant ➡</button>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      
+  <app-footer></app-footer>
+  </body>

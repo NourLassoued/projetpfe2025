@@ -9,7 +9,6 @@ import { environment } from '../environment';
 })
 export class ServiceeService {
 
-  //private apiUrl = 'http://localhost:8088/nour/services'; // Remplace par l'URL de ton backend
  private apiUrl = `${environment.apiUrl}/services`;
   constructor(private http: HttpClient) {}
 
@@ -46,7 +45,6 @@ export class ServiceeService {
   getUtilisateursByServiceOrderedByRating(serviceId: number): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(`${this.apiUrl}/par-service/${serviceId}/sorted-by-rating`);
   }
-
 
   getAllServicesByCategorie(categorieId: number): Observable<Servicee[]> {
     return this.http.get<Servicee[]>(`${this.apiUrl}/categorie/${categorieId}`);

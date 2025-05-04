@@ -1,0 +1,561 @@
+body {
+    font-family: Arial, sans-serif;
+ 
+    margin: 0;
+    padding: 0;
+    height: 500px;
+    
+}
+
+.container {
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px; 
+    padding: 20px;
+    margin-right: 200px;
+   
+}
+.container-profile {
+    flex: 2;
+    background-color: #fcf9f4;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+  
+    padding: 18px;
+    width: 1500px;
+    background-color: #fcf9f4;
+    border-radius: 20px;
+    text-align: center;
+    height: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.section label {
+    font-size: 18px;
+    margin: 10px 0;
+   margin-right: 70px;
+    font-weight: bold;
+    color:  rgb(87, 83, 83);
+
+}
+.sidebar p {
+    color: #ff9800;
+    font-weight: bold;
+}
+.sidebar button {
+    background: #218c64; 
+    border: none;
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: white;
+}
+.content {
+    flex-grow: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 35px;
+    width: 800px;
+    margin-left: 40px;
+    
+}
+.competences-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; /* Espace entre les compétences */
+   
+  
+    
+}
+.competences-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content:flex-start;
+    margin-left: 50px;
+    margin-bottom: 20px
+  }
+.competence {
+    background: #dbd8d8;
+    border-radius: 20px;
+    padding: 10px 20px; /* Espace autour du texte */
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    text-align: center; /* Aligne le texte à l'intérieur de <p> au centre */
+    border: 1px solid #ddd;
+    height: 25px; /* Hauteur uniforme */
+    min-width: 80px; /* Largeur minimale */
+    font-weight: bold;
+}
+.competence p {
+  
+
+  margin-top: 20px;
+    padding: 0; 
+  
+}
+.competence li {
+  display: flex;
+  justify-content: space-between; /* Espace entre le texte et le bouton */
+  align-items: center; /* Alignement vertical */
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Séparation des lignes */
+}
+.profile-info {
+    margin-top: 10px;
+   
+}
+
+.rating p{
+    font-size: 15px;
+}
+
+.price {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color:  #f3f1f0 ;
+    color: rgb(87, 83, 83);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.comptencee {
+    position: absolute;
+   
+   margin-left: 50px;
+    background-color:  #d0ccca ;
+   color:  rgb(74, 71, 71);
+    padding: 5px 10px;
+    border-radius: 20px;
+   
+   }
+   .comptencee p{
+    margin-top: 10px;
+    text-align: center;
+   }
+   .competences-container {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px;
+    margin-left: 50px; 
+  }
+  
+
+
+
+
+.rating-info {
+    position: absolute;
+    bottom: 0;
+    width:300px;
+    border-radius: 15px;
+    background:  #f3f1f0   ;
+    margin-left: 10px;
+ 
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 14px;
+}
+.rating-info div {
+    text-align: center;
+  
+}
+.rating {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+.rating-info strong {
+    font-size: 16px;
+    color: rgb(87, 83, 83);
+   
+}
+
+.rating-info span {
+    font-size: 18px;
+    font-weight: bold
+}
+
+ h3 {
+    font-size: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    color: #555;
+   
+  
+}
+
+
+#profile-container {
+    width: 320px;
+    height: 380px;
+    margin: auto;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  #profile-icon {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    cursor: pointer;
+   
+ 
+  }
+  
+.profile-menu.active {
+    display: block;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.profile-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.stars {
+    color: gold;
+    font-size: 20px;
+} .bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+}
+.bar-container span {
+    min-width: 30px;
+}
+.bar {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #EAEAEA;
+    margin: 0 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+.bar-fill {
+    height: 100%;
+    background-color: rgb(255, 248, 105);
+    width: 100%;
+}
+.reviews {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+.review-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+}
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+   
+}
+.review-text {
+    margin-top: 10px;
+}
+.rating {
+    font-size: 18px;
+    font-weight: bold;
+}
+.user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.section{
+    margin-right: 10px;
+}
+
+.section p{
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color:  rgb(87, 83, 83);
+ 
+}
+.location-icon  {
+    font-size: 18px;
+    color: gray;
+ 
+}
+.user-info-container {
+    display: flex;
+    gap: 496px; /* Espacement entre les éléments */
+    flex-wrap: wrap; /* Permet le retour à la ligne si l'espace est insuffisant */
+    align-items: center; /* Aligne les éléments verticalement */
+  }
+  
+  .user-info-container label {
+    
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    white-space: nowrap; /* Empêche les éléments d'être coupés */
+  }
+  .verification-container {
+    margin-left: 550px;
+    display: flex;
+    flex-direction: column; /* Affichage en colonne */
+    gap: 2px; /* Espacement entre les labels */
+  }
+  .verification-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #555; /* Couleur du texte */
+  }
+  
+  .verification-item i {
+    color: #39bf39; /* Couleur verte de l'icône */
+    font-size: 18px;
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+  }
+  .disponibilites-list {
+    list-style: none; /* Supprime les puces de la liste */
+    padding: 0;
+  }
+  
+  .disponibilites-list li {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #555; /* Couleur du texte */
+    padding: 5px 0;
+  }
+  
+  .disponibilites-list li i {
+    color: #39bf39; /* Couleur verte pour l'icône */
+    font-size: 18px;
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+  }
+  button i {
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+    font-size: 18px; /* Taille de l'icône */
+  }.notification-box {
+    position: fixed;
+    top: 370px;
+
+    transform: translateX(-50%);
+    background: #ffffff;
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 280px;
+    max-width: 400px;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Carte utilisateur */
+.user-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.profile-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.user-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Alignement des boutons */
+.contact-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+/* Boutons de contact (taille identique) */
+.contact-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: none;
+}
+
+.contact-btn whatsapp-btn{
+    background: #a7edc1;
+    
+}
+
+.notification-box {
+    margin-left: 420px;
+}
+
+/* Style du bouton Fermer */
+.notification-box button {
+
+    border: none;
+   
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+.message-btn {
+    background: #25db40;
+    border: none;
+ 
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Bouton téléphone */
+.phone-btn {
+    background: #0088cc; /* Bleu */
+    border: none;
+ 
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Icônes dans les boutons */
+.contact-btn i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+
+button.close-btn {
+    background: #ea3535;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    margin: 15px auto 0;
+    transition: background 0.2s;
+}
+.content {
+    
+    background: rgb(255, 255, 255);
+  
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 35px;
+    width: 800px;
+
+    margin-bottom: 10px;
+    
+}
+.site-link {
+    color: #007bff; /* Couleur du texte */
+    text-decoration: none; /* Supprime le souligné par défaut */
+    font-weight: 40px bold; /* Met le texte en gras */
+    transition: color 0.3s ease;
+ 
+   
+}
+
+.site-link:hover {
+    color: #0056b3; /* Changer la couleur lors du survol */
+    text-decoration: underline; /* Ajoute un souligné lors du survol */
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .navigation-buttons button {
+    margin: 0 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .navigation-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .experience{
+    margin-top: 5px;
+  }  
+  

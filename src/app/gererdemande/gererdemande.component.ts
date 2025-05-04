@@ -14,6 +14,7 @@ import { Utilisateur } from 'src/models/Utilisateur';
 import { ReservationService } from '../service/reservation.service';
 import { Reservation } from 'src/models/Reservation';
 import { AvisService } from '../service/avis.service';
+import { UtilisateurService } from '../service/utilisateur.service';
 
 
 @Component({
@@ -74,6 +75,7 @@ prestataireImageUrls: string[] = [];
     private fileService: FileService,
     private demandeservice:DemandeService,
     private router: Router,
+    private utilisateurService: UtilisateurService,
     private serviceeService:ServiceeService,
     private reservationService: ReservationService,
     private toastr: ToastrService,
@@ -185,6 +187,7 @@ prestataireImageUrls: string[] = [];
           
           this.demandeDetails.date = this.formatDateForInput(this.demande.date);
         }
+     
 
         if (this.demande?.servicee?.imageService) {
          
@@ -194,72 +197,60 @@ prestataireImageUrls: string[] = [];
           console.log('Aucune image disponible pour ce service');
         }
         if (this.demande?.servicee?.idservice) {
-          const serviceId = this.demande.servicee.idservice;
-          this.serviceeService.getUtilisateursByServiceOrderedByRating(serviceId).subscribe(
-            (utilisateurs: any[]) => {  
+          this.utilisateurService.getPrestatairesCompatibles((this.demande.idDemande!)).subscribe(
+            (utilisateurs: any[]) => {
               this.utilisateurs = utilisateurs;
-              this.utilisateurs.forEach((utilisateur, index) => {
-              
   
+              this.utilisateurs.forEach((utilisateur, index) => {
                 if (utilisateur['services'] && Array.isArray(utilisateur['services'])) {
                   utilisateur.servicesOfferts = utilisateur['services'].map((service: string) => ({
                     idservice: undefined,
-
                     nomservice: service.replace(/[\r\n]+/g, '').trim()
                   }));
                 } else {
-                  
                   utilisateur.servicesOfferts = [];
                 }
   
                 if (utilisateur.image) {
                   this.getImage(utilisateur.image, index, 'utilisateur');
                 }
+  
                 if (utilisateur.idUtilisateur !== undefined && utilisateur.idUtilisateur !== null) {
                   this.avisService.getScoreMoyen(utilisateur.idUtilisateur).subscribe({
                     next: (score) => {
-                    
-                      if (score !== undefined && score !== null) {
-                        if (utilisateur.idUtilisateur !== undefined) {
-                            this.scoreMap[utilisateur.idUtilisateur] = score;
-                        
-                        
-                        } else {
-                            console.warn('idUtilisateur is undefined for a user.');
-                        }
-                      
+                      const idUtilisateur = utilisateur.idUtilisateur;
+                      if (idUtilisateur !== undefined) {
+                        this.scoreMap[idUtilisateur] = score;
                       }
                     },
+                    error: (err) => {
+                      console.error(`Erreur lors de la récupération du score pour l'utilisateur ${utilisateur.idUtilisateur} :`, err);
+                    }
                   });
-                } 
-                else {
+  
+                  this.avisService.getNombreAvisPourUtilisateur(utilisateur.idUtilisateur).subscribe({
+                    next: (nombreAvis) => {
+                      const idUtilisateur = utilisateur.idUtilisateur;
+                      if (idUtilisateur !== undefined) {
+                        this.nombreAvisMap[idUtilisateur] = nombreAvis;
+                      }
+                      
+                    },
+                    error: (error) => {
+                      console.error('Erreur lors de la récupération du nombre d\'avis pour l\'utilisateur', utilisateur.idUtilisateur, ':', error);
+                    }
+                  });
+                } else {
                   console.error('idUtilisateur est undefined pour l\'utilisateur:', utilisateur);
                 }
-                if (utilisateur.idUtilisateur !== undefined) {
-                  const idUtilisateur = utilisateur.idUtilisateur;
-                
-                
-                  this.avisService.getNombreAvisPourUtilisateur(idUtilisateur).subscribe({
-                    next: (nombreAvis) => {
-                      this.nombreAvisMap[idUtilisateur] = nombreAvis;
-                     
-                    },
-                  error: (error) => {
-                    console.error('Erreur lors de la récupération du nombre d\'avis pour l\'utilisateur', utilisateur.idUtilisateur, ':', error);
-                  }
-                });
-              }
-                
               });
             },
-            
             (error) => {
-              console.error('Erreur lors de la récupération des utilisateurs:', error);
+              console.error('Erreur lors de la récupération des utilisateurs compatibles:', error);
             }
           );
         }
   
-          
         this.getPostulationsByDemande(id);
       },
       (error) => {

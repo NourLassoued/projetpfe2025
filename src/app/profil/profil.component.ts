@@ -57,38 +57,35 @@ export class ProfilComponent {
     ngOnInit(): void {
       this.loadUserData();
     
-      // Récupérer l'ID du prestataire depuis les paramètres de l'URL
+   
       this.activatedRoute.paramMap.subscribe(params => {
         const id = params.get('id');
         if (id) {
-          this.prestataireId = +id;  // Convertir l'ID en nombre
-          const idCrypte = this.encryptId(id); // Crypter l'ID
-          console.log('ID crypté:', idCrypte);
-          this.loadAvis(this.prestataireId); // Charger les avis avec l'ID du prestataire
+          this.prestataireId = +id;  
+          this.loadAvis(this.prestataireId); 
         } else {
           console.error("ID du prestataire manquant dans les paramètres de l'URL !");
         }
       });
     
-      // Récupérer les paramètres de la requête utilisateurId et demandeId
+    
       this.activatedRoute.queryParamMap.subscribe(params => {
-        this.utilisateurId = +params.get('utilisateurId')!;  // Utiliser "!" pour dire à TypeScript que la valeur existe
+        this.utilisateurId = +params.get('utilisateurId')!;
         this.demandeId = +params.get('demandeId')!;
       });
     
-      // Charger les informations utilisateur à partir de l'ID récupéré
       this.activatedRoute.paramMap.subscribe(params => {
         const userIdParam = params.get('id');  
         if (userIdParam) {
-          this.userId = +userIdParam;  // Convertir en nombre
+          this.userId = +userIdParam; 
           this.utilisateurservice.getById(this.userId).subscribe(
             (userData: any) => {
               this.user = userData;
               if (this.user?.image) {
-                this.loadProfileImage(this.user.image);  // Charger l'image du profil
+                this.loadProfileImage(this.user.image); 
               }
     
-              // Préparer les services offerts
+           
               if (userData.services && Array.isArray(userData.services)) {
                 this.user.servicesOfferts = userData.services.map((service: string) => ({
                   idservice: null,
@@ -98,7 +95,7 @@ export class ProfilComponent {
                 this.user.servicesOfferts = [];
               }
     
-              // Préparer les disponibilités
+         
               if (userData.disponibilites && Array.isArray(userData.disponibilites)) {
                 this.user.disponibilites = userData.disponibilites.map((dispo: any, index: number) => ({
                   id: dispo.id ?? index,
@@ -280,15 +277,7 @@ reserver(prestataireId: number) {
                 return (this.getRatingCount(star) / total) * 100;
               }
               
-           /*   getAverageRating(): string {
-                const total = this.avisList.length;
-                if (total === 0) return '0.0';
-                const sum = this.avisList.reduce((acc, avis) => acc + (avis.note ?? 0), 0);
-                return (sum / total).toFixed(1);
-              }
-
-
-*/
+   
 
             getTempsEcoule(date?: Date): string {
                   if (!date) {

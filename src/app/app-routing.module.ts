@@ -66,6 +66,13 @@ import { MeunuadminComponent } from 'src/backadmin/meunuadmin/meunuadmin.compone
 import { ScorebadageComponent } from '../backadmin/scorebadage/scorebadage.component';
 import { EspacereservationComponent } from '../backadmin/espacereservation/espacereservation.component';
 import { PaymentComponent } from './payment/payment.component';
+import { MesrevunesComponent } from './mesrevunes/mesrevunes.component';
+import { MestransactionsComponent } from './mestransactions/mestransactions.component';
+import { SectionentrpriseComponent } from './sectionentrprise/sectionentrprise.component';
+import { EntrepriseconnecteComponent } from './entrepriseconnecte/entrepriseconnecte.component';
+import { ComptentrepriseComponent } from './comptentreprise/comptentreprise.component';
+import { MespublicationComponent } from './mespublication/mespublication.component';
+import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
 
 
 const routes: Routes = [
@@ -184,6 +191,10 @@ component:InformatiqueComponent
     path: 'Compteprestaitre',
     component:CompteprestaitreComponent
   },
+  {
+    path: 'Mesrevunes',
+    component:MesrevunesComponent
+  },
   
   {
     path: 'updateprestaitre',
@@ -246,11 +257,31 @@ component:InformatiqueComponent
     path: 'escpacereservation',
     component:EspacereservationComponent
   },
+  {
+    path: 'Sectionentrprise',
+    component:SectionentrpriseComponent
+  },
+  {
+    path: 'Entrepriseconnecte/:id',
+        component:EntrepriseconnecteComponent
+  },
 
-/////////////////////////////////////
+/////////////////////////////////////entrpriser//////////////////////////////////////
+{
+  path: 'mes-publications',
+  component:MespublicationComponent
+},
+{
+  path: 'Comptentreprise',
+  component:ComptentrepriseComponent
+},
   {
     path: 'Profileentreprise',
     component:ProfiletrpriseComponent
+  },
+  {
+    path: 'ConsulterEntreprise/:id',
+    component:ConsulterentrpriseComponent
   },
   {
     path: 'UpdateEntreprise',
@@ -279,6 +310,11 @@ component:InformatiqueComponent
             path: 'Mesdemandeterminees',
             component: DemandecompletedComponent 
               },
+
+              {
+                path: 'Mestransactions',
+                component: MestransactionsComponent 
+                  },
 {
     path: 'gerer-demande',
     component:GererdemandeComponent ,
