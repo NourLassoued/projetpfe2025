@@ -108,6 +108,7 @@ import { EntrepriseconnecteComponent } from './entrepriseconnecte/entrepriseconn
 import { ComptentrepriseComponent } from './comptentreprise/comptentreprise.component';
 import { MespublicationComponent } from './mespublication/mespublication.component';
 import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
+import { CommentairesRecusComponent } from './commentaires-recus/commentaires-recus.component';
 
 
 
@@ -185,6 +186,7 @@ import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrp
     ComptentrepriseComponent,
     MespublicationComponent,
     ConsulterentrpriseComponent,
+    CommentairesRecusComponent,
  
    
 

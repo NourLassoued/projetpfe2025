@@ -73,6 +73,7 @@ import { EntrepriseconnecteComponent } from './entrepriseconnecte/entrepriseconn
 import { ComptentrepriseComponent } from './comptentreprise/comptentreprise.component';
 import { MespublicationComponent } from './mespublication/mespublication.component';
 import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
+import { CommentairesRecusComponent } from './commentaires-recus/commentaires-recus.component';
 
 
 const routes: Routes = [
@@ -275,6 +276,12 @@ component:InformatiqueComponent
   path: 'Comptentreprise',
   component:ComptentrepriseComponent
 },
+{
+  path: 'commentaires-recus',
+  component:CommentairesRecusComponent
+},
+
+
   {
     path: 'Profileentreprise',
     component:ProfiletrpriseComponent

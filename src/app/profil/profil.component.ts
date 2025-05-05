@@ -228,7 +228,7 @@ export class ProfilComponent {
             this.avisService.getScoreMoyen(this.prestataireId).subscribe(
               (score: number) => {
                 this.score = score; 
-                console.log("Score moyen du prestataire :", this.score);
+             
               },
               (error: any) => {
                 console.error("Erreur lors de la récupération du score :", error);

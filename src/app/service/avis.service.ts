@@ -10,7 +10,7 @@ import { environment } from '../environment';
 })
 export class AvisService {
 
-// private apiUrl = 'http://localhost:8088/nour/avis'; 
+
 private apiUrl = `${environment.apiUrl}/avis`;
   constructor(private http: HttpClient,private auth:AuthServiceService) {}
   getAvisParUtilisateur(id: number): Observable<Avis[]> {

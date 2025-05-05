@@ -18,7 +18,7 @@ export class PublicationService {
     return this.http.post<Publication>(`${this.apiUrl}/entreprise/${entrepriseId}`, publication);
   }
 
-
+ 
   getAllPublications(): Observable<Publication[]> {
     return this.http.get<Publication[]>(`${this.apiUrl}/getAllPublications`);
   }

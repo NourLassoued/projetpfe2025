@@ -204,13 +204,13 @@ height: 250px;
 .stars {
   display: flex;
   gap: 5px;
-  font-size: 0.3rem;  /* Ajuste la taille des étoiles */
+  font-size: 0.3rem;  
   cursor: pointer;
 }
 
 .stars svg {
-  width: 4rem; /* Ajustez la largeur */
-  height: 4rem; /* Ajustez la hauteur */
+  width: 4rem; 
+  height: 4rem;
 }
 
 .stars svg:hover {
@@ -252,15 +252,15 @@ height: 250px;
 
 .close {
   position: absolute;
-  top: 10px;  /* Ajustez selon votre préférence */
-  right: 10px;  /* Ajustez pour placer le bouton à droite */
+  top: 10px;  
+  right: 10px; 
   font-size: 2rem;
   cursor: pointer;
 }
 
 .modal-content h2 {
-  margin-top: 0;  /* Enlever la marge par défaut pour plus de précision */
-  padding-right: 30px;  /* Laisser de l'espace pour le bouton de fermeture */
+  margin-top: 0; 
+  padding-right: 30px; 
 }
 .btnenvoyer{
 background: #007bff;
