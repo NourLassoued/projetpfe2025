@@ -13,8 +13,8 @@ export class CommentaireService {
   constructor(private http: HttpClient) {}
 
 
-  ajouterCommentaire(publicationId: number, utilisateurId: number, commentaire: Commentaire): Observable<Commentaire> {
-    return this.http.post<Commentaire>(`${this.apiUrl}/ajouter/${publicationId}/${utilisateurId}`, commentaire);
+  ajouterCommentaire(publicationId: number, utilisateurConnecteId: number, commentaire: Commentaire): Observable<Commentaire> {
+    return this.http.post<Commentaire>(`${this.apiUrl}/ajouter/${publicationId}/${utilisateurConnecteId}`, commentaire);
   }
 
 
@@ -25,6 +25,9 @@ export class CommentaireService {
 
   getCommentairesParUtilisateur(utilisateurId: number): Observable<Commentaire[]> {
     return this.http.get<Commentaire[]>(`${this.apiUrl}/utilisateur/${utilisateurId}`);
+  }
+  supprimerCommentaire(id: number) {
+    return this.http.delete(`${this.apiUrl}/deletecommaintre/${id}`);
   }
 }
 

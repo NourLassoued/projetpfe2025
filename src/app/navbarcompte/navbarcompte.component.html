@@ -7,12 +7,10 @@
           <h2>Demander un service</h2>
   
       
-          <!-- Barre de recherche -->
           <input   type="text" id="search-docs" name="searchdocs"
           [(ngModel)]="searchQuery"
           (ngModelChange)="onSearch()"   placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
       
-          <!-- Affichage des catégories en grille -->
           <div class="grid-container">
             <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom) ">
               <img  [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
@@ -58,8 +56,9 @@
       </a>
 
 <div class="notification-container">
-  <a href="#" (click)="toggleNotification()" class="notification-icon">
-    <i class="fas fa-bell"></i>
+  <a href="#" (click)="toggleNotification()" class="notification-icon" >
+  
+    <i class="fas fa-bell"  [ngClass]="{ 'animate-bell': unreadCount > 0 }"></i>
     <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
   </a>
 
@@ -67,19 +66,31 @@
     <div *ngIf="notifications.length === 0">
    
     </div>
-    <ul *ngIf="unseenPublications.length > 0">
-      <li *ngFor="let publication of unseenPublications">
-        {{ publication.titre }}
-        <ul *ngIf="publication.entreprise && publication.entreprise.idUtilisateur">
-          <li>
-         
-            <a (click)="goToConsulterEntreprise(publication)">
-              {{ publication.entreprise.nomEntreprise }}
-            </a>
-          </li>
-        </ul>
+    <ul *ngIf="unseenPublications.length > 0" class="notification-list">
+      <li *ngFor="let publication of unseenPublications" class="notification-item">
+        <div class="notification-card">
+          <div class="notification-icon">
+            <img
+    *ngIf="publication.entreprise?.idUtilisateur"
+    [src]="entrepriseImages[publication.entreprise?.idUtilisateur!]"
+
+    id="profile-icon"
+    alt="Logo entreprise"
+    (click)="goToConsulterEntreprise(publication)"
+  />
+          </div>
+          <div class="notification-content">
+            <div class="notification-time" *ngIf="publication.datePublication">
+              {{ getRelativeTime(publication.datePublication) }} •
+            </div>
+            <div class="notification-message">
+             " Nouvelle publication : {{ publication.titre }}" a été publié par {{ publication.entreprise?.nomEntreprise }}
+            </div>
+          </div>
+        </div>
       </li>
     </ul>
+    
     
     
     

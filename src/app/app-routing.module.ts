@@ -74,6 +74,7 @@ import { ComptentrepriseComponent } from './comptentreprise/comptentreprise.comp
 import { MespublicationComponent } from './mespublication/mespublication.component';
 import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
 import { CommentairesRecusComponent } from './commentaires-recus/commentaires-recus.component';
+import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolutionentrprise.component';
 
 
 const routes: Routes = [
@@ -268,6 +269,12 @@ component:InformatiqueComponent
   },
 
 /////////////////////////////////////entrpriser//////////////////////////////////////
+
+
+{
+  path: 'Mesevolutionentrprise',
+  component:MesevolutionentrpriseComponent
+},
 {
   path: 'mes-publications',
   component:MespublicationComponent

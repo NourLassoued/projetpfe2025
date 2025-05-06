@@ -227,11 +227,10 @@ h6,
 }
 
 
-/*** Hero Header ***/
+
 .hero-header {
     margin-bottom: 6rem;
     padding: 9rem 0;
-    background: url(../img/bg-bottom.png) center bottom no-repeat;
 }
 
 @media (max-width: 991.98px) {
@@ -241,7 +240,7 @@ h6,
 }
 
 
-/*** Feature ***/
+
 .feature-item,
 .advanced-feature-item {
     height: 100%;

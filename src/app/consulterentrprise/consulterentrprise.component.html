@@ -268,6 +268,10 @@
                  
                       <strong class="comment-author">{{ commentaire.particulier?.nom }}</strong>
                       <p class="comment-content">{{ commentaire.contenu }}</p>
+                      <small *ngIf="commentaire.dateCommentaire">
+                        {{ getRelativeTime(commentaire.dateCommentaire) }}
+                      </small>
+                      
                     </div>
                   </div>
                   

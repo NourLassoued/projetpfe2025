@@ -50,7 +50,7 @@ export class ConsulterentrpriseComponent implements OnInit {
   userId: number | undefined;
   prestataireId!: number;
   commentaireVisiblee: { [publicationId: number]: boolean } = {};
-
+  intervalId: any;
   likedPublications: number[] = [];
 
   commentairesParPublication: { [key: number]: Commentaire[] } = {};
@@ -80,11 +80,10 @@ export class ConsulterentrpriseComponent implements OnInit {
   ngOnInit(): void {
     const savedLikes = localStorage.getItem('likes');
     const savedLikedPublications = localStorage.getItem('likedPublications');
-  
+
     this.likes = savedLikes ? JSON.parse(savedLikes) : {};
     this.likedPublications = savedLikedPublications ? JSON.parse(savedLikedPublications) : [];
-  
-    console.log('Publications likées chargées :', this.likedPublications);
+
     this.cdr.detectChanges();
 
     this.activatedRoute.paramMap.subscribe(params => {
@@ -141,8 +140,29 @@ export class ConsulterentrpriseComponent implements OnInit {
         }
       });
     });
+    this.chargerPublicationsEtCommentaires();
 
 
+    this.intervalId = setInterval(() => {
+      this.chargerPublicationsEtCommentaires();
+    }, 10000);
+
+  }
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  chargerPublicationsEtCommentaires(): void {
+    this.publicationService.getAllPublications().subscribe((publications) => {
+      this.publications = publications;
+
+      this.publications.forEach((pub) => {
+        if (pub.id !== undefined) {
+          this.chargerCommentaires(pub.id);
+        }
+      });
+    });
   }
   loadPublications(): void {
     if (!this.prestataireId) {
@@ -172,13 +192,14 @@ export class ConsulterentrpriseComponent implements OnInit {
 
 
   envoyerCommentaire(publicationId: number, utilisateurConnecteId: number) {
-    this.utilisateurConnecte = localStorage.getItem('accessToken');
-    if (!this.utilisateurConnecte) {
-      return;
-    }
+    const token = localStorage.getItem('accessToken');
 
-    const decodedToken: any = jwtDecode(this.utilisateurConnecte);
-    this.utilisateurConnecteId = decodedToken.id;
+    if (token) {
+
+      const decodedToken: any = jwtDecode(token);
+      this.utilisateurConnecteId = decodedToken.id;
+    }
+    const idAvisUtilisateur = this.utilisateurConnecteId;
 
     const contenu = this.nouveauxCommentaires[publicationId];
 
@@ -188,10 +209,11 @@ export class ConsulterentrpriseComponent implements OnInit {
         dateCommentaire: new Date(),
       };
 
-      this.commentaireService.ajouterCommentaire(publicationId, utilisateurConnecteId, commentaire).subscribe({
+      this.commentaireService.ajouterCommentaire(publicationId, idAvisUtilisateur, commentaire).subscribe({
         next: (response) => {
 
           this.nouveauxCommentaires[publicationId] = '';
+
         },
         error: (err) => {
           console.error('Erreur lors de l\'ajout du commentaire :', err);
@@ -503,7 +525,36 @@ export class ConsulterentrpriseComponent implements OnInit {
       this.chargerCommentaires(publicationId);
     }
   }
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
 
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        this.user = decodedToken;
+
+        if (this.user && this.user.id) {
+
+        } else {
+          console.warn('L\'ID de l\'utilisateur est introuvable dans le token');
+        }
+
+        if (this.user.image) {
+
+          this.loadProfileImage(this.user.image);
+        } else {
+          console.warn(" Aucune image trouvée dans le token !");
+        }
+      } catch (error) {
+        console.error(' Erreur lors du décodage du token:', error);
+      }
+    } else {
+      console.warn(" Aucun token trouvé dans localStorage !");
+    }
+  }
+  getRelativeTime(dateString: string | Date): string {
+    return 'il y a ' + formatDistanceToNow(new Date(dateString), { addSuffix: false, locale: fr });
+  }
 }
 
 

@@ -95,8 +95,8 @@
 .profile-img {
     width: 100%;
     height: 100%;
-    border-radius: 50%; /* Rendre l’image ronde */
-    object-fit: cover;  /* Ajuste l'image */
+    border-radius: 50%;
+    object-fit: cover;  
     position: absolute;
     top: 0;
     left: 0;
@@ -127,7 +127,6 @@
 .middle-btn:hover {
     background-color: #0056b3;
 }
-/* Style global pour la dropdown des notifications */
 .notification-dropdown {
   position: absolute;
   top: 50px;
@@ -143,21 +142,19 @@
   font-family: 'Arial', sans-serif;
 }
 
-/* Style pour la section quand il n'y a aucune notification */
 .notification-dropdown p {
   text-align: center;
   color: #888;
   font-size: 14px;
 }
 
-/* Style pour les publications non vues */
 .notification-dropdown ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-/* Style pour chaque publication */
+
 .notification-dropdown li {
   padding: 10px;
   border-bottom: 1px solid #eee;
@@ -165,12 +162,10 @@
   transition: background-color 0.3s ease;
 }
 
-/* Au survol des publications */
 .notification-dropdown li:hover {
   background-color: #f1f1f1;
 }
 
-/* Style pour le nom de l'entreprise */
 .notification-dropdown li ul {
   margin-top: 5px;
   font-size: 13px;
@@ -178,7 +173,6 @@
   font-style: italic;
 }
 
-/* Style pour chaque élément de notification */
 .notification-item {
   background-color: #f8f8f8;
   padding: 10px;
@@ -188,13 +182,11 @@
   transition: background-color 0.3s ease;
 }
 
-/* Au survol des notifications */
 .notification-item:hover {
   background-color: #f1f1f1;
   transform: scale(1.05);
 }
 
-/* Pour les notifications vides, ajouter un fond spécifique */
 .notification-dropdown .no-notifications {
   color: #bbb;
   font-size: 16px;
@@ -202,7 +194,7 @@
   padding: 20px;
 }
 
-/* Ajouter des animations pour une meilleure transition */
+
 .notification-dropdown ul li,
 .notification-item {
   animation: fadeIn 0.3s ease-in-out;
@@ -270,7 +262,7 @@
     }
     .category-card {
     display: flex;
-    justify-content: space-between; /* Alignement des éléments avec un espace entre */
+    justify-content: space-between; 
     align-items: center;
     background: white;
     padding: 10px;
@@ -301,11 +293,11 @@
     }
     
     .category-card label {
-      margin-bottom: 12px; /* Ajouter un espace en bas du label */
-      font-size: 16px; /* Taille du texte du label */
+      margin-bottom: 12px; 
+      font-size: 16px; 
       
     }
-    /* Sélecteur avec une spécificité plus élevée */
+   
     .modal-content input.search-bar2  {
         width: 750px;
         max-height: 40px;
@@ -323,17 +315,17 @@
       
     .iconn {
       margin-left: 90px;
-      max-width: 5px; /* Taille de la case à cocher */
+      max-width: 5px; 
       
       max-height: 5px;
-      -webkit-appearance: none; /* Supprimer l'apparence par défaut sur Safari */
-      -moz-appearance: none; /* Supprimer l'apparence par défaut sur Firefox */
-      appearance: none; /* Supprimer l'apparence par défaut */
-      border: 2px solid #ccc; /* Bordure de la case à cocher */
-      border-radius: 4px; /* Coins arrondis */
-      background-color: #ededed; /* Couleur de fond */
+      -webkit-appearance: none; 
+      -moz-appearance: none; 
+      appearance: none; 
+      border: 2px solid #ccc; 
+      border-radius: 4px; 
+      background-color: #ededed; 
       position: relative;
-      cursor: pointer; /* Curseur en forme de main */
+      cursor: pointer; 
     }
     
     
@@ -475,5 +467,84 @@
     .notification-item {
       padding: 5px 0;
       border-bottom: 1px solid #eee;
+    }
+    
+    @keyframes ring {
+      0% { transform: rotate(0); }
+      1% { transform: rotate(30deg); }
+      3% { transform: rotate(-28deg); }
+      5% { transform: rotate(34deg); }
+      7% { transform: rotate(-32deg); }
+      9% { transform: rotate(30deg); }
+      11% { transform: rotate(-28deg); }
+      13% { transform: rotate(26deg); }
+      15% { transform: rotate(-24deg); }
+      17% { transform: rotate(22deg); }
+      19% { transform: rotate(-20deg); }
+      21% { transform: rotate(18deg); }
+      23% { transform: rotate(-16deg); }
+      25% { transform: rotate(14deg); }
+      27% { transform: rotate(-12deg); }
+      29% { transform: rotate(10deg); }
+      31% { transform: rotate(-8deg); }
+      33% { transform: rotate(6deg); }
+      35% { transform: rotate(-4deg); }
+      37% { transform: rotate(2deg); }
+      39% { transform: rotate(-1deg); }
+      41% { transform: rotate(1deg); }
+      43% { transform: rotate(0); }
+      100% { transform: rotate(0); }
+    }
+    .notification-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .notification-item {
+      margin-bottom: 10px;
+    }
+    
+    .notification-card {
+      display: flex;
+      align-items: flex-start;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      padding: 16px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .notification-card:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .notification-icon {
+      flex-shrink: 0;
+      background-color: #e8f0fe;
+      color: #1a73e8;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-right: 12px;
+    }
+    
+    .notification-content {
+      flex: 1;
+    }
+    
+    .notification-time {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .notification-message {
+      font-size: 14px;
+      color: #333;
     }
     

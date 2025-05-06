@@ -14,6 +14,8 @@ import { MessageService } from '../service/message.service';
 import { PublicationService } from '../service/publication.service';
 import { NotificationpartuculierServiceService } from '../service/notificationpartuculier-service.service';
 import { Publication } from 'src/models/Publication';
+import { formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 @Component({
   selector: 'app-navbarcompte',
@@ -21,6 +23,8 @@ import { Publication } from 'src/models/Publication';
   styleUrls: ['./navbarcompte.component.css']
 })
 export class NavbarcompteComponent implements OnInit, AfterViewInit {
+  entrepriseImages: { [id: number]: SafeUrl } = {};
+
   showMessageModal: boolean = false;
   unseenPublications: Publication[] = [];
   unreadMessages: any[] = [];
@@ -37,7 +41,7 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
   selectedCategory: any = null;
   allCategories: any[] = [];
   Categories: any[] = [];
-
+  bellAnimated = false;
   filteredCategories: any[] = [];
   private notificationsSubscription: any;
 
@@ -94,7 +98,9 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.bellAnimated = true;
 
+    setTimeout(() => this.bellAnimated = false, 1000);
     setTimeout(() => {
       const user = this.authServiceService.getCurrentUser();
       this.user = user;
@@ -163,13 +169,33 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     });
 
   }
+  loadEntrepriseImages() {
+    for (let pub of this.unseenPublications) {
+      const entreprise = pub.entreprise;
+      if (entreprise?.idUtilisateur && entreprise.image) {
+        this.fileService.getImage(entreprise.image).subscribe({
+          next: (imageBlob) => {
+            const objectURL = URL.createObjectURL(imageBlob);
+            this.entrepriseImages[entreprise.idUtilisateur!] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          },
+          error: (err) => {
+            console.error('Erreur chargement image entreprise', err);
+          }
+        });
+      }
+    }
+  }
+  
   loadNotifications() {
     this.notificationserviceparticulier.getUnseenPublications(this.user.id).subscribe(publications => {
       this.unseenPublications = publications;
       this.unreadCount = this.unseenPublications.length;
+      this.loadEntrepriseImages();
 
     });
   }
+
+
   goToConsulterEntreprise(publication: Publication) {
     const entrepriseId = publication.entreprise?.idUtilisateur;
 
@@ -232,7 +258,11 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
 
       this.unreadCount = 0;
     }
-  }
+    this.bellAnimated = true;
+
+  setTimeout(() => this.bellAnimated = false, 1000);
+}
+  
 
 
   redirectBasedOnRole(): void {
@@ -430,7 +460,9 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/Front']);
   }
 
-
+  getRelativeTime(dateString: string | Date): string {
+    return 'il y a ' + formatDistanceToNow(new Date(dateString), { addSuffix: false, locale: fr });
+  }
 
 }
 

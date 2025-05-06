@@ -75,7 +75,6 @@ editNote: number = 1;
                 
                   this.avisService.deleteAvis(idAvis).subscribe(
                     () => {
-                      // Mettre à jour la liste des avis après suppression
                       this.avisList = this.avisList.filter(avis => avis.idAvis !== idAvis);
                       this.toastr.success('Avis supprimé avec succès!', 'Succès');
                       this.loadAvis(); 
