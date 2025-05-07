@@ -43,6 +43,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 @Query("SELECT u FROM Utilisateur u LEFT JOIN FETCH u.adressee LEFT JOIN FETCH u.disponibilites WHERE u.role = :role")
 List<Utilisateur> findAllPrestatairesWithAdresse(@Param("role") UserRole role);
 
+    List<Utilisateur> findByRoleIn(List<UserRole> roles);
 
 
 

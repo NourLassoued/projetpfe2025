@@ -19,8 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private  final  AuthenticationService service;
-    private final LogoutService logoutService;
-    private UtilisateurRepository utilisateurRepository;
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         // Vous pouvez ajouter d'autres actions de nettoyage si nécessaire

@@ -1,0 +1,34 @@
+package com.example.backendnourpfe.Controlleur;
+
+import com.example.backendnourpfe.classes.Notification;
+import com.example.backendnourpfe.classes.Publication;
+import com.example.backendnourpfe.service.Nootificationservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/notification")
+public class NootificationController {
+
+    @Autowired
+    private Nootificationservice nootificationservice;
+
+    @PutMapping("/markAsSeen/{userId}/{publicationId}")
+    public void markPublicationAsSeen(@PathVariable Long userId, @PathVariable Long publicationId) {
+        nootificationservice.markPublicationAsSeen(userId, publicationId);
+    }
+
+
+    @GetMapping("/unseen/{userId}")
+    public List<Notification> getUnseenNotifications(@PathVariable Long userId) {
+        return nootificationservice.getUnseenNotifications(userId);
+    }
+    @GetMapping("/unseenPublications/{userId}")
+    public List<Publication> getUnseenPublications(@PathVariable Long userId) {
+        return nootificationservice.getUnseenPublicationsByUser(userId);
+    }
+
+}
