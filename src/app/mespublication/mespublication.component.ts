@@ -9,6 +9,9 @@ import { Publication } from 'src/models/Publication';
 import { CommentaireService } from '../service/commentaire.service';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { Utilisateur } from 'src/models/Utilisateur';
+import { UserRole } from 'src/models/UserRole';
+import { MessageService } from '../service/message.service';
 
 
 @Component({
@@ -17,9 +20,13 @@ import { fr } from 'date-fns/locale';
   styleUrls: ['./mespublication.component.css']
 })
 export class MespublicationComponent {
+  contenuMessage: string = '';
   showNotification = false;
+  prestataireSelectionne: Utilisateur | null = null;
+
   publicationSelectionnee: any = null;
   user: any = null;
+
   profileImageUrl: SafeUrl | null = null;
   userId!: number;
   publications: Publication[] = [];
@@ -27,18 +34,19 @@ export class MespublicationComponent {
   publicationlist: Publication[] = [];
   particulierImages: { [key: number]: SafeUrl } = {};
   currentPage: number = 1;
-  itemsPerPage: number = 2;
+  itemsPerPage: number = 6;
   constructor(
     private fileService: FileService,
     private sanitizer: DomSanitizer,
     private toastr: ToastrService,
     private publicationService: PublicationService,
     private router: Router,
-    private commaintreservice: CommentaireService
+    private commaintreservice: CommentaireService,
+    private mmessageService: MessageService
   ) { }
   ngOnInit(): void {
     this.loadUserData();
-    ;
+
   }
 
 
@@ -92,8 +100,8 @@ export class MespublicationComponent {
     this.publicationService.getPublicationsParEntreprise(entrepriseId).subscribe({
       next: (publications) => {
         this.publications = publications;
-        this.publicationlist = [...publications]; 
-        this.currentPage = 1; 
+        this.publicationlist = [...publications];
+        this.currentPage = 1;
 
         this.publications.forEach(publication => {
           if (publication.id !== undefined) {
@@ -172,31 +180,85 @@ export class MespublicationComponent {
       next: () => {
         this.toastr.success('Commentaire supprimé avec succès', 'Succès');
         this.fermerModal();
-        },
-        error: err => {
-          console.error('Erreur lors de la suppression', err);
-          this.toastr.error('Échec de la suppression du commentaire', 'Erreur');
-        }
-      });
-    }
-     getRelativeTime(dateString: string | Date): string {
-        return 'il y a ' + formatDistanceToNow(new Date(dateString), { addSuffix: false, locale: fr });
+      },
+      error: err => {
+        console.error('Erreur lors de la suppression', err);
+        this.toastr.error('Échec de la suppression du commentaire', 'Erreur');
       }
+    });
+  }
+  getRelativeTime(dateString: string | Date): string {
+    return 'il y a ' + formatDistanceToNow(new Date(dateString), { addSuffix: false, locale: fr });
+  }
 
-      get paginatedPublications(): Publication[] {
-        const start = (this.currentPage - 1) * this.itemsPerPage;
-        const end = start + this.itemsPerPage;
-        return this.publications.slice(start, end);
-      }
-    
-      get totalPages(): number {
-        return Math.ceil(this.publications.length / this.itemsPerPage);
-      }
-    
-   
-      changePage(page: number): void {
-        if (page >= 1 && page <= this.totalPages) {
-          this.currentPage = page;
-        }
-      }
+  get paginatedPublications(): Publication[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.publications.slice(start, end);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.publications.length / this.itemsPerPage);
+  }
+
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
     }
+  }
+  afficherNotification(particulier: any, imageUrl: SafeUrl) {
+    this.user = particulier;
+    this.profileImageUrl = imageUrl;
+    this.showNotification = true;
+    this.prestataireSelectionne = particulier;
+  }
+  closeNotification() {
+    this.showNotification = false;
+  }
+
+
+  envoyerMessage(): void {
+    if (!this.contenuMessage || !this.contenuMessage.trim()) {
+      this.toastr.error("Veuillez entrer un message avant de l'envoyer.", "Erreur");
+      return;
+    }
+    const sender = new Utilisateur();
+
+    sender.idUtilisateur = this.userId;
+
+    sender.role = UserRole.ENTREPRISE;
+
+
+    const receiver = new Utilisateur();
+    if (!this.prestataireSelectionne?.idUtilisateur) {
+      this.toastr.error("Aucun destinataire sélectionné.", "Erreur");
+      return;
+    }
+    receiver.idUtilisateur = this.prestataireSelectionne.idUtilisateur;
+    receiver.role = UserRole.PARTICULIER;
+    const message = {
+
+      sender: sender,
+      receiver: receiver,
+      content: this.contenuMessage,
+      timestamp: new Date(),
+      delivered: false
+    };
+
+    this.mmessageService.sendMessage(message).subscribe({
+      next: () => {
+        this.toastr.success("Message envoyé avec succès !", "Succès");
+        this.contenuMessage = '';
+      },
+      error: (err) => {
+
+        this.toastr.error("Échec de l'envoi du message !", "Erreur");
+      }
+    });
+  }
+
+
+
+
+}

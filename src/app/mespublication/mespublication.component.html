@@ -1,93 +1,132 @@
 <app-navbarcompte></app-navbarcompte>
+
 <body>
-    <div class="container">
-      <aside class="sidebar">
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
         <ul>
-          <ul>
-            <li routerLink="/Comptentreprise">📌Tableau de bord</li>
-            <li routerLink="/mes-publications">📰 Mes publications</li>
-          
+          <li routerLink="/Comptentreprise">📌Tableau de bord</li>
+          <li routerLink="/mes-publications">📰 Mes publications</li>
 
-            <li routerLink="/Chat">💬 Mes messages</li>
 
-            <li routerLink="/Mesevolutionentrprise">⭐Mes évolutions</li>
-  
-            <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-          </ul>
+          <li routerLink="/Chat">💬 Mes messages</li>
+
+          <li routerLink="/Mesevolutionentrprise">⭐Mes évolutions</li>
+
+          <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
         </ul>
-      </aside>
-      <main class="content">
-        <h2>📰 Mes publications</h2>
-  
-      
-        <div *ngIf="publications.length === 0">
-          <p>Aucune publication trouvée.</p>
-        </div>
-  
-        <div *ngIf="publications.length > 0">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date de publication</th>
-                <th>Commentaires reçus</th>
-             
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let publication of publications">
-                <td>{{ publication.titre }}</td>
-                <td>{{ publication.description }}</td>
-                <td>{{ publication.datePublication | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button class="btn-supprimer" (click)="afficherCommentaires(publication)">🧑‍💬 Voir commentaires</button>
-                <td>
-                    <button *ngIf="publication.id" (click)="supprimerPublication(publication.id)" class="btn-supprimer"> <i class="fas fa-trash-alt"></i> Supprimer</button> 
-                  </td>
-                  
-              </tr>
-            </tbody>
-          </table>
-          <div class="modal" *ngIf="publicationSelectionnee" (click)="fermerModal()">
-            <div class="modal-content" (click)="$event.stopPropagation()">
-              <h3>Commentaires pour la publication</h3>
-              <ul *ngIf="publicationSelectionnee.commentaires?.length > 0; else aucunCommentaire">
-                <li *ngFor="let commentaire of publicationSelectionnee.commentaires">
-                  <div>
-                    <div class="notification-icon">
-                    <img 
-  *ngIf="commentaire.particulier?.idUtilisateur && particulierImages[commentaire.particulier.idUtilisateur]"
-  [src]="particulierImages[commentaire.particulier.idUtilisateur]"
-  alt="Image particulier"
+      </ul>
+    </aside>
+    <main class="content">
+      <h2>📰 Mes publications</h2>
 
-   id="profile-icon"
-/></div>
-                    <strong>{{ commentaire.particulier?.nom }}</strong><br>
-                    {{ commentaire.contenu }}<br>
-                    <small *ngIf="commentaire.dateCommentaire">
-                      {{ getRelativeTime(commentaire.dateCommentaire) }}
-                    </small>                  </div>
-                  <button class="btn-supprimer" (click)="onSupprimerCommentaire(commentaire.id)">
-                    🗑️
-                  </button>
-                </li>
-              </ul>
-              <ng-template #aucunCommentaire>
-                <p>Aucun commentaire trouvé.</p>
-              </ng-template>
-              <button (click)="fermerModal()">Fermer</button>
+
+      <div *ngIf="publications.length === 0">
+        <p>Aucune publication trouvée.</p>
+      </div>
+
+      <div *ngIf="paginatedPublications.length > 0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Description</th>
+              <th>Date de publication</th>
+              <th>Commentaires reçus</th>
+
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let publication of paginatedPublications">
+              <td>{{ publication.titre }}</td>
+              <td>{{ publication.description }}</td>
+              <td>{{ publication.datePublication | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                <button class="btn-supprimer" (click)="afficherCommentaires(publication)">🧑‍💬 Voir
+                  commentaires</button>
+              <td>
+                <button *ngIf="publication.id" (click)="supprimerPublication(publication.id)" class="btn-supprimer"> <i
+                    class="fas fa-trash-alt"></i> Supprimer</button>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+        <div class="modal" *ngIf="publicationSelectionnee" (click)="fermerModal()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="close-icon-container">
+              <i class="fas fa-times" (click)="fermerModal()"></i>
             </div>
+            <h3>Commentaires pour la publication</h3>
+            <ul *ngIf="publicationSelectionnee.commentaires?.length > 0; else aucunCommentaire">
+              <li *ngFor="let commentaire of publicationSelectionnee.commentaires">
+                <div>
+                  <div class="notification-icon">
+                    <img
+                      *ngIf="commentaire.particulier?.idUtilisateur && particulierImages[commentaire.particulier.idUtilisateur]"
+                      [src]="particulierImages[commentaire.particulier.idUtilisateur]" alt="Image particulier"
+                      (click)="afficherNotification(commentaire.particulier, particulierImages[commentaire.particulier.idUtilisateur])"
+                      id="profile-icon" />
+                  </div>
+                  <strong>{{ commentaire.particulier?.nom }}</strong><br>
+                  {{ commentaire.contenu }}<br>
+                  <small *ngIf="commentaire.dateCommentaire">
+                    {{ getRelativeTime(commentaire.dateCommentaire) }}
+                  </small>
+                </div>
+                <i class="fas fa-trash-alt icon-supprimer" (click)="onSupprimerCommentaire(commentaire.id)"></i>
+
+              </li>
+            </ul>
+            <ng-template #aucunCommentaire>
+              <p>Aucun commentaire trouvé.</p>
+            </ng-template>
           </div>
         </div>
-      </main>
-    </div>
-    <div class="pagination">
-      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
-    
-      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-    
-      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
-    </div>
-  </body>
+
+      </div>
+
+      <div class="notification-box" *ngIf="showNotification">
+        <div class="user-card">
+          <div class="profile-container">
+            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic" />
+          </div>
+          <div class="user-info">
+            <p>Contacter</p>
+            <h3>{{ user?.nom || 'Utilisateur' }}</h3>
+
+          </div>
+        </div>
+
+        <div class="contact-buttons">
+          <button class="contact-btn message-btn">
+            <i class="fas fa-envelope"></i> Message
+          </button>
+
+          <a [href]="'tel:' + user?.telephoneNumber" class="contact-btn phone-btn">
+            <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
+          </a>
+        </div>
+
+        <div class="message-form">
+          <textarea [(ngModel)]="contenuMessage" placeholder="📧 Écrivez votre message ici..." rows="3"></textarea>
+          <button class="contact-btn send-btn" (click)="envoyerMessage()">
+            <i class="fas fa-paper-plane"></i> Envoyer
+          </button>
+        </div>
+
+        <button class="close-btn" (click)="closeNotification()">Fermer</button>
+      </div>
+
+    </main>
+  </div>
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+
+    <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+  </div>
+
+</body>
