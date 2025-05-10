@@ -29,5 +29,6 @@ export class CommentaireService {
   supprimerCommentaire(id: number) {
     return this.http.delete(`${this.apiUrl}/deletecommaintre/${id}`);
   }
+
 }
 

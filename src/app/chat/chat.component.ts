@@ -171,7 +171,9 @@ getConversationWith(contactId: number): void {
   this.selectedContact = contactMessage?.sender.idUtilisateur === this.userId
     ? contactMessage?.receiver
     : contactMessage?.sender;
-    if (this.selectedContact?.idUtilisateur && this.selectedContact?.role === 'PRESTATAIRE') {
+    if (this.selectedContact?.idUtilisateur && (this.selectedContact?.role === 'PRESTATAIRE' || this.selectedContact?.role === 'ENTREPRISE')) {
+     
+    } {
       this.avisService.getScoreMoyen(this.selectedContact.idUtilisateur).subscribe({
         next: (score) => {
           this.scoreMap[this.selectedContact.idUtilisateur] = score;
@@ -225,7 +227,7 @@ sendMessage(): void {
     this.websocketService.sendMessagetempsreel(message);
   });
 
-  // Ajoute localement le message
+ 
   this.conversation.push(message);
   this.newMessage = '';
 
@@ -253,9 +255,9 @@ getUndeliveredMessages(): void {
 markMessageAsRead(id: number): void {
 
 
-  // Recherche du message dans la conversation
+
   const message = this.conversation.find(m => m.id === id);
-    // Debugging : vérifier l'ID du message
+
     if (!message.id) {
       console.warn("ID du message introuvable !");
       return;
@@ -263,17 +265,16 @@ markMessageAsRead(id: number): void {
   if (!message) {
 
     console.warn("Message non trouvé dans la conversation !");
-    console.log(this.conversation);  // Debugging : vérifier la structure des messages
+   
     return;
   }
 
-  // Vérifie que le message a un destinataire valide
   if (!message.receiver || !message.receiver.idUtilisateur) {
     console.warn("Le destinataire du message est introuvable !");
     return;
   }
 
-  // Marquer le message comme "vu"
+
   message.readTimestamp = new Date().toISOString();
   message.delivered = true;
 

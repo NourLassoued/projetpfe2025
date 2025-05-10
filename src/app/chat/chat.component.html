@@ -89,12 +89,12 @@
                         
                           <div class="contact-info">
                             <strong>{{ selectedContact?.nom }}</strong><br>
-                            <span class="star-rating" *ngIf="selectedContact?.role === 'PRESTATAIRE'">
+                            <span class="star-rating" *ngIf="selectedContact?.role === 'PRESTATAIRE' || selectedContact?.role === 'ENTREPRISE' ">
                               ⭐ {{ scoreMap[selectedContact?.idUtilisateur] || 0 }}
                              
                             </span>
-                            <span   class="avis" *ngIf="selectedContact?.role === 'PRESTATAIRE' && nombreAvisMap[selectedContact.idUtilisateur] !== undefined" >
-                              ({{ nombreAvisMap[selectedContact.idUtilisateur] }} )
+                            <span class="avis" *ngIf="(selectedContact?.role === 'PRESTATAIRE' || selectedContact?.role === 'ENTREPRISE') && nombreAvisMap[selectedContact.idUtilisateur] !== undefined">
+                              ({{ nombreAvisMap[selectedContact.idUtilisateur] }})
                             </span>
                             <br>
                             <a *ngIf="selectedContact?.role === 'PRESTATAIRE'"  [routerLink]="['/Profil', selectedContact?.idUtilisateur]" class="voir-profil">Voir le profil</a>

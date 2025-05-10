@@ -425,7 +425,7 @@
     }
     .nav-icons a {
       position: relative;
-      font-size: 24px; /* taille de l'icône */
+      font-size: 24px; 
     }
     
     .notification-container {
@@ -495,6 +495,12 @@
       43% { transform: rotate(0); }
       100% { transform: rotate(0); }
     }
+
+.animate-bell {
+  animation: ring 4s ease infinite;
+  transform-origin: 50% 0;
+  display: inline-block;
+}
     .notification-list {
       list-style: none;
       padding: 0;

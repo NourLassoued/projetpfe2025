@@ -264,7 +264,7 @@ component:InformatiqueComponent
     component:SectionentrpriseComponent
   },
   {
-    path: 'Entrepriseconnecte/:id',
+    path: 'Contactentreprise/:id',
         component:EntrepriseconnecteComponent
   },
 
@@ -301,7 +301,10 @@ component:InformatiqueComponent
     path: 'UpdateEntreprise',
     component:UpdateEtrepriseComponent
   },
- 
+ /////////
+
+  //////////////////////////////gestion de partculier//////////////////
+
   {
     path: 'Demande',
     component:DemandeComponent 
@@ -315,7 +318,6 @@ component:InformatiqueComponent
     path: 'Mesdemandes',
     component:MesdemandesComponent 
   },
-  //////////////////////////////gestion de partculier//////////////////
   {
         path: 'Mesdemandesarchivees',
         component: DemandeterminneComponent 

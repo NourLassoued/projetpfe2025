@@ -17,6 +17,7 @@ import { PublicationService } from '../service/publication.service';
 import { Publication } from 'src/models/Publication';
 import { Commentaire } from 'src/models/Commentaire';
 import { CommentaireService } from '../service/commentaire.service';
+import { co } from '@fullcalendar/core/internal-common';
 
 
 @Component({
@@ -26,11 +27,18 @@ import { CommentaireService } from '../service/commentaire.service';
 })
 export class ConsulterentrpriseComponent implements OnInit {
   likes: { [publicationId: number]: number } = {};
+  nombreDeLikesParPublication: { [key: number]: number } = {};
+  utilisateurADejaLikeParPublication: { [key: number]: boolean } = {};
 
   showNotification = false;
   profileImage: string | null = null;
   user: any = {};
   commentImages: { [commentId: number]: string } = {};
+
+  publicationId!: number;
+
+  nombreDeLikes: number = 0;
+  utilisateurADejaLike: boolean = false;
 
   publicationsAffichees: any[] = [];
   nombreAffiche: number = 3;
@@ -42,6 +50,7 @@ export class ConsulterentrpriseComponent implements OnInit {
   };
   commentaireVisible: { [key: number]: boolean } = {};
   nouveauxCommentaires: { [key: number]: string } = {};
+  commentaires: Commentaire[] = [];
 
   user1: Utilisateur = { servicesOfferts: [] };
   score: number = 0;
@@ -78,11 +87,7 @@ export class ConsulterentrpriseComponent implements OnInit {
     private messageService: MessageService,) { }
 
   ngOnInit(): void {
-    const savedLikes = localStorage.getItem('likes');
-    const savedLikedPublications = localStorage.getItem('likedPublications');
 
-    this.likes = savedLikes ? JSON.parse(savedLikes) : {};
-    this.likedPublications = savedLikedPublications ? JSON.parse(savedLikedPublications) : [];
 
     this.cdr.detectChanges();
 
@@ -140,12 +145,10 @@ export class ConsulterentrpriseComponent implements OnInit {
         }
       });
     });
-    this.chargerPublicationsEtCommentaires();
-
 
     this.intervalId = setInterval(() => {
       this.chargerPublicationsEtCommentaires();
-    }, 10000);
+    }, 6000);
 
   }
   ngOnDestroy(): void {
@@ -160,10 +163,63 @@ export class ConsulterentrpriseComponent implements OnInit {
       this.publications.forEach((pub) => {
         if (pub.id !== undefined) {
           this.chargerCommentaires(pub.id);
+          this.getLikes(pub.id);
+          this.verifierSiDejaLike(pub.id);
+
+
+
         }
       });
     });
   }
+
+  toggleLike(publicationId: number): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      this.utilisateurConnecteId = decodedToken.id;
+    }
+
+    this.publicationService.toggleLike(publicationId, this.utilisateurConnecteId).subscribe({
+      next: () => {
+        this.getLikes(publicationId);
+
+
+
+      },
+      error: (err) => console.error('Erreur lors de l\'ajout/retrait du like', err)
+    });
+  }
+
+
+
+  getLikes(publicationId: number): void {
+    this.publicationService.getNombreDeLikes(publicationId).subscribe({
+      next: (likes: number) => {
+        this.nombreDeLikesParPublication[publicationId] = likes;
+
+      },
+      error: (err) => console.error('Erreur lors de la récupération du nombre de likes', err)
+    });
+  }
+  verifierSiDejaLike(publicationId: number): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      this.utilisateurConnecteId = decodedToken.id;
+
+      this.publicationService.utilisateurADejaLike(publicationId, this.utilisateurConnecteId)
+        .subscribe({
+          next: (aLike: boolean) => {
+            this.utilisateurADejaLikeParPublication[publicationId] = aLike;
+          },
+          error: (err) => console.error('Erreur lors de la vérification du like', err)
+        });
+    }
+  }
+
   loadPublications(): void {
     if (!this.prestataireId) {
       console.error("userId est manquant !");
@@ -188,8 +244,6 @@ export class ConsulterentrpriseComponent implements OnInit {
     this.nombreAffiche += 3;
     this.mettreAJourAffichagePublication();
   }
-
-
 
   envoyerCommentaire(publicationId: number, utilisateurConnecteId: number) {
     const token = localStorage.getItem('accessToken');
@@ -221,27 +275,6 @@ export class ConsulterentrpriseComponent implements OnInit {
       });
     }
   }
-  ajouterLike(publicationId: number): void {
-    if (this.likedPublications.includes(publicationId)) {
-      return;
-    }
-
-    if (this.likes[publicationId] === undefined) {
-      this.likes[publicationId] = 0;
-    }
-
-    this.likes[publicationId]++;
-    this.likedPublications.push(publicationId);
-
-    localStorage.setItem('likes', JSON.stringify(this.likes));
-    localStorage.setItem('likedPublications', JSON.stringify(this.likedPublications));
-
-
-  }
-
-  aDejaLike(publicationId: number): boolean {
-    return this.likedPublications.includes(publicationId);
-  }
 
 
   getAverageRating(): number {
@@ -265,11 +298,6 @@ export class ConsulterentrpriseComponent implements OnInit {
     }
 
   }
-
-
-
-
-
 
 
 
@@ -524,7 +552,17 @@ export class ConsulterentrpriseComponent implements OnInit {
     if (this.commentaireVisible[publicationId]) {
       this.chargerCommentaires(publicationId);
     }
+  }  
+  supprimerCommentaire(commentaireId: number): void {
+    this.commentaireService.supprimerCommentaire(commentaireId).subscribe({
+      next: () => {
+        console.log('Commentaire supprimé');
+        this.chargerPublicationsEtCommentaires(); // recharge les commentaires
+      },
+      error: (err) => console.error('Erreur lors de la suppression du commentaire', err)
+    });
   }
+  
   loadUserData(): void {
     const token = localStorage.getItem('accessToken');
 

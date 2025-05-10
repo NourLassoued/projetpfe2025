@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px; /* Espacement entre la sidebar et le profil */
+  gap: 20px; 
   padding: 20px;
   margin-right: 200px;
  
@@ -69,31 +69,31 @@ body {
 }
 .competences-container {
   display: flex;
-  flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
-  gap: 10px; /* Espace entre les compétences */
+  flex-wrap: wrap; 
+  gap: 10px; 
  
 
   
 }
 .competences-container {
   display: flex;
-  flex-wrap: wrap; /* Permet de gérer les éléments dans plusieurs lignes si nécessaire */
-  gap: 10px; /* Espace entre les éléments */
-  justify-content:flex-start; /* Centre les éléments horizontalement */
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content:flex-start; 
   margin-left: 50px;
   margin-bottom: 20px
 }
 .competence {
   background: #dbd8d8;
   border-radius: 20px;
-  padding: 10px 20px; /* Espace autour du texte */
+  padding: 10px 20px; 
   display: flex;
-  justify-content: center; /* Centre horizontalement */
-  align-items: center; /* Centre verticalement */
-  text-align: center; /* Aligne le texte à l'intérieur de <p> au centre */
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
   border: 1px solid #ddd;
-  height: 25px; /* Hauteur uniforme */
-  min-width: 80px; /* Largeur minimale */
+  height: 25px; 
+  min-width: 80px; 
   font-weight: bold;
 }
 .competence p {
@@ -105,10 +105,10 @@ margin-top: 20px;
 }
 .competence li {
 display: flex;
-justify-content: space-between; /* Espace entre le texte et le bouton */
-align-items: center; /* Alignement vertical */
+justify-content: space-between;
+align-items: center;
 padding: 10px;
-border-bottom: 1px solid #ddd; /* Séparation des lignes */
+border-bottom: 1px solid #ddd; 
 }
 .profile-info {
   margin-top: 10px;
@@ -310,9 +310,9 @@ h3 {
 }
 .user-info-container {
   display: flex;
-  gap: 496px; /* Espacement entre les éléments */
-  flex-wrap: wrap; /* Permet le retour à la ligne si l'espace est insuffisant */
-  align-items: center; /* Aligne les éléments verticalement */
+  gap: 496px; 
+  flex-wrap: wrap;
+  align-items: center; 
 }
 
 .user-info-container label {
@@ -320,28 +320,28 @@ h3 {
   padding: 8px 12px;
   border-radius: 5px;
   font-weight: bold;
-  white-space: nowrap; /* Empêche les éléments d'être coupés */
+  white-space: nowrap;
 }
 .verification-container {
   margin-left: 550px;
   display: flex;
-  flex-direction: column; /* Affichage en colonne */
-  gap: 2px; /* Espacement entre les labels */
+  flex-direction: column;
+  gap: 2px; 
 }
 .verification-item {
   display: flex;
   align-items: center;
   font-size: 16px;
-  color: #555; /* Couleur du texte */
+  color: #555; 
 }
 
 .verification-item i {
-  color: #39bf39; /* Couleur verte de l'icône */
+  color: #39bf39; 
   font-size: 18px;
-  margin-right: 8px; /* Espacement entre l'icône et le texte */
+  margin-right: 8px;
 }
 .disponibilites-list {
-  list-style: none; /* Supprime les puces de la liste */
+  list-style: none;
   padding: 0;
 }
 
@@ -349,18 +349,18 @@ h3 {
   display: flex;
   align-items: center;
   font-size: 16px;
-  color: #555; /* Couleur du texte */
+  color: #555;
   padding: 5px 0;
 }
 
 .disponibilites-list li i {
-  color: #39bf39; /* Couleur verte pour l'icône */
+  color: #39bf39; 
   font-size: 18px;
-  margin-right: 8px; /* Espacement entre l'icône et le texte */
+  margin-right: 8px;
 }
 button i {
-  margin-right: 8px; /* Espacement entre l'icône et le texte */
-  font-size: 18px; /* Taille de l'icône */
+  margin-right: 8px;
+  font-size: 18px; 
 }
 .notification-box {
   position: fixed;
@@ -382,7 +382,7 @@ button i {
   z-index: 1000;
 }
 
-/* Carte utilisateur */
+
 .user-card {
   display: flex;
   align-items: center;
@@ -714,6 +714,7 @@ background: #007bff;
   background-color: #1877f2;
   color: #fff;
   border: none;
+  
   padding: 10px 24px;
   font-size: 1rem;
   border-radius: 10px;
@@ -724,6 +725,10 @@ background: #007bff;
 .btn:hover {
   background-color: #145db2;
 }
+
+
+
+
 .action-bar button {
   font-weight: 500;
   color: #65676b;
@@ -731,10 +736,13 @@ background: #007bff;
   border: none;
 }
 .comment-container {
+
   background-color: #f0f2f5;
   border-radius: 18px;
   padding: 10px 15px;
   margin: 8px 0;
+
+  height: 200px;
   max-width: 90%;
   word-wrap: break-word;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -760,6 +768,7 @@ background: #007bff;
 }
 
 .comment-box {
+  
   background-color: #f9f9f9;
   padding: 15px;
   border-radius: 12px;
@@ -792,16 +801,57 @@ background: #007bff;
   transition: background-color 0.2s;
 }
 
-.comment-box button:hover {
-  background-color: #28a745cc;
-}
 
-.btn-liker {
-  background-color: #dc3545;
-  color: white;
-}
+
 
 .btn-light {
   background-color: #f8f9fa; 
   color: black;
 }
+.btn-liker {
+  color: white;
+  background-color: #dc3545; /* Rouge Bootstrap */
+  border-color: #dc3545;
+}
+
+.btn-liker:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+
+.btn-liker .heart-icon, 
+.btn-light .heart-icon {
+  color: #dc3545;
+}
+.like-red {
+  color: red;
+}
+.btn-danger {
+  background-color: transparent;
+  margin-bottom: 20px;
+  border: none;
+  color: #dc3545; 
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  font-size: 1.1rem;
+}
+
+.btn-danger:hover {
+  color: #a71d2a; 
+}
+
+.btn-danger i {
+  pointer-events: none; 
+}
+.delete {
+  background-color: transparent;
+  border: none;
+  color: #696969;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 8px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+

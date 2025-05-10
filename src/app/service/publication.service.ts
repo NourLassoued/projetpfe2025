@@ -35,5 +35,17 @@ export class PublicationService {
   supprimerPublication(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
+  toggleLike(publicationId: number, particulierId: number): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}/${publicationId}/like/${particulierId}`, {});
+  }
+
+
+  getNombreDeLikes(publicationId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/${publicationId}/likes`);
+  }
+  utilisateurADejaLike(publicationId: number, utilisateurId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${publicationId}/like/${utilisateurId}`);
+  }
+  
 
 }

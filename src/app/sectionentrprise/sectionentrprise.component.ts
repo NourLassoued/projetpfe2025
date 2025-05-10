@@ -73,7 +73,7 @@ export class SectionentrpriseComponent {
 
 
       if (id) {
-        this.router.navigate(['/Entrepriseconnecte', id]);
+        this.router.navigate(['/Contactentreprise', id]);
       }
     
   }}
