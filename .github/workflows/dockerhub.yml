@@ -26,17 +26,12 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      # Correction des permissions si nécessaire
-      - name: Fix permissions
-        run: chmod +x mVnW
-        continue-on-error: true  # Au cas où le fichier n'existe pas
-
       # Exécution du test Snyk et génération du rapport SARIF
       - name: Run Snyk test
-        run: snyk test --sarif-file-output=snyk.sarif
+        run: snyk test --all-projects --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        continue-on-error: true  # Cette ligne était mal placée
+        continue-on-error: true
 
       # Compter le nombre total de vulnérabilités
       - name: Count total number of vulnerabilities
