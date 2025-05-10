@@ -35,4 +35,13 @@ public class Publication {
 @JsonIgnore
 @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notification> notifications;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "publication_like",
+            joinColumns = @JoinColumn(name = "publication_id"),
+            inverseJoinColumns = @JoinColumn(name = "particulier_id")
+    )
+    private List<Utilisateur> likedByUsers;
 }

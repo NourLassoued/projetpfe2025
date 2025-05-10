@@ -172,6 +172,12 @@ public class Utilisateur  implements UserDetails  {
 @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications;
+@JsonIgnore
+    @ManyToMany(mappedBy = "likedByUsers")
+    private List<Publication> likedPublications;
+
+
+
     public Utilisateur(String nom, String email, String password, String image, int telephoneNumber, UserRole role, Date createdAt) {
         this.nom = nom;
         this.email = email;

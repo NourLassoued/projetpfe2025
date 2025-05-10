@@ -4,15 +4,13 @@ on:
   push:
     branches: master
 
-
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses:  actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -24,19 +22,49 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests --no-transfer-progress -B
 
+      # Installation de Snyk
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      # Correction des permissions si nécessaire
+      - name: Fix permissions
+        run: chmod +x mVnW
+        continue-on-error: true  # Au cas où le fichier n'existe pas
+
+      # Exécution du test Snyk et génération du rapport SARIF
+      - name: Run Snyk test
+        run: snyk test --sarif-file-output=snyk.sarif
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true  # Cette ligne était mal placée
+
+      # Compter le nombre total de vulnérabilités
+      - name: Count total number of vulnerabilities
+        run: |
+          if [ -f "snyk.sarif" ]; then
+            VULN_COUNT=$(grep -o '"level": "error"' snyk.sarif | wc -l)
+            echo "Found $VULN_COUNT vulnerabilities"
+            echo "VULN_COUNT=$VULN_COUNT" >> $GITHUB_ENV
+          
+            if [ $VULN_COUNT -gt 10 ]; then
+              echo "::warning::High number of vulnerabilities detected: $VULN_COUNT"
+            fi
+          else
+            echo "No SARIF file found"
+            echo "VULN_COUNT=0" >> $GITHUB_ENV
+          fi
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ vars.DOCKERHUBNOUR }}
           password: ${{ secrets.DOCKERHUB_TOKENSPRING}}
 
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
-
         with:
           context: .
           push: true

@@ -33,7 +33,6 @@ jobs:
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-# sur plusieurs architectures (par exemple : ARM et AMD64). pour vertulisation
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -52,5 +51,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          #
+
           tags: ${{ steps.meta.outputs.tags }}

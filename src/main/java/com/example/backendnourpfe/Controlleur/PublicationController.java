@@ -50,7 +50,22 @@ public class PublicationController {
         List<Publication> publications = publicationService.getPublicationsParEntreprise(entrepriseId);
         return ResponseEntity.ok(publications);
     }
-
+    @PutMapping("/{publicationId}/like/{particulierId}")
+    public ResponseEntity<Void> toggleLike(@PathVariable Long publicationId, @PathVariable Long particulierId) {
+        publicationService.toggleLike(publicationId, particulierId);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/{publicationId}/likes")
+    public ResponseEntity<Long> getNombreDeLikes(@PathVariable Long publicationId) {
+        long nombreDeLikes = publicationService.getNombreDeLikes(publicationId);
+        return ResponseEntity.ok(nombreDeLikes);
+    }
+    @GetMapping("/{publicationId}/like/{utilisateurId}")
+    public ResponseEntity<Boolean> utilisateurADejaLike(@PathVariable Long publicationId,
+                                                        @PathVariable Long utilisateurId) {
+        boolean aLike = publicationService.utilisateurADejaLike(publicationId, utilisateurId);
+        return ResponseEntity.ok(aLike);
+    }
 
 
     @DeleteMapping("/delete/{id}")

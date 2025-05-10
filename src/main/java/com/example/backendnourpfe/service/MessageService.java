@@ -22,53 +22,7 @@ public class MessageService {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
-/*
-public void sendMessage(Message chatMessage) {
 
-    if (chatMessage.getSender() == null || chatMessage.getReceiver() == null) {
-        throw new IllegalArgumentException("Sender and receiver must not be null");
-    }
-
-    if (chatMessage.getContent() == null || chatMessage.getContent().isEmpty()) {
-        throw new IllegalArgumentException("Message content must not be null or empty");
-    }
-
-    // Charger les utilisateurs existants de la base
-    Utilisateur sender = utilisateurRepository.findById(chatMessage.getSender().getIdUtilisateur())
-            .orElseThrow(() -> new IllegalArgumentException("Sender not found in the database"));
-
-    Utilisateur receiver = utilisateurRepository.findById(chatMessage.getReceiver().getIdUtilisateur())
-            .orElseThrow(() -> new IllegalArgumentException("Receiver not found in the database"));
-
-    // Vérifier les rôles
-    if (sender.getRole() == null) {
-        throw new IllegalArgumentException("Sender's role must not be null");
-    }
-
-    if (receiver.getRole() == null) {
-        throw new IllegalArgumentException("Receiver's role must not be null");
-    }
-
-    // Mise à jour du message
-    chatMessage.setSender(sender);
-    chatMessage.setReceiver(receiver);
-    chatMessage.setTimestamp(LocalDateTime.now());
-    chatMessage.setDelivered(false);
-
-    // Sauvegarde en base
-    messageRepository.save(chatMessage);
-
-    // Envoi WebSocket
-    String receiverId = receiver.getIdUtilisateur().toString();
-
-    if ("PARTICULIER".equals(sender.getRole().name()) &&
-            ("PRESTATAIRE".equals(receiver.getRole().name()) || "ENTREPRISE".equals(receiver.getRole().name()))) {
-        // Logique spécifique si nécessaire
-    }
-
-    messagingTemplate.convertAndSend("/topic/messages/" + receiverId, chatMessage);
-}
-*/
     public List<Message> getUndeliveredMessages(Long receiverId) {
         List<Message> messages = messageRepository.findByReceiverIdUtilisateurAndDeliveredFalse(receiverId);
 

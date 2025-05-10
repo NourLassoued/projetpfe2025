@@ -82,4 +82,38 @@ public class PublicationService {
 
         publicationRepository.deleteById(id);
     }
+    public void toggleLike(Long publicationId, Long particulierId) {
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new RuntimeException("Publication non trouvée"));
+
+        Utilisateur particulier = utilisateurRepository.findById(particulierId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+        // Vérification du rôle de l'utilisateur
+        if (particulier.getRole() != UserRole.PARTICULIER) {
+            throw new RuntimeException("Seuls les utilisateurs de type 'Particulier' peuvent aimer ou ne pas aimer les publications.");
+        }
+
+        // Vérifier si l'utilisateur a déjà aimé cette publication
+        if (publication.getLikedByUsers().contains(particulier)) {
+            // Si oui, retirer le like
+            publication.getLikedByUsers().remove(particulier);
+        } else {
+            // Sinon, ajouter le like
+            publication.getLikedByUsers().add(particulier);
+        }
+
+        publicationRepository.save(publication);
+    }
+
+
+    public long getNombreDeLikes(Long publicationId) {
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new RuntimeException("Publication non trouvée"));
+        // Retourner le nombre de likes
+        return publication.getLikedByUsers().size();
+    }
+    public boolean utilisateurADejaLike(Long publicationId, Long utilisateurId) {
+        return publicationRepository.utilisateurADejaLike(publicationId, utilisateurId);
+    }
 }

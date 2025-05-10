@@ -1,0 +1,12 @@
+version: 2
+
+
+
+tunnels:
+  sonar:
+    addr: http://sonar:9001
+    proto: http
+    schemes:
+      - https
+      - http
+    domain: included-awfully-cardinal.ngrok-free.app

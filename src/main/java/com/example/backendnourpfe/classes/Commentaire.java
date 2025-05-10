@@ -2,14 +2,12 @@ package com.example.backendnourpfe.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -18,13 +16,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Commentaire {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String contenu;
-    private LocalDate dateCommentaire;
-@JsonIgnore
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCommentaire;
+
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "publication_id")
     private Publication publication;
