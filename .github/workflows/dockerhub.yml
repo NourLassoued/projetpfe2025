@@ -26,6 +26,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
+          # Dockerfile: Dockerfile
           context: .
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
