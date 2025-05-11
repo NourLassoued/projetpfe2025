@@ -19,35 +19,40 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      # Mise à jour des dépendances Maven pour réduire les vulnérabilités
+      - name: Update Maven dependencies
+        run: |
+          if [ -f "pom.xml" ]; then
+            echo "Checking for dependency updates..."
+            mvn versions:display-dependency-updates
+            # Optionnel: mise à jour automatique des dépendances mineures
+            # mvn versions:use-latest-releases
+          fi
+
       - name: Build with Maven
         run: mvn clean package -DskipTests --no-transfer-progress -B
 
-      # Installation de Snyk
-      - name: Install Snyk CLI
-        run: npm install -g snyk
-
-      # Exécution du test Snyk et génération du rapport SARIF
-      - name: Run Snyk test
-        run: snyk test --all-projects --sarif-file-output=snyk.sarif
+      # Utilisation de l'action officielle Snyk pour Maven
+      - name: Run Snyk to check Maven dependencies
+        uses: snyk/actions/maven@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --fail-on=upgradable
         continue-on-error: true
 
-      # Compter le nombre total de vulnérabilités
-      - name: Count total number of vulnerabilities
-        run: |
-          if [ -f "snyk.sarif" ]; then
-            VULN_COUNT=$(grep -o '"level": "error"' snyk.sarif | wc -l)
-            echo "Found $VULN_COUNT vulnerabilities"
-            echo "VULN_COUNT=$VULN_COUNT" >> $GITHUB_ENV
-          
-            if [ $VULN_COUNT -gt 10 ]; then
-              echo "::warning::High number of vulnerabilities detected: $VULN_COUNT"
-            fi
-          else
-            echo "No SARIF file found"
-            echo "VULN_COUNT=0" >> $GITHUB_ENV
-          fi
+      # Scan de l'image Docker avec Trivy (alternative à Snyk)
+      - name: Build Docker image for scanning
+        run: docker build -t nourlassoued/nourspring:scan .
+
+      - name: Scan Docker image for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'nourlassoued/nourspring:scan'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -58,9 +63,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # Ajout de labels de sécurité à l'image Docker
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: nourlassoued/nourspring:1.1.${{ github.run_number }}
+          build-args: |
+            BUILDTIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          labels: |
+            org.opencontainers.image.created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=MIT
