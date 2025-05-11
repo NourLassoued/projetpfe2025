@@ -19,7 +19,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # Mise à jour des dépendances Maven pour réduire les vulnérabilités
       - name: Update Maven dependencies
         run: |
           if [ -f "pom.xml" ]; then
@@ -30,7 +29,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests --no-transfer-progress -B
 
-      # Utilisation de l'action officielle Snyk pour Maven
       - name: Run Snyk to check Maven dependencies
         uses: snyk/actions/maven@master
         env:
@@ -39,7 +37,6 @@ jobs:
           args: --severity-threshold=high --fail-on=upgradable
         continue-on-error: true
 
-      # Scan de l'image Docker avec Trivy (alternative à Snyk)
       - name: Build Docker image for scanning
         run: docker build -t nourlassoued/nourspring:scan .
 
@@ -53,25 +50,20 @@ jobs:
           severity: 'CRITICAL,HIGH'
         id: trivy-scan
 
-      # Convertir le rapport JSON Trivy en HTML pour email
-      - name: Convert Trivy JSON to HTML
+      - name: Convert Trivy JSON to HTML for email
         run: |
-          # Installer json2html et l'utiliser avec npx
           npm install json2html
-          npx json2html -t "<table border='1'><tr><th>Vulnerability</th><th>Severity</th><th>Package</th><th>Fixed Version</th><th>Link</th></tr><tr><td>${vulnerability}</td><td>${severity}</td><td>${packageName}</td><td>${fixedVersion}</td><td><a href='${link}'>Details</a></td></tr></table>" -o trivy-report.html trivy-report.json
+          npx json2html -t "<table border='1' style='width:100%; border-collapse: collapse;'><tr><th style='padding:8px; text-align:left;'>Vulnerability</th><th style='padding:8px; text-align:left;'>Severity</th><th style='padding:8px; text-align:left;'>Package</th><th style='padding:8px; text-align:left;'>Fixed Version</th><th style='padding:8px; text-align:left;'>Link</th></tr><tr><td style='padding:8px;'>${vulnerability}</td><td style='padding:8px;'>${severity}</td><td style='padding:8px;'>${packageName}</td><td style='padding:8px;'>${fixedVersion}</td><td style='padding:8px;'><a href='${link}'>Details</a></td></tr></table>" -o trivy-report.html trivy-report.json
 
-      # Login to Docker Hub
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ vars.DOCKERHUBNOUR }}
           password: ${{ secrets.DOCKERHUB_TOKENSPRING}}
 
-      # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Ajout de labels de sécurité à l'image Docker
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -85,7 +77,6 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=MIT
 
-      # Envoi des rapports par email
       - name: Send scan results via email
         uses: dawidd6/action-send-mail@v3
         with:
@@ -94,14 +85,14 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: '🔒 Résultats des scans Snyk & Trivy - Build #${{ github.run_number }}'
-          to: ${{ secrets.EMAIL_USERNAME  }}
+          to: ${{ secrets.EMAIL_USERNAME }}
           from: 'ScanBot <${{ secrets.EMAIL_USERNAME }}>'
           body: |
             Bonjour,
 
             Voici le tableau des résultats du scan de sécurité Trivy pour l'image Docker de notre projet Maven (`nourspring`).
 
-            Le tableau ci-dessous présente les vulnérabilités critiques et élevées détectées.
+            Le tableau ci-dessous présente les vulnérabilités critiques et élevées détectées :
 
             <br><br>
 
