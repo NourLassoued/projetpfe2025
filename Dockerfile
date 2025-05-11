@@ -1,5 +1,5 @@
 
-FROM openjdk:17-bullseye
+FROM openjdk:25-bullseye
 RUN apt-get update  && apt-get install -y  maven
 WORKDIR /code/projetservice
 COPY . .
