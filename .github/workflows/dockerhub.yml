@@ -56,8 +56,9 @@ jobs:
       # Convertir le rapport JSON Trivy en HTML pour email
       - name: Convert Trivy JSON to HTML
         run: |
-          npm install -g json2html
-          json2html -t "<table border='1'><tr><th>Vulnerability</th><th>Severity</th><th>Package</th><th>Fixed Version</th><th>Link</th></tr><tr><td>${vulnerability}</td><td>${severity}</td><td>${packageName}</td><td>${fixedVersion}</td><td><a href='${link}'>Details</a></td></tr></table>" -o trivy-report.html trivy-report.json
+          # Installer json2html et l'utiliser avec npx
+          npm install json2html
+          npx json2html -t "<table border='1'><tr><th>Vulnerability</th><th>Severity</th><th>Package</th><th>Fixed Version</th><th>Link</th></tr><tr><td>${vulnerability}</td><td>${severity}</td><td>${packageName}</td><td>${fixedVersion}</td><td><a href='${link}'>Details</a></td></tr></table>" -o trivy-report.html trivy-report.json
 
       # Login to Docker Hub
       - name: Login to Docker Hub
@@ -104,9 +105,7 @@ jobs:
 
             <br><br>
 
-            ${{
-            steps.trivy-scan.outputs.htmlReport
-            }}
+            $(cat trivy-report.html)
 
             Cordialement,
             GitHub Actions
