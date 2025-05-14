@@ -1,15 +1,17 @@
-name: Build and Push to Docker Hub
+name: Build and Push Spring Boot Docker Image
 
 on:
   push:
-    branches: master
+    branches:
+      - master
 
 jobs:
-  build-and-push:
+  build_and_push:
+    name: Build and Push Docker Image to Docker Hub
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -19,89 +21,21 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Update Maven dependencies
-        run: |
-          if [ -f "pom.xml" ]; then
-            echo "Checking for dependency updates..."
-            mvn versions:display-dependency-updates
-          fi
-
       - name: Build with Maven
         run: mvn clean package -DskipTests --no-transfer-progress -B
 
-      - name: Run Snyk to check Maven dependencies
-        uses: snyk/actions/maven@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high --fail-on=upgradable
-        continue-on-error: true
-
-      - name: Build Docker image for scanning
-        run: docker build -t nourlassoued/nourspring:scan .
-
-      - name: Scan Docker image for vulnerabilities
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: 'nourlassoued/nourspring:scan'
-          format: 'json'
-          exit-code: '0'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
-        id: trivy-scan
-
-      - name: Convert Trivy JSON to HTML for email
-        id: convert-trivy-to-html
-        run: |
-          npm install json2html
-          npx json2html -t "<table border='1' style='width:100%; border-collapse: collapse;'><tr><th style='padding:8px; text-align:left;'>Vulnerability</th><th style='padding:8px; text-align:left;'>Severity</th><th style='padding:8px; text-align:left;'>Package</th><th style='padding:8px; text-align:left;'>Fixed Version</th><th style='padding:8px; text-align:left;'>Link</th></tr><tr><td style='padding:8px;'>${vulnerability}</td><td style='padding:8px;'>${severity}</td><td style='padding:8px;'>${packageName}</td><td style='padding:8px;'>${fixedVersion}</td><td style='padding:8px;'><a href='${link}'>Details</a></td></tr></table>" -o trivy-report.html trivy-report.json
-          echo "::set-output name=html_report::$(cat trivy-report.html)"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUBNOUR }}
           password: ${{ secrets.DOCKERHUB_TOKENSPRING }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: nourlassoued/nourspring:1.1.${{ github.run_number }}
-          build-args: |
-            BUILDTIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-          labels: |
-            org.opencontainers.image.created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-            org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.licenses=MIT
-
-      - name: Send scan results via email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: '🔒 Résultats des scans Snyk & Trivy - Build #${{ github.run_number }}'
-          to: ${{ secrets.EMAIL_USERNAME }}
-          from: 'ScanBot <${{ secrets.EMAIL_USERNAME }}>'
-          content-type: 'text/html'
-          body: |
-            Bonjour,
-
-            Voici le tableau des résultats du scan de sécurité Trivy pour l'image Docker de notre projet Maven (`nourspring`).
-
-            Le tableau ci-dessous présente les vulnérabilités critiques et élevées détectées :
-
-            <br><br>
-
-            ${TRIVY_HTML_REPORT}
-
-            Cordialement,
-            GitHub Actions
-        env:
-          TRIVY_HTML_REPORT: ${{ steps.convert-trivy-to-html.outputs.html_report }}
+          tags: nourlassoued/nourspring:1.0.${{ github.run_number }}
