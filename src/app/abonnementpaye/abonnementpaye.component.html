@@ -1,0 +1,104 @@
+<app-navbar></app-navbar>
+
+ <body>
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <h3 class="text-center mb-4">Informations de paiement - {{ typeAbonnement }}</h3>
+
+    <div class="form-group mb-3">
+      <label>Nom</label>
+      <input type="text" class="form-control" [(ngModel)]="nom" placeholder="Entrez votre nom">
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]="email" placeholder="Entrez votre email">
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button class="btn btn-secondary" (click)="fermerModal()">Annuler</button>
+      <button class="btn btn-success" (click)="payer()">
+    {{ typeAbonnement === 'GRATUIT' ? 'Activer votre compte' : 'Continuer le paiement' }}
+  </button>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5" style="margin-top: 50px;">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Choisissez le type d'abonnement</h1>
+    <p class="text-muted">
+      Une fois votre abonnement terminé, vous devrez payer de nouveau pour le renouveler, sinon votre compte sera désactivé.
+    </p>
+  </div>
+
+  <div class="row text-center">
+    <!-- Gratuit -->
+<div class="col-md-4">
+  <div class="card border-0 shadow carte-haute">
+    <div class="card-header text-white" style="background-color: #007bff;">
+      <h4 class="mb-0" style="color: white;">GRATUIT</h4>
+      <h2 class="mt-2" style="color: white;">0 dt</h2>
+    </div>
+    <ul class="list-group list-group-flush text-start p-3">
+      <li class="list-group-item text-center border-0">
+        <!-- Paragraphe explicatif -->
+        <p style="font-size: 16px; color: #555; margin-bottom: 15px;">
+          Commencez avec 7 jours gratuits pour essayer notre application. Cet abonnement peut être utilisé une seule fois.
+        </p>
+
+        <button class="btn bouton-payer"  (click)="afficherModal('GRATUIT')">
+          Activer Gratuitement
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <!-- Mensuel -->
+    <div class="col-md-4">
+  <div class="card border-0 shadow carte-haute ">
+    <div class="card-header text-white" style="background-color: #28a745;">
+      <h4 class="mb-0" style="color: white;">MENSUEL</h4>
+      <h2 class="mt-2" style="color: white;">20dt</h2>
+    </div>
+    <ul class="list-group list-group-flush text-start p-3">
+      <li class="list-group-item text-center border-0">
+
+        <!-- Description de l'abonnement -->
+        <p style="font-size: 16px; color: #555; margin-bottom: 15px;">
+          Accédez à toutes les fonctionnalités pendant un mois complet. Renouvellement automatique possible.
+        </p>
+
+        <button class="btn bouton-payer" (click)="afficherModal('MENSUEL')">Payer</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+  
+
+<div class="col-md-4 mb-4 ">
+  <div class="card border-0 shadow carte-haute">
+    <div class="card-header text-white" style="background-color: #007bff;">
+      <h4 class="mb-0" style="color: white;">ANNUEL</h4>
+      <h2 class="mt-2" style="color: white;">100dt</h2>
+    </div>
+    <ul class="list-group list-group-flush text-start p-3">
+      <li class="list-group-item text-center border-0">
+        <p style="font-size: 16px; color: #555; margin-bottom: 15px;">
+          Profitez d’un accès complet toute l’année avec un tarif avantageux pour un engagement long terme.
+        </p>
+        <button class="btn bouton-payer" (click)="afficherModal('ANNUEL')">Payer</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  </div>
+</div>
+ </body>
+
+<app-footer></app-footer>

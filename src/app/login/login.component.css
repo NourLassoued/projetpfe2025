@@ -10,27 +10,27 @@ body {
     justify-content: center;
     align-items:center;
     height: 100vh;
-    margin: 0; /* Supprime la marge du body */
+    margin: 0; 
     background-color: #fff;
  margin-left: 200px;
 }
 
 .container {
     display: flex;
-    width: 100%; /* Assurez-vous que la largeur occupe tout l'écran */
-    justify-content: center; /* Centrer le contenu */
-    gap: 20px; /* Réduire l'espacement entre les blocs */
+    width: 100%; 
+    justify-content: center;
+    gap: 20px; 
 }
 
 .login-form {
     display: flex;
     flex-direction: column;
-    width: 1000px; /* Largeur du formulaire de connexion */
-    height: auto; /* Hauteur s'adapte au contenu */
+    width: 1000px;
+    height: auto;
     padding: 20px;
     margin-top: 80px;
   
-    flex-grow: 1; /* Fait en sorte que le formulaire de connexion occupe tout l'espace disponible */
+    flex-grow: 1;
 }
 
 .login-form label {

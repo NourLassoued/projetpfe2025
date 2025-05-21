@@ -1,18 +1,22 @@
 
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { CategorieService } from '../../service/categorie.service';
 import { FileService } from '../../service/file.service';
 import { ServiceeService } from '../../service/servicee.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Servicee } from 'src/models/Servicee';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { ScrollServiceService } from 'src/app/service/scroll-service.service';
+import { filter } from 'rxjs';
+import { PaymentService } from 'src/app/service/payment.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-template-front',
   templateUrl: './all-template-front.component.html',
   styleUrls: ['./all-template-front.component.css']
 })
-export class AllTemplateFrontComponent {
+export class AllTemplateFrontComponent  {
   selectedServiceId!: number;  
   displayedCategories: any[] = []; 
   currentIndex: number = 0; 
@@ -39,15 +43,35 @@ export class AllTemplateFrontComponent {
   showModal = false;
   showServiceModal = false; 
   selectedServices: any[] = [];
+ 
   
-  constructor(private categorieService:CategorieService,private file:FileService,
+  constructor(private categorieService:CategorieService
+    ,private file:FileService,
     private service:ServiceeService,
     private router: Router,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef,
+    private scrollService: ScrollServiceService,
+    private route: ActivatedRoute,
+    private paymentService: PaymentService,
+    private toastr: ToastrService
+  ) {
       this.startTypingEffect(); 
     }
+   
     ngOnInit(): void {
-;
+ const paymentId = this.route.snapshot.queryParamMap.get('payment_id');
+  if (paymentId) {
+    this.paymentService.verifyAbonnementPayment(paymentId).subscribe({
+      next: res => {
+ this.toastr.success("Paiement validé avec succès !", "Succès");      },
+      error: err => {
+              this.toastr.error("Erreur lors de la vérification du paiement.", "Erreur");
+
+        console.error("Erreur vérification paiement", err);
+      }
+    });
+  }
+  
    this.getAllCategories();
    this. getAllCategoriess() ;
  

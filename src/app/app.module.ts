@@ -1,7 +1,7 @@
 import { NgModule ,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
- 
+import {  ScrollServiceService } from './service/scroll-service.service';
 import { DateFnsModule } from 'ngx-date-fns';
 
 import { MatPaginatorModule } from '@angular/material/paginator'; 
@@ -93,7 +93,7 @@ import { StompServiceService } from './service/stomp-service.service';
 import { ChatComponent } from './chat/chat.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
-import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
+import { FrontprofilshowComponent } from './Front/frontprofilshow/frontprofilshow.component';
 import { AvissectionComponent } from './Front/avissection/avissection.component';
 import { FrontpresayitrComponent } from './Front/frontpresayitr/frontpresayitr.component';
 import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.component';
@@ -110,12 +110,15 @@ import { MespublicationComponent } from './mespublication/mespublication.compone
 import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
 import { CommentairesRecusComponent } from './commentaires-recus/commentaires-recus.component';
 import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolutionentrprise.component';
+import { AbonnementComponent } from '../backadmin/abonnement/abonnement.component';
+import { AbonnementpayeComponent } from './abonnementpaye/abonnementpaye.component';
 
 
 
 
 @NgModule({
   declarations: [
+    
     AppComponent,
     NavbarComponent,
     AllTemplateFrontComponent,
@@ -189,6 +192,8 @@ import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolu
     ConsulterentrpriseComponent,
     CommentairesRecusComponent,
     MesevolutionentrpriseComponent,
+    AbonnementComponent,
+    AbonnementpayeComponent,
  
    
 
@@ -218,7 +223,13 @@ import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolu
     MatMenuModule,
     DateFnsModule,
     BsDatepickerModule.forRoot() ,
-   
+   RouterModule.forRoot([], {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      onSameUrlNavigation: 'reload'
+    }),
+  
+  
     BrowserAnimationsModule, 
     ToastrModule.forRoot({
       timeOut: 3000, 
@@ -232,8 +243,8 @@ import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolu
   
   providers: [  { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
      NotificationService,
-     WebsocketServiceService
-     
+     WebsocketServiceService,
+ 
 
      
    ],

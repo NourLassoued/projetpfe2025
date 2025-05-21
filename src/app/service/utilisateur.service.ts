@@ -83,6 +83,9 @@ export class UtilisateurService {
     getPrestatairesCompatibles(demandeId: number): Observable<Utilisateur[]> {
       return this.http.get<Utilisateur[]>(`${this.apiUrl}/${demandeId}/prestataires-compatibles`);
     }
+     getUtilisateursEnAttenteEntrepriseOuPrestataire(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(`${this.apiUrl}/en-attente`);
+  }
   
 }
 

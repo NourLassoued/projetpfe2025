@@ -24,13 +24,9 @@ nombreAvisMap: { [id: number]: number } = {};
     ){}
 
 
-      ngAfterViewInit(): void {
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'auto' });
-        }, 0);
-      }
+ 
  ngOnInit(): void {
-   
+ 
     this.getAllPrestataires(); 
 
  
@@ -118,9 +114,6 @@ nombreAvisMap: { [id: number]: number } = {};
       }
   
   
-    }
-    goToProfil(id: number): void {
-      this.router.navigate(['/Compte', id]);
     }
 
 }

@@ -1,5 +1,6 @@
 export enum StatusUtilisateur {
     ACCEPTE = 'ACCEPTE',
     ATTENTE = 'ATTENTE',
-    REFUSE = 'REFUSE'
+    REFUSE = 'REFUSE',
+    NONPAYE='NONPAYE',
   }

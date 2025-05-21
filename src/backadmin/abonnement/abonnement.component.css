@@ -22,49 +22,9 @@
 
 
 
-.fas.fa-calendar-alt.clickable-icon {
-  font-size: 24px;          
-  color: #3f51b5;           
-  cursor: pointer;         
-}
-.disponibilites-box {
-  position: absolute;  
-  margin-top: 70px;  
-  left: 50%;  
-  transform: translateX(-50%);  
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  width: 30%;  
-  z-index: 10;  
-  transition: all 0.3s ease;
-}
 
 
-.disponibilites-box h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
 
-.disponibilites-box button {
-  background-color: #6200ea;
-  color: white;
-  font-size: 1rem;
-  padding: 8px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left:80px;
-  transition: background-color 0.3s;
-  margin-top: 20px;
-}
-
-.disponibilites-box button:hover {
-  background-color: #3700b3;
-}
 .profile-pic {
   width: 50px; 
   height: 50px;
@@ -198,14 +158,3 @@ input, select {
 }
 
 
-.status-attente {
-
-  background-color: orange;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-}

@@ -1,13 +1,5 @@
 
-body {
-    font-family: Arial, sans-serif;
- 
-    margin: 0;
-    padding: 0;
-    height: 1500px;
-    
-}
-
+  
 .container {
     margin-top: 90px;
     display: flex;
@@ -71,31 +63,31 @@ body {
 }
 .competences-container {
     display: flex;
-    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
-    gap: 10px; /* Espace entre les compétences */
+    flex-wrap: wrap; 
+    gap: 10px; 
    
   
     
 }
 .competences-container {
     display: flex;
-    flex-wrap: wrap; /* Permet de gérer les éléments dans plusieurs lignes si nécessaire */
-    gap: 10px; /* Espace entre les éléments */
-    justify-content:flex-start; /* Centre les éléments horizontalement */
+    flex-wrap: wrap;
+    gap: 10px; 
+    justify-content:flex-start; 
     margin-left: 50px;
     margin-bottom: 20px
   }
 .competence {
     background: #dbd8d8;
     border-radius: 20px;
-    padding: 10px 20px; /* Espace autour du texte */
+    padding: 10px 20px; 
     display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-    text-align: center; /* Aligne le texte à l'intérieur de <p> au centre */
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
     border: 1px solid #ddd;
-    height: 25px; /* Hauteur uniforme */
-    min-width: 80px; /* Largeur minimale */
+    height: 25px; 
+    min-width: 80px; 
     font-weight: bold;
 }
 .competence p {
@@ -107,10 +99,10 @@ body {
 }
 .competence li {
   display: flex;
-  justify-content: space-between; /* Espace entre le texte et le bouton */
-  align-items: center; /* Alignement vertical */
+  justify-content: space-between; 
+  align-items: center; 
   padding: 10px;
-  border-bottom: 1px solid #ddd; /* Séparation des lignes */
+  border-bottom: 1px solid #ddd; 
 }
 .profile-info {
     margin-top: 10px;

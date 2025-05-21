@@ -51,7 +51,7 @@ export class InscriptionEntrpriseComponent {
       nom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")], [this.emailAsyncValidator()] ],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8}$")]],
+      telephoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]{8,15}$")]], 
 
       competence: [[]],
       nomEntreprise: ['', Validators.required],

@@ -1,3 +1,4 @@
+import { Abonnement } from "./Abonnement ";
 import { Adresse } from "./Adresse";
 import { Avis } from "./Avis";
 import { Commentaire } from "./Commentaire";
@@ -17,7 +18,7 @@ export class Utilisateur {
   password?: string;
   image?: string;
   telephoneNumber?: number;
-
+  abonnements?: Abonnement[];
   role?: UserRole;
   status?: StatusUtilisateur;
   createdAt?: Date;

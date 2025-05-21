@@ -58,7 +58,7 @@ import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevo
 import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
 import { ChatComponent } from './chat/chat.component';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';
-import { FrontprofilshowComponent } from './frontprofilshow/frontprofilshow.component';
+import { FrontprofilshowComponent } from './Front/frontprofilshow/frontprofilshow.component';
 import { AvissectionComponent } from './Front/avissection/avissection.component';
 import { FrontpresayitrComponent } from './Front/frontpresayitr/frontpresayitr.component';
 import { EspaceavisComponent } from '../backadmin/espaceavis/espaceavis.component';
@@ -75,6 +75,8 @@ import { MespublicationComponent } from './mespublication/mespublication.compone
 import { ConsulterentrpriseComponent } from './consulterentrprise/consulterentrprise.component';
 import { CommentairesRecusComponent } from './commentaires-recus/commentaires-recus.component';
 import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolutionentrprise.component';
+import { AbonnementComponent } from '../backadmin/abonnement/abonnement.component';
+import { AbonnementpayeComponent } from './abonnementpaye/abonnementpaye.component';
 
 
 const routes: Routes = [
@@ -83,6 +85,10 @@ const routes: Routes = [
     redirectTo: 'Front',
     pathMatch: 'full' 
   },
+    {   path: 'abonnementpaye',
+
+      component: AbonnementpayeComponent },
+
   {
     path: 'Front',
     component: AllTemplateFrontComponent
@@ -245,6 +251,10 @@ component:InformatiqueComponent
     path: 'catogories',
     component:CatogoriesComponent
   },
+   {
+    path: 'Abonnement',
+    component:AbonnementComponent
+  },
 
   {
     path: 'user',
@@ -270,7 +280,7 @@ component:InformatiqueComponent
 
 /////////////////////////////////////entrpriser//////////////////////////////////////
 
-
+ 
 {
   path: 'Mesevolutionentrprise',
   component:MesevolutionentrpriseComponent
@@ -386,10 +396,8 @@ component:InformatiqueComponent
 
 ];
 @NgModule({
-  imports: [  RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'enabled',  
-    anchorScrolling: 'enabled',           
-  })
+  imports: [ 
+   [RouterModule.forRoot(routes)],
 ],
     exports: [RouterModule]
   })

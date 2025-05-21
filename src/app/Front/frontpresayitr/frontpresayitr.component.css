@@ -86,7 +86,7 @@
 .tags {
     margin-top: 20px ;
     display: flex;
-    gap: 12px; /* Espace horizontal entre les badges */
+    gap: 12px;
   }
 
     .badge.bg-secondary {

@@ -1,3 +1,4 @@
+
 <div class="container">
     <div class="row">
       <div class="col-md-4" *ngFor="let prestataire of prestataires">
@@ -10,7 +11,7 @@
               [src]="prestataire.image || 'assets/images/user.png'" 
               class="card-img-top" 
               alt="{{ prestataire.nom }}"  
-              (click)="goToProfil(prestataire.idUtilisateur!)" >
+              [routerLink]="['/Compte', prestataire.idUtilisateur!]" >
   
           
             <div *ngIf="prestataire.idUtilisateur && scoreMap[prestataire.idUtilisateur] >= 4.5" class="badge-inside-image">
@@ -58,4 +59,3 @@
       </div>
     </div>
   </div>
-  

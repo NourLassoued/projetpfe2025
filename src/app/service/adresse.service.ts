@@ -9,7 +9,6 @@ import { environment } from '../environment';
 })
 export class AdresseService {
   private apiUrl = `${environment.apiUrl}/adresses`;
- //private apiUrl = 'http://localhost:8088/nour/adresses'; 
 
 
   constructor(private http: HttpClient) {}

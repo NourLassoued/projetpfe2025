@@ -18,7 +18,7 @@
             <p>Augmentez vos revenus en rendant service près de chez vous</p>
         </div>
     </div>
-    <p class="login-text">Vous avez déjà un compte ? <a href="#">Connectez-vous</a></p>
+    <p class="login-text">Vous avez déjà un compte ? <a   [routerLink]="['/login']">Connectez-vous</a></p>
 </div>
 <div class="modal" [class.show]="showModal">
     
@@ -64,9 +64,6 @@
         <!-- Upload de fichier -->
         <input type="file" (change)="onFileSelected($event)" accept="image/*">
         
-        <!-- Affichage de l'image sélectionnée -->
-       
-        <!-- Checkbox pour accepter les conditions -->
      
         <div class="checkbox-container">
             <label class="checkbox-label">
