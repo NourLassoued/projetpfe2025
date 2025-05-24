@@ -124,15 +124,12 @@ public ResponseEntity<String> verifyEmail(@PathVariable String email) {
     @PostMapping("/verifyOtp/{otp}/{email}")
 public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable String email) {
     try {
-        // Rechercher l'utilisateur par email
         Utilisateur user = utlisateurRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Please provide a valid email"));
 
-        // Rechercher l'entrée OTP correspondante dans la base de données
         ForgotPassword fp = forgetPasswordRepository.findByOtpAndUtlisateur(otp, user)
                 .orElseThrow(() -> new RuntimeException("Invalid OTP for email"));
 
-        // Vérifier si l'OTP a expiré
         if (fp.getExpirationTime().before(Date.from(Instant.now()))) {
             forgetPasswordRepository.deleteById(fp.getFpid());
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("OTP has expired!");
@@ -154,19 +151,15 @@ public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable
     @PostMapping("/changePassword/{id}")
     public ResponseEntity<String> changePasswordHandler(@RequestBody ChangePassword changePassword, @PathVariable Long id) {
         try {
-            // Vérification que les mots de passe correspondent
             if (!Objects.equals(changePassword.password(), changePassword.repeatPassword())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Les mots de passe ne correspondent pas. Veuillez réessayer !");
             }
 
-            // Récupérer l'utilisateur par ID
             Utilisateur user = utlisateurRepo.findById(id)
                     .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec cet ID"));
 
-            // Encoder le nouveau mot de passe
             String encodedPassword = passwordEncoder.encode(changePassword.password());
 
-            // Mettre à jour le mot de passe de l'utilisateur
             utlisateurRepo.updatePassword(user.getEmail(), encodedPassword);
 
             return ResponseEntity.ok("Le mot de passe a été modifié avec succès !");

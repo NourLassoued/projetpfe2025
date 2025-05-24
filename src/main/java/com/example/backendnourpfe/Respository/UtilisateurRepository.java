@@ -3,6 +3,7 @@ package com.example.backendnourpfe.Respository;
 
 
 
+import com.example.backendnourpfe.classes.StatusUtilisateur;
 import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,7 +45,10 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 List<Utilisateur> findAllPrestatairesWithAdresse(@Param("role") UserRole role);
 
     List<Utilisateur> findByRoleIn(List<UserRole> roles);
-
+    List<Utilisateur> findByRoleInAndStatusOrderByCreatedAtAsc(
+            List<UserRole> roles,
+            StatusUtilisateur status
+    );
 
 
 

@@ -205,7 +205,14 @@ public ResponseEntity<Map<String, Object>> affecterAdresse(@PathVariable Long ut
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
+    @GetMapping("/en-attente")
+    public ResponseEntity<List<Utilisateur>> getUtilisateursEnAttenteEntrepriseOuPrestataire() {
+        List<UserRole> roles = Arrays.asList(UserRole.ENTREPRISE, UserRole.PRESTATAIRE);
+        List<Utilisateur> utilisateurs = utilisateurRepository.findByRoleInAndStatusOrderByCreatedAtAsc(
+                roles, StatusUtilisateur.ATTENTE
+        );
+        return ResponseEntity.ok(utilisateurs);
+    }
 }
 
 

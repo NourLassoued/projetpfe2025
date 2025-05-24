@@ -3,7 +3,6 @@ package com.example.backendnourpfe.auth;
 
 
 import com.example.backendnourpfe.classes.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

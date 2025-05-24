@@ -88,13 +88,13 @@ public class AvisService  implements AvisInterface {
             double scoreMoyen = moyenne * (nombreAvis / (double)(nombreAvis + k));
 
 
-            scoreMoyen = Math.min(scoreMoyen, 4.9);
+            scoreMoyen = Math.min(scoreMoyen, 4.3);
 
 
             String badge = getBadgeForScore(scoreMoyen);
 
 
-            if (scoreMoyen >= 4.9) {
+            if (scoreMoyen >= 4.3) {
                 badge = "Superstar";
             }
 
@@ -122,7 +122,7 @@ public class AvisService  implements AvisInterface {
 
 
     private String getBadgeForScore(double score) {
-        if (score >= 4.5) {
+        if (score >= 4.3) {
             return "Excellent";
         } else if (score >= 3.5) {
             return "Bon";

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -158,31 +159,38 @@ public AuthenticationReponse register(RegisterRequest request) {
     }
 
     public AuthenticationReponse autheticate (AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-
-        var user=repository.findByEmail(request.getEmail()).orElseThrow();
-        if (user.getStatus() == StatusUtilisateur.ATTENTE) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Votre compte est en attente de validation.");
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException ex) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email ou mot de passe incorrect.");
         }
 
-        var jwtToken=jwtService.generateToken(user);
-        var refershToken=jwtService.gererateRefershToken(user);
+        var user=repository.findByEmail(request.getEmail()).orElseThrow();
 
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.gererateRefershToken(user);
 
         revokeAllUserToken(user);
+        saveUserToken(user, refreshToken);
+        String message = null;
+        if (user.getStatus() == StatusUtilisateur.ATTENTE) {
+            message = "Votre compte est en attente de validation.";
+        } else if (user.getStatus() == StatusUtilisateur.NONPAYE) {
+            message = "Votre abonnement n'est pas payé. Veuillez régulariser votre paiement.";
+        }
 
-        saveUserToken(user,refershToken);
+        saveUserToken(user,refreshToken);
         return  AuthenticationReponse.builder()
                 .accesToken(jwtToken)
                 .role(user.getRole())
 
                 .status(user.getStatus())
-
+                .message(message)
                 .build();
     }
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {

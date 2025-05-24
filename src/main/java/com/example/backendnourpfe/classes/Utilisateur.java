@@ -165,16 +165,20 @@ public class Utilisateur  implements UserDetails  {
       @JsonIgnore
     @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL)
     private List<Publication> publications;
-@JsonIgnore
-@JsonIgnoreProperties("particulier")
+    @JsonIgnore
+    @JsonIgnoreProperties("particulier")
     @OneToMany(mappedBy = "particulier", cascade = CascadeType.ALL)
     private List<Commentaire> commentaires;
-@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications;
-@JsonIgnore
+    @JsonIgnore
     @ManyToMany(mappedBy = "likedByUsers")
     private List<Publication> likedPublications;
+    @JsonIgnore
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("utilisateur")
+    private List<Abonnement> abonnements;
 
 
 

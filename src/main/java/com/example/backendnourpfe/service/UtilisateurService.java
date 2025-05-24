@@ -407,6 +407,11 @@ public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
     public List<Avis> getAvisParUtilisateur(Utilisateur avisUtilisateur) {
         return avisRepository.findByAvisUtilisateur(avisUtilisateur);
     }
+
+    public List<Utilisateur> getUtilisateursEntrepriseOuPrestataireEnAttente() {
+        List<UserRole> roles = Arrays.asList(UserRole.ENTREPRISE, UserRole.PRESTATAIRE);
+        return utilisateurRepository.findByRoleInAndStatusOrderByCreatedAtAsc(roles, StatusUtilisateur.ATTENTE);
+    }
 }
 
 

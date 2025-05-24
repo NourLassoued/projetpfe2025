@@ -7,18 +7,15 @@ services:
       db:
         condition: service_healthy
     environment:
-
-     SPRING_APPLICATION_JSON: '{
-      "spring.datasource.url": "jdbc:mysql://db:3306/backendnourpfe?&createDatabaseIfNotExist=true&useUnicode=true",
-      "spring.datasource.username": "root",
-      "spring.datasource.password": "root",
-      "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL8Dialect",
-      "spring.jpa.hibernate.ddl-auto": "update"
-    }'
-
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url": "jdbc:mysql://db:3306/backendnourpfe?&createDatabaseIfNotExist=true&useUnicode=true",
+        "spring.datasource.username": "root",
+        "spring.datasource.password": "root",
+        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL8Dialect",
+        "spring.jpa.hibernate.ddl-auto": "update"
+      }'
     networks:
       - backend
-
 
   db:
     image: mysql:latest
@@ -27,6 +24,8 @@ services:
       MYSQL_DATABASE: 'backendnourpfe'
     ports:
       - "3308:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -34,6 +33,10 @@ services:
       retries: 5
     networks:
       - backend
+
+volumes:
+  mysql-data:
+
 networks:
   backend:
     external: true

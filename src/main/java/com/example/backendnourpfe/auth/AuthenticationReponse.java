@@ -21,7 +21,7 @@ import java.util.List;
 public class AuthenticationReponse {
     @JsonProperty("access_token")
     private  String accesToken;
-
+    private String message;
     @JsonProperty("refersh_token")
     private String refershToken;
     @JsonProperty("role")
