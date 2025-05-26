@@ -34,7 +34,7 @@ jobs:
         with:
           repository: NourLassoued/argocdpfe 
           ref: master
-          token: ${{ secrets.CHCR_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           path: argocdpfe 
 
       - name: Update image tag in angular.yml
