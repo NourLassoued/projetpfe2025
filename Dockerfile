@@ -10,7 +10,7 @@ COPY package*.json ./
 
 RUN npm install --force
 
-COPY . .
+COPY . . 
 
 RUN ng build --configuration production --progress --verbose --source-map=false
 
