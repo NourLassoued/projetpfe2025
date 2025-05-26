@@ -48,6 +48,6 @@ jobs:
           cd argocdpfe
           git config user.name "GitHub Actions"
           git config user.email "github-action@github.com"
-          git add angular-app/angular.yml
+          git add argocdpfe/angular-app/templates/angular.yml
           git commit -m "Update Docker image tag to 1.1.${{ github.run_number }}"
           git push
