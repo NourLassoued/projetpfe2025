@@ -225,7 +225,6 @@ public class FlouciService {
         Float montant = switch (type) {
             case GRATUIT -> 0f;
             case MENSUEL -> 20f;
-            case TRIMESTRIEL -> 60f;
             case ANNUEL -> 120f;
         };
 
@@ -238,7 +237,6 @@ public class FlouciService {
                 switch (type) {
                     case GRATUIT -> java.sql.Date.valueOf(LocalDate.now().plusWeeks(1));
                     case MENSUEL -> java.sql.Date.valueOf(LocalDate.now().plusMonths(1));
-                    case TRIMESTRIEL -> java.sql.Date.valueOf(LocalDate.now().plusMonths(3));
                     case ANNUEL -> java.sql.Date.valueOf(LocalDate.now().plusYears(1));
                 }
         );
