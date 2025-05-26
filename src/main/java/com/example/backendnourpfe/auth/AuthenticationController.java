@@ -2,8 +2,6 @@ package com.example.backendnourpfe.auth;
 
 
 
-import com.example.backendnourpfe.Config.LogoutService;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
