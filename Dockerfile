@@ -12,12 +12,10 @@ RUN npm install --force
 
 COPY . . 
 
-RUN ng build --configuration production --progress --verbose --source-map=false
-
+RUN ng build
 
 FROM nginx:latest
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN apt-get update && apt-get install -y iputils-ping
 
 COPY --from=build /usr/src/app/dist/projetservice /usr/share/nginx/html
 
