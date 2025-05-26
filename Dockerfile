@@ -12,7 +12,8 @@ RUN npm install --force
 
 COPY . .
 
-RUN ng build 
+RUN ng build --configuration production --progress --verbose --source-map=false
+
 
 FROM nginx:latest
 
