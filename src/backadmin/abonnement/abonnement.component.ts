@@ -6,6 +6,7 @@ import { FileService } from 'src/app/service/file.service';
 import { PaymentService } from 'src/app/service/payment.service';
 import { UtilisateurService } from 'src/app/service/utilisateur.service';
 import { Abonnement } from 'src/models/Abonnement ';
+import { TypeAbonnement } from 'src/models/TypeAbonnement';
 
 @Component({
   selector: 'app-abonnement',
@@ -13,11 +14,29 @@ import { Abonnement } from 'src/models/Abonnement ';
   styleUrls: ['./abonnement.component.css']
 })
 export class AbonnementComponent {
+  currentPageExprimer: number = 1;
+abonnementsExprimerParPage: Abonnement[] = [];
+pageExprimer: number = 1;
+pageSizeExprimer: number = 5; 
+pageSizeAbonnement = 10;       
+currentPageAbonnement = 1;    
+totalPagesAbonnement = 1; 
+
+
+ abonnements: any[] = []; 
+
+
+  utilisateursEnAttentePage: any[] = [];
+ typeAbonnementValues = Object.values(TypeAbonnement);
+  typeFiltre: TypeAbonnement | null = null
     user: any;
     profileImageUrl: string | null = null;
       utilisateursEnAttente: any[] = [];
 abonnementsActifs: Abonnement[] = [];
-
+abonnementsExprimer: Abonnement[] = [];
+pageSize = 10;      
+  currentPage = 1;  
+  totalPages = 1;
    constructor(
       private utilisateurService: UtilisateurService,
        private fileservice: FileService,
@@ -34,6 +53,8 @@ abonnementsActifs: Abonnement[] = [];
       this.router.navigate(['/Front']);
     }
     ngOnInit(): void {
+         this.setupPagination();
+      this.loadAbonnementsExprimer();
       this.loadAbonnementsActifs();
       const token = localStorage.getItem('accessToken');
       if (token) {
@@ -103,6 +124,7 @@ abonnementsActifs: Abonnement[] = [];
           this.utilisateursEnAttente = utilisateurs;
           this.utilisateursEnAttente.forEach((prestataire) => {
             this.loadProfileImage(prestataire);
+              this.setupPagination();
           });
         this.cdr.detectChanges();
 
@@ -144,7 +166,6 @@ loadAbonnementsActifs(): void {
       this.abonnementsActifs.forEach((abonnement) => {
         const utilisateur = abonnement.utilisateur;
         if (utilisateur && utilisateur.image) {
-          console.log(`Image trouvée pour l'utilisateur : ${utilisateur.nom} (${utilisateur.image})`);
           this.loadProfileImage(abonnement);
           const imagePath = utilisateur.image;
           this.fileservice.getImage(imagePath).subscribe({
@@ -168,4 +189,95 @@ loadAbonnementsActifs(): void {
     }
   });
 }
+ setupPagination() {
+    this.totalPages = Math.ceil(this.utilisateursEnAttente.length / this.pageSize);
+    this.setPage(1);
+  }
+
+  setPage(page: number) {
+    if (page < 1) page = 1;
+    if (page > this.totalPages) page = this.totalPages;
+    this.currentPage = page;
+
+    const start = (page - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.utilisateursEnAttentePage = this.utilisateursEnAttente.slice(start, end);
+  }
+get abonnementsFiltresPage(): Abonnement[] {
+  let filtered = this.typeFiltre
+    ? this.abonnementsActifs.filter(a => a.typeAbonnement === this.typeFiltre)
+    : this.abonnementsActifs;
+
+  const startIndex = (this.currentPageAbonnement - 1) * this.pageSizeAbonnement;
+  return filtered.slice(startIndex, startIndex + this.pageSizeAbonnement);
+}
+
+setupPaginationAbonnements(): void {
+  const filteredLength = this.typeFiltre
+    ? this.abonnementsActifs.filter(a => a.typeAbonnement === this.typeFiltre).length
+    : this.abonnementsActifs.length;
+
+  this.totalPagesAbonnement = Math.ceil(filteredLength / this.pageSizeAbonnement);
+  this.setPageAbonnement(1);
+}
+setPageAbonnement(page: number): void {
+  if (page < 1) page = 1;
+  if (page > this.totalPagesAbonnement) page = this.totalPagesAbonnement;
+  this.currentPageAbonnement = page;
+}
+setTypeFiltre(value: TypeAbonnement | null): void {
+  this.typeFiltre = value;
+  this.currentPageAbonnement = 1;
+  this.setupPaginationAbonnements();
+}
+
+
+
+
+loadAbonnementsExprimer(): void {
+  this.abonnementService.getAbonnementsExprimer().subscribe({
+    next: (abonnements) => {
+      this.abonnementsExprimer = abonnements;
+
+      this.abonnementsExprimer.forEach((abonnement) => {
+        const utilisateur = abonnement.utilisateur;
+        if (utilisateur && utilisateur.image) {
+          this.loadProfileImage(abonnement); 
+       
+          const imagePath = utilisateur.image;
+          this.fileservice.getImage(imagePath).subscribe({
+            next: (imageBlob) => {
+              const objectURL = URL.createObjectURL(imageBlob);
+              utilisateur.image = objectURL;
+            },
+            error: () => {
+              utilisateur.image = 'assets/images/user.png';
+            },
+          });
+        } else {
+          console.warn(`Aucune image pour l'utilisateur : ${utilisateur?.nom ?? 'Inconnu'}`);
+        }
+      });
+   this.setPageExprimer(1);
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Erreur lors du chargement des abonnements exprimés :', err);
+    }
+  });
+}
+get totalPagesExprimer(): number {
+  return Math.ceil(this.abonnementsExprimer.length / this.pageSizeExprimer);
+}
+setPageExprimer(page: number): void {
+  if (page < 1) page = 1;
+  if (page > this.totalPagesExprimer) page = this.totalPagesExprimer;
+  this.pageExprimer = page;
+
+  const start = (page - 1) * this.pageSizeExprimer;
+  const end = start + this.pageSizeExprimer;
+  this.abonnementsExprimerParPage = this.abonnementsExprimer.slice(start, end);
+}
+
+
 }

@@ -21,16 +21,43 @@ import { Router } from '@angular/router';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit, DoCheck {
-  prestataires: Utilisateur[] = [];
+  searchNomPrestataire: string = '';
+allPrestataires: any[] = [];
+
+  allUtilisateursParticuliers: any[] = [];
+utilisateursParticuliers: any[] = [];
+pagedUtilisateursParticuliers: any[] = [];
+searchNomUtilisateur: string = '';
+currentPageParticuliers: number = 1;
+pageSizeParticuliers: number = 10;
+totalPagesParticuliers: number = 1;
+
+  earchNomUtilisateur: string = '';
+  filteredEntreprises: any[] = [];
+
+
+
+  prestataires: any[] = []; 
+pagedPrestataires: any[] = [];
+currentPage = 1;
+pageSize = 7; 
+totalPages = 0;
+searchNomEntreprise = '';
+pagedEntreprises: any[] = [];
+searchKeyword: string = '';
+
   @ViewChild('calendarIcon') calendarIcon!: ElementRef;
   entreprises: Utilisateur[] = [];
   selectedPrestataire: Utilisateur | null = null;
   profileImage: string | null = null;
   user: any;
   profileImageUrl: SafeUrl | null = null;
-  utilisateursParticuliers: Utilisateur[] = [];
   utilisateursEntreprises: Utilisateur[] = [];
 
+
+currentPageEntreprises = 1;
+pageSizeEntreprises = 5;
+totalPagesEntreprises = 0;
   image: SafeUrl | null = null;
   sanitizer: any;
 
@@ -89,18 +116,42 @@ export class UserComponent implements OnInit, DoCheck {
           doucument_CIN: prestataire.doucument_CIN,
           doucument_cv: prestataire.doucument_cv,
         }));
+        this.allPrestataires = [...this.prestataires];
 
-        this.prestataires.forEach((prestataire) => {
+     
+         this.prestataires.forEach((prestataire) => {
           if (prestataire.image) {
             this.loadProfileImage(prestataire);
           }
         });
+                  this.setPage(1)
+
+         this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
+        this.filterPrestatairesByNom();
+      
+
+       
+     
+        this.cdr.detectChanges(); 
+    
       },
       (error) => {
         console.error('Erreur lors du chargement des prestataires', error);
       }
     );
   }
+filterPrestatairesByNom(): void {
+  const search = this.searchNomPrestataire.toLowerCase();
+
+  this.prestataires = this.allPrestataires.filter(prestataire =>
+    prestataire.nom?.toLowerCase().includes(search)
+  );
+
+  this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
+  this.setPage(1);
+}
+
+
 
   getShortDescription(description?: string): string {
     return description ? description.substring(0, 100) + '...' : '';
@@ -170,12 +221,40 @@ export class UserComponent implements OnInit, DoCheck {
         this.utilisateursParticuliers.forEach((particulier) => {
           this.loadProfileImage(particulier);
         });
+        this.totalPagesParticuliers = Math.ceil(this.utilisateursParticuliers.length / this.pageSizeParticuliers);
+
+      this.setPageParticuliers(1);
+        this.allUtilisateursParticuliers = [...this.utilisateursParticuliers];
+        this.filterUtilisateursByNom(); 
+        this.cdr.detectChanges(); 
       },
       (error) => {
         console.error('Erreur lors du chargement des particuliers', error);
       }
     );
   }
+  filterUtilisateursByNom(): void {
+  const search = this.searchNomUtilisateur.toLowerCase();
+
+  this.utilisateursParticuliers = this.allUtilisateursParticuliers.filter(utilisateur =>
+    utilisateur.nom?.toLowerCase().includes(search)
+  );
+
+  this.totalPagesParticuliers = Math.ceil(this.utilisateursParticuliers.length / this.pageSizeParticuliers);
+
+  this.setPageParticuliers(1);
+}
+setPageParticuliers(page: number): void {
+  if (page < 1) page = 1;
+  if (page > this.totalPagesParticuliers) page = this.totalPagesParticuliers;
+
+  this.currentPageParticuliers = page;
+
+  const startIndex = (page - 1) * this.pageSizeParticuliers;
+  const endIndex = startIndex + this.pageSizeParticuliers;
+
+  this.pagedUtilisateursParticuliers = this.utilisateursParticuliers.slice(startIndex, endIndex);
+}
   getAllEntreprises(): void {
     this.utilisateurService.getAllEntreprises().subscribe(
       (data) => {
@@ -199,13 +278,36 @@ export class UserComponent implements OnInit, DoCheck {
           if (entreprise.image) {
             this.loadProfileImage(entreprise);
           }
+                this.filterUtilisateursByNom(); 
+
         });
+        
+        this.totalPagesEntreprises = Math.ceil(this.entreprises.length / this.pageSizeEntreprises);
+        this.filteredEntreprises = [...this.entreprises]; 
+      this.setPageEntreprises(1);
+
       },
       (error) => {
         console.error('Erreur lors du chargement des entreprises', error);
       }
     );
   }
+filterEntreprisesByNom(): void {
+  const keyword = this.searchNomEntreprise?.toLowerCase().trim() || '';
+
+  this.filteredEntreprises = this.entreprises.filter((entreprise) => {
+    const nom = (entreprise.nom || '').toLowerCase();
+    return nom.includes(keyword);
+  });
+
+  this.totalPagesEntreprises = Math.ceil(this.filteredEntreprises.length / this.pageSizeEntreprises);
+  this.setPageEntreprises(1);
+}
+
+
+
+
+
 
   supprimerUtilisateur(id: number): void {
     this.utilisateurService.deleteUser(id).subscribe(
@@ -273,4 +375,25 @@ export class UserComponent implements OnInit, DoCheck {
       console.error('Erreur lors du décodage du token :', error);
     }
   }
+
+  setPage(page: number) {
+  if (page < 1) page = 1;
+  if (page > this.totalPages) page = this.totalPages;
+
+  this.currentPage = page;
+  const startIndex = (page - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  this.pagedPrestataires = this.prestataires.slice(startIndex, endIndex);
+}
+
+setPageEntreprises(page: number): void {
+  this.currentPageEntreprises = page;
+  const start = (page - 1) * this.pageSizeEntreprises;
+  const end = start + this.pageSizeEntreprises;
+  this.pagedEntreprises = this.filteredEntreprises.slice(start, end);
+}
+
+
+
+
 }

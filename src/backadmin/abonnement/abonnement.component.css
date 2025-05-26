@@ -158,3 +158,27 @@ input, select {
 }
 
 
+.form-select {
+  width: 200px;       
+  padding: 8px 12px;  
+  font-size: 16px;    
+  border: 1px solid #ccc;
+  border-radius: 5px;  
+  background-color: #fff; 
+  color: #333;        
+  transition: border-color 0.3s ease;
+}
+
+.form-select:focus {
+  border-color: #007bff; 
+  outline: none;        
+  box-shadow: 0 0 5px rgba(0,123,255,0.5); 
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+
+.form-select option:hover {
+  background-color: #f0f8ff; 
+}

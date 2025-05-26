@@ -216,7 +216,8 @@ export class AllTemplateFrontComponent  {
       this.showServiceModal = true;
     } else {
       console.error('Catégorie non trouvée');
-    }}
+    }
+  }
   getAllServicesByCategorie(categorieId: number) {
     this.service.getAllServicesByCategorie(categorieId).subscribe(
       (services: Servicee[]) => {

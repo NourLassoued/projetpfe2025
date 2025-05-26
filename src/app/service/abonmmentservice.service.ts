@@ -14,4 +14,7 @@ export class AbonmmentserviceService {
   getAbonnementsActifs(): Observable<Abonnement[]> {
     return this.http.get<Abonnement[]>(`${this.apiUrl}/actifs`);
   }
+  getAbonnementsExprimer(): Observable<Abonnement[]> {
+    return this.http.get<Abonnement[]>(`${this.apiUrl}/Exprimer`);
+  }
 }
