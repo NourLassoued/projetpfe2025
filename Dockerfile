@@ -1,7 +1,6 @@
 
 FROM node:18.20.3-alpine AS build
 
-RUN apk add --no-cache python3 make g++ bash
 
 RUN npm install -g @angular/cli@16.2.16
 
@@ -13,7 +12,7 @@ RUN npm install --force
 
 COPY . .
 
-RUN ng build --configuration production --no-progress --source-map=false
+RUN ng build 
 
 FROM nginx:latest
 
