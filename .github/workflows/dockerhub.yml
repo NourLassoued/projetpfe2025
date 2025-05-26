@@ -41,7 +41,8 @@ jobs:
       - name: Update image tag in angular.yml 
         run: |
           IMAGE_TAG="1.1.${{ github.run_number }}"
-           sed -i "s|image: nourlassoued/nourangular:[^[:space:]]*|image: nourlassoued/nourangular:${IMAGE_TAG}|" argocdpfe/angular-app/templates/angular.yml
+           sed -i "s|image: nourlassoued/nourangular:[^[:space:]]*|image: nourlassoued/nourangular:${IMAGE_TAG}|" argocdpfe/angular-app/templates/values.yaml
+
  
 
       - name: Commit and push changes to argocdpfe repo
@@ -49,7 +50,8 @@ jobs:
            cd argocdpfe
            git config user.name "GitHub Actions"
            git config user.email "github-action@github.com"
-           git add angular-app/templates/angular.yml
+           git add angular-app/templates/values.yaml
+
            if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
