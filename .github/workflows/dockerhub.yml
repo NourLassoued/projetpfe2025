@@ -41,21 +41,25 @@ jobs:
       - name: Update image tag in angular.yml 
         run: |
           IMAGE_TAG="1.1.${{ github.run_number }}"
-           sed -i "s|image: nourlassoued/nourangular:[^[:space:]]*|image: nourlassoued/nourangular:${IMAGE_TAG}|" argocdpfe/angular-app/values.yaml
+          sed -i "/angular:/,/^[^ ]/ s/^\s*tag: \".*\"/  tag: \"${IMAGE_TAG}\"/" argocdpfe/angular-app/values.yaml
 
- 
-     
+      - name: Debug updated values.yaml
+        run: |
+          echo "----- Updated values.yaml -----"
+          cat argocdpfe/angular-app/values.yaml
+          echo "--------------------------------"
+
       - name: Commit and push changes to argocdpfe repo
         run: |
-           cd argocdpfe
-           git config user.name "GitHub Actions"
-           git config user.email "github-action@github.com"
-           git add angular-app/values.yaml
+          cd argocdpfe
+          git config user.name "GitHub Actions"
+          git config user.email "github-action@github.com"
+          git add angular-app/values.yaml
 
-           if git diff --cached --quiet; then
+          if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
-           else
-            git commit -m " nour Update Docker image tag to 1.1.${{ github.run_number }}"
+          else
+            git commit -m "Update Docker image tag to 1.1.${{ github.run_number }}"
             git push
-            fi
+          fi
