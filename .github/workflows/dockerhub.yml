@@ -29,22 +29,22 @@ jobs:
           context: .
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
-      - name: Checkout argotest repo
+      - name: Checkout argocdpfe  repo
         uses: actions/checkout@v4
         with:
-          repository: nourlassoued/argotest
-          ref: main
+          repository: nourlassoued/argocdpfe 
+          ref: master
           token: ${{ secrets.CHCR_TOKEN }}
-          path: argotest
+          path: argocdpfe 
 
       - name: Update image tag in angular.yml
         run: |
           IMAGE_TAG="1.1.${{ github.run_number }}"
-          sed -i "s|image: nourlassoued/nourangular:.*|image: nourlassoued/nourangular:${IMAGE_TAG}|" argotest/angular-app/angular.yml
+          sed -i "s|image: nourlassoued/nourangular:.*|image: nourlassoued/nourangular:${IMAGE_TAG}|" argocdpfe/angular-app/angular.yml
 
-      - name: Commit and push changes to argotest repo
+      - name: Commit and push changes to argocdpfe repo
         run: |
-          cd argotest
+          cd argocdpfe
           git config user.name "GitHub Actions"
           git config user.email "github-action@github.com"
           git add angular-app/angular.yml
