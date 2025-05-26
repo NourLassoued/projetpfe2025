@@ -46,7 +46,7 @@ jobs:
           repository: NourLassoued/argocdpfe
           ref: master
           path: argocdpfe
-          token: ${{ secrets.CHCR_TOKEN }}
+          token: ${{ secrets.CHRR_TOKEN}}
 
       - name: Update image tag in values.yaml for Spring Boot
         run: |
