@@ -32,9 +32,9 @@ jobs:
       - name: Checkout argocdpfe  repo
         uses: actions/checkout@v4
         with:
-          repository: nourlassoued/argocdpfe 
+          repository: NourLassoued/argocdpfe 
           ref: master
-          token: ${{ secrets.agcdtoken }}
+          token: ${{ secrets.CHCR_TOKEN }}
           path: argocdpfe 
 
       - name: Update image tag in angular.yml
