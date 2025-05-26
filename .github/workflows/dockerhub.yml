@@ -70,5 +70,5 @@ jobs:
                   exit 0
                 else
                   git commit -m "Update Spring Boot image tag to 1.0.${{ github.run_number }}"
-                  git push
+                  t push
                 fi
