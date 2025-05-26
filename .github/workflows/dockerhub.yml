@@ -36,9 +36,9 @@ jobs:
           ref: master
         
           path: argocdpfe 
-          token: ${{ secrets.CHCR_TOKEN }}
+          token: ${{ secrets.CHCR_TOKEN }} 
 
-      - name: Update image tag in angular.yml
+      - name: Update image tag in angular.yml 
         run: |
           IMAGE_TAG="1.1.${{ github.run_number }}"
           sed -i "s|image: nourlassoued/nourangular:.*|image: nourlassoued/nourangular:${IMAGE_TAG}|" argocdpfe/angular-app/templates/angular.yml
