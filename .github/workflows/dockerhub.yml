@@ -72,3 +72,4 @@ jobs:
                   git commit -m "Update Spring Boot image tag to 1.0.${{ github.run_number }}"
                   git push
                 fi
+
