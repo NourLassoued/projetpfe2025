@@ -25,6 +25,10 @@ export class BricolageComponent {
       private router: Router,
       ) {}
       ngOnInit(): void {
+        window.scrollTo({
+          top:0,
+          behavior:'smooth'
+        })
             
         this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');  
         

@@ -465,6 +465,20 @@ h1 {
     z-index: 1;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.full-width-container {
+  width: 100%;
+  padding: 0 2rem; 
+  margin: 0 auto;
+}
+
 .section-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -678,7 +692,6 @@ h1 {
 .feature-box:nth-child(5) { animation-delay: 0.5s; }
 .feature-box:nth-child(6) { animation-delay: 0.6s; }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
     .features-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -961,8 +974,138 @@ h1 {
 
 
 
+.subscription-card {
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.subscription-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.price-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color:white;
+  margin-bottom: 10px;
+}
+.pricee-body{
+  color: white;
+  font-weight: bold;
+}
+.price {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+}
+
+.price-body {
+  margin: 20px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.price-footer {
+  margin-top: auto;
+}
+
+.btn-subscribe {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  text-decoration: none;
+  color: white;
+}
+.btn-subscribe.free {
+  background: #6c757d; 
+  color: white;
+}
+
+.btn-subscribe.monthly {
+  background:white;
+  color: #0d6efd;
+}
+
+.btn-subscribe.annual {
+  background: #198754; 
+  color: white;
+}
+
+
+.badge-popular, .badge-free, .badge-annual {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 30px;
+  color: white;
+}
+
+.badge-popular {
+  background: #0d6efd;
+}
+
+.badge-free {
+  background: #6c757d;
+}
+
+.badge-annual {
+  background: #198754;
+}
+
+.annual-card {
+  border: 2px solid #198754;
+  box-shadow: 0 10px 30px #198754(0, 0, 0, 0.08);
+  border-radius: 16px;
+}
+
+.popular-card {
+   background-color: #007bff;
+ box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  color: white;
+}
+.free-card{
+    border: 2px solid #6c757d;
+;
+
+} 
 
 
 
+.section-subtitle {
+    font-size: 1.125rem;
+    color: #6b7c95;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: bold;
+}
+h1.mb-3 {
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1rem; 
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
 
 
+h1.mb-3.extra-bold {
+    font-weight: 800;
+}
+
+h1.mb-3.black {
+    font-weight: 900;
+}

@@ -46,10 +46,10 @@ body {
 }
 
 .register-box {
-    width: 1200px; /* Réduisez la largeur */
-    height: auto;
+    width: 1200px; 
+    height: 650px;
     padding: 20px;
-    margin: 0; /* Supprime les marges */
+    margin: 0; 
     background-color: #fbf5f5;
     flex-grow: 1;
    

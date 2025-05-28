@@ -77,6 +77,7 @@ import { CommentairesRecusComponent } from './commentaires-recus/commentaires-re
 import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolutionentrprise.component';
 import { AbonnementComponent } from '../backadmin/abonnement/abonnement.component';
 import { AbonnementpayeComponent } from './abonnementpaye/abonnementpaye.component';
+import { AboutComponent } from './Front/about/about.component';
 
 
 const routes: Routes = [
@@ -94,6 +95,11 @@ const routes: Routes = [
     component: AllTemplateFrontComponent
   },
   // /////////////////////Front//////////////////
+  {
+    path: 'Qui sommes-nous',
+    component: AboutComponent
+  },
+  
   {
     path: 'Bricolage',
     component:BricolageComponent
