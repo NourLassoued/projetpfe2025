@@ -37,42 +37,8 @@ public class ForgetPasswordController {
     private EmailService emailService;
     @Autowired
     private ForgetPasswordRepository forgetPasswordRepository;
-/*@PostMapping("/verifyMail/{email}")
-public ResponseEntity<String> verifyEmail(@PathVariable String email) {
-    try {
-        // Rechercher l'utilisateur par email
-        Utilisateur user = utlisateurRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Please provide a valid email !"));
 
-        // Générer un OTP
-        int otp =OtpGenrator();
-
-        // Préparer le contenu du mail
-        MailBody mailBody = MailBody.builder()
-                .to(email)
-                .text("This is the OTP for your Forget Password: " + otp)
-                .subject("OTP for Forget Password request")
-                .build();
-
-        // Sauvegarder l'OTP dans la base de données
-        ForgotPassword fp = ForgotPassword.builder()
-                .otp(otp)
-                .expirationTime(new Date(System.currentTimeMillis() + 70 * 1000))
-                .user(user)
-                .build();
-        forgetPasswordRepository.save(fp);
-
-        // Envoyer l'email
-        emailService.setJavaMailSender(mailBody);
-
-        // Retourner une réponse de confirmation
-        return ResponseEntity.ok("Email sent for verification!");
-    } catch (UsernameNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    } catch (Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email: " + ex.getMessage());
-    }
-}*/@PostMapping("/verifyMail/{email}")
+@PostMapping("/verifyMail/{email}")
 public ResponseEntity<String> verifyEmail(@PathVariable String email) {
     try {
 
@@ -95,14 +61,14 @@ public ResponseEntity<String> verifyEmail(@PathVariable String email) {
                 + "</head>"
                 + "<body>"
                 + "<div class='email-container'>"
-                + "<div class='logo'>Ring<span>Twice</span></div>"
+                + "<div class='logo'>Ring<span>SOS Service  Tunisie </span></div>"
                 + "<p>Bonjour " + user.getNom() + ",</p>"
                 + "<p>Pour réinitialiser votre mot de passe, merci de cliquer sur le lien ci-dessous :</p>"
                 + "<p style='text-align: center;'><a href='http://localhost:4200/editpassword?id=" + userId + "' class='button'>Réinitialiser mon mot de passe</a></p>"
 
                 + "<p>Si vous n'avez pas demandé de réinitialisation, merci d'ignorer cet e-mail et votre mot de passe restera inchangé.</p>"
                 + "<p>Merci,</p>"
-                + "<p>L'équipe Ring Twice</p>"
+                + "<p>L'équipe SOS Service  Tunisie </p>"
                 + "<div class='footer'>Besoin d'aide ? Trouvez votre réponse <a href='#'>ici</a> ou <a href='#'>contactez-nous</a>.</div>"
                 + "</div>"
                 + "</body>"
