@@ -12,7 +12,7 @@ RUN npm install --force
 
 COPY . . 
 
-RUN ng build
+RUN ng build --configuration production
 
 FROM nginx:latest
 RUN apt-get update && apt-get install -y iputils-ping
