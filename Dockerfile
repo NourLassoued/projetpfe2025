@@ -12,7 +12,7 @@ RUN npm install --force
 
 COPY . . 
 
-RUN ng build
+RUN ng build || (echo "Build Angular failed" && cat /usr/src/app/angular.log && exit 1)
 
 FROM nginx:latest
 RUN apt-get update && apt-get install -y iputils-ping
