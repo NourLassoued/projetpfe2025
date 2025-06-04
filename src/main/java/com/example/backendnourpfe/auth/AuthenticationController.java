@@ -20,7 +20,7 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
-        // Vous pouvez ajouter d'autres actions de nettoyage si nécessaire
+
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok("Logged out successfully!");
     }
