@@ -88,10 +88,8 @@
         <h2>Choisissez les services que vous souhaitez proposer</h2>
 
     
-        <!-- Barre de recherche -->
         <input type="text" placeholder="🔍  Recherchez votre domaine de service" class="search-bar">
     
-        <!-- Affichage des catégories en grille -->
         <div class="grid-container">
           <div class="category-card" *ngFor="let category of categories  let i = index" (click)="selectCategory(category.nom) ">
             <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
@@ -124,20 +122,19 @@
         </div>
       </div>
   </div>
-  <div class="image-container">
-    <img src="assets/img/ahmed.png" alt="Image 1">
-    <img src="assets/img/asma123.png" alt="nour">
-    <img src="assets/img/imag1.png" alt="Image 3">
-  </div>
+<div class="image-container">
+  <img src="assets/img/ahmed.png" alt="Image 1" class="image-top">
+  <img src="assets/img/asma123.png" alt="nour" class="image-middle">
+  <img src="assets/img/imag1.png" alt="Image 3" class="image-bottom">
+</div>
+
     </div>
   
   
   
 
 </body>
-<div>
-<app-footer></app-footer>
-</div>
+
 
 
 

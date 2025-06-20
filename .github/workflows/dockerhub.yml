@@ -41,7 +41,7 @@ jobs:
       - name: Update image tag in angular.yml 
         run: |
           IMAGE_TAG="1.1.${{ github.run_number }}"
-          sed -i "/angular:/,/^[^ ]/ s/^\s*tag: \".*\"/  tag: \"${IMAGE_TAG}\"/" argocdpfe/angular-app/values.yaml
+          sed -i "/angular:/,/^[^ ]/ s/^\s*tag: \".*\"/ tag: \"${IMAGE_TAG}\"/" argocdpfe/angular-app/values.yaml
 
       - name: Debug updated values.yaml
         run: |

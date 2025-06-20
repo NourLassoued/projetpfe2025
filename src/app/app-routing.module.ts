@@ -78,6 +78,7 @@ import { MesevolutionentrpriseComponent } from './mesevolutionentrprise/mesevolu
 import { AbonnementComponent } from '../backadmin/abonnement/abonnement.component';
 import { AbonnementpayeComponent } from './abonnementpaye/abonnementpaye.component';
 import { AboutComponent } from './Front/about/about.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 
 const routes: Routes = [
@@ -98,6 +99,10 @@ const routes: Routes = [
   {
     path: 'Qui sommes-nous',
     component: AboutComponent
+  },
+   {
+    path: 'chatbot',
+    component: ChatbotComponent
   },
   
   {

@@ -1,25 +1,37 @@
-
 <div class="container-xxl py-7" id="entreprises">
-  
+    <div class="section-header">
+        <p class="section-subtitle">
+            Découvrez les professionnels qui collaborent avec SOS Service Tunisie pour vous offrir des prestations de qualité
+        </p>
+    </div>
+
     <div class="services-container">
-       
         <div class="services-list">
             <button (click)="prevEntreprise()" class="scroll-btn left" [disabled]="currentIndex === 0">
                 <i class="fa fa-angle-left"></i>
             </button>
-            <div class="category-carde" *ngFor="let entreprise of visibleEntreprises; let i = index">
-                <img [src]="entreprise.safeImageUrl" [alt]="entreprise.nom" *ngIf="entreprise.safeImageUrl" />
-                <div class="category-content">
-                    <h3>{{ entreprise.nomEntreprise }}</h3>
 
-
-                    <button class="discover-btn" (click)="navigateToEntreprise(entreprise.idUtilisateur)">                        Découvrir →</button>
+            <div class="cards-wrapper">
+                <div class="category-carde" *ngFor="let entreprise of visibleEntreprises" tabindex="0">
+                    <div class="image-container">
+                        <img [src]="entreprise.safeImageUrl" [alt]="entreprise.nomEntreprise" *ngIf="entreprise.safeImageUrl" />
+                       
+                    </div>
+                    <div class="category-content">
+                        <h3>{{ entreprise.nomEntreprise }}</h3>
+                        <button class="discover-btn" (click)="navigateToEntreprise(entreprise.idUtilisateur)">
+                            Découvrir <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
+
             <button (click)="nextEntreprise()" class="scroll-btn right" [disabled]="currentIndex + itemsPerPage >= entreprises.length">
                 <i class="fa fa-angle-right"></i>
             </button>
         </div>
-
+        <div class="scroll-indicator"></div>
     </div>
+
+  
 </div>

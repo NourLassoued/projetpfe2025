@@ -10,7 +10,7 @@ body {
     padding: 0;
     margin-bottom: 0;
     width:1350px;
-    height:950px;
+   height:950px;
     
 
   }
@@ -19,14 +19,14 @@ body {
     align-items: center;
     font-size: 20px;
     font-weight: bold;
-    color: #0c0c0c; /* Couleur du texte */
+    color: #0c0c0c; 
     margin-bottom: 5px;
     
   }
   
   label i {
-    margin-right: 8px; /* Espace entre l'icône et le texte */
-    color: #007bff; /* Couleur des icônes */
+    margin-right: 8px; 
+    color: #007bff; 
     font-size: 18px;
   }
 
@@ -39,18 +39,18 @@ body {
 
 .input-fa {
   width: 100%;
-  padding-left: 30px; /* Donne de l'espace pour l'icône */
-  font-size: 14px; /* Ajuste la taille du texte dans le champ */
-  padding-right: 10px; /* Éventuellement pour les autres icônes */
+  padding-left: 30px; 
+  font-size: 14px; 
+  padding-right: 10px; 
 }
 
 .input-icon {
   position: absolute;
   top: 50%;
-  left: 10px; /* Ajuste l'espace entre l'icône et le bord gauche */
-  transform: translateY(-50%); /* Centre verticalement l'icône */
-  font-size: 18px; /* Taille de l'icône */
-  color: #888; /* Couleur de l'icône */
+  left: 10px; 
+  transform: translateY(-50%); 
+  font-size: 18px;
+  color: #888; 
 }
 
 
@@ -80,38 +80,46 @@ font-size: 15px
   }
   
   
-  
-  .image-container {
-    display: flex;
-    justify-content: space-between; 
-    align-items: flex-start;
-    width: 40%;
-    padding: 20px;
-    height: 800px;
-    margin: top 20px;
-  }
-  
-  .image-container img:nth-child(1) {
-  margin-bottom: 200px;
-    height: 400px;
-    
-  }
-  
-  .image-container img:nth-child(2) {
-    margin-top: 0px; 
-    height: 400px;
-  }
-  
-  .image-container img:nth-child(3) {
-    margin-top: 90px; 
-    height: 400px;
-  }
-  
-  .image-container img {
-    width: 30%; 
-    height: auto;
-    border-radius: 20px;
-  }
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 50px;
+}
+
+.image-container img {
+  width: 150px;
+  height: auto;
+  border-radius: 30px;
+  object-fit: cover;
+  transition: transform 0.3s ease, z-index 0.3s;
+  margin: 0 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.image-container .image-top {
+  margin-bottom: 350px;
+}
+
+.image-container .image-middle {
+  margin-bottom: 500px;
+}
+
+.image-container .image-bottom {
+  margin-bottom: 350px;
+}
+
+.image-container img:hover {
+  transform: scale(1.08);
+  z-index: 10;
+}
+
+
+ 
+
+
   
 
 .container h2{
@@ -119,13 +127,13 @@ font-size: 15px
     margin-top: 10px;
 } 
 .container {
+  margin-top: 30px;
     max-width: 800px;
-    height:920px;
- background: white;
+    height:950px;
+    background: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin: top 20px;
  
  
   }
@@ -141,8 +149,8 @@ font-size: 15px
     
   }
   .container input:focus {
-    border-color: #007bff; /* Couleur de bordure lors du focus (ici bleu) */
-    outline: none; /* Enlève le contour par défaut de l'input */
+    border-color: #007bff;
+    outline: none;
   }
   button {
     width: 100%;
@@ -192,7 +200,7 @@ font-size: 15px
 
 
 .back-icon::before {
-  content: '⬅'; /* Left arrow */
+  content: '⬅'; 
   font-weight: bold;
 }
 
@@ -280,7 +288,7 @@ color: #555;
 }
 .category-card {
 display: flex;
-justify-content: space-between; /* Alignement des éléments avec un espace entre */
+justify-content: space-between; 
 align-items: center;
 background: white;
 padding: 10px;
@@ -311,47 +319,47 @@ flex-direction: column;
 }
 
 .category-card label {
-  margin-bottom: 12px; /* Ajouter un espace en bas du label */
-  font-size: 16px; /* Taille du texte du label */
+  margin-bottom: 12px; 
+  font-size: 16px; 
   
 }
 
 .iconn {
   margin-left: 90px;
-  max-width: 5px; /* Taille de la case à cocher */
+  max-width: 5px;
   
   max-height: 5px;
-  -webkit-appearance: none; /* Supprimer l'apparence par défaut sur Safari */
-  -moz-appearance: none; /* Supprimer l'apparence par défaut sur Firefox */
-  appearance: none; /* Supprimer l'apparence par défaut */
-  border: 2px solid #ccc; /* Bordure de la case à cocher */
-  border-radius: 4px; /* Coins arrondis */
-  background-color: #ededed; /* Couleur de fond */
+  -webkit-appearance: none;
+  -moz-appearance: none; 
+  appearance: none; 
+  border: 2px solid #ccc; 
+  border-radius: 4px; 
+  background-color: #ededed;
   position: relative;
-  cursor: pointer; /* Curseur en forme de main */
+  cursor: pointer;
 }
 
 
 .iconn:checked {
 
-border-color: #4CAF50; /* Bordure verte lorsqu'il est coché */
+border-color: #4CAF50; 
 }
 
 .iconn:checked::before {
-  content: ''; /* Création du checkmark */
+  content: ''; 
   position: absolute;
   top: 4px;
   left: 7px;
   width: 6px;
   height: 6px;
   border: solid  #247df0;
-  border-width: 0 3px 3px 0; /* Style du checkmark */
-  transform: rotate(45deg); /* Rotation du checkmark */
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg); 
 }
 
 .iconn:hover {
-background-color: #f1f1f1; /* Changement de fond au survol */
-border-color: #247df0; /* Changement de bordure au survol */
+background-color: #f1f1f1;
+border-color: #247df0; 
 }
 .error {
 color: rgb(14, 13, 13);
@@ -366,31 +374,31 @@ margin-top: 5px;
 }
 .alert {
   display: block !important;
-  background-color: #007bff;  /* Couleur de fond */
-  color: white;  /* Couleur du texte */
+  background-color: #007bff; 
+  color: white; 
   width: 400px;
   height: 80px;
-  border-radius: 5px;  /* Coins arrondis */
-  padding: 15px;  /* Espace interne autour du texte */
-  font-size: 16px;  /* Taille de police */
-  font-weight: bold;  /* Poids de la police pour plus de visibilité */
-  position: fixed;  /* Fixe l'alerte à une position précise */
-  top: 20px;  /* Place l'alerte en haut de la page */
-  left: 50%;  /* Centrer horizontalement */
-  transform: translateX(-50%);  /* Centrer complètement */
-  z-index: 9999;  /* Assurez-vous qu'il est au-dessus des autres éléments */
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);  /* Ombre subtile autour de l'alerte */
-  transition: opacity 0.5s ease, transform 0.5s ease;  /* Ajout d'une animation de transition */
+  border-radius: 5px;  
+  padding: 15px; 
+  font-size: 16px; 
+  font-weight: bold; 
+  position: fixed;  
+  top: 20px;  
+  left: 50%; 
+  transform: translateX(-50%);  
+  z-index: 9999; 
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);  
+  transition: opacity 0.5s ease, transform 0.5s ease; 
 }
 
 .alert.show {
-  opacity: 1;  /* Rendre l'alerte visible */
-  transform: translateX(-50%) translateY(0);  /* Animation de l'alerte qui glisse vers le bas */
+  opacity: 1;  
+  transform: translateX(-50%) translateY(0); 
 }
 
 .alert.hide {
-  opacity: 0;  /* Rendre l'alerte invisible */
-  transform: translateX(-50%) translateY(-20px);  /* L'alerte glisse vers le haut avant de disparaître */
+  opacity: 0;  
+  transform: translateX(-50%) translateY(-20px);  
 }
 
 
