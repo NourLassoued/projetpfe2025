@@ -1,7 +1,6 @@
 package com.example.backendnourpfe.service;
 
 import com.example.backendnourpfe.Respository.AvisRepository;
-import com.example.backendnourpfe.Respository.DemandeRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Avis;
 import com.example.backendnourpfe.classes.UserRole;
@@ -10,8 +9,6 @@ import com.example.backendnourpfe.interfacee.AvisInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 
 @Service
