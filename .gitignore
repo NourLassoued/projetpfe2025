@@ -33,6 +33,7 @@ build/
 ### VS Code ###
 .vscode/
 # Ignorer tout le dossier chatbot-python
-chatbot-python/
+chatbot-python/chatbot_model/model.safetensors
+
 init.sql
 
