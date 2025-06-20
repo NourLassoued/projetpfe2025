@@ -32,4 +32,5 @@ build/
 .env
 ### VS Code ###
 .vscode/
-chatbot-python/chatbot_model/model.safetensors
+chatbot-python/
+
