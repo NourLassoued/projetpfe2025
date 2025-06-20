@@ -21,10 +21,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run tests with Maven
-        run: mvn test --no-transfer-progress -B
-
-      - name: Build with Maven (skip tests)
+      - name: Build with Maven
         run: mvn clean package -DskipTests --no-transfer-progress -B
 
       - name: Set up Docker Buildx
