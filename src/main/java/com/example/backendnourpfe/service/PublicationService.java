@@ -7,7 +7,7 @@ import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,13 +17,12 @@ import java.util.List;
 public class PublicationService {
 
     @Autowired
-    private PublicationRepository publicationRepository;
+    public PublicationRepository publicationRepository;
 
     @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    public UtilisateurRepository utilisateurRepository;
     @Autowired
-
-    private  EmailService emailService;
+    public EmailService emailService;
 
 
     public Publication ajouterPublication(Publication publication, Long entrepriseId) {

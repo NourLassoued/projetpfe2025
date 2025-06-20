@@ -26,8 +26,7 @@ import java.util.*;
 import okhttp3.*;
 @Service
 public class FlouciService {
-    @Autowired
-    private JavaMailSender javaMailSender;
+
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -37,10 +36,10 @@ public class FlouciService {
     @Autowired
     private ReservationRepository reservationRepository;
     @Value("${flouci.public-token}")
-    private String publicToken;
+    public String publicToken;
 
     @Value("${flouci.private-token}")
-    private String privateToken;
+    public String privateToken;
     @Autowired
     private PaymentAbonnementRepository paymentAbonnementRepository;
 

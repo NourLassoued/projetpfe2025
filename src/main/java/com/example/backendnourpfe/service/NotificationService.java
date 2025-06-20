@@ -1,7 +1,6 @@
 package com.example.backendnourpfe.service;
 
-import com.example.backendnourpfe.classes.Notification;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -18,13 +18,13 @@ import java.util.Optional;
 public class PostulationService {
 
     @Autowired
-    private PostulationRepository postulationRepository;
+    public PostulationRepository postulationRepository;
 
     @Autowired
-    private DemandeRepository demandeRepository;
+    public DemandeRepository demandeRepository;
 
     @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    public UtilisateurRepository utilisateurRepository;
 
 
     public Postulation postuler(Long demandeId, Long utilisateurId, Postulation postulation) {

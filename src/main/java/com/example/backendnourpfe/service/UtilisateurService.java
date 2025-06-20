@@ -69,20 +69,20 @@ public class UtilisateurService implements UtlisateurInterface {
         return utilisateurRepository.findAll();
     }
 
-public List<Utilisateur> getAllParticuliers() {
-    List<Utilisateur> particuliers = utilisateurRepository.findAll().stream()
-            .filter(user -> user.getRole() == UserRole.PARTICULIER)
-            .map(user -> {
-                if (user.getAdressee() != null) {
+    public List<Utilisateur> getAllParticuliers() {
+        List<Utilisateur> particuliers = utilisateurRepository.findAll().stream()
+                .filter(user -> user.getRole() == UserRole.PARTICULIER)
+                .map(user -> {
+                    if (user.getAdressee() != null) {
 
-                } else {
+                    } else {
 
-                }
-                return user;
-            })
-            .collect(Collectors.toList());
-    return particuliers;
-}
+                    }
+                    return user;
+                })
+                .collect(Collectors.toList());
+        return particuliers;
+    }
     public List<Utilisateur> getAllEntreprises() {
         List<Utilisateur> entreprises = utilisateurRepository.findAll().stream()
                 .filter(user -> user.getRole() == UserRole.ENTREPRISE) // Filtrer selon le rôle ENTREPRISE
@@ -99,25 +99,25 @@ public List<Utilisateur> getAllParticuliers() {
     }
 
 
-public List<Utilisateur> getAllPrestataires() {
-    List<Utilisateur> prestataires = utilisateurRepository.findAllPrestatairesWithAdresse(UserRole.PRESTATAIRE);
+    public List<Utilisateur> getAllPrestataires() {
+        List<Utilisateur> prestataires = utilisateurRepository.findAllPrestatairesWithAdresse(UserRole.PRESTATAIRE);
 
-    for (Utilisateur user : prestataires) {
-        if (user.getAdressee() != null) {
-            System.out.println("Adresse du prestataire : " + user.getAdressee().getIdAdresse());
+        for (Utilisateur user : prestataires) {
+            if (user.getAdressee() != null) {
+                System.out.println("Adresse du prestataire : " + user.getAdressee().getIdAdresse());
+            }
+            if (!user.getDisponibilites().isEmpty()) {
+                System.out.println("Disponibilités du prestataire : " + user.getDisponibilites());
+            } else {
+                System.out.println("Aucune disponibilité trouvée pour le prestataire : " + user.getIdUtilisateur());
+            }
         }
-        if (!user.getDisponibilites().isEmpty()) {
-            System.out.println("Disponibilités du prestataire : " + user.getDisponibilites());
-        } else {
-            System.out.println("Aucune disponibilité trouvée pour le prestataire : " + user.getIdUtilisateur());
-        }
+
+        return prestataires;
     }
 
-    return prestataires;
-}
-
     public Utilisateur getUtilisateurFromToken(String token) {
-        String email = jwtService.extractUsername(token); // Extraire l'email depuis le token
+        String email = jwtService.extractUsername(token);
 
         if (email == null) {
             throw new RuntimeException("Token invalide ou expiré");
@@ -210,8 +210,8 @@ public List<Utilisateur> getAllPrestataires() {
 
 
 
-                    }
-                }
+            }
+        }
 
 
 
@@ -312,7 +312,7 @@ public List<Utilisateur> getAllPrestataires() {
         if (utilisateurDetails.getPassword() != null) user.setPassword(utilisateurDetails.getPassword());
         if (utilisateurDetails.getImage() != null) user.setImage(utilisateurDetails.getImage());
         if (utilisateurDetails.getTelephoneNumber() != null) user.setTelephoneNumber(utilisateurDetails.getTelephoneNumber());
-      if(utilisateurDetails.getAdressee()!=null)user.setAdressee(utilisateurDetails.getAdressee());
+        if(utilisateurDetails.getAdressee()!=null)user.setAdressee(utilisateurDetails.getAdressee());
         if (utilisateurDetails.getRole() != null) user.setRole(utilisateurDetails.getRole());
         if (utilisateurDetails.getStatus() != null) user.setStatus(utilisateurDetails.getStatus());
         if (utilisateurDetails.getCertification() != null) user.setCertification(utilisateurDetails.getCertification());
@@ -377,28 +377,28 @@ public List<Utilisateur> getAllPrestataires() {
     }
 
 
-public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
-    Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
-            .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    public Map<String, Object> affecterAdresse(Long utilisateurId, Long adresseId) {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-    Adresse adresse = adresseRepository.findById(adresseId)
-            .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
+        Adresse adresse = adresseRepository.findById(adresseId)
+                .orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
 
-    utilisateur.setAdressee(adresse);
-    Utilisateur updatedUser = utilisateurRepository.save(utilisateur);
-
-
-    String newToken = jwtService.generateToken(updatedUser);
+        utilisateur.setAdressee(adresse);
+        Utilisateur updatedUser = utilisateurRepository.save(utilisateur);
 
 
+        String newToken = jwtService.generateToken(updatedUser);
 
-    Map<String, Object> response = new HashMap<>();
-    response.put("message", "Adresse affectée avec succès !");
-    response.put("token", newToken);
-    response.put("user", updatedUser);
 
-    return response;
-}
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Adresse affectée avec succès !");
+        response.put("token", newToken);
+        response.put("user", updatedUser);
+
+        return response;
+    }
 
 
     public Optional<Utilisateur> getUtilisateurById(Long id) {

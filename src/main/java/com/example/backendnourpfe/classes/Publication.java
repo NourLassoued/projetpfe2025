@@ -44,4 +44,7 @@ public class Publication {
             inverseJoinColumns = @JoinColumn(name = "particulier_id")
     )
     private List<Utilisateur> likedByUsers;
+
+    public void setIdPublication(long l) {
+    }
 }

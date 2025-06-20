@@ -2,7 +2,7 @@ package com.example.backendnourpfe.service;
 
 import com.example.backendnourpfe.Respository.AdresseRepository;
 import com.example.backendnourpfe.classes.Adresse;
-import com.example.backendnourpfe.classes.Utilisateur;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
