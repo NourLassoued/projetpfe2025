@@ -34,4 +34,5 @@ build/
 .vscode/
 # Ignorer tout le dossier chatbot-python
 chatbot-python/
+init.sql
 
