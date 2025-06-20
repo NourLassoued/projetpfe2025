@@ -42,7 +42,8 @@ public class SecurityConfiguration {
             "/publications/**",
             "/commentaires/**",
             "/notification/**",
-            "/AbonmentS/**"
+            "/AbonmentS/**",
+            "/chatbot/**"
 
 
 
