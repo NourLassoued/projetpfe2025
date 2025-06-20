@@ -3,10 +3,9 @@ package service;
 import com.example.backendnourpfe.Respository.*;
 import com.example.backendnourpfe.classes.TypeAbonnement;
 import com.example.backendnourpfe.classes.Utilisateur;
-import com.example.backendnourpfe.service.EmailService;
+
 import com.example.backendnourpfe.service.FlouciService;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
