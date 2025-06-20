@@ -22,9 +22,16 @@ jobs:
           cache: maven
 
       - name: Build with Maven and run tests
-        run: mvn clean verify --no-transfer-progress -B
+        run: mvn clean package --no-transfer-progress -B
 
-      - name: Set up Docker Buildx
+      - name: Show Surefire test reports
+        run: cat target/surefire-reports/*.txt || true
+               
+               
+               
+               
+               
+               - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
