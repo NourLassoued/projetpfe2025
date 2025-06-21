@@ -7,7 +7,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Servicee } from 'src/models/Servicee';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ScrollServiceService } from 'src/app/service/scroll-service.service';
-import { filter } from 'rxjs';
+
 import { PaymentService } from 'src/app/service/payment.service';
 import { ToastrService } from 'ngx-toastr';
 
