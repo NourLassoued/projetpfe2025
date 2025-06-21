@@ -55,19 +55,19 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 587
-          username: ${{ secrets.EMAIL_PASSWORD }}
-          password: ${{ secrets.EMAIL_USERNAME }}
+          username: ${{  secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Rapport de tests backendnourpfe - Build #${{ github.run_number }}"
           to: "nourlass50@gmail.com"
           from: "nourlass50@gmail.com"
           content_type: text/html
-          attachments: target/site/surefire-report.html
           body: |
             Bonjour,
             
             Veuillez trouver ci-joint le rapport HTML des tests Maven pour la build #${{ github.run_number }}.
             
             Bonne journée !
+          attachments: target/site/surefire-report.html
 
       - name: Show Surefire reports if tests fail
         if: failure()
