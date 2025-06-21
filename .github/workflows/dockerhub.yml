@@ -47,12 +47,35 @@ jobs:
       - name: Build and test with Maven
         run: mvn clean verify --no-transfer-progress -B
 
+      - name: Generate Surefire HTML Report
+        run: mvn surefire-report:report
+
+      - name: Send test report email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_PASSWORD }}
+          password: ${{ secrets.EMAIL_USERNAME }}
+          subject: "Rapport de tests backendnourpfe - Build #${{ github.run_number }}"
+          to: "nourlass50@gmail.com"
+          from: "nourlass50@gmail.com"
+          content_type: text/html
+          attachments: target/site/surefire-report.html
+          body: |
+            Bonjour,
+            
+            Veuillez trouver ci-joint le rapport HTML des tests Maven pour la build #${{ github.run_number }}.
+            
+            Bonne journée !
+
       - name: Show Surefire reports if tests fail
         if: failure()
         run: |
           echo "========= Surefire Reports ========="
           find target/surefire-reports -type f -name "*.txt" -exec cat {} \;
           echo "===================================="
+      
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
