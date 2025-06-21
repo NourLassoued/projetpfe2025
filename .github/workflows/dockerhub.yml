@@ -73,7 +73,7 @@ jobs:
           to: "nourlass50@gmail.com"
           from: "nourlass50@gmail.com"
           html_body: |
-            <p>Bonjour,</p>
+            <p>Bonjour Nour ,</p>
 
             <p><strong>Résumé des tests Maven (build #${{ github.run_number }}) :</strong></p>
             <pre>${{ steps.test_summary.outputs.summary }}</pre>
