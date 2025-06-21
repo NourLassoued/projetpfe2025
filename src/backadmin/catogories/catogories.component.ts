@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
-import { UtilisateurService } from '../../app/service/utilisateur.service';
 import { FileService } from '../../app/service/file.service';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';

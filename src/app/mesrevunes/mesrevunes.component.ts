@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { FileService } from '../service/file.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';

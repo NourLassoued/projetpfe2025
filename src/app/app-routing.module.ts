@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 
-import { AppComponent } from './app.component';
 
 
 import { RouterModule, Routes } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
 import { AllTemplateFrontComponent } from './Front/all-template-front/all-template-front.component';
 import { FooterComponent } from './footer/footer.component';
 import { InscriptionComponent } from './gestionUtilisateur/inscription/inscription.component';

@@ -1,7 +1,6 @@
-import { NgModule ,LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import {  ScrollServiceService } from './service/scroll-service.service';
 import { DateFnsModule } from 'ngx-date-fns';
 
 import { MatPaginatorModule } from '@angular/material/paginator'; 
@@ -34,7 +33,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
 
-import { MatSnackBarModule } from '@angular/material/snack-bar'; // Importer MatSnackBar
+import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 import { MatTableModule } from '@angular/material/table'; 
 import { FullCalendarModule } from '@fullcalendar/angular';
 

@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { CategorieService } from 'src/app/service/categorie.service';
 import { FileService } from 'src/app/service/file.service';
 import { ServiceeService } from 'src/app/service/servicee.service';
-import { Avis } from 'src/models/Avis';
 
 @Component({
   selector: 'app-meunuadmin',

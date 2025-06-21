@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Demande } from 'src/models/Demande';
 import { FileService } from '../service/file.service';
 import { Router } from '@angular/router';
-import { DemandeService } from '../service/demande.service';
 import { jwtDecode } from 'jwt-decode';
 import { ReservationService } from '../service/reservation.service';
 import { ToastrService } from 'ngx-toastr';

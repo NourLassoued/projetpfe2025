@@ -6,7 +6,7 @@ import { FileService } from '../service/file.service';
 import { AvisService } from '../service/avis.service';
 import { jwtDecode } from 'jwt-decode';
 import { formatDistanceToNow } from 'date-fns';
-import { fr, th } from 'date-fns/locale';
+import { fr } from 'date-fns/locale';
 import { ActivatedRoute } from '@angular/router';
 import { UserRole } from 'src/models/UserRole';
 import { UtilisateurService } from '../service/utilisateur.service';
@@ -17,7 +17,6 @@ import { PublicationService } from '../service/publication.service';
 import { Publication } from 'src/models/Publication';
 import { Commentaire } from 'src/models/Commentaire';
 import { CommentaireService } from '../service/commentaire.service';
-import { co } from '@fullcalendar/core/internal-common';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';

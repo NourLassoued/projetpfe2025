@@ -1,19 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {  ChangeDetectorRef, Component,  OnInit} from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { Avis } from 'src/models/Avis';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { FileService } from '../../service/file.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UtilisateurService } from '../../service/utilisateur.service';
 import { AvisService } from '../../service/avis.service';
 import { formatDistanceToNow } from 'date-fns';
 import fr from 'date-fns/locale/fr';
 
-import { jwtDecode } from 'jwt-decode';
+
 import { Reservation } from 'src/models/Reservation';
 import { ReservationService } from '../../service/reservation.service';
 import { ToastrService } from 'ngx-toastr';
-import { filter } from 'rxjs';
+
 
 
 

@@ -1,5 +1,5 @@
 
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import {  ChangeDetectorRef, Component } from '@angular/core';
 import { CategorieService } from '../../service/categorie.service';
 import { FileService } from '../../service/file.service';
 import { ServiceeService } from '../../service/servicee.service';

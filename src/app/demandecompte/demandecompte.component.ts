@@ -5,9 +5,7 @@ import { Servicee } from 'src/models/Servicee';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { UtilisateurService } from '../service/utilisateur.service';
 import { AdresseService } from '../service/adresse.service';
-import { FileService } from '../service/file.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthServiceService } from '../service/auth-service.service';
 import { Demande } from 'src/models/Demande';
 
 

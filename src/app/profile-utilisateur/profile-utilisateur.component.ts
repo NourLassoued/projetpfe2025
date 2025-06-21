@@ -5,7 +5,7 @@ import {  SafeUrl } from '@angular/platform-browser';
 import { Utilisateur } from 'src/models/Utilisateur';
 
 import { AvisService } from '../service/avis.service';
-import { fr } from 'date-fns/locale'; // Pour afficher en français
+import { fr } from 'date-fns/locale'; 
 import { Avis } from 'src/models/Avis';
 
 import { formatDistanceToNow, parseISO } from 'date-fns';

@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Servicee } from 'src/models/Servicee';
 import { ServiceeService } from '../../service/servicee.service';
-import { CategorieService } from '../../service/categorie.service';
 import { FileService } from '../../service/file.service';
 import { Router } from '@angular/router';
 

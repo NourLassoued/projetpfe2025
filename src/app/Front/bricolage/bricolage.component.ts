@@ -1,6 +1,5 @@
 
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { CategorieService } from '../../service/categorie.service';
+import { Component } from '@angular/core';
 import { ServiceeService } from '../../service/servicee.service';
 import {  Router } from '@angular/router';
 import { FileService } from '../../service/file.service';

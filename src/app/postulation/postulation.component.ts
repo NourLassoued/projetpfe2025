@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { PostulationService } from '../service/postulation.service';
 import { DemandeService } from '../service/demande.service';
 import { Postulation } from 'src/models/Postulation';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
