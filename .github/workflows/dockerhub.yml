@@ -50,31 +50,38 @@ jobs:
       - name: Generate Surefire HTML Report
         run: mvn surefire-report:report
 
-      - name: Lister les fichiers générés
+      - name: Créer résumé des tests et liste des échecs
+        id: test_summary
         run: |
-          echo "Contenu du dossier target/site :"
-          ls -lh target/site
+          PASSED=$(grep -r "Tests run:" target/surefire-reports | awk '{passed+=$4-$6} END{print passed}')
+          FAILED=$(grep -r "Tests run:" target/surefire-reports | awk '{failures+=$6+0} END{print failures}')
+          TOTAL=$(grep -r "Tests run:" target/surefire-reports | awk '{total+=$4} END{print total}')
+          echo "summary=✔️ Succès: $PASSED / ❌ Échecs: $FAILED / 🔢 Total: $TOTAL" >> $GITHUB_OUTPUT
 
-      - name: Zip le rapport HTML
-        run: zip -j target/surefire-report.zip target/site/surefire-report.html
+          echo "👉 Tests échoués :" > failed_tests.txt
+          grep -r "<<< FAILURE!" target/surefire-reports | sed 's/^/🔻 /' >> failed_tests.txt
 
-      - name: Envoyer le rapport de test par email
+      - name: Send test report email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Rapport de tests backendnourpfe - Build #${{ github.run_number }}"
+          subject: "🧪 Rapport de tests backendnourpfe - Build #${{ github.run_number }}"
           to: "nourlass50@gmail.com"
           from: "nourlass50@gmail.com"
-          body: |
-            Bonjour,
+          html_body: |
+            <p>Bonjour,</p>
 
-            Veuillez trouver ci-joint le rapport HTML des tests Maven pour la build #${{ github.run_number }} (fichier compressé .zip).
+            <p><strong>Résumé des tests Maven (build #${{ github.run_number }}) :</strong></p>
+            <pre>${{ steps.test_summary.outputs.summary }}</pre>
 
-            Bonne journée !
-          attachments: target/surefire-report.zip
+            <p><strong>👉 Liste des tests échoués :</strong></p>
+            <pre>$(cat failed_tests.txt)</pre>
+
+            <p>Cordialement,<br/>GitHub Actions</p>
+          attachments: target/site/surefire-report.html,failed_tests.txt
 
       - name: Show Surefire reports if tests fail
         if: failure()
