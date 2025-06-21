@@ -21,11 +21,14 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven and run tests
-        run: mvn clean package --no-transfer-progress -B
-
-      - name: Show Surefire test reports
-        run: cat target/surefire-reports/*.txt || true
+      - name: Build and test with Maven
+        run: mvn clean verify --no-transfer-progress -B
+      - name: Show Surefire reports if tests fail
+        if: failure()
+        run: |
+         echo "========= Surefire Reports ========="
+         find target/surefire-reports -type f -name "*.txt" -exec cat {} \;
+          echo "===================================="
 
 
 
