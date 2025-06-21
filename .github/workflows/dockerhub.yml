@@ -57,9 +57,13 @@ jobs:
           FAILED=$(grep -r "Tests run:" target/surefire-reports | awk '{failures+=$6+0} END{print failures}')
           TOTAL=$(grep -r "Tests run:" target/surefire-reports | awk '{total+=$4} END{print total}')
           echo "summary=✔️ Succès: $PASSED / ❌ Échecs: $FAILED / 🔢 Total: $TOTAL" >> $GITHUB_OUTPUT
-
+          
           echo "👉 Tests échoués :" > failed_tests.txt
-          grep -r "<<< FAILURE!" target/surefire-reports | sed 's/^/🔻 /' >> failed_tests.txt
+          grep -r "<<< FAILURE!" target/surefire-reports | sed 's/^/🔻 /' >> failed_tests.txt || echo "Aucun test échoué." >> failed_tests.txt
+          
+          FAILURES=$(cat failed_tests.txt | sed ':a;N;$!ba;s/\n/\\n/g')
+          echo "failures=$FAILURES" >> $GITHUB_OUTPUT
+      
 
       - name: Send test report email
         uses: dawidd6/action-send-mail@v3
@@ -72,15 +76,15 @@ jobs:
           to: "nourlass50@gmail.com"
           from: "nourlass50@gmail.com"
           html_body: |
-            <p>Bonjour,</p>
+           <p>Bonjour,</p>
 
-            <p><strong>Résumé des tests Maven (build #${{ github.run_number }}) :</strong></p>
-            <pre>${{ steps.test_summary.outputs.summary }}</pre>
+           <p><strong>Résumé des tests Maven (build #${{ github.run_number }}) :</strong></p>
+           <pre>${{ steps.test_summary.outputs.summary }}</pre>
 
-            <p><strong>👉 Liste des tests échoués :</strong></p>
-            <pre>$(cat failed_tests.txt)</pre>
+           <p><strong>👉 Liste des tests échoués :</strong></p>
+           <pre>${{ steps.test_summary.outputs.failures }}</pre>
 
-            <p>Cordialement,<br/>GitHub Actions</p>
+           <p>Cordialement,<br/>GitHub Actions</p>
           attachments: target/site/surefire-report.html,failed_tests.txt
 
       - name: Show Surefire reports if tests fail
