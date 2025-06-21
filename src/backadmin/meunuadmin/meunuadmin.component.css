@@ -1,42 +1,35 @@
-/* Style pour le texte de la description */
 
-  
-  /* Style pour le lien "Show More / Show Less" */
   .cell a {
     font-size: 15px;
-    color: #007bff; /* Couleur bleue pour le lien */
+    color: #007bff; 
     cursor: pointer;
     text-decoration: none;
     margin-top: 5px;
     display: inline-block;
+     transition: color 0.3s ease;
   }
   
   .cell a:hover {
-    text-decoration: underline; /* Souligner le lien au survol */
+    text-decoration: underline;
+        color: #0056b3; 
+
   }
   
-  /* Si la description est bien longue, vous pouvez ajouter un effet de transition */
-  .cell a {
-    transition: color 0.3s ease;
-  }
+ 
   
-  .cell a:hover {
-    color: #0056b3; /* Change la couleur du lien quand il est survolé */
-  }
-/* Style personnalisé pour centrer la boîte de dialogue */
+  *
 
 
 .fas.fa-calendar-alt.clickable-icon {
-  font-size: 24px;          /* Taille de l'icône */
-  color: #3f51b5;           /* Couleur de l'icône */
-  cursor: pointer;         /* Changer le curseur lorsque l'icône est cliquée */
+  font-size: 24px;          
+  color: #3f51b5;          
+  cursor: pointer;       
 }
 .disponibilites-box {
-  position: absolute;  /* Position absolue pour afficher au-dessus du tableau */
-  margin-top: 70px;  /* Ajustez selon la hauteur souhaitée au-dessus du tableau */
-  left: 50%;  /* Centrer horizontalement */
-  transform: translateX(-50%);  /* Centrer parfaitement */
-  padding: 20px;
+  position: absolute; 
+  margin-top: 70px;  
+  left: 50%;  
+  transform: translateX(-50%);  
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);

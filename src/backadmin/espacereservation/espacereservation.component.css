@@ -13,6 +13,7 @@
   
   .cell a:hover {
     text-decoration: underline; 
+        color: #0056b3; 
   }
   
 
@@ -20,9 +21,7 @@
     transition: color 0.3s ease;
   }
   
-  .cell a:hover {
-    color: #0056b3; 
-  }
+ 
 
 
 

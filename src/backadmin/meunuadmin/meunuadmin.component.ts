@@ -15,30 +15,30 @@ import { ServiceeService } from 'src/app/service/servicee.service';
 })
 export class MeunuadminComponent {
   user: any;
-    profileImageUrl: SafeUrl | null = null;
-   constructor(
-      private fileservice: FileService,
-      private cdr: ChangeDetectorRef,
-      private router: Router,
-      private categorieService: CategorieService,
-      private fb: FormBuilder,
-      private toastr: ToastrService,
-      private service: ServiceeService) {
-  
-  
-    }
+  profileImageUrl: SafeUrl | null = null;
+  constructor(
+    private fileservice: FileService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private categorieService: CategorieService,
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private service: ServiceeService) {
 
-      ngOnInit(): void {
-       
-    
-    
-        this.loadUserData();
-       
-       
-    
-    
 
-}
+  }
+
+  ngOnInit(): void {
+
+
+
+    this.loadUserData();
+
+
+
+
+
+  }
 
   loadProfileImagee(imagePath: string): void {
     if (!imagePath) {
@@ -107,7 +107,7 @@ export class MeunuadminComponent {
     avis.isExpanded = !avis.isExpanded;
   }
   showDetails(avis: any) {
-    console.log(avis); 
+    console.log(avis);
   }
-   
+
 }

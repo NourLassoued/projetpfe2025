@@ -24,8 +24,8 @@ body {
  padding: 20px;
  width: calc(100% - 270px);
  display: flex;
- flex-wrap: wrap; /* Permet aux cartes de passer à la ligne */
- gap: 20px; /* Ajoute de l'espace entre les cartes */
+ flex-wrap: wrap; 
+ gap: 20px; 
     
 }
 
@@ -42,8 +42,8 @@ body {
 }
 .image-section {
     display: flex;
-    align-items: center; /* Aligne verticalement les éléments */
-    gap: 15px; /* Espace entre l'image et la notification */
+    align-items: center;
+    gap: 15px; 
   }
   
 .image-section img {
@@ -74,15 +74,14 @@ body {
 }
 
 .btn:hover {
-    background: #007bff;
     
   
   color:white;
-    transform: scale(1.05); /* Légère augmentation de taille */
+    transform: scale(1.05);
     background: #007bff;
 }
 
-/* Effet au clic */
+
 .btn:active {
     transform: scale(0.98);
     background: #007bff;
@@ -127,21 +126,20 @@ app-navbarcompte {
     left: 0;
     width: 100%;
    
-    z-index: 1000; /* Pour rester au-dessus de tout */
-   
+    z-index: 1000; 
 }
 .sidebar {
     
     position: fixed;
     background-color: #fbf5f5;
-    width: 200px; /* Largeur de la barre latérale */
-    height: 100vh; /* 100% de la hauteur de la fenêtre */
-    position: fixed; /* La rend fixe */
+    width: 200px; 
+    height: 100vh;
+   
    
     
   margin-top: 70px;
     
-    overflow-y: auto; /* Ajoute un défilement si le contenu est trop long */
+    overflow-y: auto;
   
 }
 .sidebar ul {
@@ -160,13 +158,13 @@ app-navbarcompte {
 }
 .postulations-section {
     display: flex;
-    flex-direction: column; /* La notification peut être sur plusieurs lignes */
-    justify-content: center; /* Centrer verticalement le texte */
+    flex-direction: column; 
+    justify-content: center; 
   }
   
   .prestataire-avatars {
     display: flex;
-    gap: 10px; /* Espacement entre les avatars */
+    gap: 10px; 
   }
   
   .avatar {
@@ -175,14 +173,14 @@ app-navbarcompte {
     border-radius: 50%;
   }
   .notification-icon {
-    font-size: 1.6em; /* Taille de l'icône */
-    color: #efff0d; /* Couleur de l'icône (orange ici) */
+    font-size: 1.6em;
+    color: #efff0d; 
   }
   .notification-text {
     display: flex;  
-    font-weight: bold;           /* Utiliser Flexbox pour aligner l'icône et le texte sur la même ligne */
-    align-items: center;       /* Centrer verticalement l'icône et le texte */
-    gap: 8px;                  /* Espacement entre l'icône et le texte */
-    font-size: 1.4rem;           /* Taille du texte */
-    color: #1c1c1c;               /* Couleur du texte (noir clair) */
+    font-weight: bold;           
+    align-items: center;      
+    gap: 8px;                 
+    font-size: 1.4rem;          
+    color: #1c1c1c;               
   }

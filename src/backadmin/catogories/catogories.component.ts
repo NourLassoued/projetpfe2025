@@ -47,19 +47,7 @@ export class CatogoriesComponent {
   showActions: boolean = false;
 
   editModal: any;
-  openModal() {
 
-    this.showModal = true;
-  }
-
-  closeModal() {
-    this.showModal = false;
-  }
-  checkShowActions(): void {
-
-    const condition = true;
-    this.showActions = condition;
-  }
   constructor(
     private fileservice: FileService,
     private cdr: ChangeDetectorRef,
@@ -90,7 +78,19 @@ export class CatogoriesComponent {
 
   }
 
+  openModal() {
 
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+  checkShowActions(): void {
+
+    const condition = true;
+    this.showActions = condition;
+  }
   openEditModal(category: Categorie): void {
     this.selectedCategory = { ...category };
     this.isEditModalOpen = true;

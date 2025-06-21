@@ -6,19 +6,17 @@
     text-decoration: none;
     margin-top: 5px;
     display: inline-block;
-  }
-  
-  .cell a:hover {
-    text-decoration: underline;
-  }
-  
-  .cell a {
     transition: color 0.3s ease;
   }
   
   .cell a:hover {
-    color: #0056b3; 
+    text-decoration: underline;
+      color: #0056b3;
   }
+  
+ 
+  
+ 
 
 
 

@@ -15,63 +15,62 @@ import { TypeAbonnement } from 'src/models/TypeAbonnement';
 })
 export class AbonnementComponent {
   currentPageExprimer: number = 1;
-abonnementsExprimerParPage: Abonnement[] = [];
-pageExprimer: number = 1;
-pageSizeExprimer: number = 5; 
-pageSizeAbonnement = 10;       
-currentPageAbonnement = 1;    
-totalPagesAbonnement = 1; 
+  abonnementsExprimerParPage: Abonnement[] = [];
+  pageExprimer: number = 1;
+  pageSizeExprimer: number = 5;
+  pageSizeAbonnement = 10;
+  currentPageAbonnement = 1;
+  totalPagesAbonnement = 1;
 
 
- abonnements: any[] = []; 
+  abonnements: any[] = [];
 
 
   utilisateursEnAttentePage: any[] = [];
- typeAbonnementValues = Object.values(TypeAbonnement);
+  typeAbonnementValues = Object.values(TypeAbonnement);
   typeFiltre: TypeAbonnement | null = null
-    user: any;
-    profileImageUrl: string | null = null;
-      utilisateursEnAttente: any[] = [];
-abonnementsActifs: Abonnement[] = [];
-abonnementsExprimer: Abonnement[] = [];
-pageSize = 10;      
-  currentPage = 1;  
+  user: any;
+  profileImageUrl: string | null = null;
+  utilisateursEnAttente: any[] = [];
+  abonnementsActifs: Abonnement[] = [];
+  abonnementsExprimer: Abonnement[] = [];
+  pageSize = 10;
+  currentPage = 1;
   totalPages = 1;
-   constructor(
-      private utilisateurService: UtilisateurService,
-       private fileservice: FileService,
-         private abonnementService: AbonmmentserviceService, 
+  constructor(
+    private utilisateurService: UtilisateurService,
+    private fileservice: FileService,
+    private abonnementService: AbonmmentserviceService,
 
-           private cdr: ChangeDetectorRef,
-           private  paymentService:PaymentService,
-    
-      private router: Router
-    ) { }
-    ngDoCheck() { }
-    logout(): void {
-      localStorage.removeItem('accessToken');
-      this.router.navigate(['/Front']);
-    }
-    ngOnInit(): void {
-         this.setupPagination();
-      this.loadAbonnementsExprimer();
-      this.loadAbonnementsActifs();
-      const token = localStorage.getItem('accessToken');
-      if (token) {
-        const decodedToken: any = jwtDecode(token);
-        this.user = decodedToken;
-        if (this.user.image) {
-          this.loadProfileImagee(this.user.image);
-  
-        }
-      } else {
-        console.warn('Aucun token trouvé !');
+    private cdr: ChangeDetectorRef,
+    private paymentService: PaymentService,
+
+    private router: Router
+  ) { }
+  logout(): void {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/Front']);
+  }
+  ngOnInit(): void {
+    this.setupPagination();
+    this.loadAbonnementsExprimer();
+    this.loadAbonnementsActifs();
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      this.user = decodedToken;
+      if (this.user.image) {
+        this.loadProfileImagee(this.user.image);
+
       }
-    
-      this.loadUserData();
-        this.loadUtilisateursEnAttente();
+    } else {
+      console.warn('Aucun token trouvé !');
     }
-     loadUserData(): void {
+
+    this.loadUserData();
+    this.loadUtilisateursEnAttente();
+  }
+  loadUserData(): void {
     const token = localStorage.getItem('accessToken');
 
     if (!token) {
@@ -99,7 +98,7 @@ pageSize = 10;
       console.error('Erreur lors du décodage du token :', error);
     }
   }
-   loadProfileImagee(imagePath: string): void {
+  loadProfileImagee(imagePath: string): void {
     if (!imagePath) {
       this.profileImageUrl = 'assets/images/user.png';
       return;
@@ -124,9 +123,9 @@ pageSize = 10;
           this.utilisateursEnAttente = utilisateurs;
           this.utilisateursEnAttente.forEach((prestataire) => {
             this.loadProfileImage(prestataire);
-              this.setupPagination();
+            this.setupPagination();
           });
-        this.cdr.detectChanges();
+          this.cdr.detectChanges();
 
         },
         error: (err) => {
@@ -135,7 +134,7 @@ pageSize = 10;
       });
 
   }
- loadProfileImage(prestataire: any): void {
+  loadProfileImage(prestataire: any): void {
     if (prestataire.image) {
       this.fileservice.getImage(prestataire.image).subscribe({
         next: (imageBlob) => {
@@ -149,47 +148,47 @@ pageSize = 10;
     }
   }
   envoyerEmailBienvenue(email: string): void {
-  this.paymentService.testEnvoyerEmailBienvenue(email).subscribe({
-    next: (response) => {
-     
-    },
-    error: (err) => {
-      console.error('Erreur lors de l\'envoi de l\'email :', err);
-    }
-  });
-}
-loadAbonnementsActifs(): void {
-  this.abonnementService.getAbonnementsActifs().subscribe({
-    next: (abonnements) => {
-      this.abonnementsActifs = abonnements;
+    this.paymentService.testEnvoyerEmailBienvenue(email).subscribe({
+      next: (response) => {
 
-      this.abonnementsActifs.forEach((abonnement) => {
-        const utilisateur = abonnement.utilisateur;
-        if (utilisateur && utilisateur.image) {
-          this.loadProfileImage(abonnement);
-          const imagePath = utilisateur.image;
-          this.fileservice.getImage(imagePath).subscribe({
-            next: (imageBlob) => {
-              const objectURL = URL.createObjectURL(imageBlob);
-              utilisateur.image = objectURL;
-            },
-            error: () => {
-              utilisateur.image = 'assets/images/user.png';
-            },
-          });
-        } else {
-          console.warn(`Aucune image pour l'utilisateur : ${utilisateur?.nom ?? 'Inconnu'}`);
-        }
-      });
+      },
+      error: (err) => {
+        console.error('Erreur lors de l\'envoi de l\'email :', err);
+      }
+    });
+  }
+  loadAbonnementsActifs(): void {
+    this.abonnementService.getAbonnementsActifs().subscribe({
+      next: (abonnements) => {
+        this.abonnementsActifs = abonnements;
 
-      this.cdr.detectChanges();
-    },
-    error: (err) => {
-      console.error('Erreur lors du chargement des abonnements actifs :', err);
-    }
-  });
-}
- setupPagination() {
+        this.abonnementsActifs.forEach((abonnement) => {
+          const utilisateur = abonnement.utilisateur;
+          if (utilisateur && utilisateur.image) {
+            this.loadProfileImage(abonnement);
+            const imagePath = utilisateur.image;
+            this.fileservice.getImage(imagePath).subscribe({
+              next: (imageBlob) => {
+                const objectURL = URL.createObjectURL(imageBlob);
+                utilisateur.image = objectURL;
+              },
+              error: () => {
+                utilisateur.image = 'assets/images/user.png';
+              },
+            });
+          } else {
+            console.warn(`Aucune image pour l'utilisateur : ${utilisateur?.nom ?? 'Inconnu'}`);
+          }
+        });
+
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des abonnements actifs :', err);
+      }
+    });
+  }
+  setupPagination() {
     this.totalPages = Math.ceil(this.utilisateursEnAttente.length / this.pageSize);
     this.setPage(1);
   }
@@ -203,81 +202,81 @@ loadAbonnementsActifs(): void {
     const end = start + this.pageSize;
     this.utilisateursEnAttentePage = this.utilisateursEnAttente.slice(start, end);
   }
-get abonnementsFiltresPage(): Abonnement[] {
-  let filtered = this.typeFiltre
-    ? this.abonnementsActifs.filter(a => a.typeAbonnement === this.typeFiltre)
-    : this.abonnementsActifs;
+  get abonnementsFiltresPage(): Abonnement[] {
+    let filtered = this.typeFiltre
+      ? this.abonnementsActifs.filter(a => a.typeAbonnement === this.typeFiltre)
+      : this.abonnementsActifs;
 
-  const startIndex = (this.currentPageAbonnement - 1) * this.pageSizeAbonnement;
-  return filtered.slice(startIndex, startIndex + this.pageSizeAbonnement);
-}
+    const startIndex = (this.currentPageAbonnement - 1) * this.pageSizeAbonnement;
+    return filtered.slice(startIndex, startIndex + this.pageSizeAbonnement);
+  }
 
-setupPaginationAbonnements(): void {
-  const filteredLength = this.typeFiltre
-    ? this.abonnementsActifs.filter(a => a.typeAbonnement === this.typeFiltre).length
-    : this.abonnementsActifs.length;
+  setupPaginationAbonnements(): void {
+    const filteredLength = this.typeFiltre
+      ? this.abonnementsActifs.filter(a => a.typeAbonnement === this.typeFiltre).length
+      : this.abonnementsActifs.length;
 
-  this.totalPagesAbonnement = Math.ceil(filteredLength / this.pageSizeAbonnement);
-  this.setPageAbonnement(1);
-}
-setPageAbonnement(page: number): void {
-  if (page < 1) page = 1;
-  if (page > this.totalPagesAbonnement) page = this.totalPagesAbonnement;
-  this.currentPageAbonnement = page;
-}
-setTypeFiltre(value: TypeAbonnement | null): void {
-  this.typeFiltre = value;
-  this.currentPageAbonnement = 1;
-  this.setupPaginationAbonnements();
-}
-
-
+    this.totalPagesAbonnement = Math.ceil(filteredLength / this.pageSizeAbonnement);
+    this.setPageAbonnement(1);
+  }
+  setPageAbonnement(page: number): void {
+    if (page < 1) page = 1;
+    if (page > this.totalPagesAbonnement) page = this.totalPagesAbonnement;
+    this.currentPageAbonnement = page;
+  }
+  setTypeFiltre(value: TypeAbonnement | null): void {
+    this.typeFiltre = value;
+    this.currentPageAbonnement = 1;
+    this.setupPaginationAbonnements();
+  }
 
 
-loadAbonnementsExprimer(): void {
-  this.abonnementService.getAbonnementsExprimer().subscribe({
-    next: (abonnements) => {
-      this.abonnementsExprimer = abonnements;
 
-      this.abonnementsExprimer.forEach((abonnement) => {
-        const utilisateur = abonnement.utilisateur;
-        if (utilisateur && utilisateur.image) {
-          this.loadProfileImage(abonnement); 
-       
-          const imagePath = utilisateur.image;
-          this.fileservice.getImage(imagePath).subscribe({
-            next: (imageBlob) => {
-              const objectURL = URL.createObjectURL(imageBlob);
-              utilisateur.image = objectURL;
-            },
-            error: () => {
-              utilisateur.image = 'assets/images/user.png';
-            },
-          });
-        } else {
-          console.warn(`Aucune image pour l'utilisateur : ${utilisateur?.nom ?? 'Inconnu'}`);
-        }
-      });
-   this.setPageExprimer(1);
-      this.cdr.detectChanges();
-    },
-    error: (err) => {
-      console.error('Erreur lors du chargement des abonnements exprimés :', err);
-    }
-  });
-}
-get totalPagesExprimer(): number {
-  return Math.ceil(this.abonnementsExprimer.length / this.pageSizeExprimer);
-}
-setPageExprimer(page: number): void {
-  if (page < 1) page = 1;
-  if (page > this.totalPagesExprimer) page = this.totalPagesExprimer;
-  this.pageExprimer = page;
 
-  const start = (page - 1) * this.pageSizeExprimer;
-  const end = start + this.pageSizeExprimer;
-  this.abonnementsExprimerParPage = this.abonnementsExprimer.slice(start, end);
-}
+  loadAbonnementsExprimer(): void {
+    this.abonnementService.getAbonnementsExprimer().subscribe({
+      next: (abonnements) => {
+        this.abonnementsExprimer = abonnements;
+
+        this.abonnementsExprimer.forEach((abonnement) => {
+          const utilisateur = abonnement.utilisateur;
+          if (utilisateur && utilisateur.image) {
+            this.loadProfileImage(abonnement);
+
+            const imagePath = utilisateur.image;
+            this.fileservice.getImage(imagePath).subscribe({
+              next: (imageBlob) => {
+                const objectURL = URL.createObjectURL(imageBlob);
+                utilisateur.image = objectURL;
+              },
+              error: () => {
+                utilisateur.image = 'assets/images/user.png';
+              },
+            });
+          } else {
+            console.warn(`Aucune image pour l'utilisateur : ${utilisateur?.nom ?? 'Inconnu'}`);
+          }
+        });
+        this.setPageExprimer(1);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des abonnements exprimés :', err);
+      }
+    });
+  }
+  get totalPagesExprimer(): number {
+    return Math.ceil(this.abonnementsExprimer.length / this.pageSizeExprimer);
+  }
+  setPageExprimer(page: number): void {
+    if (page < 1) page = 1;
+    if (page > this.totalPagesExprimer) page = this.totalPagesExprimer;
+    this.pageExprimer = page;
+
+    const start = (page - 1) * this.pageSizeExprimer;
+    const end = start + this.pageSizeExprimer;
+    this.abonnementsExprimerParPage = this.abonnementsExprimer.slice(start, end);
+  }
 
 
 }

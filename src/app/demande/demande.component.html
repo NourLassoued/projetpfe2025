@@ -108,7 +108,6 @@
           <label for="title">Titre</label>
           <input id="title" formControlName="title" type="text" placeholder="Entrez un titre" />
   
-          <!-- Sélection de l'adresse -->
           <label for="adresse">Adresse :</label>
           <select id="adresse" formControlName="idAdresse">
             <option *ngFor="let adresse of adresses" [value]="adresse.idAdresse">{{ adresse.governoate }}</option>
@@ -117,11 +116,9 @@
           <label for="description">Description :</label>
           <textarea id="description" formControlName="description" rows="3"></textarea>
   
-          <!-- Upload de photos -->
           <label for="photos">Souhaitez-vous ajouter des photos ? (optionnel)</label>
           <input type="file" id="photos" (change)="onFileSelected($event, 'image')">
   
-          <!-- Champ de numéro de téléphone -->
           <label for="phone">À quel numéro de téléphone le prestataire pourra-t-il vous joindre ?</label>
           <input id="telephoneNumber" formControlName="telephoneNumber" type="text"  placeholder="Entrez un numéro de téléphone" />
       </div>
@@ -130,7 +127,6 @@
           <button class="link-button"(click)="nextStepe()">Suivant</button>
       </div>
   </div>
-  <!-- Étape 4 : Email et Mot de Passe -->
   <div *ngIf="step === 4">
       <div class="additional-info">
          
@@ -162,7 +158,6 @@
       <span class="close" (click)="closeModal()">&times;</span>
       <h2>Mot de passe oublié ?</h2>
       <form [formGroup]="resetPasswordForm" (ngSubmit)="verifyAndSendEmail()">
-        <label for="reset-email"></label>
         <input formControlName="email" type="email" id="reset-email" placeholder="📧Votre adresse e-mail" required>
   
         <button  type="submit" class="btn-submit">Envoyez-moi les instructions</button>

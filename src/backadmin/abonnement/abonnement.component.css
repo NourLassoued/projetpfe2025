@@ -6,20 +6,19 @@
     text-decoration: none;
     margin-top: 5px;
     display: inline-block;
+        transition: color 0.3s ease;
+
   }
   
   .cell a:hover {
     text-decoration: underline;
-  }
-  
-  .cell a {
-    transition: color 0.3s ease;
-  }
-  
-  .cell a:hover {
-    color: #0056b3; 
-  }
+        color: #0056b3; 
 
+  }
+  
+ 
+  
+ 
 
 
 
@@ -30,11 +29,11 @@
   height: 50px;
   object-fit: cover; 
   border-radius: 50%;
-}
-.profile-pic {
   font-size: 40px; 
-  color: gray; 
+  color: gray;
+
 }
+
 
 .app-btn-secondary {
   display: inline-block;

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
 
 
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-	<link rel="shortcut icon" href="favicon.ico">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-	<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+<link rel="shortcut icon" href="favicon.ico">
 
 
-	<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
 
-</head>
+
+<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+
+
 
 <body class="app">
 	<header class="app-header fixed-top">
@@ -41,11 +41,11 @@
 						<div class="search-mobile-trigger d-sm-none col">
 							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
 						</div>
-					
+
 
 						<div class="app-utilities col-auto">
-						
-							
+
+
 
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
@@ -229,43 +229,40 @@
 
 	<div class="avis-container">
 		<select (change)="onStatusFilterChange($event)">
-			<option value="">Tous</option> 
+			<option value="">Tous</option>
 			<option value="EN_ATTENTE">En attente</option>
 			<option value="CONFORME">Conforme</option>
 			<option value="ANNULEE">Annulée</option>
-		  </select>
-	<div class="reservation-container">
-		<h2>Liste des Réservations</h2>
-	  
-		<table>
-		  <thead>
-			<tr>
-			
-			  <th>Date Réservation</th>
-			  <th>Status</th>
-			  <th>Particulier</th>
-			  <th>Prestataire</th>
-			  <th>Demande</th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr *ngFor="let reservation of paginatedReservations">
-			 
-			  <td>{{ reservation.dateReservation | date:'short' }}</td> <!-- convertit le timestamp en date lisible -->
-			  <td>{{ reservation.statusReservation }}</td>
-			  <td>{{ reservation.particulier?.nom }}</td> 
-			  <td>{{ reservation.prestataire?.nom }}</td> 
-			  <td>{{ reservation.demande?.title }}</td>
-			</tr>
-		  </tbody>
-		</table>
-	  </div>
+		</select>
+		<div class="reservation-container">
+			<h2>Liste des Réservations</h2>
+
+			<table>
+				<thead>
+					<tr>
+
+						<th>Date Réservation</th>
+						<th>Status</th>
+						<th>Particulier</th>
+						<th>Prestataire</th>
+						<th>Demande</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let reservation of paginatedReservations">
+
+						<td>{{ reservation.dateReservation | date:'short' }}</td>
+						<!-- convertit le timestamp en date lisible -->
+						<td>{{ reservation.statusReservation }}</td>
+						<td>{{ reservation.particulier?.nom }}</td>
+						<td>{{ reservation.prestataire?.nom }}</td>
+						<td>{{ reservation.demande?.title }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
-	<mat-paginator
-	[length]="filteredReservations.length"
-	[pageSize]="pageSize"
-	[pageIndex]="pageIndex"
-	(page)="onPageChange($event)">
-  </mat-paginator>
-  
+	<mat-paginator [length]="filteredReservations.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+		(page)="onPageChange($event)">
+	</mat-paginator>

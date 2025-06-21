@@ -79,14 +79,13 @@
             </div>
 
             <div class="section">
-                <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>
+<a *ngIf="user?.siteWeb" [href]="user.siteWeb" target="_blank">{{ user.siteWeb }}</a>
             </div>
+<div class="section" *ngIf="user?.adresse">
+  <i class="fas fa-map-marker-alt location-icon"></i>
+  {{ user.adresse.governoate }}
+</div>
 
-           
-            <div class="section">
-                <i class="fas fa-map-marker-alt location-icon"></i>
-                {{ user.adresse?.governoate }}
-            </div>
 
 
 

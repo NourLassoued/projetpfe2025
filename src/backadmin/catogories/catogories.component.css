@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    gap: 10px; /* Espacement entre le logo et le texte */
+    gap: 10px; 
   }
   
   .profile-img {
@@ -11,11 +11,11 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #c9caca; /* Bordure colorée */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    border: 2px solid #c9caca; 
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); 
   }
   .profile-icon {
-    font-size: 40px; /* Taille de l'icône */
+    font-size: 40px; 
     border: 2px solid #c9caca; 
     transition: transform 0.3s ease-in-out, opacity 0.3s;
   }
@@ -55,7 +55,7 @@
 
 .app-btn-primary:hover .bi-plus {
  
-  transform: scale(1.2); /* Agrandir l'icône au survol */
+  transform: scale(1.2); 
 }
 .modal {
   position: fixed;
@@ -95,21 +95,20 @@
 .modal-body {
   padding: 20px 0;
 }
-/* Conteneur du modal (l'overlay) */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);  /* Couleur de fond transparente avec un peu de noir */
+  background: rgba(0, 0, 0, 0.5);  
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1050;
 }
 
-/* Contenu du modal */
+
 .modal-container {
   background-color: white;
   border-radius: 8px;
@@ -120,14 +119,13 @@
   position: relative;
 }
 
-/* Titre du modal */
+
 .modal-container h2 {
   margin: 0 0 20px;
   font-size: 1.5rem;
   color: #333;
 }
 
-/* Style des champs du formulaire */
 label {
   display: block;
   margin-bottom: 8px;
@@ -149,7 +147,6 @@ textarea {
   min-height: 100px;
 }
 
-/* Affichage de l'image actuelle */
 .image-preview {
   margin-bottom: 15px;
 }
@@ -160,21 +157,19 @@ textarea {
   border-radius: 4px;
 }
 
-/* Style pour l'input de l'image */
 input[type="file"] {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-/* Boutons du modal */
+
 .modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-/* Boutons "Enregistrer" et "Annuler" */
 .modal-buttons .btn {
   padding: 10px 20px;
   font-size: 14px;
@@ -194,12 +189,12 @@ input[type="file"] {
   color: white;
 }
 
-/* Effet au survol */
+
 .modal-buttons .btn:hover {
   opacity: 0.8;
 }
 
-/* Bouton de fermeture du modal */
+
 .close {
   position: absolute;
   top: 15px;
@@ -235,28 +230,27 @@ ul.list-unstyled li {
 }
 .search-docs {
   margin-top: 28px;
-  width: 250px; /* Ajuste la largeur du champ */
+  width: 250px; 
   padding: 8px 12px;
   height: 38px;
   font-size: 14px;
-  border: 1px solid #ccc; /* Bordure légère */
-  border-radius: 7px; /* Coins arrondis */
+  border: 1px solid #ccc; 
+  border-radius: 7px; 
   outline: none;
   transition: all 0.3s ease-in-out;
 }
 
-/* Effet au survol */
+
 .search-docs:hover {
-  border-color: #007bff; /* Change la couleur de la bordure */
+  border-color: #007bff; 
 }
 
-/* Effet au focus */
+
 .search-docs:focus {
   border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Effet lumineux */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
 }
 
-/* Ajout d'un espace autour du champ */
 .col-auto {
   margin-bottom: 10px;
 }
@@ -293,7 +287,6 @@ ul.list-unstyled li {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Bouton de fermeture */
 .new-close {
   position: absolute;
   top: 10px;
@@ -308,14 +301,14 @@ ul.list-unstyled li {
   color: red;
 }
 
-/* Style de la liste des services */
+
 .category-card {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Service Item : Aligner image, nom et bouton delete sur la même ligne */
+
 .service-item {
   display: flex;
   align-items: center;
@@ -329,7 +322,6 @@ ul.list-unstyled li {
 
 
 
-/* Nom du service */
 .service-item h3 {
   flex: 1;
   font-size: 16px;
