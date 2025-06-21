@@ -21,8 +21,8 @@ jobs:
         options: >-
           --health-cmd="mysqladmin ping -h localhost --silent"
           --health-interval=10s
-          --health-timeout=4s
-          --health-retries=4
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout repository
@@ -35,18 +35,24 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Wait for MySQL to be ready
+        run: |
+          echo "Waiting for MySQL..."
+          for i in {1..30}; do
+            nc -z localhost 3306 && echo "MySQL is up!" && break
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+
       - name: Build and test with Maven
         run: mvn clean verify --no-transfer-progress -B
+
       - name: Show Surefire reports if tests fail
         if: failure()
         run: |
-         echo "========= Surefire Reports ========="
-         find target/surefire-reports -type f -name "*.txt" -exec cat {} \;
+          echo "========= Surefire Reports ========="
+          find target/surefire-reports -type f -name "*.txt" -exec cat {} \;
           echo "===================================="
-
-
-
-
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -70,7 +76,7 @@ jobs:
           repository: NourLassoued/argocdpfe
           ref: master
           path: argocdpfe
-          token: ${{ secrets.CHRR_TOKEN}}
+          token: ${{ secrets.CHRR_TOKEN }}
 
       - name: Update image tag in values.yaml for Spring Boot
         run: |
@@ -89,7 +95,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "github-action@github.com"
           git add angular-app/values.yaml
-          
+
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
