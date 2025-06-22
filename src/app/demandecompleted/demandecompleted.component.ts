@@ -49,8 +49,7 @@ export class DemandecompletedComponent {
               
           
                 if (this.user.image) {
-                 
-                  
+                  // L'image de l'utilisateur est présente dans le token.
                 } else {
                   console.warn(" Aucune image trouvée dans le token !");
                 }
@@ -68,37 +67,35 @@ export class DemandecompletedComponent {
           
           getImage(filename: string, index: number) {
             const encodedFilename = encodeURIComponent(filename);
-            this.fileService.getImage(encodedFilename).subscribe(
-              (imageBlob) => {
+            this.fileService.getImage(encodedFilename).subscribe({
+              next: (imageBlob) => {
                 const imageUrl = URL.createObjectURL(imageBlob);
                 this.imageUrls[index] = imageUrl; 
               },
-              (error) => {
+              error: (error) => {
                 console.error('Erreur lors du chargement de l\'image', error);
-                
               }
-            );
+            });
           }
           getReservations(idDemande: number): void {
           
           
-            this.reservationservice.getReservationsByDemandeId(idDemande).subscribe(
-              (data) => {
-              
+            this.reservationservice.getReservationsByDemandeId(idDemande).subscribe({
+              next: (data) => {
                 this.reservations = data;
                 this.router.navigate(['/Reservation', idDemande]);
               },
-              (error) => {
+              error: (error) => {
                 console.error("Erreur lors de la récupération des réservations :", error);
               }
-            );
+            });
           }
           
           
           getDemandesByUserId() {
             if (this.userId) {
-              this.demandeService.getDemandesTermineesByUserId(this.userId).subscribe(
-                (data: Demande[]) => {
+              this.demandeService.getDemandesTermineesByUserId(this.userId).subscribe({
+                next: (data: Demande[]) => {
                   this.demandes = data;
                   
                   this.demandes.forEach((demande, index) => {
@@ -111,21 +108,21 @@ export class DemandecompletedComponent {
                   }
                   });
                 },
-                (error) => {
+                error: (error) => {
                   console.error('Erreur lors de la récupération des demandes', error);
                 }
-              );
+              });
             }
           }
           getPostulationsByDemande(idDemande: number): void {
-            this.demandeService.getPostulationsByDemande(idDemande).subscribe(
-                (postulationsData) => {
+            this.demandeService.getPostulationsByDemande(idDemande).subscribe({
+                next: (postulationsData) => {
                     this.demandesAvecPostulations[idDemande] = postulationsData.length; // Stocke le nombre de postulations
                 },
-                (error) => {
+                error: (error) => {
                     console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
                 }
-            );
+            });
         }
         
        
@@ -147,16 +144,14 @@ export class DemandecompletedComponent {
         
         
         deleteDemande(idDemande: number): void {
-          this.demandeService.deleteDemande(idDemande).subscribe(
-            () => {
-             
+          this.demandeService.deleteDemande(idDemande).subscribe({
+            next: () => {
               this.router.navigate(['/Mesdemandes']); 
             },
-            (error) => {
+            error: (error) => {
               console.error('Erreur lors de la suppression de la demande', error);
             }
-          );
-        
+          });
         }           
   
   

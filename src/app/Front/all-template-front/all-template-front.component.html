@@ -53,7 +53,8 @@
                                 (click)="selectCategory(category.nom)"
                                 (keydown)="selectCategory(category.nom)">
                                 <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]" />
-                                <label>{{ category.nom }}</label>
+                                <input type="radio" [id]="'category-' + i" name="category-selection" style="display:none;" />
+                                <label [for]="'category-' + i">{{ category.nom }}</label>
                                 <span class="iconn">➜</span>
                             </div>
                         </div>

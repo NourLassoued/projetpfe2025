@@ -85,26 +85,24 @@ export class EntrepriseconnecteComponent {
         this.userId = +userIdParam;
 
 
-        this.utilisateurservice.getById(this.userId).subscribe(
-          (userData: any) => {
+        this.utilisateurservice.getById(this.userId).subscribe({
+          next: (userData: any) => {
             this.user = userData;
 
             if (this.user?.image) {
               this.loadProfileImage(this.user.image);
             }
 
-
             if (this.userId !== undefined) {
-              this.aviservice.getScoreMoyen(this.userId).subscribe(
-                (score: number) => {
+              this.aviservice.getScoreMoyen(this.userId).subscribe({
+                next: (score: number) => {
                   this.score = score;
                 },
-                (error: any) => {
+                error: (error: any) => {
                   console.error("Erreur lors de la récupération du score :", error);
                 }
-              );
+              });
             }
-
 
             if (userData.services && Array.isArray(userData.services)) {
               this.user.servicesOfferts = userData.services.map((service: string) => ({
@@ -115,22 +113,21 @@ export class EntrepriseconnecteComponent {
               this.user.servicesOfferts = [];
             }
 
-
             if (userData.disponibilites && Array.isArray(userData.disponibilites)) {
               this.user.disponibilites = userData.disponibilites.map((dispo: any, index: number) => ({
                 id: dispo.id ?? index,
                 jour: dispo.jour,
                 heureDebut: dispo.heureDebut,
                 heureFin: dispo.heureFin
-              })) || [];
+              })) ?? [];
             } else {
               this.user.disponibilites = [];
             }
           },
-          (error: any) => {
+          error: (error: any) => {
             console.error("Erreur lors de la récupération de l'utilisateur :", error);
           }
-        );
+        });
       }
     });
   }
@@ -200,8 +197,8 @@ export class EntrepriseconnecteComponent {
   }
 
   loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
-    this.fileService.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
 
         if (type === 'utilisateur') {
@@ -217,10 +214,10 @@ export class EntrepriseconnecteComponent {
           this.profileImageUrl = imageUrl;
         }
       },
-      (error) => {
+      error: (error) => {
 
       }
-    );
+    });
   }
 
   loadAvis(prestataireId: number): void {
@@ -229,8 +226,8 @@ export class EntrepriseconnecteComponent {
       console.error("ID du prestataire manquant !");
       return;
     }
-    this.avisService.getAvisParprestatitr(prestataireId).subscribe(
-      (avisdata) => {
+    this.avisService.getAvisParprestatitr(prestataireId).subscribe({
+      next: (avisdata) => {
         this.avisList = avisdata;
 
         this.avisList?.forEach((avis, index) => {
@@ -239,16 +236,14 @@ export class EntrepriseconnecteComponent {
             this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
             this.mettreAJourAffichage();
 
-          } else {
-
           }
         });
         this.cdr.detectChanges();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des avis:', error);
       }
-    );
+    });
   }
 
 

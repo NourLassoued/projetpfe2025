@@ -49,12 +49,15 @@ export class ReservationprestaitreComponent {
   }
   annulerReservation(reservationId: number): void {
     if (confirm('Voulez-vous vraiment annuler cette réservation ?')) {
-      this.reservationservice.annulerReservation(reservationId, this.userId).subscribe(() => {
-        this.toastr.success('Réservation annulée avec succès !');
-        this.loadReservations(this.userId);
-      }, error => {
-        this.toastr.error('Erreur lors de l\'annulation');
-        console.error(error);
+      this.reservationservice.annulerReservation(reservationId, this.userId).subscribe({
+        next: () => {
+          this.toastr.success('Réservation annulée avec succès !');
+          this.loadReservations(this.userId);
+        },
+        error: (error) => {
+          this.toastr.error('Erreur lors de l\'annulation');
+          console.error(error);
+        }
       });
     }
   }

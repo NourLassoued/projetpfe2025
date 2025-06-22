@@ -41,12 +41,12 @@
     <span class="close" (click)="closeModal()" (keydown.enter)="closeModal()">&times;</span>
     <h2>Donner un avis sur {{user?.nomEntreprise}}</h2>
     
-    <label>Note (sur 5) :</label>
-    <div class="stars flex gap-1" *ngIf="avis?.note !== undefined">
+    <label for="note-stars">Note (sur 5) :</label>
+    <div id="note-stars" class="stars flex gap-1" *ngIf="avis?.note !== undefined">
       <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
         <ng-container *ngIf="star <= avis.note!; else emptyStar">
          
-          <svg (click)="setNote(star)" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          <svg (click)="setNote(star)" (keydown.enter)="setNote(star)" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
             class="h-6 w-6 text-yellow-400 cursor-pointer" viewBox="0 0 20 20">
             <path
               d="M9.049 2.927c.3-.627 1.701-.627 2.002 0l1.11 2.24a1.09 1.09 0 00.818.744l2.47.358c.793.115 1.11 1.09.537 1.652l-1.786 1.738a1.09 1.09 0 00-.314 1.305l.445 2.475c.137.764-.675 1.351-1.37.987l-2.217-1.17a1.09 1.09 0 00-1.072 0l-2.217 1.17c-.695.364-1.507-.223-1.37-.987l.445-2.475a1.09 1.09 0 00-.314-1.305L3.013 7.921c-.573-.562-.256-1.537.537-1.652l2.47-.358a1.09 1.09 0 00.818-.744l1.11-2.24z" />
@@ -54,7 +54,7 @@
         </ng-container>
         <ng-template #emptyStar>
          
-          <svg (click)="setNote(star)" xmlns="http://www.w3.org/2000/svg" fill="none"
+          <svg (click)="setNote(star)" (keydown.enter)="setNote(star)" xmlns="http://www.w3.org/2000/svg" fill="none"
             stroke="currentColor" stroke-width="1.5"
             class="h-6 w-6 text-gray-400 cursor-pointer" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -67,8 +67,8 @@
     
     
 
-    <label>Commentaire :</label>
-    <textarea [(ngModel)]="avis.commentaire"></textarea>
+    <label for="commentaire">Commentaire :</label>
+    <textarea id="commentaire" [(ngModel)]="avis.commentaire"></textarea>
 <br>
 
     <button class="btnenvoyer" (click)="envoyerAvis()">✅ Envoyer</button>
@@ -121,7 +121,7 @@
               <i class="fas fa-heart me-2"></i> Top Prestataire
             </h6>
           </div>
-            <label>{{ user?.nom }}</label>
+            <span>{{ user?.nom }}</span>
            
             <div class="verification-container">
                 <span class="verification-item">
@@ -139,7 +139,7 @@
             {{ user?.adressee?.governoate }}
         </div>
         <div class="section">
-        <label>{{user?.nomEntreprise}}</label>
+        <span>{{user?.nomEntreprise}}</span>
       </div>
    
       <div class="section">
@@ -147,7 +147,7 @@
     
         
         <div class="section">
-            <label>💼 Mes compétences</label>
+            <h4>💼 Mes compétences</h4>
             <div class="competences-container">
                 <div class="competence" *ngFor="let servicee of user?.competence">
                     <p>{{ servicee }}</p> 
@@ -167,7 +167,7 @@
       
         <div class="content">
             <div class="section">
-              <label class="sectionn">Avis clients</label>
+              <span class="sectionn">Avis clients</span>
           
            
               <div class="rating">
@@ -189,10 +189,10 @@
                   <img
                     *ngIf="avis.utilisateur?.image"
                     [src]="avis.utilisateur?.image"
-                    alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
+                    alt="{{ avis.utilisateur?.nom || 'Client anonyme' }}"
                     class="user-image"
                   />
-                  <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+                  <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
           
                   <div class="review-header">
                     <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>

@@ -145,14 +145,11 @@ this.resetPasswordForm = this.fb.group({
     const service = this.services.find(s => s.idservice === idService);
     const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
 
-    this.authService.authenticate(emailUtilisateur, password).subscribe(
-      (authResponse) => {
-      
+    this.authService.authenticate(emailUtilisateur, password).subscribe({
+      next: (authResponse) => {
         const decodedToken: any = jwtDecode(authResponse.access_token);
         const emailUtilisateur = decodedToken.sub;
-      
 
-  
         const demande: Demande = {
           description: description,
           date: date,
@@ -164,16 +161,14 @@ this.resetPasswordForm = this.fb.group({
           title: title, 
           telephoneNumber: telephoneNumber  
         };
-      
-       
-        this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
-          (response) => {
-           
+
+        this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe({
+          next: (response) => {
             if (decodedToken.role === 'PARTICULIER') {
               this.router.navigate(['/Compteparticulier']);
             }
           },
-          (error) => {
+          error: (error) => {
             console.log("Erreur lors de la création de la demande :", error);
             if (error.status === 400) {
               alert("Données invalides !");
@@ -183,13 +178,13 @@ this.resetPasswordForm = this.fb.group({
               alert("Une erreur est survenue, veuillez réessayer.");
             }
           }
-        );
+        });
       },
-      (authError) => {
+      error: (authError) => {
         console.log("Erreur d'authentification :", authError);
         alert("Échec de l'authentification. Vérifiez vos identifiants.");
       }
-    );
+    });
   }
   
 

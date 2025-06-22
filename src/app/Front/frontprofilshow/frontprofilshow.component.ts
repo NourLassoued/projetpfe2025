@@ -3,7 +3,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { Avis } from 'src/models/Avis';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { FileService } from '../../service/file.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UtilisateurService } from '../../service/utilisateur.service';
 import { AvisService } from '../../service/avis.service';
 import { formatDistanceToNow } from 'date-fns';
@@ -95,27 +95,24 @@ export class FrontprofilshowComponent implements OnInit {
         this.userId = +userIdParam;
 
 
-        this.utilisateurservice.getById(this.userId).subscribe(
-          (userData: any) => {
+        this.utilisateurservice.getById(this.userId).subscribe({
+          next: (userData: any) => {
             this.user = userData;
 
             if (this.user?.image) {
               this.loadProfileImage(this.user.image);
             }
 
-
             if (this.userId !== undefined) {
-              this.aviservice.getScoreMoyen(this.userId).subscribe(
-                (score: number) => {
+              this.aviservice.getScoreMoyen(this.userId).subscribe({
+                next: (score: number) => {
                   this.score = score;
                 },
-                (error: any) => {
+                error: (error: any) => {
                   console.error("Erreur lors de la récupération du score :", error);
                 }
-              );
-
+              });
             }
-
 
             if (userData.services && Array.isArray(userData.services)) {
               this.user.servicesOfferts = userData.services.map((service: string) => ({
@@ -126,22 +123,21 @@ export class FrontprofilshowComponent implements OnInit {
               this.user.servicesOfferts = [];
             }
 
-
             if (userData.disponibilites && Array.isArray(userData.disponibilites)) {
               this.user.disponibilites = userData.disponibilites.map((dispo: any, index: number) => ({
                 id: dispo.id ?? index,
                 jour: dispo.jour,
                 heureDebut: dispo.heureDebut,
                 heureFin: dispo.heureFin
-              })) || [];
+              })) ?? [];
             } else {
               this.user.disponibilites = [];
             }
           },
-          (error: any) => {
+          error: (error: any) => {
             console.error("Erreur lors de la récupération de l'utilisateur :", error);
           }
-        );
+        });
       }
     });
   }
@@ -178,8 +174,8 @@ export class FrontprofilshowComponent implements OnInit {
   }
 
   loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
-    this.fileService.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
 
         if (type === 'utilisateur') {
@@ -195,10 +191,10 @@ export class FrontprofilshowComponent implements OnInit {
           this.profileImageUrl = imageUrl;
         }
       },
-      (error) => {
+      error: (error) => {
 
       }
-    );
+    });
   }
 
   loadAvis(prestataireId: number): void {
@@ -207,8 +203,8 @@ export class FrontprofilshowComponent implements OnInit {
       console.error("ID du prestataire manquant !");
       return;
     }
-    this.avisService.getAvisParprestatitr(prestataireId).subscribe(
-      (avisdata) => {
+    this.avisService.getAvisParprestatitr(prestataireId).subscribe({
+      next: (avisdata) => {
         this.avisList = avisdata;
 
         this.avisList?.forEach((avis, index) => {
@@ -221,10 +217,10 @@ export class FrontprofilshowComponent implements OnInit {
         });
         this.cdr.detectChanges();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des avis:', error);
       }
-    );
+    });
   }
 
 

@@ -38,20 +38,21 @@
          </div>
          <div *ngIf="showModal" class="modal-overlay">
             <div class="modal-content">
-                <span class="close"(click)="closeServiceModal()" >&times;</span>
+                <span class="close" (click)="closeServiceModal()" (keydown.enter)="closeServiceModal()" >&times;</span>
                 <h2> aide à domicile</h2>
                 <input type="text" placeholder="🔍 De quel service avez-vous besoin " 
                 class="search-bar2"
                 [(ngModel)]="searchQuery"
                 (input)="filterServices()">
-                <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)">
+                <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)" (keydown)="selectService(service)">
                     <img [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
                     <span  class="service-name" >{{ service.nomservice }}</span>
 
                     <input 
                             class="iconn" 
                             type="checkbox" 
-                            id="" >
+                            id=""
+                            tabindex="0" >
                     
                    
                 </div>

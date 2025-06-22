@@ -25,7 +25,7 @@ export class AidedomicileComponent {
   ) { }
   ngOnInit(): void {
 
-    this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');
+    this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');
 
     if (this.categoryName) {
 
@@ -58,7 +58,7 @@ export class AidedomicileComponent {
     } else {
 
       this.filteredServices = this.services.filter(service =>
-        service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+        service.nomservice?.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }
   }
@@ -68,16 +68,15 @@ export class AidedomicileComponent {
 
   getImage(filename: string, index: number) {
 
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-
       },
-      (error) => {
+      error: (error) => {
         console.error(` Erreur lors du chargement de l'image ${filename}`, error);
       }
-    );
+    });
   }
 
   searchServices() {
@@ -94,8 +93,8 @@ export class AidedomicileComponent {
 
 
   getServicesByCategoryName(categorieName: string): void {
-    this.service.getServicesByCategoryName(categorieName).subscribe(
-      (services: Servicee[]) => {
+    this.service.getServicesByCategoryName(categorieName).subscribe({
+      next: (services: Servicee[]) => {
 
         if (services && services.length > 0) {
           this.services = services;
@@ -118,10 +117,10 @@ export class AidedomicileComponent {
           console.warn('Aucun service trouvé pour la catégorie:', categorieName);
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des services:', error);
       }
-    );
+    });
   }
 
   placeholders: string[] = [

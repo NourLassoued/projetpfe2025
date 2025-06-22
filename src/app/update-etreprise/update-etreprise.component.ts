@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {  Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../service/file.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Adresse } from 'src/models/Adresse';
 import { Utilisateur } from 'src/models/Utilisateur';
 
-import { Router } from '@angular/router';
+
 import { UtilisateurService } from '../service/utilisateur.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class UpdateEtrepriseComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
 triggerFileInput() {
-  this.fileInput.nativeElement.click(); // Simule un clic sur l'input file
+  this.fileInput.nativeElement.click(); 
 }
 
 emailExists: boolean = false;
@@ -49,7 +49,6 @@ userId: number | null = null;
  
  
   utilisateurId!: number;
-   private apiUrl = 'http://localhost:8088/nour/api/v1/auth';
 
 
   soumis: boolean = false;
@@ -63,11 +62,11 @@ modificationMode = false;
 
    
 
-  constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,
+  constructor(private  readonly fileService: FileService, private readonly sanitizer: DomSanitizer, private readonly utilisateurService:UtilisateurService,
    
-   private cdRef: ChangeDetectorRef,
-   private forgetPasswordService:ForgetPasswordService,
-  private uploadService :FileService,private adreesse:AdresseService) {}
+ 
+   private readonly forgetPasswordService:ForgetPasswordService,
+  private  readonly uploadService :FileService,private  readonly adreesse:AdresseService) {}
   
   ngOnInit(): void {
    
@@ -164,98 +163,100 @@ modificationMode = false;
     this.updateProfileImage();
     return;
   }
-  
+
   if (field === "password") {
-    const newPassword = this.editedValues['password'];
-    const confirmPassword = this.editedValues['confirmPassword'];
-
-    if (!newPassword || !confirmPassword) {
-      this.passwordError = "Veuillez remplir tous les champs.";
-      return;
-    }
-
-    if (newPassword.length < 6) {
-      this.passwordError = "Le mot de passe doit contenir au moins 6 caractères.";
-      return;
-    }
-
-    if (newPassword !== confirmPassword) {
-      this.passwordError = "Les mots de passe ne correspondent pas.";
-      return;
-    }
-
-   
-    this.forgetPasswordService.changePassword(this.userId, this.editedValues['password'], this.editedValues['confirmPassword'])
-      .subscribe({
-        next: (response) => {
-         
-          this.isEditing[field] = false;
-          this.passwordError = "";
-        },
-        error: (err) => {
-          console.error("Erreur lors du changement de mot de passe :", err);
-          this.passwordError = err.error || "Une erreur est survenue.";
-        }
-      });
-
+    this.handlePasswordChange(field);
     return;
   }
- 
- 
+
   if (field === "adresse") {
-    if (!this.selectedAdresse) {
-      console.error("Aucune adresse sélectionnée !");
-      return;
-    }
-
-    // Vérifier si `selectedAdresse` est un objet ou une chaîne (nom de la ville)
-    let adresseObjet = typeof this.selectedAdresse === 'string'
-      ? this.adresses.find(a => a.governoate === this.selectedAdresse)
-      : this.selectedAdresse;
-
-    if (!adresseObjet || !adresseObjet.idAdresse) {
-      console.error(" Adresse introuvable !");
-      return;
-    }
-
-    this.utilisateurService.affecterAdresse(this.userId, adresseObjet.idAdresse)
-      .subscribe({
-        next: (response: { token: string; }) => {
-          console.log(` ${field} mis à jour avec succès :`, response);
-  
-          if (response.token) {
-            localStorage.removeItem('accessToken'); 
-            localStorage.setItem('accessToken', response.token); 
-       
-          }
-          this.user.adresse = adresseObjet;
-          this.isEditing[field] = false;
-      
-          
-        },
-        error: (err: any) => {
-          console.error(" Erreur lors de la mise à jour de l'adresse :", err);
-        }
-      });
+    this.handleAdresseChange(field);
+    return;
   }
 
+  this.handleGenericFieldChange(field);
+}
 
-  
-  const updatedData = { [field]: this.editedValues[field] };
+private handlePasswordChange(field: string) {
+  const newPassword = this.editedValues['password'];
+  const confirmPassword = this.editedValues['confirmPassword'];
 
-  this.utilisateurService.updateUser(this.userId, updatedData)
+  if (!newPassword || !confirmPassword) {
+    this.passwordError = "Veuillez remplir tous les champs.";
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    this.passwordError = "Le mot de passe doit contenir au moins 6 caractères.";
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    this.passwordError = "Les mots de passe ne correspondent pas.";
+    return;
+  }
+
+  this.forgetPasswordService.changePassword(this.userId!, newPassword, confirmPassword)
+    .subscribe({
+      next: (response) => {
+        this.isEditing[field] = false;
+        this.passwordError = "";
+      },
+      error: (err) => {
+        console.error("Erreur lors du changement de mot de passe :", err);
+        this.passwordError = err.error ?? "Une erreur est survenue.";
+      }
+    });
+}
+
+private handleAdresseChange(field: string) {
+  if (!this.selectedAdresse) {
+    console.error("Aucune adresse sélectionnée !");
+    return;
+  }
+
+  let adresseObjet = typeof this.selectedAdresse === 'string'
+    ? this.adresses.find(a => a.governoate === this.selectedAdresse)
+    : this.selectedAdresse;
+
+  if (!adresseObjet?.idAdresse) {
+    console.error(" Adresse introuvable !");
+    return;
+  }
+
+  this.utilisateurService.affecterAdresse(this.userId!, adresseObjet.idAdresse)
     .subscribe({
       next: (response: { token: string; }) => {
         console.log(` ${field} mis à jour avec succès :`, response);
 
         if (response.token) {
-          localStorage.removeItem('accessToken'); 
-          localStorage.setItem('accessToken', response.token); 
-     
+          localStorage.removeItem('accessToken');
+          localStorage.setItem('accessToken', response.token);
+        }
+        this.user.adresse = adresseObjet;
+        this.isEditing[field] = false;
+      },
+      error: (err: any) => {
+        console.error(" Erreur lors de la mise à jour de l'adresse :", err);
+      }
+    });
+}
+
+private handleGenericFieldChange(field: string) {
+  const updatedData = { [field]: this.editedValues[field] };
+
+  this.utilisateurService.updateUser(this.userId!, updatedData)
+    .subscribe({
+      next: (response: { token: string; }) => {
+        console.log(` ${field} mis à jour avec succès :`, response);
+
+        if (response.token) {
+          localStorage.removeItem('accessToken');
+          localStorage.setItem('accessToken', response.token);
         }
 
-        this.user[field] = updatedData[field]; 
-        this.isEditing[field] = false; 
+        this.user[field] = updatedData[field];
+        this.isEditing[field] = false;
       },
       error: (err: any) => {
         console.error(`Erreur lors de la mise à jour de ${field} :`, err);
@@ -282,16 +283,15 @@ onFileSelected(event: any) {
 
   
 getImage(filename: string, index: number) {
-  this.fileService.getImage(filename).subscribe(
-    (imageBlob) => {
+  this.fileService.getImage(filename).subscribe({
+    next: (imageBlob) => {
       const imageUrl = URL.createObjectURL(imageBlob);
       this.imageUrls[index] = imageUrl;
-     
     },
-    (error) => {
+    error: (error) => {
       console.error('Erreur lors du chargement de l\'image', error);
     }
-  );
+  });
 }
 updateProfileImage() {
   this.loadUserData(); 

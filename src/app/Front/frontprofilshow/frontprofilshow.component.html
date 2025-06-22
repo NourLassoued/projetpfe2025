@@ -133,7 +133,7 @@
         <div class="reviews">
           <div class="review-card" *ngFor="let avis of avisAffiches">
             <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image" alt="" class="user-image" />
-            <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+            <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
 
             <div class="review-header">
               <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>

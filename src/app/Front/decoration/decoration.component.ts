@@ -24,7 +24,7 @@ export class DecorationComponent {
   ) { }
   ngOnInit(): void {
 
-    this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');
+    this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');
 
     if (this.categoryName) {
 
@@ -57,7 +57,7 @@ export class DecorationComponent {
     } else {
 
       this.filteredServices = this.services.filter(service =>
-        service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+        service.nomservice?.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }
   }
@@ -67,16 +67,15 @@ export class DecorationComponent {
 
   getImage(filename: string, index: number) {
 
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-
       },
-      (error) => {
+      error: (error) => {
         console.error(` Erreur lors du chargement de l'image ${filename}`, error);
       }
-    );
+    });
   }
 
   searchServices() {
@@ -93,8 +92,8 @@ export class DecorationComponent {
 
 
   getServicesByCategoryName(categorieName: string): void {
-    this.service.getServicesByCategoryName(categorieName).subscribe(
-      (services: Servicee[]) => {
+    this.service.getServicesByCategoryName(categorieName).subscribe({
+      next: (services: Servicee[]) => {
 
         if (services && services.length > 0) {
           this.services = services;
@@ -117,10 +116,10 @@ export class DecorationComponent {
           console.warn('Aucun service trouvé pour la catégorie:', categorieName);
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des services:', error);
       }
-    );
+    });
   }
 
   placeholders: string[] = [
@@ -136,7 +135,7 @@ export class DecorationComponent {
   currentPlaceholder: string = "";
   private index: number = 0;
   private charIndex: number = 0;
-  private typingSpeed: number = 100;
+  private readonly typingSpeed: number = 100;
   private isTyping: boolean = false;
 
 

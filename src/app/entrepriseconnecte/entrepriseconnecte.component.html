@@ -67,7 +67,8 @@
         <div class="container-profile">
 
             <div class="section">
-                <label>{{ user?.nomEntreprise }}</label>
+                <label for="nomEntreprise">{{ user?.nomEntreprise }}</label>
+                <input id="nomEntreprise" type="text" [value]="user?.nomEntreprise" readonly style="display:none;" />
                 <div class="verification-container">
                     <span class="verification-item">
                         <i class="fa-solid fa-circle-check"></i>Entreprise vérifiée
@@ -92,7 +93,7 @@
 
 
             <div class="section">
-                <label><i class="fa-solid fa-briefcase"></i> Notre service</label>
+                <span><i class="fa-solid fa-briefcase"></i> Notre service</span>
                 <div class="competences-container">
                     <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
                         <p *ngIf="servicee?.nomservice">
@@ -112,7 +113,7 @@
 
             <div class="content">
                 <div class="section">
-                    <label class="sectionn">Avis clients</label>
+                    <span class="sectionn">Avis clients</span>
 
 
                     <div class="rating">
@@ -133,7 +134,7 @@
                         <div class="review-card" *ngFor="let avis of avisAffiches">
                             <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image" alt=""
                                 class="user-image" />
-                            <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+                            <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
 
                             <div class="review-header">
                                 <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>

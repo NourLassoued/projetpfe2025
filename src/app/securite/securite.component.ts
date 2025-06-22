@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {  Component } from '@angular/core';
 import { Servicee } from 'src/models/Servicee';
-import { CategorieService } from '../service/categorie.service';
 import { FileService } from '../service/file.service';
 import { ServiceeService } from '../service/servicee.service';
 import { Router } from '@angular/router';
@@ -18,14 +17,14 @@ export class SecuriteComponent {
     filteredServices: Servicee[] = [];
     searchQuery: string = '';
     categoryName: string = '';
-    constructor(private categorieService:CategorieService,private file:FileService,
-        private service:ServiceeService,
+    constructor(private readonly file:FileService,
+        private readonly service:ServiceeService,
        
-        private router: Router,
-        private cdr: ChangeDetectorRef) {}
+        private readonly router: Router,
+        ) {}
         ngOnInit(): void {
               
-          this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');  
+          this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');  
           
           if (this.categoryName) {
           
@@ -58,7 +57,7 @@ export class SecuriteComponent {
       } else {
       
         this.filteredServices = this.services.filter(service =>
-          service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+          service.nomservice?.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
     }
@@ -68,16 +67,15 @@ export class SecuriteComponent {
   
     getImage(filename: string, index: number) {
      
-      this.file.getImage(filename).subscribe(
-        (imageBlob) => {
+      this.file.getImage(filename).subscribe({
+        next: (imageBlob) => {
           const imageUrl = URL.createObjectURL(imageBlob);
           this.imageUrls[index] = imageUrl;
-          
         },
-        (error) => {
+        error: (error) => {
           console.error(` Erreur lors du chargement de l'image ${filename}`, error);
         }
-      );
+      });
     }
   
     searchServices() {
@@ -94,8 +92,8 @@ export class SecuriteComponent {
     
    
       getServicesByCategoryName(categorieName: string): void {
-        this.service.getServicesByCategoryName(categorieName).subscribe(
-          (services: Servicee[]) => {
+        this.service.getServicesByCategoryName(categorieName).subscribe({
+          next: (services: Servicee[]) => {
             console.log('Services récupérés pour la catégorie:', categorieName, services);
             if (services && services.length > 0) {
               this.services = services;
@@ -118,10 +116,10 @@ export class SecuriteComponent {
               console.warn('Aucun service trouvé pour la catégorie:', categorieName);
             }
           },
-          (error) => {
+          error: (error) => {
             console.error('Erreur lors de la récupération des services:', error);
           }
-        );
+        });
       }
     
         placeholders: string[] = [
@@ -136,7 +134,7 @@ export class SecuriteComponent {
         currentPlaceholder: string = "";
         private index: number = 0;
         private charIndex: number = 0;
-        private typingSpeed: number = 100;
+        private  readonly typingSpeed: number = 100;
         private isTyping: boolean = false;
       
         
