@@ -127,9 +127,6 @@ body {
   
 
 
-.button:hover {
-    background-color: #0056b3;
-}
 
 .services {
     display: flex;
@@ -243,14 +240,14 @@ p {
 
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    height: 460px; /* Assure une hauteur uniforme */
+    height: 460px;
 }
 
 .service-card img {
-    width: 350px; /* Largeur fixe */
-    height: 280px; /* Hauteur fixe */
-    object-fit: cover; /* Pour que l'image conserve ses proportions et soit coupée si nécessaire */
-    border-radius: 8px; /* Optionnel : ajouter un arrondi aux coins */
+    width: 350px; 
+    height: 280px;
+    object-fit: cover; 
+    border-radius: 8px; 
   }
   
 

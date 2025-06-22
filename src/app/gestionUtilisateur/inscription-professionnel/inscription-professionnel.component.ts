@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Component } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 import { Servicee } from 'src/models/Servicee';
 import { UserRole } from 'src/models/UserRole';
@@ -38,7 +38,7 @@ export class InscriptionProfessionnelComponent {
   emailError: string | null = null; 
   email: string = '';
   notificationMessage: string = ''; 
-  constructor(private fb: FormBuilder ,private categorieService:CategorieService,private file:FileService,private service:ServiceeService,private authService: AuthServiceService,private utilisateurService:UtilisateurService, private router: Router) {
+  constructor(private readonly fb: FormBuilder ,private  readonly categorieService:CategorieService,private  readonly file:FileService,private  readonly service:ServiceeService,private  readonly authService: AuthServiceService,private readonly utilisateurService:UtilisateurService, private readonly router: Router) {
     this.form1 = this.fb.group({
       nom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern("^.*@gmail.com$")], [this.emailAsyncValidator()] ],

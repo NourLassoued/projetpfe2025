@@ -1,7 +1,7 @@
 .body{
     margin-bottom: 0px;
   padding: 0px;
-  margin: 0px;
+ 
   border: 0px;
 
 }
@@ -75,13 +75,13 @@
     color: #333;
     display: block;
     margin-bottom: 10px;
-    font-weight: bold;
+ 
 }
 
 .profile-container {
     position: relative;
     display: inline-block;
-    width: 50px;  /* Taille de l'icône */
+    width: 50px;  
     height: 50px;
 }
 .job-content {
@@ -136,28 +136,13 @@
     align-items: center;
   }
   
-  #profile-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; 
-    object-fit: cover; 
-    cursor: pointer;
-  }
+  
   #profile-container i {
     font-size: 40px;
     color: rgb(140, 137, 137);
 }
 
-#profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    overflow: hidden;
-  }
+
   
   #profile-icon {
     width: 80px;
@@ -169,10 +154,7 @@
 .profile-menu.active {
     display: block;
 }
-#profile-container i {
-    font-size: 40px;
-    color: rgb(140, 137, 137);
-}
+
 .requests ul {
     list-style-type: none; 
     padding: 0;
@@ -277,6 +259,5 @@
     resize: none;
     width: 420px;
     line-height: 1.5; 
-    resize: vertical; 
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }

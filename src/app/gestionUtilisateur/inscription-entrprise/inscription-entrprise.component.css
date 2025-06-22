@@ -21,14 +21,14 @@ body {
     color: #888; 
   }
   
+.input-fa {
+  width: 100%;
+  padding-left: 30px;
+  font-size: 14px; 
+  padding-right: 10px; 
+}
 
-  .input-fa {
-    width: 100%;
-    padding-left: 30px; 
-    font-size: 14px;
-    padding-right: 10px;
-  }
-  
+ 
 
 app-footer {
  width:1350px;
@@ -53,6 +53,7 @@ flex: 1;
 
   
 }
+
 label {
   display: flex;
   align-items: center;
@@ -68,16 +69,10 @@ label i {
   font-size: 18px;
 }
 
-.input-fa {
-  width: 100%;
-  padding-left: 30px;
-  font-size: 14px; 
-  padding-right: 10px; 
-}
 
 
 .input-fa::placeholder {
-  font-family: "Font Awesome 5 Free"; 
+  font-family: "Font Awesome 5 Free "; 
   content: "\f0e0"; 
   text-transform: none; 
   font-weight: normal; 
@@ -108,12 +103,7 @@ button[disabled] {
   background-color: #ccc;
   cursor: not-allowed;
 }
-label {
-  display: block;
-  text-align: left;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
+
 
 .title-container {
   display: flex;

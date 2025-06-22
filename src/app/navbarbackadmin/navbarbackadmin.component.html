@@ -62,7 +62,7 @@
 							       <div class="item p-3">
 								        <div class="row gx-2 justify-content-between align-items-center">
 									        <div class="col-auto">
-												<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+												<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
 									        </div><!--//col-->
 									        <div class="col">
 										        <div class="info"> 
@@ -113,7 +113,7 @@
 							       <div class="item p-3">
 								        <div class="row gx-2 justify-content-between align-items-center">
 									        <div class="col-auto">
-												<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+												<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
 									        </div><!--//col-->
 									        <div class="col">
 										        <div class="info"> 
@@ -144,7 +144,7 @@
 			            
 			            <div class="app-utility-item app-user-dropdown dropdown">
 				            <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><ng-container *ngIf="profileImageUrl; else defaultIcon">
-								<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+								<img [src]="profileImageUrl" alt="" class="profile-img">
 							</ng-container>
 							<ng-template #defaultIcon>
 								<i class="fas fa-user-circle profile-icon"></i> <!-- Icône utilisateur -->
@@ -166,7 +166,8 @@
 	        <div class="sidepanel-inner d-flex flex-column">
 		        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 		        <div class="app-branding">
-		            <a class="app-logo" routerLink="/Admindashboard"> 	<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span class="logo-text">PORTAL</span></a>
+		            <a class="app-logo" routerLink="/Admindashboard"> 	
+						<img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img"><span class="logo-text">PORTAL</span></a>
 	
 		        </div><!--//app-branding-->  
 		        

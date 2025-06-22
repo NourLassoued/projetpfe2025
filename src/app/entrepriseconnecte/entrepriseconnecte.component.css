@@ -57,6 +57,7 @@ body {
     margin-top: 10px;
     color: white;
 }
+
 .content {
     flex-grow: 1;
     background: white;
@@ -68,33 +69,26 @@ body {
     margin-left: 40px;
     
 }
-.competences-container {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 10px; /* Espace entre les compétences */
-   
-  
-    
-}
+ 
 .competences-container {
     display: flex;
     flex-wrap: wrap; 
     gap: 10px; 
-    justify-content:flex-start;
-    margin-left: 50px;
-    margin-bottom: 20px
-  }
+   
+  
+    
+}
 .competence {
     background: #dbd8d8;
     border-radius: 20px;
-    padding: 10px 20px; /* Espace autour du texte */
+    padding: 10px 20px; 
     display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-    text-align: center; /* Aligne le texte à l'intérieur de <p> au centre */
+    justify-content: center;
+    align-items: center; 
+    text-align: center; 
     border: 1px solid #ddd;
-    height: 25px; /* Hauteur uniforme */
-    min-width: 80px; /* Largeur minimale */
+    height: 25px; 
+    min-width: 80px; 
     font-weight: bold;
 }
 .competence p {
@@ -106,10 +100,10 @@ body {
 }
 .competence li {
   display: flex;
-  justify-content: space-between; /* Espace entre le texte et le bouton */
-  align-items: center; /* Alignement vertical */
+  justify-content: space-between; 
+  align-items: center; 
   padding: 10px;
-  border-bottom: 1px solid #ddd; /* Séparation des lignes */
+  border-bottom: 1px solid #ddd; 
 }
 .profile-info {
     margin-top: 10px;
@@ -145,12 +139,7 @@ body {
     margin-top: 10px;
     text-align: center;
    }
-   .competences-container {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 10px;
-    margin-left: 50px; 
-  }
+  
   
 
 
@@ -173,6 +162,7 @@ body {
     text-align: center;
   
 }
+
 .rating {
     color: #6b46c1;
     font-weight: bold;
@@ -283,10 +273,7 @@ body {
 .review-text {
     margin-top: 10px;
 }
-.rating {
-    font-size: 18px;
-    font-weight: bold;
-}
+
 .user-image {
     width: 50px;
     height: 50px;
@@ -311,9 +298,9 @@ body {
 }
 .user-info-container {
     display: flex;
-    gap: 496px; /* Espacement entre les éléments */
-    flex-wrap: wrap; /* Permet le retour à la ligne si l'espace est insuffisant */
-    align-items: center; /* Aligne les éléments verticalement */
+    gap: 496px; 
+    flex-wrap: wrap;
+    align-items: center; 
   }
   
   .user-info-container label {
@@ -321,28 +308,28 @@ body {
     padding: 8px 12px;
     border-radius: 5px;
     font-weight: bold;
-    white-space: nowrap; /* Empêche les éléments d'être coupés */
+    white-space: nowrap; 
   }
   .verification-container {
     margin-left: 550px;
     display: flex;
-    flex-direction: column; /* Affichage en colonne */
-    gap: 2px; /* Espacement entre les labels */
+    flex-direction: column; 
+    gap: 2px; 
   }
   .verification-item {
     display: flex;
     align-items: center;
     font-size: 16px;
-    color: #555; /* Couleur du texte */
+    color: #555; 
   }
   
   .verification-item i {
-    color: #39bf39; /* Couleur verte de l'icône */
+    color: #39bf39; 
     font-size: 18px;
-    margin-right: 8px; /* Espacement entre l'icône et le texte */
+    margin-right: 8px; 
   }
   .disponibilites-list {
-    list-style: none; /* Supprime les puces de la liste */
+    list-style: none; 
     padding: 0;
   }
   
@@ -350,21 +337,25 @@ body {
     display: flex;
     align-items: center;
     font-size: 16px;
-    color: #555; /* Couleur du texte */
+    color: #555; 
     padding: 5px 0;
   }
   
   .disponibilites-list li i {
-    color: #39bf39; /* Couleur verte pour l'icône */
+    color: #39bf39; 
     font-size: 18px;
-    margin-right: 8px; /* Espacement entre l'icône et le texte */
+    margin-right: 8px; 
   }
   button i {
-    margin-right: 8px; /* Espacement entre l'icône et le texte */
-    font-size: 18px; /* Taille de l'icône */
-  }.notification-box {
+    margin-right: 8px; 
+    font-size: 18px; 
+  
+}
+
+.notification-box {
     position: fixed;
     top: 370px;
+    margin-left: 420px;
 
     transform: translateX(-50%);
     background: #ffffff;
@@ -382,7 +373,7 @@ body {
     z-index: 1000;
 }
 
-/* Carte utilisateur */
+
 .user-card {
     display: flex;
     align-items: center;
@@ -416,7 +407,6 @@ body {
     color: #666;
 }
 
-/* Alignement des boutons */
 .contact-buttons {
     display: flex;
     justify-content: space-between;
@@ -425,7 +415,6 @@ body {
     gap: 10px;
 }
 
-/* Boutons de contact (taille identique) */
 .contact-btn {
     flex: 1;
     padding: 10px;
@@ -447,9 +436,6 @@ body {
     
 }
 
-.notification-box {
-    margin-left: 420px;
-}
 
 /* Style du bouton Fermer */
 .notification-box button {
@@ -508,30 +494,19 @@ button.close-btn {
     margin: 15px auto 0;
     transition: background 0.2s;
 }
-.content {
-    
-    background: rgb(255, 255, 255);
-  
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 35px;
-    width: 800px;
 
-    margin-bottom: 10px;
-    
-}
 .site-link {
-    color: #007bff; /* Couleur du texte */
-    text-decoration: none; /* Supprime le souligné par défaut */
-    font-weight: 40px bold; /* Met le texte en gras */
+    color: #007bff; 
+    text-decoration: none; 
+    font-weight: 40px bold; 
     transition: color 0.3s ease;
  
    
 }
 
 .site-link:hover {
-    color: #0056b3; /* Changer la couleur lors du survol */
-    text-decoration: underline; /* Ajoute un souligné lors du survol */
+    color: #0056b3; 
+    text-decoration: underline; 
 }
 
 .navigation-buttons {

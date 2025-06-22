@@ -29,6 +29,7 @@ h1 {
 .highlight {
     background: linear-gradient(90deg, #ff4081, #ff9800);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -42,6 +43,7 @@ a {
     text-decoration: none;
     font-weight: bold;
 }
+
 
 .btn {
     background-color: #15905c;
@@ -160,13 +162,7 @@ a {
     width: 40%;
 }
 
-.btn {
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-}
+
 
 .btn-green {
     background-color: green;

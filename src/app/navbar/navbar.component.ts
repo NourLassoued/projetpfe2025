@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
   isComptePage(): boolean {
     return this.router.url.includes('/Compte');
   }

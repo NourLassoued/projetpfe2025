@@ -1,11 +1,10 @@
-.body{
+.body {
+    margin: 0px;
     margin-bottom: 0px;
-  padding: 0px;
-  margin: 0px;
-  border: 0px;
-  width:7000px
+    padding: 0px;
 
-
+    border: 0px;
+    width: 7000px
 }
 
 
@@ -18,31 +17,35 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
 .container {
     display: flex;
- width:5500px;
-  margin: 0px;
+    width: 5500px;
+    margin: 0px;
     padding: 0px;
-   
-  
-  
- 
 
-  
-   
+
+
+
+
+
+
 }
+
 .sidebar {
     width: 250px;
     height: 670px;
 
     background-color: #fbf5f5;
-   
-  
+
+
 }
+
 .sidebar ul {
     list-style: none;
     padding: 0;
 }
+
 .sidebar ul li {
     padding: 10px;
     margin-bottom: 10px;
@@ -50,7 +53,9 @@
     border-radius: 5px;
     transition: background 0.3s;
 }
-.sidebar ul li.active, .sidebar ul li:hover {
+
+.sidebar ul li.active,
+.sidebar ul li:hover {
     background-color: #bbbdc0;
 }
 
@@ -58,13 +63,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-  
+
     padding: 15px 20px;
     border-radius: 15px;
 
     height: 120px;
     margin: auto;
-   
+
 }
 
 .user-name {
@@ -74,28 +79,31 @@
     display: block;
     margin-left: 20px;
     margin-bottom: 10px;
-    font-weight: bold;
+
 }
-.content{
-   
+
+.content {
+
     width: 900px;
     margin-right: 50px;
 
-    
+
 }
 
 .profile-container {
     position: relative;
     display: inline-block;
-    width: 50px;  /* Taille de l'icône */
+    width: 50px;
+    /* Taille de l'icône */
     height: 50px;
-   
+
 }
+
 .job-content {
     display: flex;
     align-items: center;
     margin-bottom: 70px;
-  
+
 }
 
 .job-text {
@@ -106,6 +114,7 @@
     font-size: 25px;
     display: block;
 }
+
 .job-text p {
     margin: 5px 0 0;
     font-size: 20px;
@@ -115,7 +124,7 @@
 
 
 
-#menu-icon{
+#menu-icon {
     color: rgb(140, 137, 137);
 }
 
@@ -123,6 +132,7 @@
 .profile-btn:hover {
     background-color: #fff4e5;
 }
+
 .requests {
     margin-top: 20px;
     background-color: white;
@@ -131,19 +141,17 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#profile-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  #profile-icon {
+
+
+#profile-icon {
     width: 50px;
     height: 50px;
-    border-radius: 50%; 
-    object-fit: cover; 
+    border-radius: 50%;
+    object-fit: cover;
     cursor: pointer;
-  }
-  #profile-container i {
+}
+
+#profile-container i {
     font-size: 40px;
     color: rgb(140, 137, 137);
 }
@@ -157,40 +165,33 @@
     border-radius: 50%;
     background-color: #f0f0f0;
     overflow: hidden;
-   
-  }
-  
-  #profile-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%; 
-    object-fit: cover; 
-    cursor: pointer;
-  }
+
+}
+
+
 .profile-menu.active {
     display: block;
 }
-#profile-container i {
-    font-size: 40px;
-    color: rgb(140, 137, 137);
-}
+
 .blue-icon {
-    color:#edcd8e;
-  }
-  .category-card {
+    color: #edcd8e;
+}
+
+.category-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     width: 100px;
 }
+
 .services-container {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-   margin-bottom: 500px;
-   
+    margin-bottom: 500px;
+
 }
 
 .services-list {
@@ -198,7 +199,7 @@
     gap: 15px;
     width: 60%;
     justify-content: center;
-  
+
 }
 
 
@@ -208,11 +209,13 @@
     height: 70px;
     object-fit: cover;
     border-radius: 6%;
-  
- 
-}.scroll-btn {
-    background-color:white ;
-   
+
+
+}
+
+.scroll-btn {
+    background-color: white;
+
     color: white;
     border: none;
     padding: 10px;
@@ -223,11 +226,12 @@
     height: 30px;
     margin-right: 120px;
 }
-.scroll-btnright
-{ background-color:white ;
-   
+
+.scroll-btnright {
+    background-color: white;
+
     color: white;
-    
+
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -240,24 +244,27 @@
 
 
 .scroll-btnright i {
-    color:  #007bff;; /* Définit la couleur de l'icône en bleu */
-    font-size: 30px; /* Taille de l'icône, tu peux ajuster */
-    transition: color 0.3s ease; /* Animation de transition de couleur */
-  }
-  
+    color: #007bff;
+ 
+    font-size: 30px;
+ 
+    transition: color 0.3s ease;
+ 
+}
+
 
 .scroll-btn:disabled {
-   
+
     cursor: not-allowed;
 }
 
 .scroll-btn i {
-    color:  #007bff;; /* Définit la couleur de l'icône en bleu */
-    font-size: 30px; /* Taille de l'icône, tu peux ajuster */
-    transition: color 0.3s ease; /* Animation de transition de couleur */
-  }
+    color: #007bff;
+    font-size: 30px;
+    transition: color 0.3s ease;
+}
+
+.scroll-btn i:hover {
+    color: darkblue;
   
-  .scroll-btn i:hover {
-    color: darkblue; /* Change la couleur de l'icône au survol */
-  }
-  
+}

@@ -17,10 +17,10 @@ export class JardinageComponent {
     filteredServices: Servicee[] = [];
     searchQuery: string = '';
     categoryName: string = '';
-    constructor(private file:FileService,
-        private service:ServiceeService,
+    constructor(private readonly file:FileService,
+        private readonly service:ServiceeService,
        
-        private router: Router,
+        private readonly router: Router,
         ) {}
         ngOnInit(): void {
               

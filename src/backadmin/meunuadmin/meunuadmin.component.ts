@@ -1,12 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { ToastrService } from 'ngx-toastr';
-import { CategorieService } from 'src/app/service/categorie.service';
+
 import { FileService } from 'src/app/service/file.service';
-import { ServiceeService } from 'src/app/service/servicee.service';
+
 
 @Component({
   selector: 'app-meunuadmin',
@@ -17,13 +15,9 @@ export class MeunuadminComponent {
   user: any;
   profileImageUrl: SafeUrl | null = null;
   constructor(
-    private fileservice: FileService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private categorieService: CategorieService,
-    private fb: FormBuilder,
-    private toastr: ToastrService,
-    private service: ServiceeService) {
+    private readonly fileservice: FileService,
+    private  readonly cdr: ChangeDetectorRef,
+    private readonly router: Router) {
 
 
   }
@@ -84,9 +78,7 @@ export class MeunuadminComponent {
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
-
-      }
+    
       else {
         console.warn("Aucune image trouvée dans le token !");
       }
@@ -109,5 +101,4 @@ export class MeunuadminComponent {
   showDetails(avis: any) {
     console.log(avis);
   }
-
 }

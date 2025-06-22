@@ -1,7 +1,7 @@
 .body{
     margin-bottom: 0px;
   padding: 0px;
-  margin: 0px;
+
   border: 0px;
 
 }
@@ -126,13 +126,16 @@
     max-width: 500px;
     position: relative; 
   }
-
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
+.close {
+  position: absolute; /* Positionne le bouton par rapport à .modal-content */
+  top: 10px; /* Positionne à 10px du haut de la modale */
+  right: 10px; /* Positionne à 10px de la droite de la modale */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
   .close:hover,
   .close:focus {
@@ -172,16 +175,7 @@ label {
   width: 100px; /* Fixe la largeur du label */
   font-weight: bold;
 }
-.close {
-  position: absolute; /* Positionne le bouton par rapport à .modal-content */
-  top: 10px; /* Positionne à 10px du haut de la modale */
-  right: 10px; /* Positionne à 10px de la droite de la modale */
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.3s;
-}
+
 
 /* Style du textarea */
 textarea {

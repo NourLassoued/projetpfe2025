@@ -367,11 +367,7 @@ font-size: 12px;
 margin-top: 5px;
 }
 
-.error {
-  color: rgb(14, 13, 13);
-  font-size: 12px;
-  margin-top: 5px;
-}
+
 .alert {
   display: block !important;
   background-color: #007bff; 

@@ -23,9 +23,9 @@ export class MesevolutionentrpriseComponent {
     editNote: number = 1;
     
             constructor( 
-              private router: Router,
-              private avisService: AvisService ,
-              private toastr: ToastrService, 
+              private  readonly router: Router,
+              private readonly  avisService: AvisService ,
+              private readonly toastr: ToastrService, 
               ) {}
     
     

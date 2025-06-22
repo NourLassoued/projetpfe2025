@@ -1,71 +1,69 @@
 <app-navbar></app-navbar>
+
 <body>
-   
+
     <div class="container">
         <div class="text-section">
             <h1 class="title"><i class="fas fa-laptop-code"></i> Informatique</h1>
             <h1 class="subtitle">Réservez vos services
-                <br> de dépannage informatique</h1>
+                <br> de dépannage informatique
+            </h1>
             <p class="description">
-          Installation d'appareils, assistance informatique et bien plus. Trouvez le prestataire idéal pour vous aider !
+                Installation d'appareils, assistance informatique et bien plus. Trouvez le prestataire idéal pour vous
+                aider !
             </p>
-            <button  (click)="openServiceModal()" class="button">
+            <button (click)="openServiceModal()" class="button">
                 Demander une garde d'informatique
                 <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-                    clip-rule="evenodd"
-                  ></path>
+                    <path fill-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                        clip-rule="evenodd"></path>
                 </svg>
             </button>
         </div>
         <div class="image-section">
-            <img src="/assets/img/informatique12.png" alt="Bricolage Image" class="bricolage-image">
+            <img src="/assets/img/informatique12.png" alt="" class="bricolage-image">
         </div>
     </div>
     <h1 class="h1">Tous les services d’informatique</h1>
-    <p>Installation, assistance et formation en informatique : réservez en 1 clic le service dont vous avez besoin....</p>
-    
-    <div   class="search-container">
+    <p>Installation, assistance et formation en informatique : réservez en 1 clic le service dont vous avez besoin....
+    </p>
+
+    <div class="search-container">
         <input type="text" [placeholder]="currentPlaceholder">
-        <button (click)="openServiceModal()">  
+        <button (click)="openServiceModal()">
             <i class="fas fa-search"></i>
         </button>
-         </div>
-         <div *ngIf="showModal" class="modal-overlay">
-            <div class="modal-content">
-                <span class="close"(click)="closeServiceModal()" >&times;</span>
-                <h2> Informatique</h2>
-                <input type="text" placeholder="🔍 De quel service avez-vous besoin " 
-                class="search-bar2"
-                [(ngModel)]="searchQuery"
-                (input)="filterServices()">
-                <div class="category-card" *ngFor="let service of filteredServices; let i = index"(click)="selectService(service)">
-                    <img [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
-                    <span  class="service-name" >{{ service.nomservice }}</span>
+    </div>
+    <div *ngIf="showModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close" (click)="closeServiceModal()">&times;</span>
+            <h2> Informatique</h2>
+            <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
+                [(ngModel)]="searchQuery" (input)="filterServices()">
+            <div class="category-card" *ngFor="let service of filteredServices; let i = index"
+                (click)="selectService(service)">
+                <img [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+                <span class="service-name">{{ service.nomservice }}</span>
 
-                    <input 
-                            class="iconn" 
-                            type="checkbox" 
-                            id="" >
-                    
-                   
-                </div>
-             
+                <input class="iconn" type="checkbox" id="">
+
+
             </div>
-          </div>
-  
-    <div class="services-grid">
-      
-        <div class="service-card" *ngFor="let service of services; let i = index">
-       
-          <img [src]="imageUrls[i]" alt="{{ service.nomservice }}">
-          <h3>{{ service.nomservice}}</h3>
-          <p class="service-description" >{{ service.description }}</p>
-          <p class="service-price"> À partir de  Prix : {{ service.tarif }} dt</p>
+
         </div>
     </div>
-      
-</body> 
+
+    <div class="services-grid">
+
+        <div class="service-card" *ngFor="let service of services; let i = index">
+
+            <img [src]="imageUrls[i]" alt="{{ service.nomservice }}">
+            <h3>{{ service.nomservice}}</h3>
+            <p class="service-description">{{ service.description }}</p>
+            <p class="service-price"> À partir de Prix : {{ service.tarif }} dt</p>
+        </div>
+    </div>
+
+</body>
 <app-footer></app-footer>

@@ -7,14 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-    constructor(
-     
-     
-      private router: Router,
+  constructor(
 
-    )
 
-{}
+    private readonly router: Router,
+
+  ) { }
 
 
   categoryRoutes: { [key: string]: string } = {
@@ -40,6 +38,6 @@ export class FooterComponent {
       console.error('Route non définie pour cette catégorie:', selectedCategory.nom);
     }
   }
- 
+
 
 }

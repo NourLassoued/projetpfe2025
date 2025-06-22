@@ -9,6 +9,7 @@
     text-decoration: none;
     margin-top: 5px;
     display: inline-block;
+      transition: color 0.3s ease;
   }
   
   .cell a:hover {
@@ -17,10 +18,7 @@
   }
   
 
-  .cell a {
-    transition: color 0.3s ease;
-  }
-  
+ 
  
 
 
@@ -74,10 +72,7 @@
   object-fit: cover; 
   border-radius: 50%; 
 }
-.profile-pic {
-  font-size: 40px;
-  color: gray;
-}
+
 
 .app-btn-secondary {
   display: inline-block;
@@ -384,7 +379,7 @@ table {
   margin-right: 350px;
   width: 80%;
   border-collapse: collapse; 
-  margin: 20px 0; 
+  margin: 20px ; 
   font-family: 'Arial', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -443,7 +438,7 @@ td img {
 
 .icon-star::before {
   content: "\f005"; 
-  font-family: 'Font Awesome 5 Free';
+  font-family: 'Font Awesome 5 Free', sans-serif;
   font-weight: 900;
 }
 
@@ -455,7 +450,7 @@ td img {
 
 .icon-medal::before {
   content: "\f5a2"; 
-  font-family: 'Font Awesome 5 Free';
+  font-family: 'Font Awesome 5 Free', sans-serif;
   font-weight: 900;
 }
 
@@ -467,7 +462,7 @@ td img {
 
 .icon-thumbs-up::before {
   content: "\f164"; 
-  font-family: 'Font Awesome 5 Free';
+  font-family: 'Font Awesome 5 Free sans-serif';
   font-weight: 900;
 }
 

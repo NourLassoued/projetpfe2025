@@ -50,6 +50,7 @@
     margin-top: 10px;
     color: white;
 }
+
 .content {
     flex-grow: 1;
     background: white;
@@ -61,22 +62,19 @@
     margin-left: 40px;
     
 }
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
 .competences-container {
     display: flex;
     flex-wrap: wrap; 
     gap: 10px; 
-   
-  
-    
-}
-.competences-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; 
-    justify-content:flex-start; 
-    margin-left: 50px;
-    margin-bottom: 20px
-  }
+   }
+
 .competence {
     background: #dbd8d8;
     border-radius: 20px;
@@ -138,12 +136,7 @@
     margin-top: 10px;
     text-align: center;
    }
-   .competences-container {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 10px;
-    margin-left: 50px; 
-  }
+   
   
 
 
@@ -276,10 +269,7 @@
 .review-text {
     margin-top: 10px;
 }
-.rating {
-    font-size: 18px;
-    font-weight: bold;
-}
+
 .user-image {
     width: 50px;
     height: 50px;
@@ -356,9 +346,11 @@
     margin-right: 8px; /* Espacement entre l'icône et le texte */
     font-size: 18px; /* Taille de l'icône */
   }
+
   .notification-box {
     position: fixed;
     top: 250px;
+    margin-left: 420px;
 
     transform: translateX(-50%);
     background: #ffffff;
@@ -441,10 +433,7 @@
     
 }
 
-.notification-box {
-    margin-left: 420px;
-  
-}
+
 
 /* Style du bouton Fermer */
 .notification-box button {
@@ -503,18 +492,7 @@ button.close-btn {
     margin: 15px auto 0;
     transition: background 0.2s;
 }
-.content {
-    
-    background: rgb(255, 255, 255);
-  
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 35px;
-    width: 800px;
 
-    margin-bottom: 10px;
-    
-}
 
 .navigation-buttons {
     display: flex;

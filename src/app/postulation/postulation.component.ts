@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { DemandeService } from '../service/demande.service';
 import { Postulation } from 'src/models/Postulation';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -20,7 +20,6 @@ export class PostulationComponent {
 updatedPostulation: any = {};
 
  
-  private cancelSubject = new Subject<void>();
   isDeleting: boolean = false;
 
   postulations: Postulation[] = [];
@@ -30,11 +29,11 @@ updatedPostulation: any = {};
   postulationIdToUpdate: number = 0;
 
  constructor(
-    private router:
-       Router, private demandeservice:DemandeService,
-        private toastr: ToastrService,
+    private  readonly router:
+       Router, private readonly demandeservice:DemandeService,
+        private  readonly toastr: ToastrService,
        
-        private fb: FormBuilder) {}
+        private  readonly fb: FormBuilder) {}
 
        ngOnInit(): void {
         this.postulationForm = this.fb.group({

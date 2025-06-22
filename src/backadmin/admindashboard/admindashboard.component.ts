@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { UtilisateurService } from '../../app/service/utilisateur.service';
 import { jwtDecode } from 'jwt-decode';
 import { FileService } from '../../app/service/file.service';
 import { SafeUrl } from '@angular/platform-browser';
@@ -15,9 +14,9 @@ export class AdmindashboardComponent {
   user: any;
   profileImageUrl: SafeUrl | null = null;
   constructor(
-    private fileservice: FileService,
-    private cdr: ChangeDetectorRef,
-    private router: Router) { }
+    private readonly fileservice: FileService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router) { }
   ngOnInit(): void {
 
     this.loadUserData();

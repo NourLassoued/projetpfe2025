@@ -1,7 +1,7 @@
 .body {
   margin-bottom: 0px;
   padding: 0px;
-  margin: 0px;
+
   border: 0px;
 
 }
@@ -54,10 +54,19 @@
 }
 
 .content {
-  flex-grow: 1;
+flex-grow: 1;
   padding: 20px;
+  background: rgb(255, 255, 255);
+
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 35px;
+  width: 800px;
+
+  margin-bottom: 10px;
 
 }
+
 
 .profile-alert {
   margin-top: 30px;
@@ -79,7 +88,7 @@
   color: #333;
   display: block;
   margin-bottom: 10px;
-  font-weight: bold;
+
 }
 
 .profile-container {
@@ -139,25 +148,6 @@
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-#profile-container {
-  display: flex;
-  align-items: center;
-}
-
-#profile-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-}
-
-#profile-container i {
-  font-size: 40px;
-  color: rgb(140, 137, 137);
-}
-
 #profile-container {
   display: flex;
   align-items: center;
@@ -168,7 +158,6 @@
   background-color: #f0f0f0;
   overflow: hidden;
 }
-
 #profile-icon {
   width: 80px;
   height: 80px;
@@ -177,14 +166,21 @@
   cursor: pointer;
 }
 
-.profile-menu.active {
-  display: block;
-}
+
+
 
 #profile-container i {
   font-size: 40px;
   color: rgb(140, 137, 137);
 }
+
+
+
+
+.profile-menu.active {
+  display: block;
+}
+
 
 
 .table {
@@ -327,13 +323,7 @@
 
 
 
-#profile-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-}
+
 
 .notification-icon {
   position: relative;
@@ -367,6 +357,8 @@
 
 
 .notification-box {
+    margin-left: 420px;
+
   position: fixed;
   z-index: 9999;
   top: 50%;
@@ -395,13 +387,6 @@
   margin-bottom: 10px;
 }
 
-.profile-container {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 15px;
-}
 
 .profile-pic {
   width: 100%;
@@ -453,10 +438,7 @@
 
 }
 
-.notification-box {
-  margin-left: 420px;
 
-}
 
 
 .notification-box button {
@@ -518,18 +500,6 @@ button.close-btn {
   transition: background 0.2s;
 }
 
-.content {
-
-  background: rgb(255, 255, 255);
-
-  border-radius: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 35px;
-  width: 800px;
-
-  margin-bottom: 10px;
-
-}
 
 .message-form .send-btn {
 

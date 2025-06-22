@@ -76,7 +76,7 @@
     color: #333;
     display: block;
     margin-bottom: 10px;
-    font-weight: bold;
+  
 }
 
 .profile-container {
@@ -138,29 +138,13 @@
     align-items: center;
   }
   
-  #profile-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; 
-    object-fit: cover; 
-    cursor: pointer;
-  }
+
   #profile-container i {
     font-size: 40px;
     color: rgb(140, 137, 137);
 }
 
-#profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    overflow: hidden;
-  }
-  
+
   #profile-icon {
     width: 80px;
     height: 80px;
@@ -171,10 +155,7 @@
 .profile-menu.active {
     display: block;
 }
-#profile-container i {
-    font-size: 40px;
-    color: rgb(140, 137, 137);
-}/* Style de la liste des demandes */
+
 
 
 
@@ -230,13 +211,16 @@
     max-width: 600px;
     margin: 0 auto;
   }
-  
   .publication-form label {
     display: block;
     font-size: 16px;
-    margin-bottom: 5px;
-    color: #333;
+    font-weight: 600; 
+    color: #333; 
+    margin-bottom: 8px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
   }
+ 
   
   .publication-form input,
   .publication-form textarea {
@@ -253,7 +237,11 @@
     min-height: 100px;
     resize: vertical;
   }
-  
+  .publication-form input:focus + label,
+  .publication-form textarea:focus + label {
+    color: #007bff; 
+    font-weight: bold; 
+  }
   .publication-form input:focus,
   .publication-form textarea:focus {
     outline: none;
@@ -298,20 +286,7 @@
     background-color: #d32f2f;
   }
 
-.publication-form label {
-    display: block;
-    font-size: 16px;
-    font-weight: 600; 
-    color: #333; 
-    margin-bottom: 8px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px; 
-  }
-  
+
  
-  .publication-form input:focus + label,
-  .publication-form textarea:focus + label {
-    color: #007bff; 
-    font-weight: bold; 
-  }
+  
   

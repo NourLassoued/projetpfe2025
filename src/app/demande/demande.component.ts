@@ -8,7 +8,6 @@ import { Servicee } from 'src/models/Servicee';
 import { UtilisateurService } from '../service/utilisateur.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdresseService } from '../service/adresse.service';
-import { FileService } from '../service/file.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Demande } from 'src/models/Demande';
 import { AuthServiceService } from '../service/auth-service.service';
@@ -61,21 +60,21 @@ export class DemandeComponent  {
    selectedTime: number = 4;
    showCalendar: boolean = false;
    
-  constructor(private fb: FormBuilder, 
-    private utilisateurservice:UtilisateurService,
-  private adresse:AdresseService,
-private file:FileService,
-private route: ActivatedRoute,
-private authService: AuthServiceService,
-private router: Router,
- private forgetPasswordService:ForgetPasswordService, ) {
+  constructor(private  readonly fb: FormBuilder, 
+    private readonly utilisateurservice:UtilisateurService,
+  private readonly adresse:AdresseService,
+
+private readonly route: ActivatedRoute,
+private readonly authService: AuthServiceService,
+private readonly  router: Router,
+ private readonly forgetPasswordService:ForgetPasswordService, ) {
   
   
 }
   ngOnInit() {
-    this.today.setHours(0, 0, 0, 0); // normaliser "today"
-    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1); // TOUJOURS le 1er jour du mois actuel
-    console.log("Mois actuel : ", this.currentMonth); // <== ça doit loguer avril
+    this.today.setHours(0, 0, 0, 0); 
+    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1); 
+    console.log("Mois actuel : ", this.currentMonth); 
   
     this.updateCalendar();
  
@@ -274,43 +273,7 @@ this.resetPasswordForm = this.fb.group({
       this.step--;
     }
   }
-  /*
-  updateCalendar() {
-    const year = this.currentMonth.getFullYear();
-    const month = this.currentMonth.getMonth();
   
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDay = new Date(year, month, 1).getDay();
-    const offset = firstDay === 0 ? 6 : firstDay - 1;
-  
-   
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); 
-  
-    this.daysInMonth = [];
-    
-  
-    for (let i = 0; i < offset; i++) {
-      this.daysInMonth.push({ day: 0, date: new Date(year, month, i - offset + 1) });
-    }
-  
-  
-    for (let i = 1; i <= daysInMonth; i++) {
-      const dayDate = new Date(year, month, i);
-      this.daysInMonth.push({ day: i, date: dayDate });
-    }
-  
-    console.log('Today:', today); 
-  }
-  
- 
-  /*
-  
-  prevMonth() {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
-    this.currentMonth = new Date(this.currentMonth);
-    this.updateCalendar();
-  }*/
     updateCalendar() {
       const year = this.currentMonth.getFullYear();
       const month = this.currentMonth.getMonth();
@@ -334,11 +297,10 @@ this.resetPasswordForm = this.fb.group({
       const prev = new Date(this.currentMonth);
       prev.setMonth(prev.getMonth() - 1);
     
-      // Vérifie si le mois précédent est avant le mois actuel
       const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
       
       if (prev < currentMonthStart) {
-        return; // Stop, on ne va pas plus loin
+        return;
       }
     
       this.currentMonth = prev;

@@ -5,15 +5,16 @@
   <div class="modal-content">
     <h3 class="text-center mb-4">Informations de paiement - {{ typeAbonnement }}</h3>
 
-    <div class="form-group mb-3">
-      <label>Nom</label>
-      <input type="text" class="form-control" [(ngModel)]="nom" placeholder="Entrez votre nom">
-    </div>
+<div class="form-group mb-3">
+  <label for="nom">Nom</label>
+  <input id="nom" type="text" class="form-control" [(ngModel)]="nom" placeholder="Entrez votre nom">
+</div>
 
-    <div class="form-group mb-3">
-      <label>Email</label>
-      <input type="email" class="form-control" [(ngModel)]="email" placeholder="Entrez votre email">
-    </div>
+<div class="form-group mb-3">
+  <label for="email">Email</label>
+  <input id="email" type="email" class="form-control" [(ngModel)]="email" placeholder="Entrez votre email">
+</div>
+
 
     <div class="d-flex justify-content-between mt-4">
       <button class="btn btn-secondary" (click)="fermerModal()">Annuler</button>

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, SimpleChanges,
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
 import { jwtDecode } from 'jwt-decode';
-import { Router } from '@angular/router';
+
 import { Utilisateur } from 'src/models/Utilisateur';
 
 import { UtilisateurService } from '../service/utilisateur.service';
@@ -16,12 +16,10 @@ import frLocale from '@fullcalendar/core/locales/fr';
 import { Disponibilite } from 'src/models/Disponibilite';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DisponibliteService } from '../service/disponiblite.service';
-import { ToastrService } from 'ngx-toastr';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ForgetPasswordService } from '../service/forget-password.service';
 import { AdresseService } from '../service/adresse.service';
 import { Adresse } from 'src/models/Adresse';
-import { catchError, of } from 'rxjs';
+
 
 @Component({
   selector: 'app-updateprofileprestaitre',
@@ -108,12 +106,12 @@ modificationMode = false;
     }))};
    
    
-constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,
-  private disponibliteService:DisponibliteService,
-  private toastr: ToastrService,private cdRef: ChangeDetectorRef,
- private forgetPasswordService:ForgetPasswordService,
-private uploadService :FileService,private adreesse:AdresseService,
- private renderer: Renderer2) {}
+constructor(private readonly  fileService: FileService, private readonly  sanitizer: DomSanitizer, private readonly utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,
+  private  readonly disponibliteService:DisponibliteService,
+  private  readonly cdRef: ChangeDetectorRef,
+ private  readonly forgetPasswordService:ForgetPasswordService,
+private readonly  uploadService :FileService,private readonly adreesse:AdresseService,
+ private readonly  renderer: Renderer2) {}
 
 ngOnInit(): void {
  

@@ -1,9 +1,9 @@
 
-import {  ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CategorieService } from '../../service/categorie.service';
 import { FileService } from '../../service/file.service';
 import { ServiceeService } from '../../service/servicee.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Servicee } from 'src/models/Servicee';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ScrollServiceService } from 'src/app/service/scroll-service.service';
@@ -16,161 +16,161 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './all-template-front.component.html',
   styleUrls: ['./all-template-front.component.css']
 })
-export class AllTemplateFrontComponent  {
-  selectedServiceId!: number;  
-  displayedCategories: any[] = []; 
-  currentIndex: number = 0; 
- 
-  totalCategories: number = 0; 
+export class AllTemplateFrontComponent {
+  selectedServiceId!: number;
+  displayedCategories: any[] = [];
+  currentIndex: number = 0;
+
+  totalCategories: number = 0;
   categories: any[] = [];
   imageUrls: string[] = [];
 
-  services: any[] = []; 
-  selectedCategory: any = null;  
-  allCategories: any[] = []; 
+  services: any[] = [];
+  selectedCategory: any = null;
+  allCategories: any[] = [];
   Categories: any[] = [];
-  filteredCategories: any[] = []; 
-   
-  
-  itemsPerPage = 4; 
+  filteredCategories: any[] = [];
+
+
+  itemsPerPage = 4;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
- 
+
   newFilteredCategories: any[] = []
   searchQuery: string = '';
   filteredServices: Servicee[] = [];
   searchQueryservice: string = '';
   showModal = false;
-  showServiceModal = false; 
+  showServiceModal = false;
   selectedServices: any[] = [];
- 
-  
-  constructor(private categorieService:CategorieService
-    ,private file:FileService,
-    private service:ServiceeService,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private scrollService: ScrollServiceService,
-    private route: ActivatedRoute,
-    private paymentService: PaymentService,
-    private toastr: ToastrService
+
+
+  constructor(private readonly categorieService: CategorieService
+    , private readonly file: FileService,
+    private readonly service: ServiceeService,
+    private readonly router: Router,
+
+    private readonly route: ActivatedRoute,
+    private readonly paymentService: PaymentService,
+    private readonly toastr: ToastrService
   ) {
-      this.startTypingEffect(); 
-    }
-   
-    ngOnInit(): void {
- const paymentId = this.route.snapshot.queryParamMap.get('payment_id');
-  if (paymentId) {
-    this.paymentService.verifyAbonnementPayment(paymentId).subscribe({
-      next: res => {
- this.toastr.success("Paiement validé avec succès !", "Succès");      },
-      error: err => {
-              this.toastr.error("Erreur lors de la vérification du paiement.", "Erreur");
-
-        console.error("Erreur vérification paiement", err);
-      }
-    });
+    this.startTypingEffect();
   }
-  
-   this.getAllCategories();
-   this. getAllCategoriess() ;
- 
-    
-    }
-    showSkillModal() {
-    
-      this.getAllCategories();
-  
-      this.showModal = true;
-    }
-  
-    
-    closeServiceModal() {
-      this.showServiceModal = false;
-      this.showModal = false
-    
-    }
-    
-  
-    getAllCategories() {
-      this.categorieService.getAllCategories().subscribe(
-        (data) => {
-          this.filteredCategories = data;
-          
-         
-          if (this.filteredCategories.length === 0) {
-            console.warn('Aucune catégorie trouvée');
-          }
-          this.filteredCategories.forEach((category, index) => {
-            this.getImage(category.imageCategorie, index); 
-          });
+
+  ngOnInit(): void {
+    const paymentId = this.route.snapshot.queryParamMap.get('payment_id');
+    if (paymentId) {
+      this.paymentService.verifyAbonnementPayment(paymentId).subscribe({
+        next: res => {
+          this.toastr.success("Paiement validé avec succès !", "Succès");
         },
-        (error) => {
-          console.error('Erreur lors du chargement des catégories', error);
+        error: err => {
+          this.toastr.error("Erreur lors de la vérification du paiement.", "Erreur");
+
+          console.error("Erreur vérification paiement", err);
         }
-      );
+      });
     }
 
-    getAllCategoriess() {
-      this.categorieService.getAllCategories().subscribe(
-        (data) => {
-          this.categories = data.map((category) => ({
-            ...category,
-            imageCategorie: this.getStaticImage(category.nom ?? '') 
-          }));
-        },
-        (error) => {
-          console.error('Erreur lors du chargement des catégories', error);
+    this.getAllCategories();
+    this.getAllCategoriess();
+
+
+  }
+  showSkillModal() {
+
+    this.getAllCategories();
+
+    this.showModal = true;
+  }
+
+
+  closeServiceModal() {
+    this.showServiceModal = false;
+    this.showModal = false
+
+  }
+
+
+  getAllCategories() {
+    this.categorieService.getAllCategories().subscribe(
+      (data) => {
+        this.filteredCategories = data;
+
+
+        if (this.filteredCategories.length === 0) {
+          console.warn('Aucune catégorie trouvée');
         }
-      );
-    }
-    getStaticImage(categoryName?: string): string {
-      if (!categoryName) return '/assets/img/default.png'; 
+        this.filteredCategories.forEach((category, index) => {
+          this.getImage(category.imageCategorie, index);
+        });
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des catégories', error);
+      }
+    );
+  }
 
-  const normalizedCategory = categoryName.trim(); 
+  getAllCategoriess() {
+    this.categorieService.getAllCategories().subscribe(
+      (data) => {
+        this.categories = data.map((category) => ({
+          ...category,
+          imageCategorie: this.getStaticImage(category.nom ?? '')
+        }));
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des catégories', error);
+      }
+    );
+  }
+  getStaticImage(categoryName?: string): string {
+    if (!categoryName) return '/assets/img/default.png';
 
-      const imageMap: { [key: string]: string } = {
-        'Bricolage': '/assets/img/Bricolage.png',
-      
-        'Ménage': '/assets/img/menage.png',
-        'Jardinage': '/assets/img/Jardinage.png',
-        'Enfants': '/assets/img/enfants.png',
-        'Déménagement':'/assets/img/demenagement.png',
-        'Aide à domicile': '/assets/img/Aide à domicile.png',
-        'Animaux': '/assets/img/animaux.png',
-       
-        'Informatique': '/assets/img/Informatique.png',
-        'Cours particuliers': '/assets/img/Cours particuliers.png',
-       
-        'Construction et Gros oeuvre': '/assets/img/Construction et Gros oeuvre.png',
-       
-      
-        'Décoration et Finitions': '/assets/img/Décoration et Finitions.png',
-        'Sécurité et domotique': '/assets/img/Sécurité et domotique.png',
-     
-      };
-    
-    
-      return imageMap[normalizedCategory] || '/assets/img/default.png';
-    
-    }
-    updateCategoriesToShow() {
-      
-      this.Categories = this.Categories.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
-    }
-  
+    const normalizedCategory = categoryName.trim();
+
+    const imageMap: { [key: string]: string } = {
+      'Bricolage': '/assets/img/Bricolage.png',
+
+      'Ménage': '/assets/img/menage.png',
+      'Jardinage': '/assets/img/Jardinage.png',
+      'Enfants': '/assets/img/enfants.png',
+      'Déménagement': '/assets/img/demenagement.png',
+      'Aide à domicile': '/assets/img/Aide à domicile.png',
+      'Animaux': '/assets/img/animaux.png',
+
+      'Informatique': '/assets/img/Informatique.png',
+      'Cours particuliers': '/assets/img/Cours particuliers.png',
+
+      'Construction et Gros oeuvre': '/assets/img/Construction et Gros oeuvre.png',
+
+
+      'Décoration et Finitions': '/assets/img/Décoration et Finitions.png',
+      'Sécurité et domotique': '/assets/img/Sécurité et domotique.png',
+
+    };
+
+
+    return imageMap[normalizedCategory] || '/assets/img/default.png';
+
+  }
+  updateCategoriesToShow() {
+
+    this.Categories = this.Categories.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
+  }
+
   onSearch(): void {
- 
-  
+
+
     if (this.searchQuery.trim() === '') {
       this.getAllCategories();
     } else {
       this.categorieService.searchCategories(this.searchQuery).subscribe(
         (data) => {
-         
-  
-          this.filteredCategories = data; 
-       
+
+
+          this.filteredCategories = data;
+
         },
         (error) => {
           console.error('Erreur lors de la recherche des catégories', error);
@@ -180,26 +180,26 @@ export class AllTemplateFrontComponent  {
   }
   filterServices() {
     if (this.searchQuery.trim() === '') {
-     
+
       this.filteredServices = this.services;
     } else {
-   
+
       this.filteredServices = this.services.filter(service =>
         service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }
   }
-  
-  
 
 
-  
+
+
+
   getImage(filename: string, index: number) {
     this.file.getImage(filename).subscribe(
       (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-       
+
       },
       (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
@@ -208,11 +208,11 @@ export class AllTemplateFrontComponent  {
   }
   selectCategory(categoryName: string) {
     this.selectedCategory = this.filteredCategories.find(category => category.nom === categoryName) || null;
-  
+
     if (this.selectedCategory) {
-     
-    
-      this.getAllServicesByCategorie(this.selectedCategory.id); 
+
+
+      this.getAllServicesByCategorie(this.selectedCategory.id);
       this.showServiceModal = true;
     } else {
       console.error('Catégorie non trouvée');
@@ -229,45 +229,46 @@ export class AllTemplateFrontComponent  {
       },
       (error) => {
         console.error('Erreur lors du chargement des services:', error);
-        alert('Une erreur est survenue lors du chargement des services.'); 
+        alert('Une erreur est survenue lors du chargement des services.');
       }
     );
   }
 
-    placeholders: string[] = [
-      "Quel service recherchez-vous?",
-      "Votre confort, notre priorité !",
-     
-      "Trouvez un professionnel près de chez vous !",
-      
-       "Besoin d’un plombier, électricien ?",
-     
-    ];
-  
-    currentPlaceholder: string = "";
-    private index: number = 0;
-    private charIndex: number = 0;
-    private typingSpeed: number = 100;
-    private isTyping: boolean = false;
-  
-    
-  
-    startTypingEffect() {
-      this.typePlaceholder(); 
-      setInterval(() => { if (!this.isTyping) {  
+  placeholders: string[] = [
+    "Quel service recherchez-vous?",
+    "Votre confort, notre priorité !",
+
+    "Trouvez un professionnel près de chez vous !",
+
+    "Besoin d’un plombier, électricien ?",
+
+  ];
+
+  currentPlaceholder: string = "";
+  private index: number = 0;
+  private charIndex: number = 0;
+  private readonly typingSpeed: number = 100;
+  private isTyping: boolean = false;
+
+
+
+  startTypingEffect() {
+    this.typePlaceholder();
+    setInterval(() => {
+      if (!this.isTyping) {
         this.typePlaceholder();
       }
-    }, 2000);  
+    }, 2000);
   }
-  
+
   typePlaceholder() {
-    if (this.isTyping) return; 
-  
-    this.isTyping = true; 
-    this.currentPlaceholder = ""; 
+    if (this.isTyping) return;
+
+    this.isTyping = true;
+    this.currentPlaceholder = "";
     this.charIndex = 0;
     const text = this.placeholders[this.index];
-  
+
     const typingInterval = setInterval(() => {
       if (this.charIndex < text.length) {
         this.currentPlaceholder += text[this.charIndex];
@@ -275,13 +276,13 @@ export class AllTemplateFrontComponent  {
       } else {
         clearInterval(typingInterval);
         setTimeout(() => {
-          this.isTyping = false;  
+          this.isTyping = false;
           this.index = (this.index + 1) % this.placeholders.length;
-        }, 100);  
+        }, 100);
       }
     }, this.typingSpeed);
-  } 
-  
+  }
+
   get visibleCategories() {
     return this.categories.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
   }
@@ -293,52 +294,52 @@ export class AllTemplateFrontComponent  {
     }
   }
 
- 
+
   nextCategory() {
     if (this.currentIndex + this.itemsPerPage < this.categories.length) {
       this.currentIndex += this.itemsPerPage;
     }
   }
-navigateToCategory(categorieName: string) {
-  const selectedCategory = this.categories.find(category => category.nom === categorieName);  // Chercher par nom
-  if (!selectedCategory) {
-    console.error('Catégorie non trouvée pour le nom:', categorieName);
-    return;  
+  navigateToCategory(categorieName: string) {
+    const selectedCategory = this.categories.find(category => category.nom === categorieName);  // Chercher par nom
+    if (!selectedCategory) {
+      console.error('Catégorie non trouvée pour le nom:', categorieName);
+      return;
+    }
+
+
+    localStorage.setItem('categorieName', JSON.stringify(selectedCategory.nom));
+
+
+    const categoryRoutes: { [key: string]: string } = {
+      'Bricolage': '/Bricolage',
+      'Ménage': '/Ménage',
+      'Jardinage': '/Jardinage',
+      'Animaux': '/Animaux',
+      'Enfants': '/Enfants',
+      'Déménagement': '/Demenagement',
+      'Aide à domicile': '/aide-a-domicile',
+      'Informatique': '/Informatique',
+      'Cours particuliers': '/Coursparticuliers',
+      'Construction et Gros oeuvre': '/Construction',
+      'Décoration et Finitions': '/Decoration',
+      'Sécurité et domotique': '/Domotique'
+
+    };
+
+
+    const route = categoryRoutes[selectedCategory.nom];
+
+    if (route) {
+      this.router.navigateByUrl(route);
+    } else {
+      console.error('Route non définie pour cette catégorie:', selectedCategory.nom);
+    }
   }
-
-
-  localStorage.setItem('categorieName', JSON.stringify(selectedCategory.nom));
-
-  
-  const categoryRoutes: { [key: string]: string } = {
-    'Bricolage': '/Bricolage',
-    'Ménage': '/Ménage',
-    'Jardinage':'/Jardinage',
-   'Animaux':'/Animaux',
-    'Enfants': '/Enfants',
-    'Déménagement':'/Demenagement',
-    'Aide à domicile':'/aide-a-domicile',
-    'Informatique':'/Informatique',
-    'Cours particuliers' :'/Coursparticuliers',
-    'Construction et Gros oeuvre':'/Construction',
-    'Décoration et Finitions':'/Decoration',
-    'Sécurité et domotique':'/Domotique'
-
-  };
-
-
-  const route = categoryRoutes[selectedCategory.nom];
-
-  if (route) { 
-    this.router.navigateByUrl(route);  
-  } else {
-    console.error('Route non définie pour cette catégorie:', selectedCategory.nom);
+  selectService(service: any) {
+    this.selectedServiceId = service.idservice;
+    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
   }
-}
-selectService(service: any) {
-  this.selectedServiceId = service.idservice;  
-  this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
-}
 
 
 }

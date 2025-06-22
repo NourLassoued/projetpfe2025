@@ -1,9 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { UtilisateurService } from '../service/utilisateur.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FileService } from '../service/file.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SafeUrl } from '@angular/platform-browser';
 import { jwtDecode } from 'jwt-decode';
 
@@ -26,11 +24,11 @@ export class NavbarbackadminComponent {
     
 
 
-   constructor(private utilisateurService: UtilisateurService, public dialog: MatDialog,
-    private fileservice:FileService, 
-       private snackBar: MatSnackBar, 
-       private cdr: ChangeDetectorRef,
-      private router :Router ) {}
+   constructor( public dialog: MatDialog,
+    private  readonly fileservice:FileService, 
+    
+       private readonly cdr: ChangeDetectorRef,
+      private readonly  router :Router ) {}
 
 
 
@@ -76,9 +74,7 @@ export class NavbarbackadminComponent {
           if (this.user.image) {
             this.loadProfileImagee(this.user.image);
           } 
-          if (this.user.telephoneNumber) {
-           
-          }
+         
           else {
             console.warn("Aucune image trouvée dans le token !");
           }

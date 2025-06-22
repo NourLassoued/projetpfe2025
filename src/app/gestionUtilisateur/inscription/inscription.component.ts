@@ -1,4 +1,4 @@
-import { Component, OnInit,HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { FileService } from '../../service/file.service';
 import { Router } from '@angular/router';
@@ -24,8 +24,8 @@ export class InscriptionComponent  implements OnInit{
   email: string = '';
   notificationMessage: string | null = null;
 
-  constructor(private authService: AuthServiceService, private fileService: FileService,private fb: FormBuilder,
-    private router: Router,private utilisateurService: UtilisateurService
+  constructor(private readonly authService: AuthServiceService, private  readonly fileService: FileService,private readonly fb: FormBuilder,
+    private readonly router: Router,private readonly utilisateurService: UtilisateurService
   ) {}
 
  

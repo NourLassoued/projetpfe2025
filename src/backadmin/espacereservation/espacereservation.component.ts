@@ -20,10 +20,10 @@ paginatedReservations: any[] = [];
  user: any;
  filteredReservations: any[] = [];
  selectedStatus: string = '';
-  constructor(private reservationService: ReservationService,
-          private fileservice: FileService,
-          private cdr: ChangeDetectorRef,
-               private router: Router,
+  constructor(private readonly reservationService: ReservationService,
+          private readonly fileservice: FileService,
+          private readonly cdr: ChangeDetectorRef,
+               private  readonly router: Router,
   ) {}
 
 
@@ -65,9 +65,7 @@ paginatedReservations: any[] = [];
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
-
-      }
+     
       else {
         console.warn("Aucune image trouvée dans le token !");
       }

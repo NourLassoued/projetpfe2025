@@ -33,12 +33,11 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  width: 30%;  /* Ajustez la largeur de la boîte */
-  z-index: 10;  /* Assurez-vous que la boîte de disponibilité soit au-dessus du tableau */
+  width: 30%;  
+  z-index: 10;  
   transition: all 0.3s ease;
 }
 
-/* Titre et bouton */
 .disponibilites-box h3 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -63,17 +62,13 @@
   background-color: #3700b3;
 }
 .profile-pic {
-  width: 50px; /* Largeur de l'image */
-  height: 50px; /* Hauteur de l'image */
-  object-fit: cover; /* Assure que l'image garde son ratio sans déformer */
-  border-radius: 50%; /* Pour arrondir l'image, si c'est une photo de profil */
+  width: 50px; 
+  height: 50px; 
+  object-fit: cover; 
+  border-radius: 50%; 
 }
-.profile-pic {
-  font-size: 40px; /* Ajuste la taille de l'icône */
-  color: gray; /* Change la couleur de l'icône */
-}
-/* Style général pour les liens de téléchargement */
-/* Style général pour les liens de téléchargement */
+
+
 .app-btn-secondary {
   display: inline-block;
   padding: 6px 12px;
@@ -129,13 +124,11 @@ input:hover, select:hover {
   background-color: #fafafa;
 }
 
-/* Style des options dans les selects */
 select {
   background-color: #fff;
   cursor: pointer;
 }
 
-/* Transition fluide pour les changements de focus et hover */
 input, select {
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }

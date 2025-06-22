@@ -32,7 +32,7 @@ body {
     font-size: 50px;
     margin-top: 10px;
     color: #3b1c02;
-    ;
+    
 }
 
 .description {
@@ -128,9 +128,7 @@ body {
   
 
 
-.button:hover {
-    background-color: #0056b3;
-}
+
 
 .services {
     display: flex;

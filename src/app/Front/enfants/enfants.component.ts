@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {  Component } from '@angular/core';
 import { Servicee } from 'src/models/Servicee';
-import { CategorieService } from '../../service/categorie.service';
 import { FileService } from '../../service/file.service';
 import { ServiceeService } from '../../service/servicee.service';
 import { Router } from '@angular/router';
@@ -18,12 +17,12 @@ export class EnfantsComponent {
       searchQuery: string = '';
       selectedServiceId!: number;
       categoryName: string = '';
-      constructor(private categorieService:CategorieService,private file:FileService,
-          private service:ServiceeService,
+      constructor(private readonly file:FileService,
+          private readonly service:ServiceeService,
          
          
-          private router: Router,
-          private cdr: ChangeDetectorRef) {}
+          private readonly router: Router,
+       ) {}
           ngOnInit(): void {
                 
             this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');  
@@ -141,7 +140,7 @@ export class EnfantsComponent {
           currentPlaceholder: string = "";
           private index: number = 0;
           private charIndex: number = 0;
-          private typingSpeed: number = 100;
+          private readonly typingSpeed: number = 100;
           private isTyping: boolean = false;
         
           

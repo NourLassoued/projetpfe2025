@@ -65,7 +65,7 @@
                   <div class="notification-icon">
                     <img
                       *ngIf="commentaire.particulier?.idUtilisateur && particulierImages[commentaire.particulier.idUtilisateur]"
-                      [src]="particulierImages[commentaire.particulier.idUtilisateur]" alt="Image particulier"
+                      [src]="particulierImages[commentaire.particulier.idUtilisateur]" alt=""
                       (click)="afficherNotification(commentaire.particulier, particulierImages[commentaire.particulier.idUtilisateur])"
                       id="profile-icon" />
                   </div>
@@ -90,7 +90,7 @@
       <div class="notification-box" *ngIf="showNotification">
         <div class="user-card">
           <div class="profile-container">
-            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic" />
+            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic" />
           </div>
           <div class="user-info">
             <p>Contacter</p>

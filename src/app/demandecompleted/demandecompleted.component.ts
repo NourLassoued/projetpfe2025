@@ -27,10 +27,10 @@ export class DemandecompletedComponent {
     
         services: any[] = [];
      
-          constructor(private fileService: FileService, 
-            private router: Router,
-            private demandeService: DemandeService,
-          private reservationservice:ReservationService) {}
+          constructor(private readonly fileService: FileService, 
+            private readonly router: Router,
+            private readonly demandeService: DemandeService,
+          private readonly reservationservice:ReservationService) {}
           ngOnInit(): void {
             this.loadUserData();
          

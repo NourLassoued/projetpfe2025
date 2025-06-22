@@ -457,13 +457,6 @@ h1 {
     pointer-events: none;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    position: relative;
-    z-index: 1;
-}
 
 .container {
     max-width: 1200px;
@@ -681,9 +674,7 @@ h1 {
     }
 }
 
-.feature-box {
-    animation: fadeInUp 0.6s ease forwards;
-}
+
 
 .feature-box:nth-child(1) { animation-delay: 0.1s; }
 .feature-box:nth-child(2) { animation-delay: 0.2s; }
@@ -861,13 +852,7 @@ h1 {
     pointer-events: none;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    position: relative;
-    z-index: 1;
-}
+
 
 .cta-content {
     text-align: center;
@@ -917,10 +902,10 @@ h1 {
   padding: 12px 24px;
   border-radius: 6px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 500 bold;
   text-decoration: none;
   transition: all 0.3s ease;
-    font-weight: bold;
+   
 
 }
 
@@ -1079,20 +1064,12 @@ h1 {
 }
 .free-card{
     border: 2px solid #6c757d;
-;
+
 
 } 
 
 
 
-.section-subtitle {
-    font-size: 1.125rem;
-    color: #6b7c95;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
-    font-weight: bold;
-}
 h1.mb-3 {
     font-weight: 700;
     color: #000000;

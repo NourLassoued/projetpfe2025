@@ -15,9 +15,9 @@ export class EditpasswordComponent  implements OnInit {
   successMessage: string = '';
   id: number = 0; 
   constructor(
-    private route: ActivatedRoute,
-    private forgetPasswordService: ForgetPasswordService,
-    private router: Router
+    private  readonly route: ActivatedRoute,
+    private readonly  forgetPasswordService: ForgetPasswordService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {

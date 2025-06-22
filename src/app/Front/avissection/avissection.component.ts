@@ -13,9 +13,9 @@ export class AvissectionComponent {
   topAvisList: Avis[] = [];
   isLoading: boolean = true; 
 
-  constructor(private avisService: AvisService, 
-    private fileservice: FileService,
-    private router: Router) {}
+  constructor(private readonly avisService: AvisService, 
+    private readonly fileservice: FileService,
+    private readonly router: Router) {}
 
   ngOnInit(): void {
     this.getTopAvis();

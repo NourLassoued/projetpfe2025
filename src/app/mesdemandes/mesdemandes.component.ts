@@ -26,9 +26,9 @@ export class MesdemandesComponent {
 
     services: any[] = [];
  
-      constructor(private fileService: FileService, 
-        private router: Router,
-        private demandeService: DemandeService) {}
+      constructor(private  readonly fileService: FileService, 
+        private  readonly router: Router,
+        private readonly demandeService: DemandeService) {}
       ngOnInit(): void {
         this.loadUserData();
      

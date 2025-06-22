@@ -49,13 +49,13 @@ export class CatogoriesComponent {
   editModal: any;
 
   constructor(
-    private fileservice: FileService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private categorieService: CategorieService,
-    private fb: FormBuilder,
-    private toastr: ToastrService,
-    private service: ServiceeService) {
+    private readonly fileservice: FileService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly categorieService: CategorieService,
+    private readonly fb: FormBuilder,
+    private readonly toastr: ToastrService,
+    private readonly service: ServiceeService) {
 
 
   }
@@ -190,9 +190,7 @@ export class CatogoriesComponent {
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
-
-      }
+    
       else {
         console.warn("Aucune image trouvée dans le token !");
       }

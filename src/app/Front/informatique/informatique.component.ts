@@ -17,10 +17,10 @@ export class InformatiqueComponent {
       filteredServices: Servicee[] = [];
       searchQuery: string = '';
       categoryName: string = '';
-      constructor(private file:FileService,
-          private service:ServiceeService,
+      constructor(private  readonly file:FileService,
+          private readonly service:ServiceeService,
          
-          private router: Router,
+          private readonly router: Router,
           ) {}
           ngOnInit(): void {
                 
@@ -136,7 +136,7 @@ export class InformatiqueComponent {
           currentPlaceholder: string = "";
           private index: number = 0;
           private charIndex: number = 0;
-          private typingSpeed: number = 100;
+          private readonly typingSpeed: number = 100;
           private isTyping: boolean = false;
         
           

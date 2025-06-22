@@ -1,4 +1,4 @@
-/* Variables CSS cohérentes avec SOS Service Tunisie */
+
 :root {
   --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
@@ -584,10 +584,14 @@ input[type="text"]::placeholder {
     width: 56px;
     height: 56px;
   }
+.trigger-icon {
+  position: relative;
+  display: inline-block;
+  font-size: 32px;
+  color: #f1f8f1;
+}
 
-  .trigger-icon {
-    font-size: 20px;
-  }
+  
 
   .chatbot-widget {
     bottom: 0;
@@ -633,12 +637,6 @@ input[type="text"]::placeholder {
 .close-btn:focus {
   outline: 2px solid #2563eb;
   outline-offset: 2px;
-}
-.trigger-icon {
-  position: relative;
-  display: inline-block;
-  font-size: 32px;
-  color: #f1f8f1;
 }
 
 

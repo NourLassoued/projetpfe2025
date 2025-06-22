@@ -3,76 +3,77 @@
 
 
 <body>
-   
+
     <div class="container">
         <aside class="sidebar">
             <ul>
                 <ul>
-                    <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
+                    <li routerLink="/Compteparticulier">📌Tableau de bord</li>
                     <li routerLink="/Mesdemandes" (click)="toggleDemandes()">
                         📋 Mes demandes
                         <span *ngIf="showDemandes">
-                            <i class="fa fa-chevron-down"></i> 
-                          </span>
-                          <span *ngIf="!showDemandes">
-                            <i class="fa fa-chevron-right"></i> 
-                          </span>
+                            <i class="fa fa-chevron-down"></i>
+                        </span>
+                        <span *ngIf="!showDemandes">
+                            <i class="fa fa-chevron-right"></i>
+                        </span>
                     </li>
                     <ul *ngIf="showDemandes" class="submenu">
                         <li routerLink="/Mesdemandeterminees">Demandes de service clôturées</li>
                         <li routerLink="/Mesdemandesarchivees">Mes Demandes Archivées</li>
-                       
+
                     </ul>
-                   
+
                     <li routerLink="/Reservationcours">📅 Réservations en cours</li>
                     <li routerLink="/Historique">📜Mon historique</li>
                     <li routerLink="/Mestransactions">💰 Mes transactions</li>
                     <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
                     <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
                 </ul>
-                
+
             </ul>
         </aside>
         <main class="content">
-            
+
             <h2>Mes demandes terminées</h2>
-           
+
             <!-- Boucle pour afficher les demandes -->
             <div *ngFor="let demande of demandes ; let i = index">
                 <div class="card">
-                  <div class="image-section">
-                    <!-- Affichage de l'image -->
-                    <img [src]="imageUrls[i]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
-                   
+                    <div class="image-section">
+                        <img [src]="imageUrls[i]" alt="{{ demande.servicee?.nomservice }}" class="service-image">
+
                         <div class="postulations-section" *ngIf="demande.idDemande !== undefined">
-                            <span class="notification-text"><i class="fas fa-bell notification-icon"></i>  Vous avez reçu {{ demandesAvecPostulations[demande.idDemande] || 0 }} offres</span>
-            
-                            <!-- Vérification que postulations existe avant de boucler dessus -->
+                            <span class="notification-text"><i class="fas fa-bell notification-icon"></i> Vous avez reçu
+                                {{ demandesAvecPostulations[demande.idDemande] || 0 }} offres</span>
+
                             <div class="prestataire-avatars" *ngIf="(postulations[demande.idDemande] ?? []).length > 0">
 
-                                <img *ngFor="let postulation of postulations[demande.idDemande]" 
-                                     [src]="postulation.prestataire?.image ? imageUrls[postulation.prestataire.id] : 'assets/default-avatar.png'" 
-                                     alt="Prestataire" class="avatar">
+                                <img *ngFor="let postulation of postulations[demande.idDemande]"
+                                    [src]="postulation.prestataire?.image ? imageUrls[postulation.prestataire.id] : 'assets/default-avatar.png'"
+                                    alt="Prestataire" class="avatar">
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="info-section">
                         <h3>🛠 Service:{{ demande.servicee?.nomservice }}</h3>
-                        
-                        <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }} - ⏰ {{ demande.date | date: 'HH:mm' }}</span></p>
+
+                        <p><span class="date">📅 {{ demande.date | date: 'dd MMM yyyy' }} - ⏰ {{ demande.date | date:
+                                'HH:mm' }}</span></p>
                         <p><span class="duration">⏳ {{ demande.heureTravail }} heures de service</span></p>
-                        
-                       
-                        <button *ngIf="demande.idDemande !== undefined" (click)="getReservations(demande.idDemande!)" class="btn">
+
+
+                        <button *ngIf="demande.idDemande !== undefined" (click)="getReservations(demande.idDemande!)"
+                            class="btn">
                             Voir le prestataire réservé
-                          </button>
+                        </button>
 
                     </div>
                 </div>
             </div>
         </main>
-        
+
     </div>
 
 </body>

@@ -44,16 +44,16 @@ export class FrontprofilshowComponent implements OnInit {
   contenuMessage: string = '';
   utilisateurConnecte: any;
   score: number = 0;
-  constructor(private fileService: FileService,
+  constructor(private  readonly fileService: FileService,
 
-    private activatedRoute: ActivatedRoute,
-    private utilisateurservice: UtilisateurService,
-    private reservationService: ReservationService,
-    private cdr: ChangeDetectorRef,
-    private avisService: AvisService,
-    private toastr: ToastrService,
-    private aviservice: AvisService,
-    private router: Router
+    private  readonly activatedRoute: ActivatedRoute,
+    private readonly utilisateurservice: UtilisateurService,
+    private readonly reservationService: ReservationService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly avisService: AvisService,
+    private readonly  toastr: ToastrService,
+    private readonly aviservice: AvisService,
+  
 
 
 
@@ -217,9 +217,7 @@ export class FrontprofilshowComponent implements OnInit {
             this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
             this.mettreAJourAffichage();
 
-          } else {
-
-          }
+          } 
         });
         this.cdr.detectChanges();
       },

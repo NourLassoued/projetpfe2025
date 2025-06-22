@@ -51,7 +51,7 @@
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
 									role="button" aria-expanded="false"><ng-container
 										*ngIf="profileImageUrl; else defaultIcon">
-										<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
 									<ng-template #defaultIcon>
 										<i class="fas fa-user-circle profile-icon"></i>
@@ -76,7 +76,7 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span
+							[src]="profileImageUrl" alt="" class="profile-img"><span
 							class="logo-text">SOS service Tunisie</span></a>
 
 				</div>

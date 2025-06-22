@@ -27,13 +27,13 @@ export class CompteprestaitreComponent implements OnInit {
   showDemandes = false;
   notifMessage: string | null = null;
   constructor(
-    private fileService: FileService,
-    private sanitizer: DomSanitizer,
-    private utilisateurService: UtilisateurService,
-    private toastr: ToastrService,
-    private demandeService: DemandeService,
-    private router: Router,
-    private route: ActivatedRoute
+    private  readonly fileService: FileService,
+    private readonly sanitizer: DomSanitizer,
+    private readonly utilisateurService: UtilisateurService,
+    private readonly toastr: ToastrService,
+    private readonly demandeService: DemandeService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     this.loadUserData();
@@ -59,6 +59,7 @@ export class CompteprestaitreComponent implements OnInit {
           console.warn(' Aucune image trouvée dans le token !');
         }
         if (this.userId) {
+
         } else {
           console.error(' Erreur : ID utilisateur non défini !');
         }
@@ -167,7 +168,6 @@ export class CompteprestaitreComponent implements OnInit {
   setupMenuToggle(): void {
     const menuIcon = document.getElementById('menu-icon');
     const profileMenu = document.getElementById('profile-menu');
-    const logoutButton = document.getElementById('logout-btn');
 
     if (menuIcon && profileMenu) {
       menuIcon.addEventListener('click', () => {

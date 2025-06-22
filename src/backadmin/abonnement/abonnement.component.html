@@ -50,7 +50,7 @@
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
 									role="button" aria-expanded="false"><ng-container
 										*ngIf="profileImageUrl; else defaultIcon">
-										<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
 									<ng-template #defaultIcon>
 										<i class="fas fa-user-circle profile-icon"></i>
@@ -75,7 +75,7 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span
+							[src]="profileImageUrl" alt="" class="profile-img"><span
 							class="logo-text">SOS service Tunisie</span></a>
 
 				</div>
@@ -295,7 +295,7 @@
 											  <tr *ngFor="let user of utilisateursEnAttentePage">
                                                 <td class="cell">
 													<img *ngIf="user.image" [src]="user.image"
-														alt="Photo de {{ user.nom }}" class="profile-pic">
+														alt="" class="profile-pic">
 													<i *ngIf="!user.image" class="fa fa-user profile-pic"></i>
 												</td>
 
@@ -371,7 +371,7 @@
             <tr *ngFor="let abonnement of abonnementsFiltresPage">
 				 <td class="cell">
     <img *ngIf="abonnement.utilisateur?.image" [src]="abonnement.utilisateur?.image"
-         alt="Photo de {{ abonnement.utilisateur?.nom }}" class="profile-pic">
+         alt="" class="profile-pic">
     <i *ngIf="!abonnement.utilisateur?.image" class="fa fa-user profile-pic"></i>
 				 </td>
               <td class="cell">{{ abonnement.utilisateur?.email }}</td>
@@ -443,7 +443,7 @@
             <tr *ngFor="let abonnement of abonnementsExprimerParPage">
               <td class="cell">
                 <img *ngIf="abonnement.utilisateur?.image" [src]="abonnement.utilisateur?.image"
-                     alt="Photo de {{ abonnement.utilisateur?.nom }}" class="profile-pic">
+                     alt="" class="profile-pic">
                 <i *ngIf="!abonnement.utilisateur?.image" class="fa fa-user profile-pic"></i>
               </td>
               <td class="cell">{{ abonnement.utilisateur?.email }}</td>

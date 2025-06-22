@@ -1,79 +1,77 @@
 <app-navbarcompte></app-navbarcompte>
+
 <body>
-    <div class="container">
-      <aside class="sidebar">
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
         <ul>
-          <ul>
-            <li routerLink="/Comptentreprise">📌Tableau de bord</li>
-            <li routerLink="/mes-publications">📰 Mes publications</li>
-          
+          <li routerLink="/Comptentreprise">📌Tableau de bord</li>
+          <li routerLink="/mes-publications">📰 Mes publications</li>
 
-            <li routerLink="/Chat">💬 Mes messages</li>
 
-            <li routerLink="/Mesevolutionentrprise">⭐Mes évolutions</li>
-  
-            <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-          </ul>
+          <li routerLink="/Chat">💬 Mes messages</li>
+
+          <li routerLink="/Mesevolutionentrprise">⭐Mes évolutions</li>
+
+          <li  (click)="logout()">🚪 Se déconnecter</li>
         </ul>
-      </aside>
-      <main class="content">
-        <button (click)="openModal()" class="middle-btn">
-            <i class="fas fa-pencil-alt"></i> Publier un poste
-          </button>
-          
-        <div class="profile-wrapper">
-          <label class="user-name">Bonjour {{ user?.nom }}</label>
-          
-         
-  
-          <div class="profile-alert">
-            <div class="job-content">
-              <div id="profile-container">
-                <ng-container *ngIf="profileImageUrl; else defaultIcon">
-                  <img
-                    [src]="profileImageUrl"
-                    alt="Photo de profil"
-                    id="profile-icon"
-                  />
-                </ng-container>
-                <ng-template #defaultIcon>
-                  <i class="fas fa-user default-icon"></i>
-               
-                </ng-template>
-              </div>
-              <div class="job-text">
-                <strong>Vous souhaitez postuler à un Job ?</strong>
-                <p>Alors complétez ces quelques informations</p>
-              </div>
+      </ul>
+    </aside>
+    <main class="content">
+      <button (click)="openModal()" class="middle-btn">
+        <i class="fas fa-pencil-alt"></i> Publier un poste
+      </button>
+
+      <div class="profile-wrapper">
+        <label class="user-name">Bonjour {{ user?.nom }}</label>
+
+
+
+        <div class="profile-alert">
+          <div class="job-content">
+            <div id="profile-container">
+              <ng-container *ngIf="profileImageUrl; else defaultIcon">
+                <img [src]="profileImageUrl" alt="" id="profile-icon" />
+              </ng-container>
+              <ng-template #defaultIcon>
+                <i class="fas fa-user default-icon"></i>
+
+              </ng-template>
             </div>
-            <button class="profile-btn">Compléter mon profil</button>
+            <div class="job-text">
+              <strong>Vous souhaitez postuler à un Job ?</strong>
+              <p>Alors complétez ces quelques informations</p>
+            </div>
           </div>
-     
-
-
-       
-
-<div class="modal" *ngIf="isModalOpen">
-    <div class="modal-content">
-        <h2>📰 Ajouter une publication</h2>
-        <form (ngSubmit)="ajouterPublication()" class="publication-form">
-          <label for="titre">Titre :</label>
-          <input type="text" id="titre" [(ngModel)]="nouvellePublication.titre" name="titre" required />
-        
-          <label for="description">Description :</label>
-          <textarea id="description" [(ngModel)]="nouvellePublication.description" name="description" required></textarea>
-        
-          <div class="form-actions">
-            <button type="submit" class="submit-btn">Publier</button>
-            <button type="button" class="close-btn" (click)="closeModal()">Fermer</button>
-          </div>
-        </form>
-        
-    </div>
-  </div>
-  
-
+          <button class="profile-btn">Compléter mon profil</button>
         </div>
-      </main>
-    </div>
+
+
+
+
+
+        <div class="modal" *ngIf="isModalOpen">
+          <div class="modal-content">
+            <h2>📰 Ajouter une publication</h2>
+            <form (ngSubmit)="ajouterPublication()" class="publication-form">
+              <label for="titre">Titre :</label>
+              <input type="text" id="titre" [(ngModel)]="nouvellePublication.titre" name="titre" required />
+
+              <label for="description">Description :</label>
+              <textarea id="description" [(ngModel)]="nouvellePublication.description" name="description"
+                required></textarea>
+
+              <div class="form-actions">
+                <button type="submit" class="submit-btn">Publier</button>
+                <button type="button" class="close-btn" (click)="closeModal()">Fermer</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+
+      </div>
+    </main>
+  </div>
 </body>

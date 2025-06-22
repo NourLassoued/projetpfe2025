@@ -4,7 +4,7 @@
         <div class="sidebar">
             <div id="profile-container">
                 <div class="image-wrapper">
-                    <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                    <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
 
                     <div class="rating-info">
                         <div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-          
+
             <div class="button-container">
                 <button (click)="afficherNumero()">
                     Contacter
@@ -37,7 +37,7 @@
         <div class="notification-box" *ngIf="showNotification">
             <div class="user-card">
                 <div class="profile-container">
-                    <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+                    <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic">
                 </div>
                 <div class="user-info">
                     <h3>{{ user?.nom || 'Utilisateur' }}</h3>
@@ -63,9 +63,9 @@
 
 
 
-       
+
         <div class="container-profile">
-          
+
             <div class="section">
                 <label>{{ user?.nomEntreprise }}</label>
                 <div class="verification-container">
@@ -79,17 +79,17 @@
             </div>
 
             <div class="section">
-<a *ngIf="user?.siteWeb" [href]="user.siteWeb" target="_blank">{{ user.siteWeb }}</a>
+                <a *ngIf="user?.siteWeb" [href]="user.siteWeb" target="_blank">{{ user.siteWeb }}</a>
             </div>
-<div class="section" *ngIf="user?.adresse">
-  <i class="fas fa-map-marker-alt location-icon"></i>
-  {{ user.adresse.governoate }}
-</div>
+            <div class="section" *ngIf="user?.adresse">
+                <i class="fas fa-map-marker-alt location-icon"></i>
+                {{ user.adresse.governoate }}
+            </div>
 
 
 
 
-           
+
 
             <div class="section">
                 <label><i class="fa-solid fa-briefcase"></i> Notre service</label>
@@ -128,18 +128,18 @@
                         <span>{{ getRatingCount(note) }}</span>
                     </div>
 
-                   
+
                     <div class="reviews">
                         <div class="review-card" *ngFor="let avis of avisAffiches">
-                            <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image"
-                                alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}" class="user-image" />
+                            <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image" alt=""
+                                class="user-image" />
                             <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
 
                             <div class="review-header">
                                 <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
                             </div>
 
-                           
+
                             <div class="stars">
                                 <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
                                     ★
@@ -152,7 +152,7 @@
                         </div>
                     </div>
 
-                   
+
                     <div class="navigation-buttons">
                         <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
                         <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant

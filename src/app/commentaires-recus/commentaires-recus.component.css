@@ -76,8 +76,7 @@
     color: #333;
     display: block;
     margin-bottom: 10px;
-    font-weight: bold;
-}
+  }
 
 .profile-container {
     position: relative;
@@ -133,22 +132,14 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#profile-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  #profile-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; 
-    object-fit: cover; 
-    cursor: pointer;
-  }
+
+
+ 
   #profile-container i {
     font-size: 40px;
     color: rgb(140, 137, 137);
 }
+
 
 #profile-container {
     display: flex;
@@ -160,21 +151,19 @@
     background-color: #f0f0f0;
     overflow: hidden;
   }
-  
-  #profile-icon {
-    width: 80px;
-    height: 80px;
+   #profile-icon {
+    width: 50px;
+    height: 50px;
     border-radius: 50%; 
     object-fit: cover; 
     cursor: pointer;
   }
+ 
+  
+ 
 .profile-menu.active {
     display: block;
 }
-#profile-container i {
-    font-size: 40px;
-    color: rgb(140, 137, 137);
-}/* Style de la liste des demandes */
 
 
 

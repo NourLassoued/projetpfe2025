@@ -12,7 +12,7 @@ export class PaymentComponent {
   paymentStatus?: string;
   errorMessage?: string;
 
-  constructor(private paymentService: PaymentService) { }
+  constructor(private  readonly paymentService: PaymentService) { }
 /*
   // Créer un paiement
   createPayment() {

@@ -55,11 +55,11 @@ export class DemandecompteComponent {
    selectedTime: number = 4; 
    
    
-  constructor(private fb: FormBuilder, 
-  private utilisateurservice:UtilisateurService,
-  private adresse:AdresseService,
-  private route: ActivatedRoute,
-  private router: Router
+  constructor(private readonly fb: FormBuilder, 
+  private readonly utilisateurservice:UtilisateurService,
+  private readonly adresse:AdresseService,
+  private readonly route: ActivatedRoute,
+  private readonly router: Router
  ) {
   
   {
@@ -265,11 +265,11 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
     const prev = new Date(this.currentMonth);
     prev.setMonth(prev.getMonth() - 1);
   
-    // Vérifie si le mois précédent est avant le mois actuel
+    
     const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
     
     if (prev < currentMonthStart) {
-      return; // Stop, on ne va pas plus loin
+      return; 
     }
   
     this.currentMonth = prev;

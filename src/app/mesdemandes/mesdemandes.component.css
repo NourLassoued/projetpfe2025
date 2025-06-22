@@ -79,7 +79,7 @@ body {
   
   color:white;
     transform: scale(1.05); /* Légère augmentation de taille */
-    background: #007bff;
+  
 }
 
 /* Effet au clic */
@@ -100,6 +100,7 @@ body {
     gap: 10px;
     margin-top: 10px;
 }
+ 
 .avatar {
     width: 40px;
     height: 40px;
@@ -136,7 +137,7 @@ app-navbarcompte {
     background-color: #fbf5f5;
     width: 200px; /* Largeur de la barre latérale */
     height: 100vh; /* 100% de la hauteur de la fenêtre */
-    position: fixed; /* La rend fixe */
+ 
    
     
   margin-top: 70px;
@@ -169,11 +170,7 @@ app-navbarcompte {
     gap: 10px; /* Espacement entre les avatars */
   }
   
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
+
   .notification-icon {
     font-size: 1.6em; /* Taille de l'icône */
     color: #efff0d; /* Couleur de l'icône (orange ici) */

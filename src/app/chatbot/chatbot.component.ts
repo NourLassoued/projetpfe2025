@@ -7,15 +7,15 @@ import { ChatbotServiceService } from '../service/chatbot-service.service';
   styleUrls: ['./chatbot.component.css']
 })
 export class ChatbotComponent {
-   message = ""
+  message = ""
   response = ""
   error = ""
   isChatbotOpen = false
   isMinimized = false
   isTyping = false
-suggestionResponse: string = "";
+  suggestionResponse: string = "";
 
-  constructor(private chatbotService: ChatbotServiceService) {}
+  constructor(private chatbotService: ChatbotServiceService) { }
 
   toggleChatbot() {
     this.isChatbotOpen = !this.isChatbotOpen
@@ -24,14 +24,14 @@ suggestionResponse: string = "";
     }
   }
 
-closeChatbot() {
-  this.isChatbotOpen = false;
-  this.error = "";
-  this.response = "";
-  this.message = "";
-  this.isTyping = false;
-  this.suggestionResponse = "";
-}
+  closeChatbot() {
+    this.isChatbotOpen = false;
+    this.error = "";
+    this.response = "";
+    this.message = "";
+    this.isTyping = false;
+    this.suggestionResponse = "";
+  }
 
 
   toggleMinimize() {
@@ -44,31 +44,31 @@ closeChatbot() {
     }
   }
 
-sendSuggestion(suggestionText: string) {
-  this.response = "" 
+  sendSuggestion(suggestionText: string) {
+    this.response = ""
 
-  let botResponse = "";
+    let botResponse = "";
 
-  switch (suggestionText) {
-    case 'Je cherche un plombier':
-      botResponse = '🔧  Pas de souci ! Nous avons plusieurs plombiers disponibles dans toute la région.';
-      break;
-    case 'Quels sont vos prix ?':
-      botResponse = '💰 Nos prix varient selon le service. Par exemple, une intervention de base commence à partir de 30 DT.';
-      break;
-    case 'Comment ça marche ?':
-botResponse = '🛠️ Très simple ! Vous choisissez un service et passez une demande. Nous vous mettons ensuite en relation avec un prestataire, et le travail peut commencer.';
-      break;
-    case 'Contacter le support':
-      botResponse = '📞 Vous pouvez nous contacter par email  ou appeler directement le 26 446 609.';
-      break;
-    default:
-      botResponse = '🤖 Je n’ai pas compris votre demande. Pouvez-vous reformuler ?';
-      break;
+    switch (suggestionText) {
+      case 'Je cherche un plombier':
+        botResponse = '🔧  Pas de souci ! Nous avons plusieurs plombiers disponibles dans toute la région.';
+        break;
+      case 'Quels sont vos prix ?':
+        botResponse = '💰 Nos prix varient selon le service. Par exemple, une intervention de base commence à partir de 30 DT.';
+        break;
+      case 'Comment ça marche ?':
+        botResponse = '🛠️ Très simple ! Vous choisissez un service et passez une demande. Nous vous mettons ensuite en relation avec un prestataire, et le travail peut commencer.';
+        break;
+      case 'Contacter le support':
+        botResponse = '📞 Vous pouvez nous contacter par email  ou appeler directement le 26 446 609.';
+        break;
+      default:
+        botResponse = '🤖 Je n’ai pas compris votre demande. Pouvez-vous reformuler ?';
+        break;
+    }
+
+    this.response = botResponse;
   }
-
-  this.response = botResponse; 
-}
 
 
   sendMessage() {
@@ -85,18 +85,18 @@ botResponse = '🛠️ Très simple ! Vous choisissez un service et passez une d
         this.isTyping = false
         this.response = res.response
         this.error = ""
-        this.message = "" 
+        this.message = ""
       },
       error: (err) => {
         this.isTyping = false
         console.error(err)
         this.response = "Erreur lors de la communication avec le chatbot."
         this.error = err.message
-        this.message = "" 
+        this.message = ""
       },
     })
   }
-   getCurrentTime(): string {
+  getCurrentTime(): string {
     return new Date().toLocaleTimeString("fr-FR", {
       hour: "2-digit",
       minute: "2-digit",

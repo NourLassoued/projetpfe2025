@@ -99,6 +99,7 @@ body {
     gap: 10px;
     margin-top: 10px;
 }
+
 .avatar {
     width: 40px;
     height: 40px;
@@ -166,12 +167,7 @@ app-navbarcompte {
     display: flex;
     gap: 10px; 
   }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
+
   .notification-icon {
     font-size: 1.6em;
     color: #efff0d; 

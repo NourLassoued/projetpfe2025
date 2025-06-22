@@ -3,72 +3,74 @@
 
 
 <body>
-   
+
     <div class="container">
         <aside class="sidebar">
             <ul>
                 <ul>
-                    <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
-                    <li routerLink="/Mesdemandes" (click)="toggleDemandes()">
+                    <li routerLink="/Compteparticulier">📌Tableau de bord</li>
+                   <li routerLink="/Mesdemandes" (click)="toggleDemandes()">
                         📋 Mes demandes
                         <span *ngIf="showDemandes">
-                            <i class="fa fa-chevron-down"></i> <!-- Icône flèche vers le bas -->
-                          </span>
-                          <span *ngIf="!showDemandes">
-                            <i class="fa fa-chevron-right"></i> <!-- Icône flèche vers la droite -->
-                          </span>
+                            <i class="fa fa-chevron-down"></i> 
+                        </span>
+                        <span *ngIf="!showDemandes">
+                            <i class="fa fa-chevron-right"></i> 
+                        </span>
                     </li>
                     <ul *ngIf="showDemandes" class="submenu">
                         <li routerLink="/Mesdemandeterminees">Demandes de service clôturées</li>
                         <li routerLink="/Mesdemandesarchivees">Mes Demandes Archivées</li>
-                       
+
                     </ul>
-                   
+
                     <li routerLink="/Reservationcours">📅 Réservations en cours</li>
                     <li routerLink="/Historique">📜Mon historique</li>
                     <li routerLink="/Mestransactions">💰 Mes transactions</li>
                     <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
-                    <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
+                    <li (click)="logout()">🚪 Se déconnecter</li>
                 </ul>
-                
+
             </ul>
         </aside>
-        
+
         <main class="content">
             <div class="profile-wrapper">
-                <label class="user-name">Bonjour {{ user?.nom }}</label> <!-- Affichage dynamique du nom -->
-    
+                <label class="user-name">Bonjour {{ user?.nom }}</label> 
+
                 <div class="profile-alert">
                     <div class="job-content">
                         <div id="profile-container">
                             <ng-container *ngIf="profileImageUrl; else defaultIcon">
-                                <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+                                <img [src]="profileImageUrl"        alt="" id="profile-icon" />
                             </ng-container>
                             <ng-template #defaultIcon>
-                                <i class="fas fa-user default-icon"></i> <!-- Icône utilisateur par défaut -->
+                                <i class="fas fa-user default-icon"></i> 
                             </ng-template>
                         </div>
-                        
+
                     </div>
-                  
+
                 </div>
                 <div class="services-container">
-                    <button (click)="prevCategory()" class="scroll-btn left" [disabled]="currentIndex === 0"> <i class="fa fa-angle-left"></i></button>
-                  
+                    <button (click)="prevCategory()" class="scroll-btn left" [disabled]="currentIndex === 0"> <i
+                            class="fa fa-angle-left"></i></button>
+
                     <div class="services-list">
                         <div class="category-card" *ngFor="let category of visibleCategories; let i = index">
                             <img [src]="imageUrls[currentIndex + i]" alt="{{ category.nom }}">
                             <span>{{ category.nom }}</span>
                         </div>
                     </div>
-                    <button (click)="nextCategory()" class="scroll-btnright" [disabled]="currentIndex + itemsPerPage >= categories.length"> <i class="fa fa-angle-right"></i></button>
-                   
+                    <button (click)="nextCategory()" class="scroll-btnright"
+                        [disabled]="currentIndex + itemsPerPage >= categories.length"> <i
+                            class="fa fa-angle-right"></i></button>
+
                 </div>
-                
+
             </div>
         </main>
-        
+
     </div>
-    
-    </body>
-   
+
+</body>

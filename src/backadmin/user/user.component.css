@@ -69,10 +69,7 @@
   object-fit: cover; 
   border-radius: 50%;
 }
-.profile-pic {
-  font-size: 40px; 
-  color: gray; 
-}
+
 
 .app-btn-secondary {
   display: inline-block;

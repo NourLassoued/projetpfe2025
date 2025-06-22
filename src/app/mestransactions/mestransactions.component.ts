@@ -24,10 +24,10 @@ export class MestransactionsComponent {
       
     
      constructor(
-          private sanitizer: DomSanitizer,
-   private paymenService :PaymentService,
-     private fileService: FileService,
-        private router: Router,
+          private readonly sanitizer: DomSanitizer,
+   private  readonly paymenService :PaymentService,
+     private readonly fileService: FileService,
+        private  readonly router: Router,
      
       ) {}
   

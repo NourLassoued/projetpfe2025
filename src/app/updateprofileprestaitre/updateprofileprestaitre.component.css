@@ -155,17 +155,20 @@ margin-left: 20px;
   border-radius: 7px;
   resize: vertical;
   }
-  .save-btn {
+  /* Bouton Sauvegarder */
+.save-btn {
+  background: #1e5799;
+  color: white;
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
  
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 10px;
-  }
-  
  
   /* Styles pour l'arrière-plan de la modale */
 .modal-overlay {
@@ -199,18 +202,17 @@ margin-left: 20px;
   margin-bottom: 100px; /* Ajoute un margin-bottom */
 }
 
-/* Bouton de fermeture */
 .close-btn {
-
+  background: #dc3545; /* Rouge */
   color: white;
-  font-size: 14px;
-  padding: 10px 15px;
-  border-radius: 8px;
   border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
   transition: all 0.3s ease-in-out;
 }
+
 
 
 .close-btn:hover {
@@ -385,18 +387,6 @@ full-calendar {
   transition: all 0.5s ease-in-out;
 
 }
-/* Bouton Sauvegarder */
-.save-btn {
-  background: #1e5799;
-  color: white;
-  font-size: 14px;
-  padding: 10px 15px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease-in-out;
-}
 
 .save-btn:hover {
 
@@ -466,40 +456,15 @@ full-calendar {
   border-color: #0056b3;
 }
 
-/* Style pour les boutons */
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.save-btn {
-
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
 
 
 
-.close-btn {
-  background: #dc3545; /* Rouge */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
 
-.close-btn:hover {
-  background: #c82333;
-}
+
+
+
+
+
 .close-calendar-btn {
   background: transparent;
   border: none;
@@ -544,8 +509,6 @@ full-calendar {
   margin: 5px 0;
   border-radius: 5px;
 }
-
-
 select {
   width: 100%;
   padding: 10px;
@@ -558,6 +521,18 @@ select {
   outline: none;
   transition: all 0.3s ease-in-out;
 }
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='gray'><path fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px;
+}
+
+
 
 
 select:hover {
@@ -587,16 +562,7 @@ select::-ms-expand {
 }
 
 /* Ajout d'une icône de flèche personnalisée */
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='gray'><path fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 16px;
-  padding-right: 30px;
-}
+
 
 /* Conteneur des champs de saisie */
 .edit-container {

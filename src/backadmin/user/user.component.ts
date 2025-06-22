@@ -1,7 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
-  DoCheck,
+ 
   ElementRef,
   OnInit,
   ViewChild,
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent implements OnInit, DoCheck {
+export class UserComponent implements OnInit {
   searchNomPrestataire: string = '';
 allPrestataires: any[] = [];
 
@@ -66,14 +66,14 @@ totalPagesEntreprises = 0;
   newValue: any = '';
 
   constructor(
-    private utilisateurService: UtilisateurService,
-    public dialog: MatDialog,
-    private fileservice: FileService,
+    private readonly utilisateurService: UtilisateurService,
+    public  readonly dialog: MatDialog,
+    private  readonly fileservice: FileService,
 
-    private cdr: ChangeDetectorRef,
-    private router: Router
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router
   ) { }
-  ngDoCheck() { }
+
   logout(): void {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/Front']);

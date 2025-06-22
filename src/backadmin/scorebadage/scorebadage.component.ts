@@ -31,10 +31,10 @@ export class ScorebadageComponent {
   paginatedAvis: Avis[] = [];
   page: number = 1;
   constructor(
-    private fileservice: FileService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private avisService: AvisService,
+    private readonly fileservice: FileService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly avisService: AvisService,
 
 
 
@@ -70,9 +70,7 @@ export class ScorebadageComponent {
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
-
-      }
+      
       else {
         console.warn("Aucune image trouvée dans le token !");
       }

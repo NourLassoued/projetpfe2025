@@ -71,15 +71,15 @@ prestataireImageUrls: string[] = [];
 
 
 
-  constructor(private route: ActivatedRoute,
-    private fileService: FileService,
-    private demandeservice:DemandeService,
-    private router: Router,
-    private utilisateurService: UtilisateurService,
-    private serviceeService:ServiceeService,
-    private reservationService: ReservationService,
-    private toastr: ToastrService,
-    private  avisService:AvisService
+  constructor(private readonly route: ActivatedRoute,
+    private readonly  fileService: FileService,
+    private readonly demandeservice:DemandeService,
+    private readonly router: Router,
+    private readonly  utilisateurService: UtilisateurService,
+    private readonly serviceeService:ServiceeService,
+    private readonly reservationService: ReservationService,
+    private readonly  toastr: ToastrService,
+    private readonly   avisService:AvisService
    ) 
    {
     const today = new Date();

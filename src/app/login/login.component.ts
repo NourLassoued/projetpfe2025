@@ -28,12 +28,12 @@ export class LoginComponent {
   showConfirmation = false;
   errorMessage: string = '';
   modalPosition = { top: '50%', left: '50%' };
-  constructor(private fb: FormBuilder,
-    private authService: AuthServiceService,
-    private router: Router,
-    private toastr: ToastrService,
-    private forgetPasswordService: ForgetPasswordService,
-    private cdr: ChangeDetectorRef) {
+  constructor(private readonly fb: FormBuilder,
+    private  readonly authService: AuthServiceService,
+    private readonly router: Router,
+    private readonly  toastr: ToastrService,
+    private readonly forgetPasswordService: ForgetPasswordService,
+    private  readonly cdr: ChangeDetectorRef) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
