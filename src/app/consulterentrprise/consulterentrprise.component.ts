@@ -74,16 +74,16 @@ export class ConsulterentrpriseComponent implements OnInit {
   utilisateurConnecte: any;
   publications: Publication[] = [];
 
-  constructor(private fileService: FileService,
+  constructor(private readonly fileService: FileService,
 
-    private activatedRoute: ActivatedRoute,
-    private utilisateurservice: UtilisateurService,
-    private publicationService: PublicationService,
-    private cdr: ChangeDetectorRef,
-    private avisService: AvisService,
-    private toastr: ToastrService,
-    private commentaireService: CommentaireService,
-    private messageService: MessageService,) { }
+    private readonly  activatedRoute: ActivatedRoute,
+    private readonly utilisateurservice: UtilisateurService,
+    private readonly publicationService: PublicationService,
+    private  readonly cdr: ChangeDetectorRef,
+    private readonly  avisService: AvisService,
+    private readonly  toastr: ToastrService,
+    private readonly commentaireService: CommentaireService,
+    private readonly messageService: MessageService,) { }
 
   ngOnInit(): void {
 
@@ -556,7 +556,7 @@ export class ConsulterentrpriseComponent implements OnInit {
     this.commentaireService.supprimerCommentaire(commentaireId).subscribe({
       next: () => {
         console.log('Commentaire supprimé');
-        this.chargerPublicationsEtCommentaires(); // recharge les commentaires
+        this.chargerPublicationsEtCommentaires(); 
       },
       error: (err) => console.error('Erreur lors de la suppression du commentaire', err)
     });
@@ -571,7 +571,7 @@ export class ConsulterentrpriseComponent implements OnInit {
         this.user = decodedToken;
 
         if (this.user && this.user.id) {
-
+          // L'utilisateur a un ID valide dans le token
         } else {
           console.warn('L\'ID de l\'utilisateur est introuvable dans le token');
         }

@@ -1,16 +1,16 @@
 <div class="chat-container">
-  <div class="chatbot-trigger" (click)="toggleChatbot()" *ngIf="!isChatbotOpen">
-    <div class="trigger-icon">
-     <i class="fas fa-robot"></i>
-  <i class="fas fa-comment-dots floating-icon"></i>
-    </div>
-    <div class="trigger-notification">
+  <button class="chatbot-trigger" (click)="toggleChatbot()" (keydown)="toggleChatbot()" *ngIf="!isChatbotOpen" tabindex="0" type="button" aria-label="Ouvrir le chatbot">
+    <span class="trigger-icon">
+      <i class="fas fa-robot"></i>
+      <i class="fas fa-comment-dots floating-icon"></i>
+    </span>
+    <span class="trigger-notification">
       <span>1</span>
-    </div>
-    <div class="trigger-tooltip">
+    </span>
+    <span class="trigger-tooltip">
       Besoin d'aide ? Discutez avec nous !
-    </div>
-  </div>
+    </span>
+  </button>
 
   <div class="chatbot-widget" [class.active]="isChatbotOpen" [class.minimized]="isMinimized">
     <div class="chatbot-header">
@@ -126,7 +126,7 @@
   </div>
 
   <div class="chatbot-overlay"
-   *ngIf="isChatbotOpen" (click)="closeChatbot()">
+   *ngIf="isChatbotOpen" (click)="closeChatbot()" (keydown)="closeChatbot()">
 
   </div>
 </div>

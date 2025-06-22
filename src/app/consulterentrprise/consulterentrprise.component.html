@@ -4,7 +4,7 @@
     <div class="sidebar">
         <div id="profile-container">
             <div class="image-wrapper">
-                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
              
                 <div class="rating-info">
                     <div>
@@ -38,7 +38,7 @@
        
 <div class="modal" [class.show]="showModal">
   <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
+    <span class="close" (click)="closeModal()" (keydown.enter)="closeModal()">&times;</span>
     <h2>Donner un avis sur {{user?.nomEntreprise}}</h2>
     
     <label>Note (sur 5) :</label>
@@ -79,7 +79,7 @@
     <div class="notification-box" *ngIf="showNotification">
       <div class="user-card">
           <div class="profile-container">
-              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic">
           </div>
           <div class="user-info">
               <h3>{{ user?.nom || 'Utilisateur' }}</h3>
@@ -221,7 +221,7 @@
           </div>
           <div class="content">
             <div class="section">
-              <label class="sectionn">Publications</label>
+              <span class="sectionn">Publications</span>
           
               <div *ngFor="let publication of publicationsAffichees" class="publication-card">
                 <h3>{{ publication.titre }}</h3>
@@ -265,7 +265,7 @@
                   <div *ngIf="commentairesParPublication[publication.id]">
                     <div *ngFor="let commentaire of commentairesParPublication[publication.id]" class="comment-container">
                       <img [src]="commentaire.particulier?.image || 'path-to-default-image.jpg'"
-                      alt="Photo de profil"
+                      alt=""
                       class="user-image" />
                  
                       <strong class="comment-author">{{ commentaire.particulier?.nom }}</strong>

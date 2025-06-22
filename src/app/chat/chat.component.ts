@@ -254,7 +254,7 @@ export class ChatComponent implements OnInit {
    console.warn("Message non trouvé dans la conversation !");
      return;
     }
-   if (!message.receiver || !message.receiver.idUtilisateur) {
+   if (!message.receiver?.idUtilisateur) {
       console.warn("Le destinataire du message est introuvable !");
       return;
     }

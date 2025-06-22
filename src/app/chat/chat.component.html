@@ -131,7 +131,8 @@
         <ul *ngIf="lastMessages.length > 0">
           <h3>Messagerie</h3>
           <li *ngFor="let message of lastMessages"
-            (click)="getConversationWith(message.sender.idUtilisateur === userId ? message.receiver.idUtilisateur : message.sender.idUtilisateur)">
+            (click)="getConversationWith(message.sender.idUtilisateur === userId ? message.receiver.idUtilisateur : message.sender.idUtilisateur)"
+            (keydown)="getConversationWith(message.sender.idUtilisateur === userId ? message.receiver.idUtilisateur : message.sender.idUtilisateur)">
 
 
             <div class="message-box"

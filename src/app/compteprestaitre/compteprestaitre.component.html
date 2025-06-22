@@ -13,14 +13,21 @@
 
           <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
           <li routerLink="/Mesrevunes">💰 Mes revenus</li>
-          <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-        </ul>
+  <li  >
+        
+   
+  
+                        <button id="logout-btn"  (click)="logout()" (keydown)="logout()" tabindex="0" style="background:none;border:none;padding:0;cursor:pointer; color:  #66696e;">
+                            🚪 Se déconnecter
+                        </button>
+                    </li>
+                          </ul>
       </ul>
     </aside>
 
     <main class="content">
       <div class="profile-wrapper">
-        <label class="user-name">Bonjour {{ user?.nom }}</label>
+        <span class="user-name">Bonjour {{ user?.nom }}</span>
         <!-- Affichage dynamique du nom -->
 
         <div class="profile-alert">
@@ -29,7 +36,7 @@
               <ng-container *ngIf="profileImageUrl; else defaultIcon">
                 <img
                   [src]="profileImageUrl"
-                  alt="Photo de profil"
+                  alt=""
                   id="profile-icon"
                 />
               </ng-container>
@@ -119,7 +126,7 @@
   </div>
   <div class="modal" *ngIf="showModal">
     <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
+      <span class="close" (click)="closeModal()" (keydown)="closeModal()">&times;</span>
       <h3>Postuler à la demande</h3>
 
       <form class="commentaire" (ngSubmit)="envoyerPostulation()">

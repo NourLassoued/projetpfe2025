@@ -40,8 +40,7 @@ export class CompteprestaitreComponent implements OnInit {
     this.getDemandesDisponibles();
     this.route.queryParams.subscribe((params) => {
       this.notifMessage = params['notif'];
-      if (this.notifMessage) {
-      }
+      // You can handle notifMessage here if needed
     });
   }
   loadUserData(): void {
@@ -58,9 +57,7 @@ export class CompteprestaitreComponent implements OnInit {
         } else {
           console.warn(' Aucune image trouvée dans le token !');
         }
-        if (this.userId) {
-
-        } else {
+        if (!this.userId) {
           console.error(' Erreur : ID utilisateur non défini !');
         }
       } catch (error) {
@@ -72,8 +69,8 @@ export class CompteprestaitreComponent implements OnInit {
   }
   getDemandesDisponibles(): void {
     if (this.userId) {
-      this.demandeService.getDemandesDisponibles(this.userId).subscribe(
-        (data: Demande[]) => {
+      this.demandeService.getDemandesDisponibles(this.userId).subscribe({
+        next: (data: Demande[]) => {
           this.demandesDisponibles = data || [];
 
           this.demandesDisponibles.forEach((demande) => {
@@ -82,14 +79,14 @@ export class CompteprestaitreComponent implements OnInit {
             }
           });
         },
-        (error) => {
+        error: (error) => {
           console.error(
             'Erreur lors de la récupération des demandes disponibles',
             error
           );
           this.demandesDisponibles = []; 
         }
-      );
+      });
     } else {
       console.warn(
         'Impossible de récupérer les demandes : utilisateur non identifié !'
@@ -122,12 +119,12 @@ export class CompteprestaitreComponent implements OnInit {
       return;
     }
 
-    if (!this.selectedDemande || !this.selectedDemande.idDemande) {
+    if (!this.selectedDemande?.idDemande) {
       console.error('La demande sélectionnée est invalide.');
       return;
     }
 
-    if (!this.user || !this.user.id) {
+    if (!this.user?.id) {
       console.error("L'utilisateur est invalide.");
       return;
     }

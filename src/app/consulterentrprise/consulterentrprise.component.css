@@ -56,6 +56,7 @@ body {
   margin-top: 10px;
   color: white;
 }
+
 .content {
   flex-grow: 1;
   background: white;
@@ -67,14 +68,8 @@ body {
   margin-left: 40px;
   
 }
-.competences-container {
-  display: flex;
-  flex-wrap: wrap; 
-  gap: 10px; 
- 
 
-  
-}
+
 .competences-container {
   display: flex;
   flex-wrap: wrap;
@@ -144,12 +139,7 @@ border-bottom: 1px solid #ddd;
   margin-top: 10px;
   text-align: center;
  }
- .competences-container {
-  display: flex; 
-  flex-wrap: wrap; 
-  gap: 10px;
-  margin-left: 50px; 
-}
+ 
 
 
 
@@ -235,10 +225,15 @@ h3 {
   height: 100%;
   object-fit: cover;
 }
+
 .stars {
   color: gold;
   font-size: 20px;
-} .bar-container {
+    display: flex;
+  gap: 5px;
+  cursor: pointer;
+} 
+.bar-container {
   display: flex;
   align-items: center;
   width: 100%;
@@ -282,10 +277,7 @@ h3 {
 .review-text {
   margin-top: 10px;
 }
-.rating {
-  font-size: 18px;
-  font-weight: bold;
-}
+
 .user-image {
   width: 50px;
   height: 50px;
@@ -362,9 +354,14 @@ button i {
   margin-right: 8px;
   font-size: 18px; 
 }
+
+
 .notification-box {
+    margin-left: 420px;
+
   position: fixed;
   top: 250px;
+ 
 
   transform: translateX(-50%);
   background: #ffffff;
@@ -447,10 +444,6 @@ button i {
   
 }
 
-.notification-box {
-  margin-left: 420px;
-
-}
 
 
 .notification-box button {
@@ -509,18 +502,7 @@ button.close-btn {
   margin: 15px auto 0;
   transition: background 0.2s;
 }
-.content {
-  
-  background: rgb(255, 255, 255);
 
-  border-radius: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 35px;
-  width: 800px;
-
-  margin-bottom: 10px;
-  
-}
 
 .navigation-buttons {
   display: flex;
@@ -600,12 +582,7 @@ width: 150px;
   color: gold;
   font-size: 20px;
 } 
-.stars {
-  display: flex;
-  gap: 5px;
-  font-size: 0.3rem;  
-  cursor: pointer;
-}
+
 
 .stars svg {
   width: 4rem; 

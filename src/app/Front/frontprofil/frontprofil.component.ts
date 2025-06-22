@@ -15,10 +15,10 @@ export class FrontprofilComponent {
 nombreAvisMap: { [id: number]: number } = {};
 
   prestataires: Utilisateur[] = [];
-    constructor(private utilisateurService: UtilisateurService,
-      private fileservice:FileService,
-      private aviservice:AvisService,
-      private router: Router
+    constructor(private  readonly utilisateurService: UtilisateurService,
+      private  readonly fileservice:FileService,
+      private readonly  aviservice:AvisService,
+      private readonly router: Router
 
       
     ){}
@@ -36,14 +36,14 @@ nombreAvisMap: { [id: number]: number } = {};
 
 
   getAllPrestataires(): void {
-    this.utilisateurService.getPrestataires().subscribe(
-      (data) => {
+    this.utilisateurService.getPrestataires().subscribe({
+      next: (data) => {
       
         this.prestataires = data
           .slice(0, 8)
           .map(prestataire => ({
             ...prestataire,
-            disponibilites: prestataire.disponibilite || [],
+            disponibilites: prestataire.disponibilite ?? [],
             showFullDescription: false,
             servicesOfferts: prestataire.servicesOfferts
               ? prestataire.servicesOfferts.map(service => ({
@@ -94,10 +94,10 @@ nombreAvisMap: { [id: number]: number } = {};
           }
         });
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des prestataires', error);
       }
-    );
+    });
   }
   
     loadProfileImage(prestataire: any): void {

@@ -46,9 +46,7 @@ export class ComptentrepriseComponent {
         } else {
           console.warn(' Aucune image trouvée dans le token !');
         }
-        if (this.userId) {
-
-        } else {
+        if (!this.userId) {
           console.error(' Erreur : ID utilisateur non défini !');
         }
       } catch (error) {

@@ -9,7 +9,7 @@
             <ul>
                 <ul>
                     <li routerLink="/Compteparticulier">📌Tableau de bord</li>
-                   <li routerLink="/Mesdemandes" (click)="toggleDemandes()">
+                   <li routerLink="/Mesdemandes" (click)="toggleDemandes()" (keydown)="toggleDemandes()" tabindex="0">
                         📋 Mes demandes
                         <span *ngIf="showDemandes">
                             <i class="fa fa-chevron-down"></i> 
@@ -28,7 +28,14 @@
                     <li routerLink="/Historique">📜Mon historique</li>
                     <li routerLink="/Mestransactions">💰 Mes transactions</li>
                     <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
-                    <li (click)="logout()">🚪 Se déconnecter</li>
+                    <li  >
+        
+   
+  
+                        <button id="logout-btn"  (click)="logout()" (keydown)="logout()" tabindex="0" style="background:none;border:none;padding:0;cursor:pointer; color:  #66696e;">
+                            🚪 Se déconnecter
+                        </button>
+                    </li>
                 </ul>
 
             </ul>
@@ -36,7 +43,7 @@
 
         <main class="content">
             <div class="profile-wrapper">
-                <label class="user-name">Bonjour {{ user?.nom }}</label> 
+                <span class="user-name">Bonjour {{ user?.nom }}</span> 
 
                 <div class="profile-alert">
                     <div class="job-content">

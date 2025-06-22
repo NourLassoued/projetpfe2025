@@ -15,7 +15,7 @@ export class ChatbotComponent {
   isTyping = false
   suggestionResponse: string = "";
 
-  constructor(private chatbotService: ChatbotServiceService) { }
+  constructor(private  readonly chatbotService: ChatbotServiceService) { }
 
   toggleChatbot() {
     this.isChatbotOpen = !this.isChatbotOpen

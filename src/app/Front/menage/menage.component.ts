@@ -17,9 +17,9 @@ export class MenageComponent {
     filteredServices: Servicee[] = [];
     searchQuery: string = '';
     categoryName: string = '';
-    constructor(private file:FileService,
-        private service:ServiceeService,
-        private router: Router,
+    constructor(private readonly  file:FileService,
+        private  readonly service:ServiceeService,
+        private  readonly router: Router,
        
        
        ) {}
@@ -27,7 +27,7 @@ export class MenageComponent {
 
           ngOnInit(): void {
             
-              this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');  
+              this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');  
               
               if (this.categoryName) {
               
@@ -60,7 +60,7 @@ export class MenageComponent {
           } else {
           
             this.filteredServices = this.services.filter(service =>
-              service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+              service.nomservice?.toLowerCase().includes(this.searchQuery.toLowerCase())
             );
           }
         }
@@ -70,16 +70,15 @@ export class MenageComponent {
       
         getImage(filename: string, index: number) {
          
-          this.file.getImage(filename).subscribe(
-            (imageBlob) => {
+          this.file.getImage(filename).subscribe({
+            next: (imageBlob) => {
               const imageUrl = URL.createObjectURL(imageBlob);
               this.imageUrls[index] = imageUrl;
-              
             },
-            (error) => {
+            error: (error) => {
               console.error(` Erreur lors du chargement de l'image ${filename}`, error);
             }
-          );
+          });
         }
 
         searchServices() {
@@ -96,8 +95,8 @@ export class MenageComponent {
         
        
           getServicesByCategoryName(categorieName: string): void {
-            this.service.getServicesByCategoryName(categorieName).subscribe(
-              (services: Servicee[]) => {
+            this.service.getServicesByCategoryName(categorieName).subscribe({
+              next: (services: Servicee[]) => {
                 console.log('Services récupérés pour la catégorie:', categorieName, services);
                 if (services && services.length > 0) {
                   this.services = services;
@@ -120,10 +119,10 @@ export class MenageComponent {
                   console.warn('Aucun service trouvé pour la catégorie:', categorieName);
                 }
               },
-              (error) => {
+              error: (error) => {
                 console.error('Erreur lors de la récupération des services:', error);
               }
-            );
+            });
           }
         
         placeholders: string[] = [
@@ -140,7 +139,7 @@ export class MenageComponent {
         currentPlaceholder: string = "";
         private index: number = 0;
         private charIndex: number = 0;
-        private typingSpeed: number = 100;
+        private  readonly typingSpeed: number = 100;
         private isTyping: boolean = false;
       
         

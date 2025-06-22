@@ -1,12 +1,11 @@
 
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {Component } from '@angular/core';
 import { CategorieService } from '../../service/categorie.service';
 import { FileService } from '../../service/file.service';
 import { ServiceeService } from '../../service/servicee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Servicee } from 'src/models/Servicee';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { ScrollServiceService } from 'src/app/service/scroll-service.service';
 
 import { PaymentService } from 'src/app/service/payment.service';
 import { ToastrService } from 'ngx-toastr';
@@ -93,10 +92,9 @@ export class AllTemplateFrontComponent {
 
 
   getAllCategories() {
-    this.categorieService.getAllCategories().subscribe(
-      (data) => {
+    this.categorieService.getAllCategories().subscribe({
+      next: (data) => {
         this.filteredCategories = data;
-
 
         if (this.filteredCategories.length === 0) {
           console.warn('Aucune catégorie trouvée');
@@ -105,24 +103,24 @@ export class AllTemplateFrontComponent {
           this.getImage(category.imageCategorie, index);
         });
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des catégories', error);
       }
-    );
+    });
   }
 
   getAllCategoriess() {
-    this.categorieService.getAllCategories().subscribe(
-      (data) => {
+    this.categorieService.getAllCategories().subscribe({
+      next: (data) => {
         this.categories = data.map((category) => ({
           ...category,
           imageCategorie: this.getStaticImage(category.nom ?? '')
         }));
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des catégories', error);
       }
-    );
+    });
   }
   getStaticImage(categoryName?: string): string {
     if (!categoryName) return '/assets/img/default.png';
@@ -165,17 +163,14 @@ export class AllTemplateFrontComponent {
     if (this.searchQuery.trim() === '') {
       this.getAllCategories();
     } else {
-      this.categorieService.searchCategories(this.searchQuery).subscribe(
-        (data) => {
-
-
+      this.categorieService.searchCategories(this.searchQuery).subscribe({
+        next: (data) => {
           this.filteredCategories = data;
-
         },
-        (error) => {
+        error: (error) => {
           console.error('Erreur lors de la recherche des catégories', error);
         }
-      );
+      });
     }
   }
   filterServices() {
@@ -185,7 +180,7 @@ export class AllTemplateFrontComponent {
     } else {
 
       this.filteredServices = this.services.filter(service =>
-        service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+        service.nomservice?.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }
   }
@@ -195,19 +190,18 @@ export class AllTemplateFrontComponent {
 
 
   getImage(filename: string, index: number) {
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
       }
-    );
+    });
   }
   selectCategory(categoryName: string) {
-    this.selectedCategory = this.filteredCategories.find(category => category.nom === categoryName) || null;
+    this.selectedCategory = this.filteredCategories.find(category => category.nom === categoryName) ?? null;
 
     if (this.selectedCategory) {
 
@@ -219,19 +213,19 @@ export class AllTemplateFrontComponent {
     }
   }
   getAllServicesByCategorie(categorieId: number) {
-    this.service.getAllServicesByCategorie(categorieId).subscribe(
-      (services: Servicee[]) => {
+    this.service.getAllServicesByCategorie(categorieId).subscribe({
+      next: (services: Servicee[]) => {
         this.services = services;
         this.services.forEach((service, index) => {
           this.getImage(service.imageService, index);
         });
         this.filterServices();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des services:', error);
         alert('Une erreur est survenue lors du chargement des services.');
       }
-    );
+    });
   }
 
   placeholders: string[] = [
