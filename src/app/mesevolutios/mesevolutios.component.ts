@@ -39,15 +39,14 @@ editNote: number = 1;
           loadAvis(): void {
            
             if (this.userId) {
-              this.avisService.getAvisParUtilisateur(this.userId).subscribe(
-                (avis: Avis[]) => {
+              this.avisService.getAvisParUtilisateur(this.userId).subscribe({
+                next: (avis: Avis[]) => {
                   this.avisList = avis; 
-                
                 },
-                (error) => {
+                error: (error) => {
                   console.error('Erreur lors de la récupération des avis:', error);
                 }
-              );
+              });
             }
           }
         
@@ -73,17 +72,17 @@ editNote: number = 1;
 
               deleteAvis(idAvis: number): void {
                 
-                  this.avisService.deleteAvis(idAvis).subscribe(
-                    () => {
+                  this.avisService.deleteAvis(idAvis).subscribe({
+                    next: () => {
                       this.avisList = this.avisList.filter(avis => avis.idAvis !== idAvis);
                       this.toastr.success('Avis supprimé avec succès!', 'Succès');
                       this.loadAvis(); 
                     },
-                    (error) => {
+                    error: (error) => {
                       console.error('Erreur lors de la suppression de l\'avis', error);
                       this.toastr.error('Erreur lors de la suppression de l\'avis', 'Erreur');
                     }
-                  );
+                  });
                 }
                 getFullStars(note: number | undefined): string[] {
                   return Array(note ?? 0).fill('★');
@@ -107,17 +106,17 @@ editNote: number = 1;
                       note: this.editNote,
                     };
                 
-                    this.avisService.updateAvis(this.editModeId, updatedAvis).subscribe(
-                      () => {
+                    this.avisService.updateAvis(this.editModeId, updatedAvis).subscribe({
+                      next: () => {
                         this.toastr.success('Avis mis à jour avec succès', 'Succès');
                         this.editModeId = null;
                         this.loadAvis();
                       },
-                      error => {
+                      error: error => {
                         console.error('Erreur lors de la mise à jour', error);
                         this.toastr.error('Erreur lors de la mise à jour', 'Erreur');
                       }
-                    );
+                    });
                   }
                 }
                 

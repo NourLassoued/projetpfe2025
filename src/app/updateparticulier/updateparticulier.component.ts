@@ -1,8 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileService } from '../service/file.service';
-import { ToastrService } from 'ngx-toastr';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdresseService } from '../service/adresse.service';
 import { ForgetPasswordService } from '../service/forget-password.service';
 import { Router } from '@angular/router';
@@ -16,177 +14,171 @@ import { jwtDecode } from 'jwt-decode';
   styleUrls: ['./updateparticulier.component.css']
 })
 export class UpdateparticulierComponent {
-    @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef;
   triggerFileInput() {
-    this.fileInput.nativeElement.click(); 
+    this.fileInput.nativeElement.click();
   }
   selectedFile: File | null = null;
   isEditing: { [key: string]: boolean } = {};
-editedValues: { [key: string]: string } = {}; 
-userId: number | null = null;
- profileImageUrl: SafeUrl | null = null; 
- selectedFiles: { [key: string]: File } = {};  
- passwordData = {
-  oldPassword: '',
-  password: '',
-  repeatPassword: ''
- 
-};
-selectedAdresse: any;
+  editedValues: { [key: string]: string } = {};
+  userId: number | null = null;
+  profileImageUrl: SafeUrl | null = null;
+  selectedFiles: { [key: string]: File } = {};
+  passwordData = {
+    oldPassword: '',
+    password: '',
+    repeatPassword: ''
+
+  };
+  selectedAdresse: any;
   adresses: Adresse[] = [];
   user: any = null;
   imageUrls: string[] = [];
   passwordError = '';
   emailExists: boolean = false;
-  emailError: string | null = null; 
+  emailError: string | null = null;
   email: string = '';
-constructor(private fileService: FileService, private sanitizer: DomSanitizer, private router: Router,private utilisateurService:UtilisateurService,
+  constructor(private readonly fileService: FileService,
+    private readonly sanitizer: DomSanitizer,
+    private readonly router: Router,
+    private readonly utilisateurService: UtilisateurService,
 
-  private toastr: ToastrService,private snackBar: MatSnackBar,
- private forgetPasswordService:ForgetPasswordService,
-private uploadService :FileService,private adreesse:AdresseService) {}
+
+    private readonly forgetPasswordService: ForgetPasswordService,
+    private readonly uploadService: FileService,
+    private readonly adreesse: AdresseService) { }
 
 
-ngOnInit(): void {
- 
-  this.loadAdresses();
+  ngOnInit(): void {
+
+    this.loadAdresses();
     this.loadUserData();
- 
 
-   
-  
-   
+
+
+
+
 
     const token = localStorage.getItem('accessToken');
-    if (token) {
-      const decodedToken: any = jwtDecode(token);
-     
-  
-      
-       
-      } else {
-        console.warn(" Aucun service trouvé dans le token !");
+    if (!token) {
+      console.warn(" Aucun service trouvé dans le token !");
+    }
+  }
+
+
+  loadAdresses(): void {
+    this.adreesse.getAllAdresses().subscribe((data) => {
+      this.adresses = data;
+    });
+  }
+
+  loadProfileImage(filename: string): void {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
+        const objectURL = URL.createObjectURL(imageBlob);
+        this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      },
+      error: (err) => {
+        console.error(' Erreur de chargement de l\'image', err);
+        this.profileImageUrl = null;
       }
+    });
   }
-  
-
-   loadAdresses(): void {
-     this.adreesse.getAllAdresses().subscribe((data) => {
-       this.adresses = data;
-     });
-   }
- 
-   loadProfileImage(filename: string): void {
-     this.fileService.getImage(filename).subscribe({
-       next: (imageBlob) => {
-         const objectURL = URL.createObjectURL(imageBlob);
-         this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-       },
-       error: (err) => {
-         console.error(' Erreur de chargement de l\'image', err);
-         this.profileImageUrl = null; 
-       }
-     });
-   }
-   
- 
-   loadUserData(): void {
-     const token = localStorage.getItem('accessToken');
-   
-     if (!token) {
-       console.error(" Aucun token trouvé !");
-       return;
-     }
-   
-     try {
-       const decodedToken: any = jwtDecode(token);
-   
-       if (!decodedToken.id) {
-         console.error(" L'ID utilisateur est introuvable dans le token !");
-         return;
-       }
-   
-       this.user = decodedToken;
-       this.userId = decodedToken.id;
-     if (this.user.image) {
-         this.loadProfileImage(this.user.image);
-       } else {
-         console.warn(" Aucune image trouvée dans le token !");
-       }
-   
-     } catch (error) {
-       console.error("Erreur lors du décodage du token :", error);
-     }
 
 
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      console.error(" Aucun token trouvé !");
+      return;
     }
 
-onFileSelected(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    this.selectedFile = file;
-    this.updateProfileImage(); 
-  }
-}
+    try {
+      const decodedToken: any = jwtDecode(token);
 
-  
-getImage(filename: string, index: number) {
-  this.fileService.getImage(filename).subscribe(
-    (imageBlob) => {
-      const imageUrl = URL.createObjectURL(imageBlob);
-      this.imageUrls[index] = imageUrl;
-     
-    },
-    (error) => {
-      console.error('Erreur lors du chargement de l\'image', error);
+      if (!decodedToken.id) {
+        console.error(" L'ID utilisateur est introuvable dans le token !");
+        return;
+      }
+
+      this.user = decodedToken;
+      this.userId = decodedToken.id;
+      if (this.user.image) {
+        this.loadProfileImage(this.user.image);
+      } else {
+        console.warn(" Aucune image trouvée dans le token !");
+      }
+
+    } catch (error) {
+      console.error("Erreur lors du décodage du token :", error);
     }
-  );
-}
-updateProfileImage() {
-  this.loadUserData(); 
-  if (!this.userId) {
-    console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
-    return;
+
+
   }
 
-  if (!this.selectedFile) {
-    console.error("Aucun fichier sélectionné !");
-    return;
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.updateProfileImage();
+    }
   }
+
+
+  getImage(filename: string, index: number) {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
+        const imageUrl = URL.createObjectURL(imageBlob);
+        this.imageUrls[index] = imageUrl;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement de l\'image', error);
+      }
+    });
+  }
+  updateProfileImage() {
+    this.loadUserData();
+    if (!this.userId) {
+      console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
+      return;
+    }
+
+    if (!this.selectedFile) {
+      console.error("Aucun fichier sélectionné !");
+      return;
+    }
 
     this.uploadService.uploadFile(this.selectedFile).subscribe({
       next: (response: string) => {
         console.log("Réponse du backend :", response);
-  
-        // ✅ Extraire uniquement le nom du fichier de la réponse
-        const match = response.match(/File uploaded successfully: (.+)/);
+
+        const regex = /File uploaded successfully: (.+)/;
+        const match = regex.exec(response);
         const filename = match ? match[1] : null;
-     
+
         if (!filename) {
           console.error("Nom de fichier invalide après l'upload !");
           return;
         }
-  
+
         console.log("Nom de fichier extrait :", filename);
-  
+
         this.utilisateurService.updateUser(Number(this.userId), { image: filename })
           .subscribe({
             next: (response) => {
               console.log("Profil mis à jour avec succès :", response);
-  
-              // ✅ Générer l'URL correcte de l'image
+
               const updatedImageUrl = `http://localhost:8088/nour/api/v1/auth/get-image/${filename}?t=${new Date().getTime()}`;
               this.profileImageUrl = updatedImageUrl;
-  
-              // ✅ Mettre à jour l'image dans FileService
+
               this.fileService.updateProfileImage(updatedImageUrl);
-  
-              // ✅ Mettre à jour le token s'il est renvoyé
+
               if (response.token) {
                 localStorage.removeItem('accessToken');
                 localStorage.setItem('accessToken', response.token);
               }
-  
+
               this.loadUserData();
             },
             error: (err) => {
@@ -199,38 +191,55 @@ updateProfileImage() {
       }
     });
 
-}
-startEditing(field: string, currentValue: string) {
-  this.isEditing[field] = true;
-  this.editedValues[field] = currentValue;
-}
-checkEmail() {
-  this.utilisateurService.checkEmailExists(this.email).subscribe({
-    next: (exists: boolean) => {
-      this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
-      if (this.emailExists) {
-        this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
-      } else {
-        this.emailError = null;
+  }
+  startEditing(field: string, currentValue: string) {
+    this.isEditing[field] = true;
+    this.editedValues[field] = currentValue;
+  }
+  checkEmail() {
+    this.utilisateurService.checkEmailExists(this.email).subscribe({
+      next: (exists: boolean) => {
+        this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+        if (this.emailExists) {
+          this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
+        } else {
+          this.emailError = null;
+        }
+      },
+      error: (err) => {
+        console.error('Erreur lors de la vérification de l\'email', err);
       }
-    },
-    error: (err) => {
-      console.error('Erreur lors de la vérification de l\'email', err);
-    }
-  });
-}
+    });
+  }
 
-saveChanges(field: string) {
-  if (!this.userId) {
-    console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
-    return;
+  saveChanges(field: string) {
+    if (!this.userId) {
+      console.error(" Impossible de mettre à jour : ID utilisateur introuvable !");
+      return;
+    }
+
+    switch (field) {
+      case "profileImage":
+        if (this.selectedFile) {
+          this.updateProfileImage();
+        }
+        break;
+      case "password":
+        this.handlePasswordChange(field);
+        break;
+      case "email":
+        this.handleEmailChange(field);
+        break;
+      case "adresse":
+        this.handleAdresseChange(field);
+        break;
+      default:
+        this.handleDefaultFieldChange(field);
+        break;
+    }
   }
-  if (field === "profileImage" && this.selectedFile) {
-    this.updateProfileImage();
-    return;
-  }
-  
-  if (field === "password") {
+
+  private handlePasswordChange(field: string) {
     const newPassword = this.editedValues['password'];
     const confirmPassword = this.editedValues['confirmPassword'];
 
@@ -248,7 +257,7 @@ saveChanges(field: string) {
       return;
     }
 
-    if (!/[0-9]/.test(newPassword)) {
+    if (!/\d/.test(newPassword)) {
       this.passwordError = "⚠️ Le mot de passe doit contenir au moins un chiffre.";
       return;
     }
@@ -258,23 +267,20 @@ saveChanges(field: string) {
       return;
     }
 
-   
-    this.forgetPasswordService.changePassword(this.userId, this.editedValues['password'], this.editedValues['confirmPassword'])
+    this.forgetPasswordService.changePassword(this.userId!, newPassword, confirmPassword)
       .subscribe({
-        next: (response) => {
-         
+        next: () => {
           this.isEditing[field] = false;
           this.passwordError = "";
         },
         error: (err) => {
           console.error("Erreur lors du changement de mot de passe :", err);
-          this.passwordError = err.error || "Une erreur est survenue.";
+          this.passwordError = err.error ?? "Une erreur est survenue.";
         }
       });
-
-    return;
   }
-  if (field === "email") {
+
+  private handleEmailChange(field: string) {
     const email = this.editedValues['email'];
 
     if (!email) {
@@ -291,24 +297,23 @@ saveChanges(field: string) {
       next: (exists) => {
         if (exists) {
           this.emailError = "⚠️ Cet email est déjà utilisé.";
-          return; // Empêche la mise à jour de l'email
+          return;
         }
         if (this.userId === null) {
           console.error("L'ID utilisateur est introuvable.");
           return;
         }
 
-        // Si l'email n'existe pas, mettre à jour l'utilisateur
         this.utilisateurService.updateUser(this.userId, { email })
           .subscribe({
             next: (response) => {
               this.user.email = email;
               this.isEditing[field] = false;
-              this.emailError = ""; // Réinitialiser les erreurs
+              this.emailError = "";
             },
             error: (err) => {
               console.error("❌ Erreur lors de la mise à jour de l'email :", err);
-              this.emailError = err.error || "⚠️ Une erreur est survenue.";
+              this.emailError = err.error ?? "⚠️ Une erreur est survenue.";
             }
           });
       },
@@ -317,40 +322,34 @@ saveChanges(field: string) {
         this.emailError = "⚠️ Une erreur est survenue lors de la vérification de l'email.";
       }
     });
-
-    return;
   }
 
-  if (field === "adresse") {
+  private handleAdresseChange(field: string) {
     if (!this.selectedAdresse) {
       console.error("Aucune adresse sélectionnée !");
       return;
     }
 
-    // Vérifier si `selectedAdresse` est un objet ou une chaîne (nom de la ville)
     let adresseObjet = typeof this.selectedAdresse === 'string'
       ? this.adresses.find(a => a.governoate === this.selectedAdresse)
       : this.selectedAdresse;
 
-    if (!adresseObjet || !adresseObjet.idAdresse) {
+    if (!adresseObjet?.idAdresse) {
       console.error(" Adresse introuvable !");
       return;
     }
 
-    this.utilisateurService.affecterAdresse(this.userId, adresseObjet.idAdresse)
+    this.utilisateurService.affecterAdresse(this.userId!, adresseObjet.idAdresse)
       .subscribe({
         next: (response) => {
           console.log(` ${field} mis à jour avec succès :`, response);
-  
+
           if (response.token) {
-            localStorage.removeItem('accessToken'); 
-            localStorage.setItem('accessToken', response.token); 
-       
+            localStorage.removeItem('accessToken');
+            localStorage.setItem('accessToken', response.token);
           }
           this.user.adresse = adresseObjet;
           this.isEditing[field] = false;
-      
-          
         },
         error: (err) => {
           console.error(" Erreur lors de la mise à jour de l'adresse :", err);
@@ -358,40 +357,38 @@ saveChanges(field: string) {
       });
   }
 
+  private handleDefaultFieldChange(field: string) {
+    const updatedData = { [field]: this.editedValues[field] };
 
-  
-  const updatedData = { [field]: this.editedValues[field] };
+    this.utilisateurService.updateUser(this.userId!, updatedData)
+      .subscribe({
+        next: (response) => {
+          console.log(` ${field} mis à jour avec succès :`, response);
 
-  this.utilisateurService.updateUser(this.userId, updatedData)
-    .subscribe({
-      next: (response) => {
-        console.log(` ${field} mis à jour avec succès :`, response);
+          if (response.token) {
+            localStorage.removeItem('accessToken');
+            localStorage.setItem('accessToken', response.token);
+          }
 
-        if (response.token) {
-          localStorage.removeItem('accessToken'); 
-          localStorage.setItem('accessToken', response.token); 
-     
+          this.user[field] = updatedData[field];
+          this.isEditing[field] = false;
+        },
+        error: (err) => {
+          console.error(`Erreur lors de la mise à jour de ${field} :`, err);
         }
+      });
+  }
 
-        this.user[field] = updatedData[field]; 
-        this.isEditing[field] = false; 
-      },
-      error: (err) => {
-        console.error(`Erreur lors de la mise à jour de ${field} :`, err);
-      }
-    });
+  logout(): void {
+
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']);
+  }
 }
-   
-logout(): void {
-    
-  localStorage.removeItem('accessToken')
-  this.router.navigate(['/Front']); 
-}
-}
-   
-   
-  
- 
-   
+
+
+
+
+
 
 

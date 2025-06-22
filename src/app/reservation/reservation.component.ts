@@ -30,12 +30,12 @@ export class ReservationComponent {
   imageUrls: { [key: number]: string } = {};
   user: any = null;
   showPaymentModal = false;
-  constructor(private route: ActivatedRoute,
-    private reservationService: ReservationService,
-    private fileService: FileService,
-    private toastr: ToastrService,
-    private router: Router,
-    private payment: PaymentService
+  constructor(private  readonly route: ActivatedRoute,
+    private  readonly reservationService: ReservationService,
+    private readonly fileService: FileService,
+    private readonly  toastr: ToastrService,
+    private readonly  router: Router,
+    private readonly payment: PaymentService
 
   ) { }
 
@@ -88,38 +88,29 @@ export class ReservationComponent {
   }
 
   getReservations(): void {
-    this.reservationService.getReservationsByDemandeId(this.idDemande).subscribe(
-      (data) => {
+    this.reservationService.getReservationsByDemandeId(this.idDemande).subscribe({
+      next: (data) => {
         this.reservations = data;
 
-
         if (this.reservations.length > 0) {
-
-
 
           const demandeServiceImage = this.reservations[0].demande?.servicee?.imageService;
           if (demandeServiceImage) {
             this.getImage(demandeServiceImage, 0, 'service');
           }
 
-
           this.reservations.forEach((reservation, index) => {
             if (reservation.prestataire?.image) {
-
-
               this.getImage(reservation.prestataire.image, index, 'prestataire');
-
-
             }
           });
 
-
         }
       },
-      (error) => {
+      error: (error) => {
         console.error("Erreur lors de la récupération des réservations :", error);
       }
-    );
+    });
   }
 
   getImage(filename: string, index: number, type: 'service' | 'prestataire') {
@@ -129,8 +120,8 @@ export class ReservationComponent {
     }
 
     const encodedFilename = encodeURIComponent(filename);
-    this.fileService.getImage(encodedFilename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(encodedFilename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
 
         if (type === 'service') {
@@ -141,20 +132,18 @@ export class ReservationComponent {
           console.error(`Type d'image inconnu : ${type}`);
         }
       },
-      (error) => {
+      error: (error) => {
         console.error(`Erreur lors du chargement de l'image (${type})`, error);
       }
-    );
+    });
   }
   annulerReservation(reservationId: number): void {
     if (this.userId !== null) {
-      this.reservationService.annulerReservation(reservationId, this.userId).subscribe(
-        (response) => {
-
+      this.reservationService.annulerReservation(reservationId, this.userId).subscribe({
+        next: (response) => {
           this.toastr.success('Réservation annulée avec succès');
         },
-        (error) => {
-
+        error: (error) => {
           if (error.status === 404) {
             this.toastr.error('Réservation introuvable');
           } else if (error.status === 400) {
@@ -165,7 +154,7 @@ export class ReservationComponent {
             this.toastr.error('Erreur lors de l\'annulation de la réservation');
           }
         }
-      );
+      });
     } else {
       console.error('ID utilisateur non trouvé');
       this.toastr.error('ID utilisateur non trouvé');
@@ -173,15 +162,15 @@ export class ReservationComponent {
   }
   terminerReservation(idReservation: number): void {
     if (this.userId !== null) {
-      this.reservationService.terminerReservation(idReservation).subscribe(
-        () => {
+      this.reservationService.terminerReservation(idReservation).subscribe({
+        next: () => {
           this.toastr.success('Réservation terminée avec succès');
         },
-        (error) => {
+        error: (error) => {
           console.error('Erreur lors de la terminaison de la réservation', error);
           this.toastr.error('Erreur lors de la terminaison de la réservation');
         }
-      );
+      });
     } else {
       console.error('ID utilisateur non trouvé');
     }
@@ -215,7 +204,8 @@ export class ReservationComponent {
               alert('Erreur : lien de paiement introuvable.');
             }
           } catch (e) {
-            alert('Erreur : ' + response);
+            console.error('Erreur lors du traitement de la réponse de paiement:', e, response);
+            alert('Une erreur est survenue lors du traitement du paiement. Veuillez réessayer.');
           }
         },
         error: (err) => {

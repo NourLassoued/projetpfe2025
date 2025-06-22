@@ -11,9 +11,14 @@ body {
   display: flex;
   flex-direction: column;
 }
-.texte{
-  margin-right: 400px;
-}
+ .texte {
+      display: flex;  /* Aligne les éléments horizontalement */
+      align-items: center;  /* Centre les éléments verticalement */
+      margin-left: 140px;
+        margin-right: 400px;
+
+  }
+
 a, span {
   display: inline; /* Affiche les éléments sur la même ligne */
  
@@ -29,11 +34,7 @@ a:hover {
   text-decoration: underline;  /* Optionnel : Ajoute un soulignement lors du survol */
 }
 
-  .texte {
-      display: flex;  /* Aligne les éléments horizontalement */
-      align-items: center;  /* Centre les éléments verticalement */
-      margin-left: 140px;
-  }
+ 
   
   .texte i {
       margin: 0 10px;  /* Ajoute de l'espace autour de l'icône */
@@ -64,9 +65,12 @@ a:hover {
 .task-card h2 {
   margin-top: 10px;
 }
+
 .task-card p {
   color: #555;
   margin: 5px 0;
+    margin-bottom: 25px; 
+
 }
 .button-container {
   display: flex;
@@ -77,8 +81,10 @@ a:hover {
   background: #007bff;
   color: white;
   border: none;
-  width: 200px;
+ 
   padding: 10px;
+   margin-right: 40px; 
+  width: 250px;
   margin-top: 10px;
   height: 60px;
   cursor: pointer;
@@ -109,13 +115,7 @@ width: 470px;
   font-size: 0.9em;
   color: #777;
 }
-button {
-  margin-right: 40px; 
-  width: 250px;
-}
-.task-card p {
-  margin-bottom: 25px; /* Espace de 15px sous chaque paragraphe */
-}
+
 
 button:last-child {
   margin-right: 0; /* Enlève l'espace à droite du dernier bouton */
@@ -163,17 +163,20 @@ mat-menu a:last-child {
   border-radius: 15px; /* Bord arrondi pour une présentation plus élégante */
   object-fit: cover; /* Assure que l'image couvre l'espace sans déformation */
 }
-/* Modal Styles */
 .modal {
-  display: block;
+  background: white;
+  margin-top: 20px;
+  padding: 30px;
+  border-radius: 15px;
+  width: 70%;
+  height: 90%;
+  margin-left: 200px;
+ display: block;
   position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+    overflow: auto;
+
 }
 
 .modal-content {
@@ -233,9 +236,7 @@ font-size: 16px;
 width: 100%;
 box-sizing: border-box;
 }
-label{
-  color: #000;
-}
+
 
 input[type="number"],
 input[type="datetime-local"] {
@@ -443,18 +444,7 @@ color: black;
   z-index: 1000;
 }
 
-.modal {
-  background: white;
-  margin-top: 20px;
-  padding: 30px;
-  border-radius: 15px;
-  width: 70%;
-  height: 90%;
-  margin-left: 200px;
- 
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
-}
+
 .payment-options {
   display: flex;
   justify-content: space-between;
@@ -501,7 +491,6 @@ color: black;
   color: white;
   border: none;
   padding: 10px 20px;
-  font-weight: bold;
   font-size: 25px;
   border-radius: 8px;
   cursor: pointer;

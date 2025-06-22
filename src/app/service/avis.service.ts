@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthServiceService } from './auth-service.service';
 import { Observable } from 'rxjs';
 import { Avis } from 'src/models/Avis';
 import { environment } from '../environment';
@@ -11,8 +10,8 @@ import { environment } from '../environment';
 export class AvisService {
 
 
-private apiUrl = `${environment.apiUrl}/avis`;
-  constructor(private http: HttpClient,private auth:AuthServiceService) {}
+private  readonly apiUrl = `${environment.apiUrl}/avis`;
+  constructor(private  readonly http: HttpClient) {}
   getAvisParUtilisateur(id: number): Observable<Avis[]> {
     return this.http.get<Avis[]>(`${this.apiUrl}/parparticulier/${id}`);
   }

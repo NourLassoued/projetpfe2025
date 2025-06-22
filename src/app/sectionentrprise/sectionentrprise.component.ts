@@ -15,10 +15,10 @@ export class SectionentrpriseComponent {
   visibleEntreprises: any[] = [];
   currentIndex: number = 0;
   itemsPerPage: number = 3;  
-  constructor(private entrepriseService: UtilisateurService, 
-    private fileService: FileService,
-    private router: Router,
-    private sanitizer: DomSanitizer) {}
+  constructor(private readonly entrepriseService: UtilisateurService, 
+    private readonly  fileService: FileService,
+    private readonly  router: Router,
+    private readonly sanitizer: DomSanitizer) {}
     ngOnInit(): void {
       this.entrepriseService.getAllEntreprises().subscribe(entreprises => {
         const entrepriseWithImages: any[] = [];

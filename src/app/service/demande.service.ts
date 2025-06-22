@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Demande } from 'src/models/Demande';
-import { AuthServiceService } from './auth-service.service';
 import { Postulation } from 'src/models/Postulation';
 import { environment } from '../environment';
 @Injectable({
@@ -11,9 +10,9 @@ import { environment } from '../environment';
 export class DemandeService {
 
 
-    private apiUrl = `${environment.apiUrl}/demandes`;
+    private  readonly apiUrl = `${environment.apiUrl}/demandes`;
 
-  constructor(private http: HttpClient,private auth:AuthServiceService) {}
+  constructor(private readonly http: HttpClient) {}
 
 
   deleteDemande(idDemande: number): Observable<void> {

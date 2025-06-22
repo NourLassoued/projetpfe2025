@@ -44,15 +44,15 @@ export class ProfilComponent {
    userRole: string = '';
    contenuMessage: string = ''; 
    utilisateurConnecte: any;
-  constructor(private fileService: FileService, 
+  constructor(private  readonly fileService: FileService, 
  
-  private activatedRoute: ActivatedRoute,
-  private utilisateurservice:UtilisateurService ,
-  private reservationService: ReservationService,
-  private cdr: ChangeDetectorRef,
-  private avisService: AvisService,
-    private toastr: ToastrService,
-    private messageService: MessageService,){}
+  private readonly  activatedRoute: ActivatedRoute,
+  private readonly utilisateurservice:UtilisateurService ,
+  private readonly reservationService: ReservationService,
+  private readonly cdr: ChangeDetectorRef,
+  private readonly avisService: AvisService,
+    private readonly toastr: ToastrService,
+    private readonly messageService: MessageService,){}
 
     ngOnInit(): void {
       this.loadUserData();
@@ -78,8 +78,8 @@ export class ProfilComponent {
         const userIdParam = params.get('id');  
         if (userIdParam) {
           this.userId = +userIdParam; 
-          this.utilisateurservice.getById(this.userId).subscribe(
-            (userData: any) => {
+          this.utilisateurservice.getById(this.userId).subscribe({
+            next: (userData: any) => {
               this.user = userData;
               if (this.user?.image) {
                 this.loadProfileImage(this.user.image); 
@@ -102,15 +102,15 @@ export class ProfilComponent {
                   jour: dispo.jour,
                   heureDebut: dispo.heureDebut,
                   heureFin: dispo.heureFin
-                })) || [];
+                })) ?? [];
               } else {
                 this.user.disponibilites = [];
               }
             },
-            (error) => {
+            error: (error) => {
               console.error("Erreur lors de la récupération de l'utilisateur :", error);
             }
-          );
+          });
         }
       });
     }
@@ -182,8 +182,8 @@ export class ProfilComponent {
       }
 
       loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
-        this.fileService.getImage(filename).subscribe(
-          (imageBlob) => {
+        this.fileService.getImage(filename).subscribe({
+          next: (imageBlob) => {
             const imageUrl = URL.createObjectURL(imageBlob);
       
             if (type === 'utilisateur') {
@@ -199,10 +199,10 @@ export class ProfilComponent {
               this.profileImageUrl = imageUrl;
             }
           },
-          (error) => {
+          error: (error) => {
             
           }
-        );
+        });
       }
       
       loadAvis(prestataireId: number): void {
@@ -211,8 +211,8 @@ export class ProfilComponent {
           console.error("ID du prestataire manquant !");
           return;
         }
-        this.avisService.getAvisParprestatitr(prestataireId).subscribe(
-          (avisdata) => {
+        this.avisService.getAvisParprestatitr(prestataireId).subscribe({
+          next: (avisdata) => {
             this.avisList = avisdata;
       
             this.avisList?.forEach((avis, index) => {
@@ -221,26 +221,24 @@ export class ProfilComponent {
                 this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
                 this.mettreAJourAffichage();
                 
-              } else {
-               
               }
             });
-            this.avisService.getScoreMoyen(this.prestataireId).subscribe(
-              (score: number) => {
+            this.avisService.getScoreMoyen(this.prestataireId).subscribe({
+              next: (score: number) => {
                 this.score = score; 
              
               },
-              (error: any) => {
+              error: (error: any) => {
                 console.error("Erreur lors de la récupération du score :", error);
               }
-            );
+            });
       
             this.cdr.detectChanges();
           },
-          (error) => {
+          error: (error) => {
             console.error('Erreur lors de la récupération des avis:', error);
           }
-        );
+        });
       }
       
       
@@ -289,7 +287,7 @@ reserver(prestataireId: number) {
 
 
                 envoyerMessage(): void {
-                  if (!this.contenuMessage || !this.contenuMessage.trim()) {
+                  if (!this.contenuMessage?.trim()) {
                     this.toastr.error("Veuillez entrer un message avant de l'envoyer.", "Erreur");
                     return;
                   }

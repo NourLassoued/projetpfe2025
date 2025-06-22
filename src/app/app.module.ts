@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
+import { MatOptionModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AllTemplateFrontComponent } from './Front/all-template-front/all-template-front.component';
@@ -21,7 +21,6 @@ import { InscriptionEntrpriseComponent } from './gestionUtilisateur/inscription-
 import { LoginComponent } from './login/login.component';
 import { NewinstructionssendComponent } from './Front/newinstructionssend/newinstructionssend.component';
 import { EditpasswordComponent } from './gestionUtilisateur/editpassword/editpassword.component';
-import { registerLocaleData } from '@angular/common';
 import { CompteprestaitreComponent } from './compteprestaitre/compteprestaitre.component';
 import { UpdateprofileprestaitreComponent } from './updateprofileprestaitre/updateprofileprestaitre.component';
 import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
@@ -29,7 +28,6 @@ import { NavbarcompteComponent } from './navbarcompte/navbarcompte.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
 
@@ -70,7 +68,7 @@ import { ConstructionetGrosoeuvreComponent } from './Front/constructionet-grosoe
 import { DecorationComponent } from './Front/decoration/decoration.component';
 import { SecuriteComponent } from './securite/securite.component';
 import { DemandeComponent } from './demande/demande.component';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+
 import { DemandecompteComponent } from './demandecompte/demandecompte.component';
 import { MesdemandesComponent } from './mesdemandes/mesdemandes.component';
 import { GererdemandeComponent } from './gererdemande/gererdemande.component';
@@ -88,7 +86,6 @@ import { MesevolutiosComponent } from './mesevolutios/mesevolutios.component';
 import { MesevolutiosprestaitreComponent } from './mesevolutiosprestaitre/mesevolutiosprestaitre.component';
 import { InscriptionProfessionnelComponent } from './gestionUtilisateur/inscription-professionnel/inscription-professionnel.component';
 import { WebsocketServiceService } from './service/websocket-service.service';
-import { StompServiceService } from './service/stomp-service.service';
 import { ChatComponent } from './chat/chat.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { FrontprofilComponent } from './Front/frontprofil/frontprofil.component';

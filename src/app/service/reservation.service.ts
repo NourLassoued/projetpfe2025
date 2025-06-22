@@ -9,10 +9,10 @@ import { environment } from '../environment';
 })
 export class ReservationService {
 
-  private apiUrl = `${environment.apiUrl}/reservation`;
+  private  readonly apiUrl = `${environment.apiUrl}/reservation`;
  
 
-  constructor(private http: HttpClient) {}
+  constructor(private  readonly http: HttpClient) {}
   reserverPrestataire(
     particulierId: number,
     prestataireId: number,

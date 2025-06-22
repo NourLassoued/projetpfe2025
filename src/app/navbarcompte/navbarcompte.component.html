@@ -32,16 +32,16 @@
           
        <div class="grid-container">
         
-        <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)">
+        <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)" (keydown.enter)="selectService(service)">
             <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
             <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
           
-  
+
               <input 
                 class="iconn" 
                 type="checkbox" 
                 id="service-{{ service.idservice }}" 
-                
+                tabindex="0"
                 >
           </div>
           </div>
@@ -104,7 +104,7 @@
         
         <div id="profile-container">
             <ng-container *ngIf="profileImageUrl; else defaultIcon">
-                <img [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+                <img [src]="profileImageUrl" alt="" id="profile-icon"/>
             </ng-container>
             <ng-template #defaultIcon>
                 <i class="fas fa-user default-icon"></i> 

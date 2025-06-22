@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AbonmmentserviceService {
-  private apiUrl = `${environment.apiUrl}/AbonmentS`;
+  private readonly apiUrl = `${environment.apiUrl}/AbonmentS`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
   getAbonnementsActifs(): Observable<Abonnement[]> {
     return this.http.get<Abonnement[]>(`${this.apiUrl}/actifs`);
   }

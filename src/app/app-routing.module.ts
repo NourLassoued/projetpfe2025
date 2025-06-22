@@ -82,11 +82,13 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'Front',
-    pathMatch: 'full' 
+    pathMatch: 'full'
   },
-    {   path: 'abonnementpaye',
+  {
+    path: 'abonnementpaye',
 
-      component: AbonnementpayeComponent },
+    component: AbonnementpayeComponent
+  },
 
   {
     path: 'Front',
@@ -97,78 +99,80 @@ const routes: Routes = [
     path: 'Qui sommes-nous',
     component: AboutComponent
   },
-   {
+  {
     path: 'chatbot',
     component: ChatbotComponent
   },
-  
+
   {
     path: 'Bricolage',
-    component:BricolageComponent
+    component: BricolageComponent
   },
   {
     path: 'Ménage',
-    component:MenageComponent
+    component: MenageComponent
   },
-  
+
 
   {
     path: 'Jardinage',
-    component:JardinageComponent
+    component: JardinageComponent
   },
-  { path: 'create-payment',
-     component: PaymentComponent },
+  {
+    path: 'create-payment',
+    component: PaymentComponent
+  },
   {
     path: 'Enfants',
-    component:EnfantsComponent
+    component: EnfantsComponent
   },
   {
-  path: 'Demenagement',
-  component:DemenagementComponent
-},
-{
-  path: 'aide-a-domicile',
-  component:AidedomicileComponent
-},
-{
-  path: 'Animaux',
-  component:AnimauxComponent
-},
-{
-path: 'Informatique',
-component:InformatiqueComponent
-},
-{
-  path: 'Coursparticuliers',
-  component:CoursparticuliersComponent  
+    path: 'Demenagement',
+    component: DemenagementComponent
+  },
+  {
+    path: 'aide-a-domicile',
+    component: AidedomicileComponent
+  },
+  {
+    path: 'Animaux',
+    component: AnimauxComponent
+  },
+  {
+    path: 'Informatique',
+    component: InformatiqueComponent
+  },
+  {
+    path: 'Coursparticuliers',
+    component: CoursparticuliersComponent
   },
   {
     path: 'Decoration',
-    component:DecorationComponent  
+    component: DecorationComponent
   },
   {
     path: 'Construction',
-    component:ConstructionetGrosoeuvreComponent  
+    component: ConstructionetGrosoeuvreComponent
   },
   {
     path: 'Domotique',
-    component:SecuriteComponent 
+    component: SecuriteComponent
   },
   {
     path: 'avisection',
-    component:AvissectionComponent 
+    component: AvissectionComponent
   },
   {
     path: 'devenirprestataire',
-    component:FrontpresayitrComponent 
+    component: FrontpresayitrComponent
   },
   {
     path: 'Frontprofil',
-    component:FrontprofilComponent 
+    component: FrontprofilComponent
   },
   {
     path: 'Compte/:id',
-    component:FrontprofilshowComponent 
+    component: FrontprofilshowComponent
   },
   {
     path: 'prestataire',
@@ -197,201 +201,201 @@ component:InformatiqueComponent
 
   {
     path: 'new',
-    component:  NewinstructionssendComponent
+    component: NewinstructionssendComponent
   },
   {
     path: 'editpassword',
-    component:EditpasswordComponent
+    component: EditpasswordComponent
   },
   {
     path: 'Compteprestaitre',
-    component:CompteprestaitreComponent
+    component: CompteprestaitreComponent
   },
   {
     path: 'Mesrevunes',
-    component:MesrevunesComponent
+    component: MesrevunesComponent
   },
-  
+
   {
     path: 'updateprestaitre',
-    component:UpdateprofileprestaitreComponent
+    component: UpdateprofileprestaitreComponent
   },
   {
     path: 'navbarcompte',
-    component:NavbarcompteComponent
+    component: NavbarcompteComponent
   },
   {
     path: 'ProfileUtilisateur',
-    component:ProfileUtilisateurComponent
+    component: ProfileUtilisateurComponent
   },
   {
     path: 'Compteparticulier',
-    component:ComptepartuculierComponent
+    component: ComptepartuculierComponent
   },
   {
     path: 'Profileparticulier',
-    component:ProfileparticulierComponent
+    component: ProfileparticulierComponent
   },
   {
     path: 'Updateparticulier',
-    component:UpdateparticulierComponent
+    component: UpdateparticulierComponent
   },
 
   //////espace admin
   {
     path: 'Admindashboard',
-    component:AdmindashboardComponent
+    component: AdmindashboardComponent
   },
   {
     path: 'espaceavis',
-    component:EspaceavisComponent 
+    component: EspaceavisComponent
   },
-  
+
   {
     path: 'adminmenu',
-    component:MeunuadminComponent 
+    component: MeunuadminComponent
   },
   {
     path: 'Scorebadage',
-    component:ScorebadageComponent 
+    component: ScorebadageComponent
   },
   {
     path: 'catogories',
-    component:CatogoriesComponent
+    component: CatogoriesComponent
   },
-   {
+  {
     path: 'Abonnement',
-    component:AbonnementComponent
+    component: AbonnementComponent
   },
 
   {
     path: 'user',
-    component:UserComponent
+    component: UserComponent
   },
   {
     path: 'Service',
-    component:ServiceComponent
+    component: ServiceComponent
   },
-  
+
   {
     path: 'escpacereservation',
-    component:EspacereservationComponent
+    component: EspacereservationComponent
   },
   {
     path: 'Sectionentrprise',
-    component:SectionentrpriseComponent
+    component: SectionentrpriseComponent
   },
   {
     path: 'Contactentreprise/:id',
-        component:EntrepriseconnecteComponent
+    component: EntrepriseconnecteComponent
   },
 
 
- 
-{
-  path: 'Mesevolutionentrprise',
-  component:MesevolutionentrpriseComponent
-},
-{
-  path: 'mes-publications',
-  component:MespublicationComponent
-},
-{
-  path: 'Comptentreprise',
-  component:ComptentrepriseComponent
-},
-{
-  path: 'commentaires-recus',
-  component:CommentairesRecusComponent
-},
+
+  {
+    path: 'Mesevolutionentrprise',
+    component: MesevolutionentrpriseComponent
+  },
+  {
+    path: 'mes-publications',
+    component: MespublicationComponent
+  },
+  {
+    path: 'Comptentreprise',
+    component: ComptentrepriseComponent
+  },
+  {
+    path: 'commentaires-recus',
+    component: CommentairesRecusComponent
+  },
 
 
   {
     path: 'Profileentreprise',
-    component:ProfiletrpriseComponent
+    component: ProfiletrpriseComponent
   },
   {
     path: 'ConsulterEntreprise/:id',
-    component:ConsulterentrpriseComponent
+    component: ConsulterentrpriseComponent
   },
   {
     path: 'UpdateEntreprise',
-    component:UpdateEtrepriseComponent
+    component: UpdateEtrepriseComponent
   },
- /////////
+  /////////
 
   //////////////////////////////gestion de partculier//////////////////
 
   {
     path: 'Demande',
-    component:DemandeComponent 
+    component: DemandeComponent
   },
-  
+
   {
     path: 'Demandeservice',
-    component:DemandecompteComponent 
+    component: DemandecompteComponent
   },
   {
     path: 'Mesdemandes',
-    component:MesdemandesComponent 
+    component: MesdemandesComponent
   },
   {
-        path: 'Mesdemandesarchivees',
-        component: DemandeterminneComponent 
-          },
-          {
-            path: 'Mesdemandeterminees',
-            component: DemandecompletedComponent 
-              },
+    path: 'Mesdemandesarchivees',
+    component: DemandeterminneComponent
+  },
+  {
+    path: 'Mesdemandeterminees',
+    component: DemandecompletedComponent
+  },
 
-              {
-                path: 'Mestransactions',
-                component: MestransactionsComponent 
-                  },
-{
+  {
+    path: 'Mestransactions',
+    component: MestransactionsComponent
+  },
+  {
     path: 'gerer-demande',
-    component:GererdemandeComponent ,
-   
+    component: GererdemandeComponent,
+
   },
   {
     path: 'Profil/:id',
-    component:ProfilComponent 
+    component: ProfilComponent
   },
   {
     path: 'Reservation/:idDemande',
-    component:ReservationComponent 
+    component: ReservationComponent
   },
   {
     path: 'Reservationcours',
-    component:ReservationcoursComponent 
+    component: ReservationcoursComponent
   },
   {
     path: 'Historique',
-    component:HistoriqueComponent 
+    component: HistoriqueComponent
   },
 
   {
     path: 'Postulation',
-    component:PostulationComponent 
+    component: PostulationComponent
   },
   {
     path: 'reservationprestataire',
-    component:ReservationprestaitreComponent 
+    component: ReservationprestaitreComponent
   },
   {
     path: 'Mesévolutions',
-    component:MesevolutiosComponent 
+    component: MesevolutiosComponent
   },
   {
     path: 'Mesevolutions',
-    component:MesevolutiosprestaitreComponent 
+    component: MesevolutiosprestaitreComponent
   },
   {
     path: 'Chat',
-    component:ChatComponent 
+    component: ChatComponent
   },
- 
-  
+
+
 
 
 
@@ -403,11 +407,10 @@ component:InformatiqueComponent
 
 ];
 @NgModule({
-  imports: [ 
-   [RouterModule.forRoot(routes)],
-],
-    exports: [RouterModule]
-  })
-  export class AppRoutingModule { }
-  
-  
+  imports: [
+    [RouterModule.forRoot(routes)],
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+

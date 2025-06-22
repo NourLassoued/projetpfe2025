@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { Utilisateur } from 'src/models/Utilisateur';
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import { Router } from '@angular/router';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import { environment } from '../environment';
 
 @Injectable({
@@ -14,10 +14,10 @@ export class AuthServiceService {
   public user: Observable<Utilisateur | null>;
   isconn: any=false;
 
-private baseUrl = `${environment.apiUrl}/api/v1/auth`
+private  readonly baseUrl = `${environment.apiUrl}/api/v1/auth`
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user')!));
+  constructor(private readonly  http: HttpClient, private readonly router: Router) {
+    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user') ?? sessionStorage.getItem('user')!));
     this.user = this.userSubject.asObservable();
   }
   public get userValue() {
@@ -47,7 +47,7 @@ private baseUrl = `${environment.apiUrl}/api/v1/auth`
     const token = localStorage.getItem('accessToken');
   
 
-    return token || 'EMPTY';
+    return token ?? 'EMPTY';
   }
   getAccessToken(): string {
     return localStorage.getItem('accessToken')!;

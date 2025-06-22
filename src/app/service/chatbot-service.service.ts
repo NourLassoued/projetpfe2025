@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChatbotServiceService {
-  private apiUrl = `${environment.apiUrl}/chatbot/chat`;
+  private readonly apiUrl = `${environment.apiUrl}/chatbot/chat`;
 
- constructor(private http: HttpClient) {}
+ constructor(private readonly  http: HttpClient) {}
 
 sendMessage(message: string): Observable<any> {
     return this.http.post<any>(this.apiUrl, { message });

@@ -12,7 +12,7 @@
             </button>
 
             <div class="cards-wrapper">
-                <div class="category-carde" *ngFor="let entreprise of visibleEntreprises" tabindex="0">
+                <div class="category-carde" *ngFor="let entreprise of visibleEntreprises">
                     <div class="image-container">
                         <img [src]="entreprise.safeImageUrl" [alt]="entreprise.nomEntreprise" *ngIf="entreprise.safeImageUrl" />
                        

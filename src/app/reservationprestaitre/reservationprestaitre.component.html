@@ -43,7 +43,9 @@
                 <td  *ngIf="reservation.idReservation"
                 class="delete-btn"
                 title="Annuler"
-                (click)="annulerReservation(reservation.idReservation)">
+                (click)="annulerReservation(reservation.idReservation)"
+                (keydown.enter)="annulerReservation(reservation.idReservation)"
+                tabindex="0">
                   <i class="fa fa-times-circle cancel-icon"></i> Annuler
                 </td>
                

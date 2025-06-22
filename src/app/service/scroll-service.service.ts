@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import {  NavigationStart, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScrollServiceService {
 
-  constructor(private router: Router) {
+  constructor(private  readonly router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         const shouldScrollToTop = this.shouldScrollToTop(event.url);

@@ -8,10 +8,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PublicationService {
-    private apiUrl = `${environment.apiUrl}/publications`;
+    private  readonly apiUrl = `${environment.apiUrl}/publications`;
   
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
 
   ajouterPublication(publication: Publication, entrepriseId: number): Observable<Publication> {

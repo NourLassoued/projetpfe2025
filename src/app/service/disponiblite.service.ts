@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Disponibilite } from 'src/models/Disponibilite';
 import { environment } from '../environment';
 
@@ -8,14 +8,12 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class DisponibliteService {
-  ///private apiUrl = 'http://localhost:8088/nour/disponibilites'; 
-  private apiUrl = `${environment.apiUrl}/disponibilites`;
+  private readonly  apiUrl = `${environment.apiUrl}/disponibilites`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
  
   ajouterDisponibilite(id: number, disponibilite: Disponibilite): Observable<Disponibilite> {
-    console.log("📡 Données envoyées :", disponibilite); 
     return this.http.post<Disponibilite>(`${this.apiUrl}/${id}`, disponibilite);
   }
 

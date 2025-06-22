@@ -39,14 +39,14 @@ export class MesevolutionentrpriseComponent {
               
               }
               loadAvis(): void {
-                this.avisService.getAvisParprestatitr(this.userId).subscribe(
-                  (avis: Avis[]) => {
+                this.avisService.getAvisParprestatitr(this.userId).subscribe({
+                  next: (avis: Avis[]) => {
                     this.avisList = avis;
                   },
-                  (error) => {
+                  error: (error) => {
                     console.error('Erreur lors de la récupération des avis du prestataire:', error);
                   }
-                );
+                });
               }
     
             
@@ -95,16 +95,15 @@ export class MesevolutionentrpriseComponent {
       this.showDemandes = !this.showDemandes;
     }
     loadScoreMoyen(): void {
-      this.avisService.getScoreMoyen(this.userId).subscribe(
-        (score: number) => {
+      this.avisService.getScoreMoyen(this.userId).subscribe({
+        next: (score: number) => {
           this.scoreMoyen = score; 
-        
         },
-        (error) => {
+        error: (error) => {
           console.error('Erreur lors de la récupération du score moyen:', error);
           this.toastr.error('Impossible de charger le score moyen', 'Erreur');
         }
-      );
+      });
     }
     get paginatedAvis(): Avis[] {
       const start = (this.currentPage - 1) * this.itemsPerPage;

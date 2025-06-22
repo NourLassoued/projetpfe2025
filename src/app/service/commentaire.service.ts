@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommentaireService {
-    private apiUrl = `${environment.apiUrl}/commentaires`;
+    private readonly apiUrl = `${environment.apiUrl}/commentaires`;
   
-  constructor(private http: HttpClient) {}
+  constructor(private readonly  http: HttpClient) {}
 
 
   ajouterCommentaire(publicationId: number, utilisateurConnecteId: number, commentaire: Commentaire): Observable<Commentaire> {

@@ -5,7 +5,7 @@
     <div class="sidebar">
         <div id="profile-container">
             <div class="image-wrapper">
-                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
                 <div class="price">
                     {{ user?.tarifs }} dt
                 </div>
@@ -41,7 +41,7 @@
     <div class="notification-box" *ngIf="showNotification">
       <div class="user-card">
           <div class="profile-container">
-              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic">
           </div>
           <div class="user-info">
               <h3>{{ user?.nom || 'Utilisateur' }}</h3>

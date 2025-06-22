@@ -29,10 +29,10 @@ export class ReservationcoursComponent {
   
       services: any[] = [];
    
-        constructor(private fileService: FileService, 
-          private router: Router,
-       private toastr: ToastrService,
-          private reservationService: ReservationService) {}
+        constructor(private readonly fileService: FileService, 
+          private readonly  router: Router,
+       private readonly toastr: ToastrService,
+          private readonly  reservationService: ReservationService) {}
         ngOnInit(): void {
           this.loadUserData();
        
@@ -51,10 +51,7 @@ export class ReservationcoursComponent {
         
               this.getReservationsEnAttente();
         
-              if (this.user.image) {
-               
-                
-              } else {
+              if (!this.user.image) {
                 console.warn(" Aucune image trouvée dans le token !");
               }
             } catch (error) {
@@ -131,14 +128,12 @@ export class ReservationcoursComponent {
     
 annulerReservation(reservationId: number): void {
   if (this.userId !== null) {
-    this.reservationService.annulerReservation(reservationId, this.userId).subscribe(
-      (response) => {
-
+    this.reservationService.annulerReservation(reservationId, this.userId).subscribe({
+      next: (response) => {
         this.toastr.success('Réservation annulée avec succès');
         this.getReservationsEnAttente();
       },
-      (error) => {
-       
+      error: (error) => {
         if (error.status === 404) {
           this.toastr.error('Réservation introuvable');
         } else if (error.status === 400) {
@@ -149,7 +144,7 @@ annulerReservation(reservationId: number): void {
           this.toastr.error('Erreur lors de l\'annulation de la réservation');
         }
       }
-    );
+    });
   } else {
     console.error('ID utilisateur non trouvé');
     this.toastr.error('ID utilisateur non trouvé');

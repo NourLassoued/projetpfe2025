@@ -67,7 +67,7 @@ export class InscriptionComponent  implements OnInit{
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
+    if (input.files?.[0]) {
       this.selectedFile = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
@@ -82,18 +82,18 @@ export class InscriptionComponent  implements OnInit{
     onSubmit(): void {
       if (this.registerForm.valid) {
         if (this.selectedFile) {
-          this.fileService.uploadFile(this.selectedFile).subscribe(
-            (response: any) => {
+          this.fileService.uploadFile(this.selectedFile).subscribe({
+            next: (response: any) => {
               const filename = response.split(': ')[1];
               console.log(filename);
               this.registerForm.patchValue({ image: filename });
               this.register();
             },
-            error => {
+            error: (error) => {
               console.error('Error uploading file:', error);
            
             }
-          );
+          });
         } else {
           this.register();
         }
@@ -114,23 +114,18 @@ export class InscriptionComponent  implements OnInit{
       const formData = { ...this.registerForm.value };
     
      
-      this.authService.register(formData).subscribe(
-        (response: any) => {
-     
-          this.registerForm.reset();
-        
-          this.notificationMessage = "Vérifiez votre boîte email pour activer votre compte.";
-        
-          
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000); 
-        },
-        error => {
-         
-          console.error('Erreur lors de l\'inscription de l\'utilisateur :', error);
-        }
-      );
+    this.authService.register(formData).subscribe({
+      next: (response: any) => {
+        this.registerForm.reset();
+        this.notificationMessage = "Vérifiez votre boîte email pour activer votre compte.";
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000); 
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'inscription de l\'utilisateur :', error);
+      }
+    });
     }
     checkEmail() {
       this.utilisateurService.checkEmailExists(this.email).subscribe({

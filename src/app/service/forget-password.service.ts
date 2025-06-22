@@ -7,10 +7,9 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class ForgetPasswordService {
-  //private apiUrl = 'http://localhost:8088/nour/forgetPassword';
-   private apiUrl = `${environment.apiUrl}/forgetPassword`;
+   private  readonly apiUrl = `${environment.apiUrl}/forgetPassword`;
   
-  constructor(private http: HttpClient) {}
+  constructor(private readonly  http: HttpClient) {}
 
  
   verifyEmail(email: string): Observable<string> {

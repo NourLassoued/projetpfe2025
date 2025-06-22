@@ -91,13 +91,13 @@ export class ServiceComponent {
   }
 
   constructor(
-    private fileservice: FileService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-       private toastr: ToastrService,
-    private categorieService: CategorieService,
-    private fb: FormBuilder,
-    private service: ServiceeService) {
+    private readonly fileservice: FileService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly toastr: ToastrService,
+    private readonly categorieService: CategorieService,
+    private readonly fb: FormBuilder,
+    private readonly service: ServiceeService) {
 
 
   }
@@ -125,9 +125,7 @@ export class ServiceComponent {
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
-
-      }
+     
       else {
         console.warn("Aucune image trouvée dans le token !");
       }
@@ -248,15 +246,14 @@ export class ServiceComponent {
 
 
   getAllCategories(): void {
-    this.categorieService.getAllCategories().subscribe(
-      (categories: Categorie[]) => {
-
+    this.categorieService.getAllCategories().subscribe({
+      next: (categories: Categorie[]) => {
         this.categories = categories;
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des catégories:', error);
       }
-    );
+    });
   }
 
   onSubmit(): void {
@@ -289,7 +286,7 @@ export class ServiceComponent {
       this.service.addServiceToCategory(categorieId, formData).subscribe(
         (response) => {
           this.toastr.success("Service ajouté avec succès !");
-         
+
           this.getAllService();
           this.registerForm!.reset();
           this.showModal = false;
@@ -336,7 +333,7 @@ export class ServiceComponent {
           this.servicee = this.servicee.filter(service => service.idservice !== idservice);
           this.toastr.success('Service supprimé avec succès', 'Succès');
           this.getAllService();
-         
+
         },
         error: err => {
           console.error('Erreur lors de la suppression:', err);

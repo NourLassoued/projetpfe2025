@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { Client, IMessage, Stomp } from '@stomp/stompjs';  // Utilise @stomp/stompjs
+import { Client, IMessage } from '@stomp/stompjs';  // Utilise @stomp/stompjs
 
 import { AuthServiceService } from './auth-service.service';
 import { jwtDecode } from 'jwt-decode';
@@ -13,18 +13,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class WebsocketServiceService {  
-  private client!: Client;  // Déclare correctement le type de client STOMP
-  private notificationsSubject: Subject<string> = new Subject();
-  private serverUrl = 'http://localhost:8088/nour/ws';  // URL du serveur WebSocket
-  private messagesSubject: Subject<IMessage> = new Subject(); 
-  private userRole: string | null = null; // Récupère le rôle de l'utilisateur
+  private client!: Client;  
+  private  readonly notificationsSubject: Subject<string> = new Subject();
+  private readonly messagesSubject: Subject<IMessage> = new Subject(); 
+  private userRole: string | null = null; 
   
   user: any = null;
 
   private connected: boolean = false;
 
-  constructor(private authServiceService: AuthServiceService,
-    private http: HttpClient
+  constructor(private readonly authServiceService: AuthServiceService,
+    private readonly http: HttpClient
   ) {
   
   }
@@ -54,7 +53,6 @@ export class WebsocketServiceService {
       connectHeaders: {},
       reconnectDelay: 5000,
       onConnect: () => {
-        // 1 Abonnement aux notifications temps réel
         this.client.subscribe(`/topic/notifications/${userId}`, (message: IMessage) => {
           this.notificationsSubject.next(message.body);
         });
@@ -63,11 +61,9 @@ export class WebsocketServiceService {
         this.http.get<string[]>(`http://localhost:8088/nour/notifications/${userId}`)
        
           .subscribe(oldMessages => {
-            if (Array.isArray(oldMessages)) {
-              oldMessages.forEach(msg => this.notificationsSubject.next(msg));
-            } else {
-           
-            }
+          if (Array.isArray(oldMessages)) {
+            oldMessages.forEach(msg => this.notificationsSubject.next(msg));
+          }
           });
 
           this.client.subscribe(`/topic/messages/${userId}`, (message: IMessage) => {
@@ -94,7 +90,7 @@ export class WebsocketServiceService {
 
   
   disconnect(): void {
-    if (this.client && this.client.connected) {
+    if (this.client?.connected) {
       this.client.deactivate(); // Arrêter la connexion
      
     }
@@ -111,7 +107,7 @@ export class WebsocketServiceService {
     }
   }
   isConnected(): boolean {
-    return this.client && this.client.connected;
+    return this.client?.connected;
   }
   
   waitUntilConnected(callback: () => void): void {

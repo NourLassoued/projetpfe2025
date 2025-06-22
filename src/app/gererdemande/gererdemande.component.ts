@@ -135,8 +135,7 @@ prestataireImageUrls: string[] = [];
     
   
         if (this.user.image) {
-         
-          
+          // L'image de l'utilisateur est présente dans le token.
         } else {
           console.warn(" Aucune image trouvée dans le token !");
         }
@@ -156,8 +155,8 @@ prestataireImageUrls: string[] = [];
   }
   
   getImage(filename: string, index: number, type: 'service' | 'prestataire'  | 'utilisateur') {
-    this.fileService.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         
         if (type === 'service') {
@@ -165,22 +164,21 @@ prestataireImageUrls: string[] = [];
         } else if (type === 'prestataire') {
           this.prestataireImageUrls[index] = imageUrl; 
         }
-       else if (type === 'utilisateur') {
-        this.utilisateurs[index].image = imageUrl;  
-      
-      }
-    },
-      (error) => {
+        else if (type === 'utilisateur') {
+          this.utilisateurs[index].image = imageUrl;  
+        }
+      },
+      error: (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
       }
-    );
+    });
   }
   
   getDemandeDetails(id: number): void {
   
     
-    this.demandeservice.getDemandeById(id).subscribe(
-      (data) => {
+    this.demandeservice.getDemandeById(id).subscribe({
+      next: (data) => {
         this.demande = data;
   
         if (this.demande?.date) {
@@ -253,20 +251,19 @@ prestataireImageUrls: string[] = [];
   
         this.getPostulationsByDemande(id);
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération de la demande:', error);
       }
-    );
+    });
   }
   getPostulationsByDemande(idDemande: number): void {
-    this.demandeservice.getPostulationsByDemande(idDemande).subscribe(
-      (postulationsData) => {
+    this.demandeservice.getPostulationsByDemande(idDemande).subscribe({
+      next: (postulationsData) => {
         
         this.postulations = postulationsData;
 
         this.postulations.forEach((postulation, index) => {
           if (postulation.prestataire?.image) {
-          
             
             this.getImage(postulation.prestataire.image, index, 'prestataire');
           } else {
@@ -278,10 +275,10 @@ prestataireImageUrls: string[] = [];
 
        
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
       }
-    );
+    });
 }
 
  
@@ -342,33 +339,30 @@ updateDemande(): void {
   };
 
 
-  this.demandeservice.updateDemande(this.demandeId, this.demandeDetails).subscribe(
-    (response) => {
-      
+  this.demandeservice.updateDemande(this.demandeId, this.demandeDetails).subscribe({
+    next: (response) => {
       this.demande = response; 
       this.demandeDetails = { ...response }; 
       this.router.navigate(['/Mesdemandes']); 
     },
-    (error) => {
+    error: (error) => {
       console.error('Erreur lors de la mise à jour:', error);
-     
     }
-  );
+  });
 }
 
 
 
 
 deleteDemande(idDemande: number): void {
-  this.demandeservice.deleteDemande(idDemande).subscribe(
-    () => {
-     
+  this.demandeservice.deleteDemande(idDemande).subscribe({
+    next: () => {
       this.router.navigate(['/Mesdemandes']); 
     },
-    (error) => {
+    error: (error) => {
       console.error('Erreur lors de la suppression de la demande', error);
     }
-  );
+  });
 }
 
 goToProfile(prestataireId?: number, utilisateurId?: number, demandeId?: number) {

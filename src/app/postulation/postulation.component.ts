@@ -134,23 +134,21 @@ updatedPostulation: any = {};
         }
      
         submitUpdatePostulation(): void {
-          // Créez un nouvel objet avec uniquement le champ 'commentaire' à mettre à jour
           const updatedData = {
             commentaire: this.updatedPostulation.commentaire
           };
         
-          // Faites l'appel à l'API en envoyant uniquement le champ 'commentaire'
-          this.demandeservice.updatePostulation(this.updatedPostulation.id, updatedData).subscribe(
-            () => {
+          this.demandeservice.updatePostulation(this.updatedPostulation.id, updatedData).subscribe({
+            next: () => {
               this.isUpdateModalOpen = false;
-              this.loadPostulations(this.userId);  // Recharger les postulations après mise à jour
+              this.loadPostulations(this.userId);  
               this.toastr.success('Postulation mise à jour avec succès!', 'Succès');
             },
-            error => {
+            error: (error) => {
               console.error('Erreur lors de la mise à jour de la postulation', error);
               this.toastr.error('Une erreur est survenue lors de la mise à jour de la postulation', 'Erreur');
             }
-          );
+          });
         }
         
         

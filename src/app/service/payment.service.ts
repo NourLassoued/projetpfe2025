@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { TypeAbonnement } from 'src/models/TypeAbonnement';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = `${environment.apiUrl}/payment`;
-  constructor(private http: HttpClient) { }
+  private  readonly apiUrl = `${environment.apiUrl}/payment`;
+  constructor(private  readonly http: HttpClient) { }
 
   createPayment(montant: number, reservationId: number): Observable<any> {
     return this.http.post(

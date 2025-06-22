@@ -9,9 +9,9 @@ import { environment } from '../environment';
 export class CategorieService {
 
 
-  private apiUrl = `${environment.apiUrl}/categories`;
+  private readonly apiUrl = `${environment.apiUrl}/categories`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private  readonly http: HttpClient) {}
 
   getAllCategories(): Observable<Categorie[]> {
     return this.http.get<Categorie[]>(`${this.apiUrl}/getAllCategories`);

@@ -10,9 +10,9 @@ import { environment } from '../environment';
 export class MessageService {
   [x: string]: any;
  
-   private apiUrl = `${environment.apiUrl}/message`;
+   private  readonly apiUrl = `${environment.apiUrl}/message`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private  readonly http: HttpClient) {}
 
   
   sendMessage(message: Message): Observable<void> {

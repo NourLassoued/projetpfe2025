@@ -36,13 +36,13 @@ export class MespublicationComponent {
   currentPage: number = 1;
   itemsPerPage: number = 6;
   constructor(
-    private fileService: FileService,
-    private sanitizer: DomSanitizer,
-    private toastr: ToastrService,
-    private publicationService: PublicationService,
-    private router: Router,
-    private commaintreservice: CommentaireService,
-    private mmessageService: MessageService
+    private  readonly fileService: FileService,
+    private readonly sanitizer: DomSanitizer,
+    private readonly toastr: ToastrService,
+    private  readonly publicationService: PublicationService,
+    private readonly router: Router,
+    private readonly commaintreservice: CommentaireService,
+    private readonly mmessageService: MessageService
   ) { }
   ngOnInit(): void {
     this.loadUserData();
@@ -70,8 +70,7 @@ export class MespublicationComponent {
         } else {
           console.error('Erreur : ID utilisateur non défini!');
         }
-        if (this.userId) {
-        } else {
+        if (!this.userId) {
           console.error(' Erreur : ID utilisateur non défini !');
         }
       } catch (error) {
@@ -219,7 +218,7 @@ export class MespublicationComponent {
 
 
   envoyerMessage(): void {
-    if (!this.contenuMessage || !this.contenuMessage.trim()) {
+    if (!this.contenuMessage?.trim()) {
       this.toastr.error("Veuillez entrer un message avant de l'envoyer.", "Erreur");
       return;
     }

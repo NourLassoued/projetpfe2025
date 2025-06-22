@@ -5,7 +5,7 @@
       <div class="sidebar">
           <div id="profile-container">
               <div class="image-wrapper">
-                  <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+                  <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
                  
                   <!-- Bloc des informations de notation -->
                   <div class="rating-info">
@@ -38,7 +38,7 @@
       <div class="notification-box" *ngIf="showNotification">
         <div class="user-card">
             <div class="profile-container">
-                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Photo de profil" class="profile-pic">
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic">
             </div>
             <div class="user-info">
                 <h3>{{ user?.nom || 'Utilisateur' }}</h3>
@@ -68,7 +68,8 @@
       <div class="container-profile">
           <!-- Nom et vérifications -->
           <div class="section">
-              <label>{{ user?.nomEntreprise }}</label>
+              <label for="nomEntreprise">{{ user?.nomEntreprise }}</label>
+              <input id="nomEntreprise" type="text" [value]="user?.nomEntreprise" readonly style="display:none;" />
               <div class="verification-container">
                   <span class="verification-item">
                       <i class="fa-solid fa-circle-check"></i>Entreprise vérifiée
@@ -94,8 +95,8 @@
           <!-- Compétences -->
           
           <div class="section">
-            <label><i class="fa-solid fa-briefcase"></i> Notre service</label>
-              <div class="competences-container">
+            <label for="servicesOfferts"><i class="fa-solid fa-briefcase"></i> Notre service</label>
+              <div class="competences-container" id="servicesOfferts">
                   <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
                       <p *ngIf="servicee?.nomservice">
                           {{ servicee.nomservice }}
@@ -116,7 +117,7 @@
        <!-- Avis clients -->
 <div class="content">
     <div class="section">
-      <label class="sectionn">Avis clients</label>
+      <span class="sectionn">Avis clients</span>
   
       <!-- Note moyenne -->
       <div class="rating">
@@ -138,10 +139,10 @@
           <img
             *ngIf="avis.utilisateur?.image"
             [src]="avis.utilisateur?.image"
-            alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
+            alt="{{ avis.utilisateur?.nom || 'Client anonyme' }}"
             class="user-image"
           />
-          <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+          <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
   
           <div class="review-header">
             <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
@@ -170,5 +171,6 @@
   </div>
 </div>
     <!-- Pied de page -->
-    <app-footer></app-footer>
+  
     </body>
+      <app-footer></app-footer>

@@ -7,7 +7,7 @@ import { AvisService } from '../service/avis.service';
 import { Avis } from 'src/models/Avis';
 import { fr } from 'date-fns/locale'; 
 
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 @Component({
   selector: 'app-profiletrprise',
   templateUrl: './profiletrprise.component.html',
@@ -25,11 +25,11 @@ export class ProfiletrpriseComponent {
   
    user1: Utilisateur = { servicesOfferts: [] };
      
-    constructor(private fileService: FileService, 
+    constructor(private readonly  fileService: FileService, 
     
 
-          private cdr: ChangeDetectorRef,
-     private avisService: AvisService ,){}
+          private  readonly cdr: ChangeDetectorRef,
+     private readonly  avisService: AvisService ,){}
     
      
     ngOnInit(): void {
@@ -95,9 +95,7 @@ export class ProfiletrpriseComponent {
         if (this.user.image) {
           this.loadProfileImage(this.user.image);
         } 
-        if (this.user.telephoneNumber) {
        
-        }
         else {
           console.warn("Aucune image trouvée dans le token !");
         }
@@ -120,14 +118,14 @@ export class ProfiletrpriseComponent {
     }
     
   loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
-    this.fileService.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
-  
+
         if (type === 'utilisateur') {
 
           const utilisateur = this.avisList?.[index]?.utilisateur;
-  
+
           if (utilisateur) {
             utilisateur.image = imageUrl;
           } else {
@@ -137,15 +135,15 @@ export class ProfiletrpriseComponent {
           this.profileImageUrl = imageUrl;
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur de chargement de l\'image', error);
       }
-    );
+    });
   }
   
   loadAvis(userId: number): void {
-    this.avisService.getAvisParprestatitr(userId).subscribe(
-      (avisdata) => {
+    this.avisService.getAvisParprestatitr(userId).subscribe({
+      next: (avisdata) => {
         this.avisList = avisdata;
   
         this.avisList?.forEach((avis, index) => {
@@ -159,10 +157,10 @@ export class ProfiletrpriseComponent {
         });
         this.cdr.detectChanges();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des avis:', error);
       }
-    );
+    });
   }
   
   

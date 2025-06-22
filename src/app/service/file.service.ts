@@ -8,13 +8,13 @@ import { environment } from '../environment';
 })
 export class FileService {
 
-  private profileImageSubject = new BehaviorSubject<string | null>(null);
+  private readonly profileImageSubject = new BehaviorSubject<string | null>(null);
   profileImage$ = this.profileImageSubject.asObservable();
 
-   private apiUrl = `${environment.apiUrl}/api/v1/auth`;
+   private  readonly apiUrl = `${environment.apiUrl}/api/v1/auth`;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   uploadFile(file: File): Observable<string> {
     const formData = new FormData();

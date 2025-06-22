@@ -9,7 +9,7 @@
             <ul>
                 <ul>
                     <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
-                    <li routerLink="/Mesdemandes" (click)="toggleDemandes()">
+                    <li routerLink="/Mesdemandes" (click)="toggleDemandes()" (keydown)="toggleDemandes()">
                         📋 Mes demandes
                         <span *ngIf="showDemandes">
                             <i class="fa fa-chevron-down"></i> <!-- Icône flèche vers le bas -->
@@ -44,9 +44,8 @@
       
               <div class="card-body reservation-item">
                 
-                <!-- Partie gauche : Détails de la réservation -->
                 <div class="reservation-details">
-                    <img *ngIf="serviceImageUrls[i]" [src]="serviceImageUrls[i]" alt="Image du service" class="service-image">
+                    <img *ngIf="serviceImageUrls[i]" [src]="serviceImageUrls[i]" alt="" class="service-image">
                   <h2>🛠 Service: {{ reservation.demande?.servicee?.nomservice }}</h2>
                   <p>📍 {{ reservation.demande?.adressedemande?.governoate }}</p>
                   <p>📅 {{ reservation.demande?.date | date: 'dd MMM yyyy' }} - ⏰ {{ reservation.demande?.date | date: 'HH:mm' }}</p>
@@ -61,9 +60,10 @@
                   <h3>👤 Prestataire</h3>
                   <img *ngIf="prestataireImageUrls[i]"
                        [src]="prestataireImageUrls[i]"
-                       alt="Image du prestataire"
+                       alt=""
                        class="profile-pic"
-                       (click)="utilisateurId ? goToProfile(reservation.prestataire?.idUtilisateur, utilisateurId, reservation.demandeId) : null">
+                       (click)="utilisateurId ? goToProfile(reservation.prestataire?.idUtilisateur, utilisateurId, reservation.demandeId) : null"
+                       (keydown)="utilisateurId ? goToProfile(reservation.prestataire?.idUtilisateur, utilisateurId, reservation.demandeId) : null">
                   <p><strong>{{ reservation.prestataire?.nom }}</strong></p>
                   <p> 📞 Rappeler {{ reservation.prestataire?.telephoneNumber }}</p>
       

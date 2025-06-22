@@ -35,11 +35,11 @@ export class HistoriqueComponent {
 
   services: any[] = [];
 
-  constructor(private fileService: FileService,
-    private router: Router,
-    private toastr: ToastrService,
-    private reservationService: ReservationService,
-    private utilisateurservice: UtilisateurService) { }
+  constructor(private  readonly fileService: FileService,
+    private  readonly router: Router,
+    private  readonly toastr: ToastrService,
+    private readonly reservationService: ReservationService,
+    private readonly utilisateurservice: UtilisateurService) { }
   ngOnInit(): void {
     this.loadUserData();
 

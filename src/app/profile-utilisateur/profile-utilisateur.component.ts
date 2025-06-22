@@ -8,7 +8,7 @@ import { AvisService } from '../service/avis.service';
 import { fr } from 'date-fns/locale'; 
 import { Avis } from 'src/models/Avis';
 
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 
 @Component({
   selector: 'app-profile-utilisateur',
@@ -28,10 +28,10 @@ avisParPage: number = 3;
  avisList: Avis[] = []; 
  user1: Utilisateur = { servicesOfferts: [] };
  userId: number | undefined;
-  constructor(private fileService: FileService, 
+  constructor(private  readonly fileService: FileService, 
  
-    private cdr: ChangeDetectorRef,
-      private avisService: AvisService ,
+    private  readonly cdr: ChangeDetectorRef,
+      private readonly avisService: AvisService ,
     ){}
   
    
@@ -61,7 +61,7 @@ avisParPage: number = 3;
           jour: dispo.jour,
           heureDebut: dispo.heureDebut,
           heureFin: dispo.heureFin
-        })) || [];
+        })) ?? [];
         
         
       } else {
@@ -153,14 +153,14 @@ loadUserData(): void {
 
   }
   loadProfileImage(filename: string, index: number = 0, type: 'utilisateur' | 'user' = 'user'): void {
-    this.fileService.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
-  
+
         if (type === 'utilisateur') {
 
           const utilisateur = this.avisList?.[index]?.utilisateur;
-  
+
           if (utilisateur) {
             utilisateur.image = imageUrl;
           } else {
@@ -170,19 +170,18 @@ loadUserData(): void {
           this.profileImageUrl = imageUrl;
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur de chargement de l\'image', error);
       }
-    );
+    });
   }
   
   loadAvis(userId: number): void {
-    this.avisService.getAvisParprestatitr(userId).subscribe(
-      (avisdata) => {
+    this.avisService.getAvisParprestatitr(userId).subscribe({
+      next: (avisdata) => {
         this.avisList = avisdata;
   
         this.avisList?.forEach((avis, index) => {
-          // Vérification que l'utilisateur et l'image existent
           if (avis.utilisateur?.image) {
 
             this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
@@ -195,10 +194,10 @@ loadUserData(): void {
         });
         this.cdr.detectChanges();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des avis:', error);
       }
-    );
+    });
   }
   
   

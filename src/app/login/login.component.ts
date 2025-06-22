@@ -82,11 +82,10 @@ export class LoginComponent {
   }
 
   authenticate(): void {
-    this.authService.authenticate(this.loginForm.value.email, this.loginForm.value.password).subscribe(
-      response => {
-        if (response && response.access_token) {
+    this.authService.authenticate(this.loginForm.value.email, this.loginForm.value.password).subscribe({
+      next: (response) => {
+        if (response?.access_token) {
           localStorage.setItem("accessToken", response.access_token);
-
 
           const decodedToken: any = jwtDecode(response.access_token);
           if (response.message) {
@@ -100,34 +99,41 @@ export class LoginComponent {
             }
           }
 
-
-          if (decodedToken.role === 'PRESTATAIRE') {
-            this.router.navigate(['/Compteprestaitre']);
-          } else if (decodedToken.role === 'PARTICULIER') {
-            this.router.navigate(['/Compteparticulier']);
-          } else if (decodedToken.role === 'ADMINISTRATEUR') {
-            this.router.navigate(['/Admindashboard']);
-          } else if (decodedToken.role === 'ENTREPRISE') {
-            this.router.navigate(['/Comptentreprise']);
-          }
-
-          else {
-            this.router.navigate(['/Front']);
-          }
+          this.navigateByRole(decodedToken.role);
 
         } else {
           this.toastr.error("Vérifiez votre email ou mot de passe ❌", "Erreur");
         }
       },
-      error => {
+      error: (error) => {
         if (error.status === 403) {
-          this.toastr.warning(error.error || "Email ou mot de passe incorrect !", "Attention");
+          this.toastr.warning(error.error ?? "Email ou mot de passe incorrect !", "Attention");
         } else {
           this.toastr.error("Une erreur est survenue lors de la connexion.", "Erreur");
         }
         console.error('Erreur:', error);
       }
-    );
+    });
+  }
+
+  private navigateByRole(role: string): void {
+    switch (role) {
+      case 'PRESTATAIRE':
+        this.router.navigate(['/Compteprestaitre']);
+        break;
+      case 'PARTICULIER':
+        this.router.navigate(['/Compteparticulier']);
+        break;
+      case 'ADMINISTRATEUR':
+        this.router.navigate(['/Admindashboard']);
+        break;
+      case 'ENTREPRISE':
+        this.router.navigate(['/Comptentreprise']);
+        break;
+      default:
+        this.router.navigate(['/Front']);
+        break;
+    }
   }
 
   getImageUrl(filename: string): string {

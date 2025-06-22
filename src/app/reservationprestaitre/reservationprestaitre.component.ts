@@ -15,65 +15,62 @@ export class ReservationprestaitreComponent {
   userId!: number;
   user: any = null;
   constructor(
-    private reservationservice:ReservationService,
-  private router:
-         Router,
-          private toastr: ToastrService){}
-         
-          ngOnInit(): void {
-            this.loadUserData();
-            this.loadReservations(this.userId);
-          }
+    private readonly reservationservice: ReservationService,
+    private readonly router:
+      Router,
+    private readonly toastr: ToastrService) { }
 
-              loadUserData(): void {
-                    const token = localStorage.getItem('accessToken');
-                  
-                    if (token) {
-                      try {
-                        const decodedToken: any = jwtDecode(token);
-                        this.user = decodedToken;
-                        this.userId = decodedToken.id;
-                      
-                  
-                       
-                        
-                        if (this.userId) {
-                         
-                        } else {
-                          console.error("Erreur : ID utilisateur non défini !");
-                        }
-                      } catch (error) {
-                        console.error('Erreur lors du décodage du token:', error);
-                      }
-                    } else {
-                      console.warn("Aucun token trouvé dans localStorage !");
-                    }
-                  }
-                  annulerReservation(reservationId: number): void {
-                    if (confirm('Voulez-vous vraiment annuler cette réservation ?')) {
-                      this.reservationservice.annulerReservation(reservationId, this.userId).subscribe(() => {
-                        this.toastr.success('Réservation annulée avec succès !');
-                        this.loadReservations(this.userId); // Recharger les données
-                      }, error => {
-                        this.toastr.error('Erreur lors de l\'annulation');
-                        console.error(error);
-                      });
-                    }
-                  }
-                
-        
-                  loadReservations(prestataireId: number): void {
-                    this.reservationservice.getReservationsConfirmées(prestataireId).subscribe(
-                      (data: Reservation[]) => {
-                        this.reservations = data; // Stocker les réservations confirmées
-                        console.log('Réservations confirmées:', this.reservations); // Afficher dans la console pour vérifier
-                      },
-                      (error) => {
-                        console.error('Erreur lors de la récupération des réservations:', error);
-                        this.toastr.error('Erreur lors de la récupération des réservations');
-                      }
-                    );
-                  }
+  ngOnInit(): void {
+    this.loadUserData();
+    this.loadReservations(this.userId);
+  }
+
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        this.user = decodedToken;
+        this.userId = decodedToken.id;
+
+
+
+
+        if (!this.userId) {
+          console.error("Erreur : ID utilisateur non défini !");
+        }
+      } catch (error) {
+        console.error('Erreur lors du décodage du token:', error);
+      }
+    } else {
+      console.warn("Aucun token trouvé dans localStorage !");
+    }
+  }
+  annulerReservation(reservationId: number): void {
+    if (confirm('Voulez-vous vraiment annuler cette réservation ?')) {
+      this.reservationservice.annulerReservation(reservationId, this.userId).subscribe(() => {
+        this.toastr.success('Réservation annulée avec succès !');
+        this.loadReservations(this.userId);
+      }, error => {
+        this.toastr.error('Erreur lors de l\'annulation');
+        console.error(error);
+      });
+    }
+  }
+
+
+  loadReservations(prestataireId: number): void {
+    this.reservationservice.getReservationsConfirmées(prestataireId).subscribe({
+      next: (data: Reservation[]) => {
+        this.reservations = data;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des réservations:', error);
+        this.toastr.error('Erreur lors de la récupération des réservations');
+      }
+    });
+  }
 
 
 
@@ -109,9 +106,9 @@ export class ReservationprestaitreComponent {
 
 
   logout(): void {
-  
+
     localStorage.removeItem('accessToken')
-    this.router.navigate(['/Front']); 
+    this.router.navigate(['/Front']);
   }
 
 

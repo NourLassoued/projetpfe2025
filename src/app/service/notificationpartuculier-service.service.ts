@@ -8,11 +8,11 @@ import { Publication } from 'src/models/Publication';
   providedIn: 'root'
 })
 export class NotificationpartuculierServiceService {
-   private apiUrl = `${environment.apiUrl}/notification`;
+   private  readonly apiUrl = `${environment.apiUrl}/notification`;
 
  
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly  http: HttpClient) { }
 
   markPublicationAsSeen(userId: number, publicationId: number): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/markAsSeen/${userId}/${publicationId}`, {});

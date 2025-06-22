@@ -66,16 +66,16 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
   newMessageCount: number = 0;
 
 
-  constructor(private fileService: FileService,
-    private sanitizer: DomSanitizer,
-    private authServiceService: AuthServiceService,
-    private categorieService: CategorieService, private file: FileService,
-    private service: ServiceeService,
-    private router: Router,
-    private websocketService: WebsocketServiceService,
-    private cdr: ChangeDetectorRef,
-    private messageservice: MessageService,
-    private notificationserviceparticulier: NotificationpartuculierServiceService
+  constructor(private readonly fileService: FileService,
+    private  readonly sanitizer: DomSanitizer,
+    private readonly authServiceService: AuthServiceService,
+    private readonly categorieService: CategorieService, private  readonly file: FileService,
+    private readonly  service: ServiceeService,
+    private readonly router: Router,
+    private readonly websocketService: WebsocketServiceService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly messageservice: MessageService,
+    private readonly notificationserviceparticulier: NotificationpartuculierServiceService
 
   ) { }
   ngOnDestroy(): void {
@@ -116,17 +116,15 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     this.loadNotifications();
     if (this.user) {
 
-      this.messageservice.getUndeliveredMessages(this.user.id).subscribe(
-        (messages) => {
+      this.messageservice.getUndeliveredMessages(this.user.id).subscribe({
+        next: (messages) => {
           this.newMessageCount = messages.length;
           this.newMessage = true;
-
-
         },
-        (err) => {
+        error: (err) => {
           console.error("Erreur récupération des messages non délivrés :", err);
         }
-      );
+      });
     }
     this.websocketService.getMessages().subscribe((message) => {
       this.newMessageCount++;
@@ -209,15 +207,14 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     }
 
   
-    this.notificationserviceparticulier.markPublicationAsSeen(userId, publicationId).subscribe(
-      () => {
-      
+    this.notificationserviceparticulier.markPublicationAsSeen(userId, publicationId).subscribe({
+      next: () => {
         this.router.navigate(['/ConsulterEntreprise', entrepriseId]);
       },
-      (error) => {
+      error: (error) => {
         console.error("Erreur lors du marquage de la publication comme lue :", error);
       }
-    );
+    });
   }
 
 
@@ -265,26 +262,21 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
 
 
   redirectBasedOnRole(): void {
-    if (this.userRole === 'prestataire') {
+    if (this.userRole === 'prestataire' || this.userRole === 'entreprise') {
       this.router.navigate(['/Compteprestaitre']);
-    } else if (this.userRole === 'entreprise') {
-      this.router.navigate(['/Compteprestaitre']);
-    } else {
-
     }
   }
 
   getImage(filename: string, index: number) {
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-
       },
-      (error) => {
-
+      error: (error) => {
+        // handle error if needed
       }
-    );
+    });
   }
 
   loadUserData(): void {
@@ -295,8 +287,8 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
         const decodedToken: any = jwtDecode(token);
         this.user = decodedToken;
 
-        if (this.user && this.user.id) {
-        
+        if (this.user?.id) {
+          // L'utilisateur a un ID, aucune action supplémentaire requise ici.
         } else {
           console.warn('L\'ID de l\'utilisateur est introuvable dans le token');
         }
@@ -349,10 +341,9 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
 
 
   getAllCategories() {
-    this.categorieService.getAllCategories().subscribe(
-      (data) => {
+    this.categorieService.getAllCategories().subscribe({
+      next: (data) => {
         this.filteredCategories = data;
-
 
         if (this.filteredCategories.length === 0) {
           console.warn('Aucune catégorie trouvée');
@@ -361,10 +352,10 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
           this.getImage(category.imageCategorie, index);
         });
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des catégories', error);
       }
-    );
+    });
   }
   onSearch(): void {
 
@@ -372,17 +363,14 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     if (this.searchQuery.trim() === '') {
       this.getAllCategories();
     } else {
-      this.categorieService.searchCategories(this.searchQuery).subscribe(
-        (data) => {
-
-
+      this.categorieService.searchCategories(this.searchQuery).subscribe({
+        next: (data) => {
           this.filteredCategories = data;
-
         },
-        (error) => {
+        error: (error) => {
           console.error('Erreur lors de la recherche des catégories', error);
         }
-      );
+      });
     }
   }
   filterServices() {
@@ -392,14 +380,14 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     } else {
 
       this.filteredServices = this.services.filter(service =>
-        service.nomservice && service.nomservice.toLowerCase().includes(this.searchQuery.toLowerCase())
+        service.nomservice?.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }
   }
 
 
   selectCategory(categoryName: string) {
-    this.selectedCategory = this.filteredCategories.find(category => category.nom === categoryName) || null;
+    this.selectedCategory = this.filteredCategories.find(category => category.nom === categoryName) ?? null;
 
     if (this.selectedCategory) {
 
@@ -411,19 +399,19 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     }
   }
   getAllServicesByCategorie(categorieId: number) {
-    this.service.getAllServicesByCategorie(categorieId).subscribe(
-      (services: Servicee[]) => {
+    this.service.getAllServicesByCategorie(categorieId).subscribe({
+      next: (services: Servicee[]) => {
         this.services = services;
         this.services.forEach((service, index) => {
           this.getImage(service.imageService, index);
         });
         this.filterServices();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des services:', error);
 
       }
-    );
+    });
   }
 
 

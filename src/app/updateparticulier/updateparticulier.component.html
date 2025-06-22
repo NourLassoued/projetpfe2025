@@ -9,7 +9,11 @@
         <li routerLink="/Mesdemandes">📋 Mes demandes</li>
         <li routerLink="/Reservationcours">📅 Réservations en cours</li>
         <li routerLink="/Historique">📜  Mon historique</li>
-        <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
+        <li>
+          <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0" style="background:none;border:none;padding:0;cursor:pointer;">
+            🚪 Se déconnecter
+          </button>
+        </li>
       </ul>
     </aside>
 
@@ -17,8 +21,8 @@
     <div class="content">
       <div class="profile-section">
         <div id="profile-container">
-          <div class="image-wrapper" (click)="triggerFileInput()">
-            <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="Photo de profil" id="profile-icon"/>
+          <div class="image-wrapper" (click)="triggerFileInput()" (keydown)="triggerFileInput()">
+            <img *ngIf="profileImageUrl; else defaultIcon" [src]="profileImageUrl" alt="" id="profile-icon"/>
             <ng-template #defaultIcon>
               <i class="fas fa-user default-icon"></i>
             </ng-template>
@@ -30,11 +34,11 @@
 
           
           <div class="section">
-            <label>Nom</label>
+            <label for="nom-input">Nom</label>
             <div class="competence">
               <ng-container *ngIf="!isEditing['nom'] else 
                                                             editNom">
-                <p (click)="startEditing('nom', user?.nom)">
+                <p (click)="startEditing('nom', user?.nom)" (keydown)="startEditing('nom', user?.nom)">
                   {{ user?.nom || 'Aucune nom disponible.' }}
                 </p>
                 <button class="edit-btn" (click)="startEditing('nom', user?.nom)">✏️</button>
@@ -42,7 +46,7 @@
         
               <ng-template #editNom>
                 <div class="edit-container">
-                  <input  [(ngModel)]="editedValues['nom']">
+                  <input id="nom-input" [(ngModel)]="editedValues['nom']">
                   <button class="savee-btn" (click)="saveChanges('nom')">✔️</button>
                 </div>
               </ng-template>
@@ -53,10 +57,10 @@
         
         <div class="content">
         <div class="section">
-          <label>email</label>
+          <label for="email-input">email</label>
           <div class="competence">
             <ng-container *ngIf="!isEditing['email']   else editEmail">
-              <p (click)="startEditing('email', user?.email)">
+              <p (click)="startEditing('email', user?.email)" (keydown)="startEditing('email', user?.email)">
                 {{ user?.email || 'Aucune email disponible.' }}
               </p>
               <button class="edit-btn" (click)="startEditing('email', user?.email)">✏️</button>
@@ -64,7 +68,7 @@
       
             <ng-template #editEmail>
               <div class="edit-container">
-                <input type="text"  [(ngModel)]="editedValues['email']">
+                <input id="email-input" type="text"  [(ngModel)]="editedValues['email']">
                 <button class="savee-btn" (click)="saveChanges('email')">✔️</button>
               </div>
               <div class="error" *ngIf="emailError">
@@ -77,10 +81,10 @@
       
         <div class="content">
           <div class="section">
-              <label>📞 Téléphone</label>
+              <label for="telephone-input">📞 Téléphone</label>
               <div class="competence">
                   <ng-container *ngIf="!isEditing['telephoneNumber']; else editTelephone">
-                      <p (click)="startEditing('telephoneNumber', user?.telephoneNumber)">
+                      <p (click)="startEditing('telephoneNumber', user?.telephoneNumber)" (keydown)="startEditing('telephoneNumber', user?.telephoneNumber)">
                           {{ user?.telephoneNumber || 'Aucun numéro disponible.' }}
                       </p>
                       <button class="edit-btn" (click)="startEditing('telephoneNumber', user?.telephoneNumber)">✏️</button>
@@ -88,7 +92,7 @@
               
                   <ng-template #editTelephone>
                       <div class="edit-container">
-                          <input type="text" [(ngModel)]="editedValues['telephoneNumber']">
+                          <input id="telephone-input" type="text" [(ngModel)]="editedValues['telephoneNumber']">
                           <button class="savee-btn" (click)="saveChanges('telephoneNumber')">✔️</button>
                       </div>
                   </ng-template>
@@ -99,10 +103,10 @@
       </div>
       <div class="content">
         <div class="section">
-          <label>📍Adresse</label>
+          <label for="adresse-select">📍Adresse</label>
           <div class="competence">
             <ng-container *ngIf="!isEditing['adresse']; else editAdresse">
-              <p (click)="startEditing('adresse', user?.adresse)">
+              <p (click)="startEditing('adresse', user?.adresse)" (keydown)="startEditing('adresse', user?.adresse)">
                 {{ user?.adresse?.governoate || 'Adresse non renseignée.' }}
               </p>
               <button class="edit-btn" (click)="startEditing('adresse', user?.adresse)">✏️</button>
@@ -110,7 +114,7 @@
       
             <ng-template #editAdresse>
               <div class="edit-container">
-                <select [(ngModel)]="selectedAdresse">
+                <select id="adresse-select" [(ngModel)]="selectedAdresse">
                   <option *ngFor="let adresse of adresses" [ngValue]="adresse">
                     {{ adresse.governoate }} 
                   </option>
@@ -123,7 +127,7 @@
       </div>
       <div class="content">
         <div class="section">
-          <label>🔒 Mot de passe</label>
+          <label for="password-input">🔒 Mot de passe</label>
           <div class="competence">
             <ng-container *ngIf="!isEditing['password']; else editPassword">
               <p>********</p>
@@ -132,7 +136,7 @@
       
             <ng-template #editPassword>
               <div class="edit-containerr">
-                <input type="password"  class="password-input" placeholder="Nouveau mot de passe" [(ngModel)]="editedValues['password']">
+                <input id="password-input" type="password"  class="password-input" placeholder="Nouveau mot de passe" [(ngModel)]="editedValues['password']">
                 <input type="password"  class="password-input" placeholder="Confirmer mot de passe" [(ngModel)]="editedValues['confirmPassword']">
                 <button class="save-btnpasword" (click)="saveChanges('password')">✔️</button>
               </div>

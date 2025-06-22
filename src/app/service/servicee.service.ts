@@ -9,8 +9,8 @@ import { environment } from '../environment';
 })
 export class ServiceeService {
 
- private apiUrl = `${environment.apiUrl}/services`;
-  constructor(private http: HttpClient) {}
+ private  readonly apiUrl = `${environment.apiUrl}/services`;
+  constructor(private readonly http: HttpClient) {}
 
 
   getAllServices(): Observable<Servicee[]> {

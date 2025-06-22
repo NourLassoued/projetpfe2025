@@ -49,7 +49,7 @@ width:2500px;
 
 color:white;
   transform: scale(1.05); 
-  background: #007bff;
+ 
 }
 
 
@@ -72,14 +72,14 @@ app-navbarcompte {
   
   position: fixed;
   background-color: #fbf5f5;
-  width: 200px; /* Largeur de la barre latérale */
-  height: 100vh; /* 100% de la hauteur de la fenêtre */
-  position: fixed; /* La rend fixe */
+  width: 200px; 
+  height: 100vh; 
+
  
   
 margin-top: 70px;
   
-  overflow-y: auto; /* Ajoute un défilement si le contenu est trop long */
+  overflow-y: auto; 
 
 }
 .sidebar ul {
@@ -122,17 +122,14 @@ h1 {
   justify-content: space-between;
   align-items: center;
 }
-
 .action-buttons {
+  margin-top: 15px;
   display: flex;
-  gap: 10px;
+  gap: 10px; 
+  flex-wrap: wrap; 
 }
 
-.btn {
-  padding: 5px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+
 
 .rappel {
   background-color: #4CAF50;
@@ -175,12 +172,7 @@ h1 {
 .delete mat-icon {
   margin-right: 5px;
 }
-.action-buttons {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px; /* <-- C'est ça qui ajoute l'espace entre les deux boutons */
-  flex-wrap: wrap; /* Pour qu'ils se déplacent en ligne suivante si l'écran est petit */
-}
+
 /* Conteneur de la carte */
 .card.task-card {
   margin-bottom: 20px;

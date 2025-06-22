@@ -8,10 +8,10 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class AdresseService {
-  private apiUrl = `${environment.apiUrl}/adresses`;
+  private  readonly apiUrl = `${environment.apiUrl}/adresses`;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private  readonly http: HttpClient) {}
 
 
   getAllAdresses(): Observable<Adresse[]> {

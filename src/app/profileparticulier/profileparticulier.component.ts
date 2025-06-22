@@ -12,7 +12,7 @@ export class ProfileparticulierComponent implements  OnInit{
  profileImage: string | null = null; 
  user: any;
   profileImageUrl: SafeUrl | null = null; 
-constructor(private fileService: FileService, private sanitizer: DomSanitizer) {}
+constructor(private readonly fileService: FileService, private  readonly sanitizer: DomSanitizer) {}
   
    
   ngOnInit(): void {

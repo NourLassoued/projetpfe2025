@@ -47,8 +47,7 @@ export class MesdemandesComponent {
           
       
             if (this.user.image) {
-             
-              
+              // L'utilisateur a une image, vous pouvez traiter ici si nécessaire
             } else {
               console.warn(" Aucune image trouvée dans le token !");
             }
@@ -66,22 +65,21 @@ export class MesdemandesComponent {
       
       getImage(filename: string, index: number) {
         const encodedFilename = encodeURIComponent(filename);
-        this.fileService.getImage(encodedFilename).subscribe(
-          (imageBlob) => {
+        this.fileService.getImage(encodedFilename).subscribe({
+          next: (imageBlob) => {
             const imageUrl = URL.createObjectURL(imageBlob);
             this.imageUrls[index] = imageUrl; 
           },
-          (error) => {
+          error: (error) => {
             console.error('Erreur lors du chargement de l\'image', error);
-            
           }
-        );
+        });
       }
       
       getDemandesByUserId() {
         if (this.userId) {
-          this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe(
-            (data: Demande[]) => {
+          this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe({
+            next: (data: Demande[]) => {
               this.demandes = data;
               
               this.demandes.forEach((demande, index) => {
@@ -94,27 +92,26 @@ export class MesdemandesComponent {
               }
               });
             },
-            (error) => {
+            error: (error) => {
               console.error('Erreur lors de la récupération des demandes', error);
             }
-          );
+          });
         }
       }
       getPostulationsByDemande(idDemande: number): void {
-        this.demandeService.getPostulationsByDemande(idDemande).subscribe(
-            (postulationsData) => {
+        this.demandeService.getPostulationsByDemande(idDemande).subscribe({
+            next: (postulationsData) => {
                 this.demandesAvecPostulations[idDemande] = postulationsData.length; 
             },
-            (error) => {
+            error: (error) => {
                 console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
             }
-        );
+        });
     }
     
       gererDemande(demande: any) {
       
-        if (!demande || !demande.idDemande) {
-          
+        if (!demande?.idDemande) {
             return;
         }
         this.router.navigate(['/gerer-demande'], { queryParams: { id: demande.idDemande } });

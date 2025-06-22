@@ -57,24 +57,20 @@ body {
     color: white;
 }
 .content {
-    flex-grow: 1;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+    
+    background: rgb(255, 255, 255);
+  
+    border-radius: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-top: 35px;
     width: 800px;
     margin-left: 40px;
+ padding: 20px;
+    margin-bottom: 10px;
     
 }
-.competences-container {
-    display: flex;
-    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
-    gap: 10px; /* Espace entre les compétences */
-   
-  
-    
-}
+
+
 .competences-container {
     display: flex;
     flex-wrap: wrap; /* Permet de gérer les éléments dans plusieurs lignes si nécessaire */
@@ -144,12 +140,7 @@ body {
     margin-top: 10px;
     text-align: center;
    }
-   .competences-container {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 10px;
-    margin-left: 50px; 
-  }
+
   
 
 
@@ -282,10 +273,7 @@ body {
 .review-text {
     margin-top: 10px;
 }
-.rating {
-    font-size: 18px;
-    font-weight: bold;
-}
+
  .user-image {
     width: 50px;
     height: 50px;
@@ -361,9 +349,11 @@ body {
   button i {
     margin-right: 8px; /* Espacement entre l'icône et le texte */
     font-size: 18px; /* Taille de l'icône */
-  }.notification-box {
+  }
+  .notification-box {
     position: fixed;
     top: 370px;
+    margin-left: 420px;
 
     transform: translateX(-50%);
     background: #ffffff;
@@ -446,9 +436,7 @@ body {
     
 }
 
-.notification-box {
-    margin-left: 420px;
-}
+
 
 /* Style du bouton Fermer */
 .notification-box button {
@@ -507,18 +495,7 @@ button.close-btn {
     margin: 15px auto 0;
     transition: background 0.2s;
 }
-.content {
-    
-    background: rgb(255, 255, 255);
-  
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 35px;
-    width: 800px;
 
-    margin-bottom: 10px;
-    
-}
 .navigation-buttons {
     display: flex;
     justify-content: center;

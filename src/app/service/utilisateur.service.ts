@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Avis } from 'src/models/Avis';
 import { Demande } from 'src/models/Demande';
@@ -13,8 +13,8 @@ import { environment } from '../environment';
 })
 export class UtilisateurService {
 
-   private apiUrl = `${environment.apiUrl}/utilisateurss`;
-  constructor(private http: HttpClient) {}
+   private  readonly apiUrl = `${environment.apiUrl}/utilisateurss`;
+  constructor(private readonly http: HttpClient) {}
 
 
   ajouterUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
