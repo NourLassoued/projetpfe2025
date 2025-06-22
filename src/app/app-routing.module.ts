@@ -286,7 +286,6 @@ component:InformatiqueComponent
         component:EntrepriseconnecteComponent
   },
 
-/////////////////////////////////////entrpriser//////////////////////////////////////
 
  
 {
