@@ -40,7 +40,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # 🛠️ Build + analyse SonarQube
       - name: Build and analyze with SonarQube
         env:
           SONAR_TOKEN: ${{ secrets.SONARTOKEN }}
