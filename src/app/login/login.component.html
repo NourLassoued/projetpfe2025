@@ -56,10 +56,10 @@
     </div>
     <div class="modal" *ngIf="showModal">
         <div class="modal-content">
-          <span class="close" (click)="closeModal()">&times;</span>
+          <span class="close" (click)="closeModal()" (keydown.enter)="closeModal()">&times;</span>
           <h2>Mot de passe oublié ?</h2>
           <form [formGroup]="resetPasswordForm" (ngSubmit)="verifyAndSendEmail()">
-            <label for="reset-email"></label>
+            <label for="reset-email">Adresse e-mail</label>
             <input formControlName="email" type="email" id="reset-email" placeholder="📧Votre adresse e-mail" required>
       
             <button  type="submit" class="btn-submit">Envoyez-moi les instructions</button>

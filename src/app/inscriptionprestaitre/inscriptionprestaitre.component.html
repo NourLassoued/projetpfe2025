@@ -57,7 +57,7 @@
     </div>
     <div class="modal" *ngIf="showModal">
         <div class="modal-content">
-            <span class="close" (click)="closeModal()">&times;</span>
+            <span class="close" (click)="closeModal()" (keydown.enter)="closeModal()" tabindex="0" role="button" aria-label="Fermer le modal">&times;</span>
             <h2>Quel type de prestataire êtes-vous ?</h2>
             <div class="cards">
                 <div class="card">

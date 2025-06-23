@@ -5,7 +5,7 @@
   <app-navbar></app-navbar>
     <h2>Bienvenue chez SOS Service Tunisie</h2>
     <div class="optionss" >
-        <div class="options" (click)="openModal()">
+        <div class="options" (click)="openModal()" (keydown)="openModal()">
             <i class="fas fa-bell-concierge"></i>
             <h3>J'ai besoin d'un service</h3>
             <p>Réservez le prestataire idéal pour vos services du quotidien</p>
@@ -23,7 +23,9 @@
 <div class="modal" [class.show]="showModal">
     
     <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
+      <button type="button" class="close" (click)="closeModal()" (keydown)="closeModal()" tabindex="0" aria-label="Fermer">
+        &times;
+      </button>
       <h2>Créer un compte</h2>
       <p>Profitez de votre temps libre grâce à nos jobbers</p>
   

@@ -69,7 +69,7 @@
   <div class="container-profile">
       <!-- Nom et vérifications -->
       <div class="section">
-          <label>{{ user?.nom }}</label>
+          <h2>{{ user?.nom }}</h2>
           <div class="verification-container">
               <span class="verification-item">
                   <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
@@ -152,7 +152,7 @@
             alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
             class="user-image"
           />
-          <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+          <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
   
           <div class="review-header">
             <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>

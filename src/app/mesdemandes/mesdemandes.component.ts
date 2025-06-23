@@ -15,114 +15,114 @@ import { Router } from '@angular/router';
 export class MesdemandesComponent {
   showDemandes = false;
   demandes: Demande[] = [];
-    demandesAvecPostulations: { [key: number]: number } = {};
-   user: any = null;
-   postulations: { [key: number]: any[] } = {};
-      categories: any[] = [];
-      imageUrls: { [key: number]: string } = {};
-   
-    userId!: number;
-  
+  demandesAvecPostulations: { [key: number]: number } = {};
+  user: any = null;
+  postulations: { [key: number]: any[] } = {};
+  categories: any[] = [];
+  imageUrls: { [key: number]: string } = {};
 
-    services: any[] = [];
- 
-      constructor(private  readonly fileService: FileService, 
-        private  readonly router: Router,
-        private readonly demandeService: DemandeService) {}
-      ngOnInit(): void {
-        this.loadUserData();
-     
-        this.getDemandesByUserId();
-      
-      }
-      loadUserData(): void {
-        const token = localStorage.getItem('accessToken');
-      
-        if (token) {
-          try {
-            const decodedToken: any = jwtDecode(token);
-            this.user = decodedToken;
-            this.userId = decodedToken.id;
-      
-          
-      
-            if (this.user.image) {
-              // L'utilisateur a une image, vous pouvez traiter ici si nécessaire
-            } else {
-              console.warn(" Aucune image trouvée dans le token !");
-            }
-          } catch (error) {
-            console.error(' Erreur lors du décodage du token:', error);
-          }
+  userId!: number;
+
+
+  services: any[] = [];
+
+  constructor(private readonly fileService: FileService,
+    private readonly router: Router,
+    private readonly demandeService: DemandeService) { }
+  ngOnInit(): void {
+    this.loadUserData();
+
+    this.getDemandesByUserId();
+
+  }
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        this.user = decodedToken;
+        this.userId = decodedToken.id;
+
+
+
+        if (this.user.image) {
+          // L'utilisateur a une image, vous pouvez traiter ici si nécessaire
         } else {
-          console.warn(" Aucun token trouvé dans localStorage !");
+          console.warn(" Aucune image trouvée dans le token !");
         }
+      } catch (error) {
+        console.error(' Erreur lors du décodage du token:', error);
       }
-    
-    
-     
-     
-      
-      getImage(filename: string, index: number) {
-        const encodedFilename = encodeURIComponent(filename);
-        this.fileService.getImage(encodedFilename).subscribe({
-          next: (imageBlob) => {
-            const imageUrl = URL.createObjectURL(imageBlob);
-            this.imageUrls[index] = imageUrl; 
-          },
-          error: (error) => {
-            console.error('Erreur lors du chargement de l\'image', error);
-          }
-        });
+    } else {
+      console.warn(" Aucun token trouvé dans localStorage !");
+    }
+  }
+
+
+
+
+
+  getImage(filename: string, index: number) {
+    const encodedFilename = encodeURIComponent(filename);
+    this.fileService.getImage(encodedFilename).subscribe({
+      next: (imageBlob) => {
+        const imageUrl = URL.createObjectURL(imageBlob);
+        this.imageUrls[index] = imageUrl;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement de l\'image', error);
       }
-      
-      getDemandesByUserId() {
-        if (this.userId) {
-          this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe({
-            next: (data: Demande[]) => {
-              this.demandes = data;
-              
-              this.demandes.forEach((demande, index) => {
-                
-                if (demande.servicee?.imageService) {
-                  this.getImage(demande.servicee.imageService, index);
-                }
-                if (demande.idDemande !== undefined) {
-                  this.getPostulationsByDemande(demande.idDemande);
-              }
-              });
-            },
-            error: (error) => {
-              console.error('Erreur lors de la récupération des demandes', error);
+    });
+  }
+
+  getDemandesByUserId() {
+    if (this.userId) {
+      this.demandeService.getAllDemandesByUtilisateurId(this.userId).subscribe({
+        next: (data: Demande[]) => {
+          this.demandes = data;
+
+          this.demandes.forEach((demande, index) => {
+
+            if (demande.servicee?.imageService) {
+              this.getImage(demande.servicee.imageService, index);
+            }
+            if (demande.idDemande !== undefined) {
+              this.getPostulationsByDemande(demande.idDemande);
             }
           });
+        },
+        error: (error) => {
+          console.error('Erreur lors de la récupération des demandes', error);
         }
+      });
+    }
+  }
+  getPostulationsByDemande(idDemande: number): void {
+    this.demandeService.getPostulationsByDemande(idDemande).subscribe({
+      next: (postulationsData) => {
+        this.demandesAvecPostulations[idDemande] = postulationsData.length;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
       }
-      getPostulationsByDemande(idDemande: number): void {
-        this.demandeService.getPostulationsByDemande(idDemande).subscribe({
-            next: (postulationsData) => {
-                this.demandesAvecPostulations[idDemande] = postulationsData.length; 
-            },
-            error: (error) => {
-                console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);
-            }
-        });
+    });
+  }
+
+  gererDemande(demande: any) {
+
+    if (!demande?.idDemande) {
+      return;
     }
-    
-      gererDemande(demande: any) {
-      
-        if (!demande?.idDemande) {
-            return;
-        }
-        this.router.navigate(['/gerer-demande'], { queryParams: { id: demande.idDemande } });
-    }
-    logout(): void {
-  
-      localStorage.removeItem('accessToken')
-      this.router.navigate(['/Front']); 
-    }
-    toggleDemandes() {
-      this.showDemandes = !this.showDemandes;
-    }
-   
-    }           
+    this.router.navigate(['/gerer-demande'], { queryParams: { id: demande.idDemande } });
+  }
+  logout(): void {
+
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']);
+  }
+  toggleDemandes() {
+    this.showDemandes = !this.showDemandes;
+  }
+
+}           

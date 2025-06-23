@@ -48,7 +48,8 @@
   <div class="container-profile">
 
     <div class="section">
-      <label>{{ user?.nom }}</label>
+      <label for="user-nom">{{ user?.nom }}</label>
+      <input id="user-nom" type="text" [value]="user?.nom" readonly style="display:none;" />
 
       <div *ngIf="getAverageRating() >= 4.5" class="badge-container">
         <h6 class="badgebg-succes">
@@ -77,7 +78,7 @@
     <!-- Compétences -->
 
     <div class="section">
-      <label>💼 Mes compétences</label>
+      <h3>💼 Mes compétences</h3>
       <div class="competences-container">
         <div class="competence" *ngFor="let servicee of user?.competence">
           <p>{{ servicee }}</p>

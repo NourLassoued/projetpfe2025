@@ -49,9 +49,9 @@
 
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
-									role="button" aria-expanded="false"><ng-container
+									role="button" aria-expanded="false" (keydown)="null"><ng-container
 										*ngIf="profileImageUrl; else defaultIcon">
-										<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
 									<ng-template #defaultIcon>
 										<i class="fas fa-user-circle profile-icon"></i>
@@ -76,11 +76,11 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span
+							[src]="profileImageUrl" alt="" class="profile-img"><span
 							class="logo-text">SOS service Tunisie</span></a>
 
 				</div>
-				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1" aria-label="Main navigation">
 					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
 
 						<li class="nav-item">
@@ -366,7 +366,7 @@
 							<!-- Affichage de l'image actuelle -->
 							<div class="image-preview">
 								<img *ngIf="selectedCategory.imageCategorie" [src]="selectedCategory.imageCategorie"
-									alt="Image actuelle">
+									alt="">
 
 							</div>
 
@@ -384,7 +384,7 @@
 				</div>
 				<div class="modal-overlay" *ngIf="showServiceModal" [ngClass]="{ 'show': showServiceModal }">
 					<div class="new-modal-content">
-						<span class="new-close" (click)="closeServiceModal()">&times;</span>
+						<span class="new-close" (click)="closeServiceModal()" (keydown.enter)="closeServiceModal()" tabindex="0" role="button">&times;</span>
 
 						<h2>{{ selectedCategory.nom }}</h2>
 
@@ -489,7 +489,7 @@
 					</div><!--//col-->
 				</div>
 
-				<nav class="app-pagination mt-5">
+				<nav class="app-pagination mt-5" aria-label="Pagination Navigation">
 					<ul class="pagination justify-content-center">
 						<!-- Previous Button -->
 						<li class="page-item" [class.disabled]="currentPage === 1">

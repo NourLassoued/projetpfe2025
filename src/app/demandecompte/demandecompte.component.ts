@@ -61,28 +61,18 @@ export class DemandecompteComponent {
   private readonly route: ActivatedRoute,
   private readonly router: Router
  ) {
-  
-  {
     this.today = new Date();
-   this.today.setHours(0, 0, 0, 0);
-   this.demandeForm = this.fb.group({
-      
+    this.today.setHours(0, 0, 0, 0);
+    this.demandeForm = this.fb.group({
       description: ['', Validators.required],
       date: ['', Validators.required],
       heureTravail: ['', Validators.required],
       idService: ['', Validators.required],
-      idAdresse: ['', Validators.required] ,
-      title: ['', Validators.required],  
+      idAdresse: ['', Validators.required],
+      title: ['', Validators.required],
       emailUtilisateur: ['', [Validators.required, Validators.email]],
-      
       telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
- 
     });
-
-  }
-  
-
-   
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -155,15 +145,14 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
     };
 
 
-    this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe(
-      (response) => {
-       
+    this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe({
+      next: (response) => {
         this.router.navigate(['/Compteparticulier']);
       },
-      (error) => {
+      error: (error) => {
         console.error("Erreur lors de la création de la demande", error);
       }
-    );
+    });
   }
 
   selectTime(hour: number) {

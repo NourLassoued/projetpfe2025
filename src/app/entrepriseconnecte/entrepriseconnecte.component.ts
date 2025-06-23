@@ -39,15 +39,15 @@ export class EntrepriseconnecteComponent {
   contenuMessage: string = '';
   utilisateurConnecte: any;
   score: number = 0;
-  constructor(private  readonly fileService: FileService,
+  constructor(private readonly fileService: FileService,
 
     private readonly activatedRoute: ActivatedRoute,
     private readonly utilisateurservice: UtilisateurService,
-    private  readonly reservationService: ReservationService,
+    private readonly reservationService: ReservationService,
     private readonly cdr: ChangeDetectorRef,
     private readonly avisService: AvisService,
     private readonly toastr: ToastrService,
-    private readonly  aviservice: AvisService,
+    private readonly aviservice: AvisService,
 
 
   ) { }

@@ -26,7 +26,7 @@ export class DemandeterminneComponent {
   services: any[] = [];
 
   constructor(private readonly fileService: FileService,
-    private  readonly router: Router,
+    private readonly router: Router,
     private readonly demandeService: DemandeService) { }
   ngOnInit(): void {
     this.loadUserData();

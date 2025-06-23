@@ -3,7 +3,7 @@
     <button  (click)="showSkillModal()" class="middle-btn" *ngIf="userRole === 'PARTICULIER'" ><i class="fa fa-plus"></i> Demander un service</button>
     <div    (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
         <div class="modal-content"  >
-          <span class="close" (click)="showModal = false">&times;</span>
+          <span class="close" (click)="showModal = false" (keydown.enter)="showModal = false">&times;</span>
           <h2>Demander un service</h2>
   
       
@@ -12,7 +12,7 @@
           (ngModelChange)="onSearch()"   placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
       
           <div class="grid-container">
-            <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom) ">
+            <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom)" (keydown.enter)="selectCategory(category.nom)">
               <img  [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
               <span>{{ category.nom }}</span>
               <span class="icon">➜</span>
@@ -75,7 +75,7 @@
     [src]="entrepriseImages[publication.entreprise?.idUtilisateur!]"
 
     id="profile-icon"
-    alt="Logo entreprise"
+    alt=""
     (click)="goToConsulterEntreprise(publication)"
   />
           </div>

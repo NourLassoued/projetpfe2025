@@ -13,8 +13,15 @@
 
           <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
           <li routerLink="/Mesrevunes">💰 Mes revenus</li>
-          <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-        </ul>
+ <li>
+
+
+
+                        <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0"
+                            style="background:none;border:none;padding:0;cursor:pointer; color:  #66696e;">
+                            🚪 Se déconnecter
+                        </button>
+                    </li>        </ul>
       </ul>
     </aside>
     

@@ -18,8 +18,8 @@
     <p>Inscrivez-vous dès maintenant et accédez à plus de 4 000 jobs chaque semaine, dans plus de 120 catégories.</p>
     <form [formGroup]="form1">
      
-    <label><i class="fas fa-user"></i> nom</label>
-        <input formControlName="nom"  class="input-fa">
+    <label for="nom"><i class="fas fa-user"></i> nom</label>
+        <input id="nom" formControlName="nom"  class="input-fa">
        
      
       <div class="error" *ngIf="form1.get('nom')?.invalid && form1.get('nom')?.touched">
@@ -28,8 +28,8 @@
     
     
       
-      <label><i class="fas fa-envelope"></i> Email</label>
-      <input formControlName="email" type="email"  class="input-fa">
+      <label for="email"><i class="fas fa-envelope"></i> Email</label>
+      <input id="email" formControlName="email" type="email"  class="input-fa">
       
       <div class="error" *ngIf="form1.get('email')?.invalid && form1.get('email')?.touched">
         <span *ngIf="form1.get('email')?.errors?.['required']">⚠️ L'email est requis.</span>
@@ -40,9 +40,9 @@
       </div>
     
       
-        <label><i class="fas fa-lock"></i>  Mot de passe</label>
+        <label for="password"><i class="fas fa-lock"></i>  Mot de passe</label>
         <div class="input-container">
-          <input formControlName="password" type="password" class="input-fa">
+          <input id="password" formControlName="password" type="password" class="input-fa">
           
         </div>
      
@@ -51,26 +51,26 @@
         <span *ngIf="form1.get('password')?.errors?.['minlength']">⚠️ Le mot de passe doit contenir au moins 6 caractères.</span>
       </div>
     
-      <label><i class="fas fa-phone"></i>  Téléphone</label>
-      <input formControlName="telephoneNumber" class="input-fa">
+      <label for="telephoneNumber"><i class="fas fa-phone"></i>  Téléphone</label>
+      <input id="telephoneNumber" formControlName="telephoneNumber" class="input-fa">
       <div class="error" *ngIf="form1.get('telephoneNumber')?.invalid && form1.get('telephoneNumber')?.touched">
         <span *ngIf="form1.get('telephoneNumber')?.errors?.['required']">⚠️ Le numéro de téléphone est requis.</span>
         <span *ngIf="form1.get('telephoneNumber')?.errors?.['pattern']">⚠️ Entrez un numéro valide.</span>
       </div>
     
-      <label><i class="fas fa-briefcase"></i> Sélectionnez votre domaine de spécialisation</label>
-      <input formControlName="competence" type="text" class="input-fa" (click)="showSkillModal()">
-      <label><i class="fas fa-calendar-check"></i> Années d'expérience</label>
-<input formControlName="workExperience" type="number"  class="input-fa" min="0">
+      <label for="competence"><i class="fas fa-briefcase"></i> Sélectionnez votre domaine de spécialisation</label>
+      <input id="competence" formControlName="competence" type="text" class="input-fa" (click)="showSkillModal()">
+      <label for="workExperience"><i class="fas fa-calendar-check"></i> Années d'expérience</label>
+<input id="workExperience" formControlName="workExperience" type="number"  class="input-fa" min="0">
     
-      <label><i class="fas fa-file-upload"></i> Télécharger votre CV</label>
-      <input type="file" (change)="onFileSelected($event,'doucument_cv')">
+      <label for="cv-upload"><i class="fas fa-file-upload"></i> Télécharger votre CV</label>
+      <input id="cv-upload" type="file" (change)="onFileSelected($event,'doucument_cv')">
     
-      <label><i class="fas fa-id-card"></i> Télécharger votre CIN</label>
-      <input type="file" (change)="onFileSelected($event,'doucument_CIN')">
+      <label for="cin-upload"><i class="fas fa-id-card"></i> Télécharger votre CIN</label>
+      <input id="cin-upload" type="file" (change)="onFileSelected($event,'doucument_CIN')">
     
-      <label><i class="fas fa-image"></i> Télécharger votre image</label>
-      <input type="file" accept="image/*" (change)="onFileSelected($event,'image')">
+      <label for="image-upload"><i class="fas fa-image"></i> Télécharger votre image</label>
+      <input id="image-upload" type="file" accept="image/*" (change)="onFileSelected($event,'image')">
     
       <button (click)="onSubmit()">Soumettre</button>
       
@@ -84,14 +84,14 @@
   
     <div class="modal" *ngIf="showModal">
       <div class="modal-content">
-        <span class="close" (click)="showModal = false">&times;</span>
+        <span class="close" (click)="showModal = false" (keydown)="showModal = false">&times;</span>
         <h2>Choisissez les services que vous souhaitez proposer</h2>
 
     
         <input type="text" placeholder="🔍  Recherchez votre domaine de service" class="search-bar">
     
         <div class="grid-container">
-          <div class="category-card" *ngFor="let category of categories  let i = index" (click)="selectCategory(category.nom) ">
+          <div class="category-card" *ngFor="let category of categories  let i = index" (click)="selectCategory(category.nom)" (keydown)="selectCategory(category.nom)">
             <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
             <span>{{ category.nom }}</span>
             <span class="icon">➜</span>
@@ -103,7 +103,7 @@
     </div>
     <div class="modal" *ngIf="showServiceModal">
       <div class="modal-content">
-        <span class="close"(click)="closeServiceModal()" >&times;</span>
+        <span class="close" (click)="closeServiceModal()" (keydown)="closeServiceModal()">&times;</span>
         <h2>Services disponibles pour la catégorie : {{ selectedCategory?.nom }}</h2>
         <input type="text" placeholder="🔍 Recherchez un service" class="search-bar">
      <div class="grid-container">

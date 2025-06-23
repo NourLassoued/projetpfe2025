@@ -13,8 +13,12 @@
 
           <li routerLink="/Mesevolutionentrprise">⭐Mes évolutions</li>
 
-          <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-        </ul>
+<li>
+          <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0"
+            style="background:none;border:none;padding:0;cursor:pointer; color:  #66696e;">
+            🚪 Se déconnecter
+          </button>
+          </li>        </ul>
       </ul>
     </aside>
     <main class="content">
@@ -53,10 +57,10 @@
             </tr>
           </tbody>
         </table>
-        <div class="modal" *ngIf="publicationSelectionnee" (click)="fermerModal()">
-          <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal" *ngIf="publicationSelectionnee" (click)="fermerModal()" (keydown)="fermerModal()">
+          <div class="modal-content" (click)="$event.stopPropagation()" (keydown)="fermerModal()">
             <div class="close-icon-container">
-              <i class="fas fa-times" (click)="fermerModal()"></i>
+              <i class="fas fa-times" (click)="fermerModal()" (keydown)="fermerModal()"></i>
             </div>
             <h3>Commentaires pour la publication</h3>
             <ul *ngIf="publicationSelectionnee.commentaires?.length > 0; else aucunCommentaire">
@@ -67,6 +71,7 @@
                       *ngIf="commentaire.particulier?.idUtilisateur && particulierImages[commentaire.particulier.idUtilisateur]"
                       [src]="particulierImages[commentaire.particulier.idUtilisateur]" alt=""
                       (click)="afficherNotification(commentaire.particulier, particulierImages[commentaire.particulier.idUtilisateur])"
+                      (keydown)="afficherNotification(commentaire.particulier, particulierImages[commentaire.particulier.idUtilisateur])"
                       id="profile-icon" />
                   </div>
                   <strong>{{ commentaire.particulier?.nom }}</strong><br>
@@ -75,7 +80,7 @@
                     {{ getRelativeTime(commentaire.dateCommentaire) }}
                   </small>
                 </div>
-                <i class="fas fa-trash-alt icon-supprimer" (click)="onSupprimerCommentaire(commentaire.id)"></i>
+                <i class="fas fa-trash-alt icon-supprimer" (click)="onSupprimerCommentaire(commentaire.id)" (keydown)="onSupprimerCommentaire(commentaire.id)"></i>
 
               </li>
             </ul>

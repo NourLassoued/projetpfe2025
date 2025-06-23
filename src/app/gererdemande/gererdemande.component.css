@@ -52,11 +52,17 @@ a:hover {
 .task-card p {
     color: #555;
     margin: 5px 0;
+        margin-bottom: 25px; 
+
 }
 button {
     background: #007bff;
     color: white;
     border: none;
+  
+    margin-right: 40px; 
+    width: 250px;
+
     padding: 10px;
     margin-top: 10px;
     cursor: pointer;
@@ -84,13 +90,8 @@ button:hover {
     font-size: 0.9em;
     color: #777;
 }
-button {
-    margin-right: 40px; 
-    width: 250px;
-}
-.task-card p {
-    margin-bottom: 25px; 
-}
+
+
 
 button:last-child {
     margin-right: 0; 
@@ -208,9 +209,7 @@ textarea {
   width: 100%;
   box-sizing: border-box;
 }
-label{
-    color: #000;
-}
+
 
 input[type="number"],
 input[type="datetime-local"] {

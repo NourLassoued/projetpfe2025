@@ -9,7 +9,7 @@
             <ul>
                 <ul>
                     <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
-                    <li (click)="toggleDemandes()">
+                    <li (click)="toggleDemandes()" (keydown)="toggleDemandes()">
                         📋 Mes demandes
                         <span *ngIf="showDemandes">
                             <i class="fa fa-chevron-down"></i> 
@@ -54,7 +54,7 @@
               <div class="reservation-details">
                 <img *ngIf="serviceImageUrls[i]" 
                 [src]="serviceImageUrls[i]" 
-                alt="Image du service" 
+                alt="" 
                 class="service-image">
                 <h2>🛠 Service: {{ reservation.demande?.servicee?.nomservice }}</h2>
                 <p>📍 {{ reservation.demande?.adressedemande?.governoate }}</p>
@@ -67,7 +67,7 @@
               
                 <img *ngIf="prestataireImageUrls[i]" 
                 [src]="prestataireImageUrls[i]" 
-                alt="Image du prestataire" 
+                alt="" 
                 class="profile-pic">
                 <p><strong>{{ reservation.prestataire?.nom }}</strong></p>
                 <p>📞 {{ reservation.prestataire?.telephoneNumber }}</p>
@@ -87,10 +87,11 @@
       <!-- MODAL D’AVIS -->
 <div class="modal" [class.show]="showModal">
   <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
+    <span class="close" (click)="closeModal()" (keydown)="closeModal()" tabindex="0" role="button" aria-label="Fermer le modal">&times;</span>
     <h2>Donner un avis sur {{ selectedReservation?.prestataire?.nom }}</h2>
     
-    <label>Note (sur 5) :</label>
+    <label for="note-input">Note (sur 5) :</label>
+    <input id="note-input" type="range" min="1" max="5" [(ngModel)]="avis.note" style="display:none;" />
     <div class="stars">
       <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
    
@@ -100,7 +101,8 @@
           viewBox="0 0 20 20"
           fill="currentColor"
           class="h-4 w-4 cursor-pointer text-yellow-400"
-          (click)="setNote(star)">
+          (click)="setNote(star)"
+          (keydown)="setNote(star)">
           <path d="M9.049 2.927C9.3 2.3 10.7 2.3 10.951 2.927l1.11 2.24c.19.386.573.661 1.016.744l2.47.358c.358.052.692.318.819.663.248.445.158.99-.217 1.267l-1.786 1.738c-.347.338-.497.832-.414 1.305l.445 2.475c.062.359-.167.724-.529.832-.363.108-.75-.053-.976-.348l-2.217-1.17a1.09 1.09 0 0 0-1.072 0l-2.217 1.17c-.226.295-.613.456-.976.348-.363-.108-.591-.473-.529-.832l.445-2.475a1.09 1.09 0 0 0-.414-1.305l-1.786-1.738c-.375-.277-.465-.822-.217-1.267.127-.345.461-.611.819-.663l2.47-.358c.444-.083.826-.358 1.016-.744l1.11-2.24z"/>
         </svg>
     
@@ -110,7 +112,8 @@
           viewBox="0 0 20 20"
           fill="currentColor"
           class="h-4 w-4 cursor-pointer text-gray-300"
-          (click)="setNote(star)">
+          (click)="setNote(star)"
+          (keydown)="setNote(star)">
           <path d="M9.049 2.927C9.3 2.3 10.7 2.3 10.951 2.927l1.11 2.24c.19.386.573.661 1.016.744l2.47.358c.358.052.692.318.819.663.248.445.158.99-.217 1.267l-1.786 1.738c-.347.338-.497.832-.414 1.305l.445 2.475c.062.359-.167.724-.529.832-.363.108-.75-.053-.976-.348l-2.217-1.17a1.09 1.09 0 0 0-1.072 0l-2.217 1.17c-.226.295-.613.456-.976.348-.363-.108-.591-.473-.529-.832l.445-2.475a1.09 1.09 0 0 0-.414-1.305l-1.786-1.738c-.375-.277-.465-.822-.217-1.267.127-.345.461-.611.819-.663l2.47-.358c.444-.083.826-.358 1.016-.744l1.11-2.24z"/>
         </svg>
       </ng-container>
@@ -119,8 +122,8 @@
     
     
 
-    <label>Commentaire :</label>
-    <textarea [(ngModel)]="avis.commentaire"></textarea>
+    <label for="commentaire-input">Commentaire :</label>
+    <textarea id="commentaire-input" [(ngModel)]="avis.commentaire"></textarea>
 <br>
 
     <button class="btnenvoyer" (click)="envoyerAvis()">✅ Envoyer</button>

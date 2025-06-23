@@ -6,7 +6,7 @@ import { Servicee } from 'src/models/Servicee';
 import { UserRole } from 'src/models/UserRole';
 
 import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
-import { catchError, debounceTime, Observable, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, Observable, of, switchMap, firstValueFrom } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { CategorieService } from 'src/app/service/categorie.service';
@@ -97,36 +97,35 @@ export class InscriptionProfessionnelComponent {
     this.showModal = true;
   } 
    getAllCategories() {
-    this.categorieService.getAllCategories().subscribe(
-      (data) => {
+    this.categorieService.getAllCategories().subscribe({
+      next: (data) => {
         this.categories = data;
        
         this.categories.forEach((category, index) => {
           this.getImage(category.imageCategorie, index);
         });
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des catégories', error);
       }
-    );
+    });
   }
 
   
   getImage(filename: string, index: number) {
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-       
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
       }
-    );
+    });
   }
 
 selectCategory(categoryName: string) {
-  this.selectedCategory = this.categories.find(category => category.nom === categoryName) || null;
+  this.selectedCategory = this.categories.find(category => category.nom === categoryName) ?? null;
 
   if (this.selectedCategory) {
    
@@ -136,19 +135,20 @@ selectCategory(categoryName: string) {
   } else {
     console.error('Catégorie non trouvée');
   }
-}getAllServicesByCategorie(categorieId: number) {
-  this.service.getAllServicesByCategorie(categorieId).subscribe(
-    (services: Servicee[]) => {
+}
+getAllServicesByCategorie(categorieId: number) {
+  this.service.getAllServicesByCategorie(categorieId).subscribe({
+    next: (services: Servicee[]) => {
       this.services = services;
       this.services.forEach((service, index) => {
         this.getImage(service.imageService, index);
       });
     },
-    (error) => {
+    error: (error) => {
       console.error('Erreur lors du chargement des services:', error);
       alert('Une erreur est survenue lors du chargement des services.'); 
     }
-  );
+  });
 }
 selectService(service: any) {
   if (this.selectedServices.includes(service)) {
@@ -179,7 +179,7 @@ onSubmit(): void {
   
   
     const fileUploadPromises = Object.keys(this.selectedFiles).map((fileType) =>
-      this.file.uploadFile(this.selectedFiles[fileType]).toPromise()
+      firstValueFrom(this.file.uploadFile(this.selectedFiles[fileType]))
     );
 
    
@@ -192,22 +192,19 @@ onSubmit(): void {
         });
 
       
-        this.authService.register(formData).subscribe(
-          (response: any) => {
-         
+        this.authService.register(formData).subscribe({
+          next: (response: any) => {
             this.notificationMessage = "Vérifiez votre email pour avoir plus d'informations de votre candidature.";
             this.form1.reset();
             setTimeout(() => {
               this.router.navigate(['/login']);
             }, 2000); 
-         
-           
           },
-          (error) => {
+          error: (error) => {
             console.error("Erreur lors de l'inscription :", error);
             alert("Une erreur s'est produite lors de l'inscription.");
           }
-        );
+        });
       })
       .catch((error) => {
         console.error("Erreur lors de l'upload des fichiers :", error);

@@ -255,7 +255,7 @@
 			  
 	  
 		  <ng-container matColumnDef="note">
-			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('note')">
+			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('note')" (keydown)="sortBy('note')" tabindex="0">
 				Note 
 				<span *ngIf="sortField === 'note'">
 				  {{ sortDirection === 'asc' ? '↑' : '↓' }}
@@ -271,7 +271,7 @@
 		  </ng-container>
 	  
 		  <ng-container matColumnDef="date">
-			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('dateAvis')">
+			<th class="heder clickable-header" mat-header-cell *matHeaderCellDef (click)="sortBy('dateAvis')" (keydown)="sortBy('dateAvis')" tabindex="0">
 				Date
 				<span *ngIf="sortField === 'dateAvis'">
 				  {{ sortDirection === 'asc' ? '↑' : '↓' }}

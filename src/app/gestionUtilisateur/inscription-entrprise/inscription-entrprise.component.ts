@@ -8,7 +8,7 @@ import { UserRole } from 'src/models/UserRole';
 import { Servicee } from 'src/models/Servicee';
 import { StatusUtilisateur } from 'src/models/StatusUtilisateur';
 import { UtilisateurService } from '../../service/utilisateur.service';
-import { catchError, debounceTime, Observable, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, Observable, of, switchMap, firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -36,14 +36,14 @@ export class InscriptionEntrpriseComponent {
   email: string = '';
 
   constructor(
-    private fb: FormBuilder,
+    private  readonly fb: FormBuilder,
    
-    private categorieService: CategorieService,
-    private file: FileService,
-    private service: ServiceeService,
-    private authService: AuthServiceService,
-    private utilisateurService: UtilisateurService,
-    private router: Router
+    private readonly  categorieService: CategorieService,
+    private readonly  file: FileService,
+    private  readonly service: ServiceeService,
+    private  readonly authService: AuthServiceService,
+    private readonly utilisateurService: UtilisateurService,
+    private readonly router: Router
   ) {
  
     this.form1 = this.fb.group({
@@ -85,35 +85,34 @@ export class InscriptionEntrpriseComponent {
   }
 
   getAllCategories() {
-    this.categorieService.getAllCategories().subscribe(
-      (data) => {
+    this.categorieService.getAllCategories().subscribe({
+      next: (data) => {
         this.categories = data;
        
         this.categories.forEach((category, index) => {
           this.getImage(category.imageCategorie, index);
         });
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des catégories', error);
       }
-    );
+    });
   }
 
   getImage(filename: string, index: number) {
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
-       
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
       }
-    );
+    });
   }
 
   selectCategory(categoryName: string) {
-    this.selectedCategory = this.categories.find(category => category.nom === categoryName) || null;
+    this.selectedCategory = this.categories.find(category => category.nom === categoryName) ?? null;
 
     if (this.selectedCategory) {
       console.log('Categorie ID:', this.selectedCategory.id);
@@ -125,18 +124,18 @@ export class InscriptionEntrpriseComponent {
   }
 
   getAllServicesByCategorie(categorieId: number) {
-    this.service.getAllServicesByCategorie(categorieId).subscribe(
-      (services: Servicee[]) => {
+    this.service.getAllServicesByCategorie(categorieId).subscribe({
+      next: (services: Servicee[]) => {
         this.services = services;
         this.services.forEach((service, index) => {
           this.getImage(service.imageService, index);
         });
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement des services:', error);
         alert('Une erreur est survenue lors du chargement des services.');
       }
-    );
+    });
   }
 
   selectService(service: any) {
@@ -162,7 +161,7 @@ export class InscriptionEntrpriseComponent {
       const formData = { ...this.form1.value };
 
       const fileUploadPromises = Object.keys(this.selectedFiles).map((fileType) =>
-        this.file.uploadFile(this.selectedFiles[fileType]).toPromise()
+        firstValueFrom(this.file.uploadFile(this.selectedFiles[fileType]))
       );
 
       Promise.all(fileUploadPromises)
@@ -173,22 +172,19 @@ export class InscriptionEntrpriseComponent {
             formData[fileType] = filename;
           });
 
-          this.authService.register(formData).subscribe(
-            (response: any) => {
-           
+          this.authService.register(formData).subscribe({
+            next: (response: any) => {
               this.notificationMessage = "Vérifiez votre email pour avoir plus d'informations de votre candidature.";
               this.form1.reset();
               setTimeout(() => {
                 this.router.navigate(['/login']);
               }, 2000); 
-           
-             
             },
-            (error) => {
+            error: (error) => {
               console.error("Erreur lors de l'inscription :", error);
               alert("Une erreur s'est produite lors de l'inscription.");
             }
-          );
+          });
         })
         .catch((error) => {
           console.error("Erreur lors de l'upload des fichiers :", error);

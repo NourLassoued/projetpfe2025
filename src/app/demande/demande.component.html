@@ -6,20 +6,20 @@
   <div class="container" *ngIf="!showCalendar">
     <h1>De combien d’heures de service avez-vous besoin ?</h1>
     <div class="grid">
-      <div class="card" (click)="selectTime(2)" [ngClass]="{'selected': selectedTime === 2}">
+      <div class="card" (click)="selectTime(2)" [ngClass]="{'selected': selectedTime === 2}" (keydown)="selectTime(2)">
         <div class="icon">🕒</div>
         <div class="title">2h00</div>
         <div class="subtitle">Court</div>
         <div class="checkmark">✔</div>
       </div>
-      <div class="card" (click)="selectTime(4)" [ngClass]="{'selected': selectedTime === 4}">
+      <div class="card" (click)="selectTime(4)" [ngClass]="{'selected': selectedTime === 4}" (keydown)="selectTime(4)">
         <div class="icon">🕒</div>
         <div class="title">4h00</div>
         <div class="subtitle">Classique</div>
         <div class="popular">⭐ Populaire</div>
         <div class="checkmark">✔</div>
       </div>
-      <div class="card" (click)="selectTime(6)" [ngClass]="{'selected': selectedTime === 6}">
+      <div class="card" (click)="selectTime(6)" [ngClass]="{'selected': selectedTime === 6}" (keydown)="selectTime(6)">
         <div class="icon">🕒</div>
         <div class="title">6h00</div>
         <div class="subtitle">Long</div>
@@ -30,9 +30,9 @@
     <div class="text-center">ou</div>
     <div class="text-center">Ajuster le nombre d’heures manuellement</div>
     <div class="flex">
-      <div class="button" (click)="adjustHeure('decrease')">-</div>
+      <div class="button" (click)="adjustHeure('decrease')" (keydown)="adjustHeure('decrease')">-</div>
       <div class="time">{{ demandeForm.controls['heureTravail'].value }}h</div>
-      <div class="button" (click)="adjustHeure('increase')">+</div>
+      <div class="button" (click)="adjustHeure('increase')" (keydown)="adjustHeure('increase')">+</div>
     </div>
 
     <div class="footer">
@@ -67,7 +67,8 @@
               'past-date': dayObj.date < today && dayObj.date.getTime() !== today.getTime(),
               'today': dayObj.date.getTime() === today.getTime() 
             }"
-            (click)="dayObj.date >= today && selectDate(dayObj.date)">
+            (click)="dayObj.date >= today && selectDate(dayObj.date)"
+            (keydown)="dayObj.date >= today && selectDate(dayObj.date)">
          {{ dayObj.day !== 0 ? dayObj.day : '' }}
        </div>
           </div>
@@ -155,7 +156,7 @@
   </form>
   <div class="modal" *ngIf="showModal">
     <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
+      <span class="close" (click)="closeModal()" (keydown)="closeModal()">&times;</span>
       <h2>Mot de passe oublié ?</h2>
       <form [formGroup]="resetPasswordForm" (ngSubmit)="verifyAndSendEmail()">
         <input formControlName="email" type="email" id="reset-email" placeholder="📧Votre adresse e-mail" required>

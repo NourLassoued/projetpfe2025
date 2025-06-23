@@ -83,7 +83,8 @@
               <i class="fas fa-heart me-2"></i> Top Prestataire
             </h6>
           </div>
-            <label>{{ user?.nom }}</label>
+             <label for="user-nom">{{ user?.nom }}</label>
+      <input id="user-nom" type="text" [value]="user?.nom" readonly style="display:none;" />
 
             <div class="verification-container">
                 <span class="verification-item">
@@ -106,7 +107,7 @@
         <!-- Compétences -->
         
         <div class="section">
-            <label>💼 Mes compétences</label>
+            <span>💼 Mes compétences</span>
             <div class="competences-container">
                 <div class="competence" *ngFor="let servicee of user?.competence">
                     <p>{{ servicee }}</p> 
@@ -142,7 +143,7 @@
         <!-- Avis clients -->
         <div class="content">
             <div class="section">
-              <label class="sectionn">Avis clients</label>
+              <span class="sectionn">Avis clients</span>
           
               <!-- Note moyenne -->
               <div class="rating">
@@ -164,10 +165,10 @@
                   <img
                     *ngIf="avis.utilisateur?.image"
                     [src]="avis.utilisateur?.image"
-                    alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}"
+                    alt="{{ avis.utilisateur?.nom || 'Client anonyme' }}"
                     class="user-image"
                   />
-                  <label>{{ avis.utilisateur?.nom || 'Client anonyme' }}</label>
+                  <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
           
                   <div class="review-header">
                     <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>

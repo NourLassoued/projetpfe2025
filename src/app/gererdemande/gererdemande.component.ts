@@ -195,8 +195,8 @@ prestataireImageUrls: string[] = [];
           console.log('Aucune image disponible pour ce service');
         }
         if (this.demande?.servicee?.idservice) {
-          this.utilisateurService.getPrestatairesCompatibles((this.demande.idDemande!)).subscribe(
-            (utilisateurs: any[]) => {
+          this.utilisateurService.getPrestatairesCompatibles((this.demande.idDemande!)).subscribe({
+            next: (utilisateurs: any[]) => {
               this.utilisateurs = utilisateurs;
   
               this.utilisateurs.forEach((utilisateur, index) => {
@@ -243,10 +243,10 @@ prestataireImageUrls: string[] = [];
                 }
               });
             },
-            (error) => {
+            error: (error) => {
               console.error('Erreur lors de la récupération des utilisateurs compatibles:', error);
             }
-          );
+          });
         }
   
         this.getPostulationsByDemande(id);

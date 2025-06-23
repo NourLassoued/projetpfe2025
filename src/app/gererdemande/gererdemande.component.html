@@ -45,7 +45,7 @@
         </div>
         <div *ngIf="showModel" class="modal">
             <div class="modal-content">
-              <span class="close" (click)="closeModel()">&times;</span>
+              <span class="close" (click)="closeModel()" (keydown.enter)="closeModel()" (keydown.space)="closeModel()">&times;</span>
           
               <h2>Modifier ma demande</h2>
               <form (ngSubmit)="updateDemande()">
@@ -74,8 +74,9 @@
             <h3>Discussion publique</h3>
             <div *ngFor="let postulation of postulations ; let i = index" class="comment">
                 <div class="comment-header">
-                  <img *ngIf="prestataireImageUrls[i]" [src]="prestataireImageUrls[i]" alt="Image du prestataire"
-                  class="profile-pic"     (click)="goToProfile(postulation.prestataire?.idUtilisateur, utilisateurId, demandeId)">
+                  <img *ngIf="prestataireImageUrls[i]" [src]="prestataireImageUrls[i]" alt=""
+                  class="profile-pic" (click)="goToProfile(postulation.prestataire?.idUtilisateur, utilisateurId, demandeId)"
+                  (keydown.enter)="goToProfile(postulation.prestataire?.idUtilisateur, utilisateurId, demandeId)">
 
 
 
@@ -95,7 +96,7 @@
         
         
         <p class="score">
-          <img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
+          <img *ngIf="utilisateur.image" [src]="utilisateur.image" alt="{{ utilisateur.nom }}" class="profile-pic">
      
           <span class="score-value" *ngIf="scoreMap[utilisateur.idUtilisateur!] !== undefined">
             <h4>{{ utilisateur.nom }}</h4>
