@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
 
 
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-	<link rel="shortcut icon" href="favicon.ico">
 
 
-	<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+<link rel="shortcut icon" href="favicon.ico">
 
 
-	<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
 
-</head>
+
+<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+
+
 
 <body class="app">
 	<header class="app-header fixed-top">
@@ -41,17 +40,17 @@
 						<div class="search-mobile-trigger d-sm-none col">
 							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
 						</div>
-					
+
 
 						<div class="app-utilities col-auto">
-						
-							
+
+
 
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
-									role="button" aria-expanded="false"><ng-container
-										*ngIf="profileImageUrl; else defaultIcon">
-										<img [src]="profileImageUrl" alt="Photo de profil" class="profile-img">
+									role="button" aria-expanded="false">
+									<ng-container *ngIf="profileImageUrl; else defaultIcon">
+										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
 									<ng-template #defaultIcon>
 										<i class="fas fa-user-circle profile-icon"></i>
@@ -76,9 +75,8 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="Photo de profil" class="profile-img"><span
-							class="logo-text">SOS service Tunisie</span></a>
-
+							[src]="profileImageUrl" alt="" class="profile-img"><span class="logo-text">SOS service
+							Tunisie</span></a>
 				</div>
 				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
 					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
@@ -238,27 +236,27 @@
 					<div class="col-auto">
 						<div class="page-utilities">
 							<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-								
-							
-								
+
+
+
 							</div>
 						</div>
 					</div>
 				</div>
 
 
-				<nav id="orders-table-tab"
-					class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-					<a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab"
-						href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
-					<a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab"
-						href="#orders-paid" role="tab" aria-controls="orders-paid"
-						aria-selected="false">Particuliers</a>
-					<a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab"
-						href="#orders-pending" role="tab" aria-controls="orders-pending"
-						aria-selected="false">Entreprise</a>
+			<nav id="orders-table-tab"
+     class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4"
+     role="tablist"
+     aria-label="Filtrer les commandes par type d’utilisateur">
+  <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab"
+     href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
+  <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab"
+     href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Particuliers</a>
+  <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab"
+     href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Entreprise</a>
+</nav>
 
-				</nav>
 
 
 				<div class="tab-content" id="orders-table-tab-content">
@@ -323,13 +321,16 @@
 											<tr *ngFor="let prestataire of pagedPrestataires">
 												<td class="cell">
 													<img *ngIf="prestataire.image" [src]="prestataire.image"
-														alt="Photo de {{ prestataire.nom }}" class="profile-pic">
+														alt="{{ prestataire.nom }}" class="profile-pic">
 													<i *ngIf="!prestataire.image" class="fa fa-user profile-pic"></i>
 												</td>
+
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'nom'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null">
+														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null"
+														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null"
+														tabindex="0" role="button">
 														{{ prestataire.nom }}
 													</span>
 
@@ -339,12 +340,16 @@
 														(blur)="updateUserInTable(prestataire.idUtilisateur, 'nom', prestataire.nom)"
 														placeholder="Nom">
 												</td>
+
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'email'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null">
+														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null"
+														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null"
+														tabindex="0" role="button">
 														{{ prestataire.email }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'email'"
@@ -358,9 +363,12 @@
 
 													<span
 														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'telephoneNumber'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null">
+														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null"
+														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null"
+														tabindex="0" role="button">
 														{{ prestataire.telephoneNumber }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'telephoneNumber'"
@@ -372,11 +380,12 @@
 													<span
 														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'status'"
 														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'status', prestataire.status) : null"
-														[ngClass]="{
-															'status-accepte': prestataire.status === 'ACCEPTE',
-															'status-refuse': prestataire.status === 'REFUSE',
-															'status-attente': prestataire.status === 'ATTENTE'
-														  }">
+														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'status', prestataire.status) : null"
+														tabindex="0" role="button" [ngClass]="{
+      'status-accepte': prestataire.status === 'ACCEPTE',
+      'status-refuse': prestataire.status === 'REFUSE',
+      'status-attente': prestataire.status === 'ATTENTE'
+    }">
 														{{ prestataire.status }}
 													</span>
 
@@ -391,13 +400,16 @@
 												</td>
 
 
-												<td class="cell">
 
+												<td class="cell">
 													<span
 														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'tarifs'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null">
+														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null"
+														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null"
+														tabindex="0" role="button">
 														{{ prestataire.tarifs }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'tarifs'"
@@ -409,7 +421,9 @@
 
 												<td class="cell">
 													<i #calendarIcon class="fas fa-calendar-alt clickable-icon"
-														(click)="showDisponibilites(prestataire)">
+														(click)="showDisponibilites(prestataire)"
+														(keydown.enter)="showDisponibilites(prestataire)" tabindex="0"
+														role="button" aria-label="Afficher les disponibilités">
 													</i>
 												</td>
 
@@ -434,7 +448,9 @@
 
 													<span
 														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'workExperience'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null">
+														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null"
+														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null"
+														tabindex="0" role="button">
 														{{ prestataire.workExperience }}
 													</span>
 
@@ -537,8 +553,8 @@
 											<tr
 												*ngFor="let utilisateur of pagedUtilisateursParticuliers;  let i = index">
 												<td class="cell">
-													<img *ngIf="utilisateur.image" [src]="utilisateur.image"
-														alt="Photo de {{ utilisateur.nom }}" class="profile-pic">
+													<img *ngIf="utilisateur.image" [src]="utilisateur.image" alt=""
+														class="profile-pic">
 													<i *ngIf="!utilisateur.image" class="fa fa-user profile-pic"></i>
 												</td>
 												<td class="cell">{{ utilisateur.nom }}</td>
@@ -550,9 +566,12 @@
 
 													<span
 														*ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'telephoneNumber'"
-														(click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null">
+														(click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null"
+														(keydown.enter)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null"
+														tabindex="0" role="button">
 														{{ utilisateur.telephoneNumber }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'telephoneNumber'"
@@ -564,13 +583,15 @@
 													<span
 														*ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'status'"
 														(click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'status', utilisateur.status) : null"
-														[ngClass]="{
-															'status-accepte': utilisateur.status === 'ACCEPTE',
-															'status-refuse': utilisateur.status === 'REFUSE',
-															'status-attente': utilisateur.status === 'ATTENTE'
-														  }">
+														(keydown.enter)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'status', utilisateur.status) : null"
+														tabindex="0" role="button" [ngClass]="{
+    'status-accepte': utilisateur.status === 'ACCEPTE',
+    'status-refuse': utilisateur.status === 'REFUSE',
+    'status-attente': utilisateur.status === 'ATTENTE'
+  }">
 														{{ utilisateur.status }}
 													</span>
+
 
 													<select
 														*ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'status'"
@@ -658,16 +679,19 @@
 											<tr *ngFor="let entreprise of pagedEntreprises">
 
 												<td class="cell">
-													<img *ngIf="entreprise.image" [src]="entreprise.image"
-														alt="Photo de {{ entreprise.nom }}" class="profile-pic">
+													<img *ngIf="entreprise.image" [src]="entreprise.image" alt=""
+														class="profile-pic">
 													<i *ngIf="!entreprise.image" class="fa fa-user profile-pic"></i>
 												</td>
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'nom'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nom', entreprise.nom) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nom', entreprise.nom) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nom', entreprise.nom) : null"
+														tabindex="0" role="button">
 														{{ entreprise.nom }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'nom'"
@@ -678,7 +702,9 @@
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'nomEntreprise'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise) : null"
+														tabindex="0" role="button">
 														{{ entreprise.nomEntreprise }}
 													</span>
 
@@ -691,9 +717,12 @@
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'email'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'email', entreprise.email) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'email', entreprise.email) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'email', entreprise.email) : null"
+														tabindex="0" role="button">
 														{{ entreprise.email }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'email'"
@@ -707,9 +736,12 @@
 
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'telephoneNumber'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber) : null"
+														tabindex="0" role="button">
 														{{ entreprise.telephoneNumber }}
 													</span>
+
 
 													<input
 														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'telephoneNumber'"
@@ -721,13 +753,15 @@
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'status'"
 														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'status', entreprise.status) : null"
-														[ngClass]="{
-															'status-accepte': entreprise.status === 'ACCEPTE',
-															'status-refuse': entreprise.status === 'REFUSE',
-															'status-attente': entreprise.status === 'ATTENTE'
-														  }">
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'status', entreprise.status) : null"
+														tabindex="0" role="button" [ngClass]="{
+    'status-accepte': entreprise.status === 'ACCEPTE',
+    'status-refuse': entreprise.status === 'REFUSE',
+    'status-attente': entreprise.status === 'ATTENTE'
+  }">
 														{{ entreprise.status }}
 													</span>
+
 
 													<select
 														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'status'"
@@ -743,16 +777,22 @@
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'siret'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siret', entreprise.siret) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siret', entreprise.siret) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siret', entreprise.siret) : null"
+														tabindex="0" role="button">
 														{{ entreprise.siret }}
 													</span>
+
 												</td>
 												<td class="cell">
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'siteWeb'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siteWeb', entreprise.siteWeb) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siteWeb', entreprise.siteWeb) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siteWeb', entreprise.siteWeb) : null"
+														tabindex="0" role="button">
 														{{ entreprise.siteWeb }}
 													</span>
+
 
 
 													<input
@@ -786,7 +826,9 @@
 
 													<span
 														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'workExperience'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience) : null">
+														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience) : null"
+														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience) : null"
+														tabindex="0" role="button">
 														{{ entreprise.workExperience }}
 													</span>
 
@@ -878,5 +920,3 @@
 	<script src="assetsadmin/js/app.js"></script>
 
 </body>
-
-</html>

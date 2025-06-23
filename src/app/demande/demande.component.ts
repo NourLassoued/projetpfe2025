@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 
 
@@ -17,25 +17,25 @@ import { ForgetPasswordService } from '../service/forget-password.service';
   selector: 'app-demande',
   templateUrl: './demande.component.html',
   styleUrls: ['./demande.component.css'],
- 
+
 })
-export class DemandeComponent  {
+export class DemandeComponent {
   today: Date = new Date();
 
   adresses: Adresse[] = [];
   demandeForm!: FormGroup;
-  currentMonth: Date = new Date(); 
-  
+  currentMonth: Date = new Date();
+
   unknownHours: boolean = false;
   selectedAdresse: any = '';
   step: number = 1;
-  showResetForm = false; 
+  showResetForm = false;
   resetPasswordForm!: FormGroup;
   selectedTimee: string = "";
-  services: Servicee[] = []; 
+  services: Servicee[] = [];
   showModal: boolean = false;
-  
-  utilisateurs: Utilisateur[] = []; 
+
+  utilisateurs: Utilisateur[] = [];
   weekDays: string[] = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
   hours: string[] = [
     "07:00", "07:30", "08:00", "08:30", "09:00", "09:30",
@@ -46,55 +46,55 @@ export class DemandeComponent  {
   ];
   daysInMonth: { day: number, date: Date }[] = [];
   showPasswordInput: boolean = false;
-  
+
   selectedDate: Date | null = null;
 
   adresseSelectionnée!: Adresse;
-  
+
 
   errorMessage: string = '';
   serviceSelectionné!: Servicee;
   utilisateurActuel!: Utilisateur;
   isterForm: FormGroup | undefined;
-   selectedFile: File | null = null;
-   selectedTime: number = 4;
-   showCalendar: boolean = false;
-   
-  constructor(private  readonly fb: FormBuilder, 
-    private readonly utilisateurservice:UtilisateurService,
-  private readonly adresse:AdresseService,
+  selectedFile: File | null = null;
+  selectedTime: number = 4;
+  showCalendar: boolean = false;
 
-private readonly route: ActivatedRoute,
-private readonly authService: AuthServiceService,
-private readonly  router: Router,
- private readonly forgetPasswordService:ForgetPasswordService, ) {
-  
-  
-}
+  constructor(private readonly fb: FormBuilder,
+    private readonly utilisateurservice: UtilisateurService,
+    private readonly adresse: AdresseService,
+
+    private readonly route: ActivatedRoute,
+    private readonly authService: AuthServiceService,
+    private readonly router: Router,
+    private readonly forgetPasswordService: ForgetPasswordService,) {
+
+
+  }
   ngOnInit() {
-    this.today.setHours(0, 0, 0, 0); 
-    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1); 
-    console.log("Mois actuel : ", this.currentMonth); 
-  
+    this.today.setHours(0, 0, 0, 0);
+    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
+    console.log("Mois actuel : ", this.currentMonth);
+
     this.updateCalendar();
- 
+
     this.demandeForm = this.fb.group({
       emailUtilisateur: ['', [Validators.required, Validators.email]],
       description: ['', Validators.required],
       date: ['', Validators.required],
       heureTravail: ['', Validators.required],
-      idService: ['', Validators.required], 
-      idAdresse: ['', Validators.required] ,
-      title: ['', Validators.required],  
-  telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
-  password: ['', [Validators.required, Validators.minLength(6)]], 
+      idService: ['', Validators.required],
+      idAdresse: ['', Validators.required],
+      title: ['', Validators.required],
+      telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.route.queryParams.subscribe(params => {
       const idService = params['idservice'];
       if (idService) {
         this.serviceSelectionné = { idservice: idService, nomservice: '' };
-        
-        if (this.demandeForm) {  
+
+        if (this.demandeForm) {
           this.demandeForm.patchValue({
             idService: idService
           });
@@ -102,9 +102,9 @@ private readonly  router: Router,
       }
     });
 
-this.resetPasswordForm = this.fb.group({
-  emailUtilisateur: ['', [Validators.required, Validators.email]]
-});
+    this.resetPasswordForm = this.fb.group({
+      emailUtilisateur: ['', [Validators.required, Validators.email]]
+    });
 
     this.loadAdresses();
 
@@ -112,35 +112,35 @@ this.resetPasswordForm = this.fb.group({
 
 
 
-    
+
   }
 
   openModal() {
-  
+
     this.showModal = true;
   }
   closeModal() {
-   
+
     this.showModal = false;
   }
   submitDemande() {
-    
+
     if (this.demandeForm.invalid) {
       console.warn(" Formulaire invalide", this.demandeForm.value);
       return;
-      
+
     }
-  
+
     const emailUtilisateur = this.demandeForm.value.emailUtilisateur;
     const idService = this.demandeForm.value.idService;
     const idAdresse = this.demandeForm.value.idAdresse;
     const description = this.demandeForm.value.description;
-    const password = this.demandeForm.value.password; 
+    const password = this.demandeForm.value.password;
     const date = this.demandeForm.value.date;
     const heureTravail = this.demandeForm.value.heureTravail;
-    const title = this.demandeForm.value.title;  
+    const title = this.demandeForm.value.title;
     const telephoneNumber = this.demandeForm.value.telephoneNumber;
-  
+
     const utilisateur = this.utilisateurs.find(u => u.email === emailUtilisateur);
     const service = this.services.find(s => s.idservice === idService);
     const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
@@ -155,11 +155,11 @@ this.resetPasswordForm = this.fb.group({
           date: date,
           heureTravail: heureTravail,
           demandephoto: this.selectedFile ? this.selectedFile.name : undefined,
-          servicee: service, 
-          adressedemande: adresse,  
+          servicee: service,
+          adressedemande: adresse,
           utilisateur: utilisateur,
-          title: title, 
-          telephoneNumber: telephoneNumber  
+          title: title,
+          telephoneNumber: telephoneNumber
         };
 
         this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe({
@@ -186,30 +186,30 @@ this.resetPasswordForm = this.fb.group({
       }
     });
   }
-  
+
 
   selectTime(hour: number) {
     if (!this.unknownHours) {
-    
+
       this.demandeForm.controls['heureTravail'].setValue(hour);
-      this.selectedTime = hour;  
+      this.selectedTime = hour;
     }
   }
   selectTimee(hour: string) {
     this.selectedTimee = hour;
-  
+
 
     if (this.selectedDate) {
       const selectedDateTime = new Date(this.selectedDate);
-      const [hourValue, minuteValue] = hour.split(":").map(val => parseInt(val));  
-      selectedDateTime.setHours(hourValue, minuteValue);  
+      const [hourValue, minuteValue] = hour.split(":").map(val => parseInt(val));
+      selectedDateTime.setHours(hourValue, minuteValue);
       this.selectedDate = selectedDateTime;
-  
-  
+
+
       this.demandeForm.patchValue({ date: selectedDateTime });
     }
   }
-  
+
   adjustHeure(action: 'increase' | 'decrease') {
     let currentValue = this.demandeForm.controls['heureTravail'].value;
 
@@ -219,42 +219,42 @@ this.resetPasswordForm = this.fb.group({
       currentValue -= 1;
     }
 
-    this.demandeForm.controls['heureTravail'].setValue(currentValue); 
+    this.demandeForm.controls['heureTravail'].setValue(currentValue);
   }
   toggleUnknownHours() {
     if (this.unknownHours) {
 
       this.demandeForm.controls['heureTravail'].disable();
-      this.demandeForm.controls['heureTravail'].setValue(null);  
+      this.demandeForm.controls['heureTravail'].setValue(null);
     } else {
 
       this.demandeForm.controls['heureTravail'].enable();
-      this.demandeForm.controls['heureTravail'].setValue(4); 
+      this.demandeForm.controls['heureTravail'].setValue(4);
     }
   }
   onFileSelected(event: any, type?: string) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-     
+
     }
   }
-  
 
-    selectDate(date: Date): void {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); 
-      
-      if (date < today) {
-        return; 
-      }
-    
-      this.selectedDate = date;
-      this.demandeForm.controls['date'].setValue(date);
+
+  selectDate(date: Date): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (date < today) {
+      return;
     }
-    
-  
-    
+
+    this.selectedDate = date;
+    this.demandeForm.controls['date'].setValue(date);
+  }
+
+
+
   nextStepe() {
     this.showCalendar = true;
     if (this.step < 4) {
@@ -268,40 +268,40 @@ this.resetPasswordForm = this.fb.group({
       this.step--;
     }
   }
-  
-    updateCalendar() {
-      const year = this.currentMonth.getFullYear();
-      const month = this.currentMonth.getMonth();
-    
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const firstDayOfWeek = new Date(year, month, 1).getDay();
-      const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-    
-      this.daysInMonth = [];
-    
-      for (let i = 0; i < offset; i++) {
-        this.daysInMonth.push({ day: 0, date: new Date(year, month, i - offset + 1) });
-      }
-    
-      for (let i = 1; i <= daysInMonth; i++) {
-        this.daysInMonth.push({ day: i, date: new Date(year, month, i) });
-      }
+
+  updateCalendar() {
+    const year = this.currentMonth.getFullYear();
+    const month = this.currentMonth.getMonth();
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+
+    this.daysInMonth = [];
+
+    for (let i = 0; i < offset; i++) {
+      this.daysInMonth.push({ day: 0, date: new Date(year, month, i - offset + 1) });
     }
-    
-    prevMonth() {
-      const prev = new Date(this.currentMonth);
-      prev.setMonth(prev.getMonth() - 1);
-    
-      const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
-      
-      if (prev < currentMonthStart) {
-        return;
-      }
-    
-      this.currentMonth = prev;
-      this.updateCalendar();
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      this.daysInMonth.push({ day: i, date: new Date(year, month, i) });
     }
-    
+  }
+
+  prevMonth() {
+    const prev = new Date(this.currentMonth);
+    prev.setMonth(prev.getMonth() - 1);
+
+    const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
+
+    if (prev < currentMonthStart) {
+      return;
+    }
+
+    this.currentMonth = prev;
+    this.updateCalendar();
+  }
+
 
   nextMonth() {
     this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
@@ -314,16 +314,16 @@ this.resetPasswordForm = this.fb.group({
       this.currentMonth.getMonth() === this.today.getMonth()
     );
   }
-  
 
- 
+
+
 
   nextStep() {
     this.showCalendar = true;
   }
 
   previousStep() {
-   
+
     this.showCalendar = false;
   }
 
@@ -332,11 +332,11 @@ this.resetPasswordForm = this.fb.group({
       this.adresses = data;
     });
   }
-  
+
   resetPassword() {
     if (this.resetPasswordForm.valid) {
-    
-     
+
+
       this.closeModal();
     }
   }
@@ -345,13 +345,13 @@ this.resetPasswordForm = this.fb.group({
       this.errorMessage = 'Veuillez entrer une adresse e-mail valide.';
       return;
     }
-  
+
     const email = this.resetPasswordForm.value.email;
-  
+
     this.forgetPasswordService.verifyEmail(email).subscribe({
       next: (response) => {
-      
-      
+
+
         this.router.navigate(['/new']);
       },
       error: (err) => {

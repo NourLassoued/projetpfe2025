@@ -30,11 +30,11 @@ export class ReservationComponent {
   imageUrls: { [key: number]: string } = {};
   user: any = null;
   showPaymentModal = false;
-  constructor(private  readonly route: ActivatedRoute,
-    private  readonly reservationService: ReservationService,
+  constructor(private readonly route: ActivatedRoute,
+    private readonly reservationService: ReservationService,
     private readonly fileService: FileService,
-    private readonly  toastr: ToastrService,
-    private readonly  router: Router,
+    private readonly toastr: ToastrService,
+    private readonly router: Router,
     private readonly payment: PaymentService
 
   ) { }

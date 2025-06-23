@@ -1,77 +1,83 @@
 <app-navbarcompte></app-navbarcompte>
 
-
-
 <body>
-   
-    <div class="container">
-        <aside class="sidebar">
-            <ul>
-                <ul>
-                    <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
-                    <li routerLink="/Mesdemandes" (click)="toggleDemandes()" (keydown)="toggleDemandes()">
-                        📋 Mes demandes
-                        <span *ngIf="showDemandes">
-                            <i class="fa fa-chevron-down"></i> 
-                          </span>
-                          <span *ngIf="!showDemandes">
-                            <i class="fa fa-chevron-right"></i> 
-                          </span>
-                    </li>
-                    <ul *ngIf="showDemandes" class="submenu">
-                        <li routerLink="/Mesdemandeterminees">Demandes de service clôturées</li>
-                        <li routerLink="/Mesdemandesarchivees">Mes Demandes Archivées</li>
-                       
-                    </ul>
-                   
-                    <li routerLink="/Reservationcours">📅 Réservations en cours</li>
-                    <li routerLink="/Historique">📜Mon historique</li>
-                    <li routerLink="/Mestransactions">💰 Mes transactions</li>
-                    <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
-<li>
-          <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0"
-            style="background:none;border:none;padding:0;cursor:pointer; color:  #66696e;">
-            🚪 Se déconnecter
-          </button>
-          </li>                 </ul>
-                
-            </ul>
-        </aside>
-        <div class="content">
-            <h2 >💰 Mes transactions </h2>
-      
-            <div *ngIf="payments && payments.length > 0; else noPayments">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nom du prestataire</th>
-                    <th>Montant</th>
-                    <th>Mode de paiement</th>
-                    <th>Statut</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let payment of paginatedPayments">
-                    <td>{{ payment.prestataire
-                        ?.nom }}</td>
-                    <td>{{ payment.amount }} TND</td>
-                    <td>{{ payment.modePaiement }}</td>
-                    <td>{{ payment.paymentStatus }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-      
-            <ng-template #noPayments>
-              <p>Aucun paiement trouvé pour cet utilisateur.</p>
-            </ng-template>
-          </div>
-        </div>
-        <div class="pagination">
-          <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Précédent</button>
-        
-          <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-        
-          <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Suivant</button>
-        </div>
-</body>      
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <ul>
+          <li routerLink="/Compteparticulier">📌Tableau de bord</li>
+          <li routerLink="/Mesdemandes" (click)="toggleDemandes()" (keydown)="toggleDemandes()">
+            📋 Mes demandes
+            <span *ngIf="showDemandes">
+              <i class="fa fa-chevron-down"></i>
+            </span>
+            <span *ngIf="!showDemandes">
+              <i class="fa fa-chevron-right"></i>
+            </span>
+          </li>
+          <ul *ngIf="showDemandes" class="submenu">
+            <li routerLink="/Mesdemandeterminees">
+              Demandes de service clôturées
+            </li>
+            <li routerLink="/Mesdemandesarchivees">Mes Demandes Archivées</li>
+          </ul>
+
+          <li routerLink="/Reservationcours">📅 Réservations en cours</li>
+          <li routerLink="/Historique">📜Mon historique</li>
+          <li routerLink="/Mestransactions">💰 Mes transactions</li>
+          <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
+          <li>
+            <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0" style="
+                background: none;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                color: #66696e;
+              ">
+              🚪 Se déconnecter
+            </button>
+          </li>
+        </ul>
+      </ul>
+    </aside>
+    <div class="content">
+      <h2>💰 Mes transactions</h2>
+
+      <div *ngIf="payments && payments.length > 0; else noPayments">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom du prestataire</th>
+              <th>Montant</th>
+              <th>Mode de paiement</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of paginatedPayments">
+              <td>{{ payment.prestataire?.nom }}</td>
+              <td>{{ payment.amount }} TND</td>
+              <td>{{ payment.modePaiement }}</td>
+              <td>{{ payment.paymentStatus }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noPayments>
+        <p>Aucun paiement trouvé pour cet utilisateur.</p>
+      </ng-template>
+    </div>
+  </div>
+  <div class="pagination">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">
+      Précédent
+    </button>
+
+    <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">
+      Suivant
+    </button>
+  </div>
+</body>

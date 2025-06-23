@@ -23,13 +23,13 @@ export class DemandecompteComponent {
   unknownHours: boolean = false;
   selectedAdresse: any = '';
   step: number = 1;
-  showResetForm = false; 
- 
+  showResetForm = false;
+
   showCalendar: boolean = false;
   selectedTimee: string = "";
   services: Servicee[] = [];
   showModal: boolean = false;
-  utilisateurs: Utilisateur[] = []; 
+  utilisateurs: Utilisateur[] = [];
   weekDays: string[] = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
   hours: string[] = [
     "07:00", "07:30", "08:00", "08:30", "09:00", "09:30",
@@ -40,7 +40,7 @@ export class DemandecompteComponent {
   ];
   daysInMonth: { day: number, date: Date }[] = [];
   showPasswordInput: boolean = false;
-  
+
   selectedDate: Date | null = null;
 
   adresseSelectionnée!: Adresse;
@@ -51,16 +51,16 @@ export class DemandecompteComponent {
   serviceSelectionné!: Servicee;
   utilisateurActuel!: Utilisateur;
   isterForm: FormGroup | undefined;
-   selectedFile: File | null = null;
-   selectedTime: number = 4; 
-   
-   
-  constructor(private readonly fb: FormBuilder, 
-  private readonly utilisateurservice:UtilisateurService,
-  private readonly adresse:AdresseService,
-  private readonly route: ActivatedRoute,
-  private readonly router: Router
- ) {
+  selectedFile: File | null = null;
+  selectedTime: number = 4;
+
+
+  constructor(private readonly fb: FormBuilder,
+    private readonly utilisateurservice: UtilisateurService,
+    private readonly adresse: AdresseService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
     this.demandeForm = this.fb.group({
@@ -76,38 +76,38 @@ export class DemandecompteComponent {
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-    
-      this.serviceId = +params['idservice'];  
-      this.email = params['email'];  
-       this.demandeForm.patchValue({
+
+      this.serviceId = +params['idservice'];
+      this.email = params['email'];
+      this.demandeForm.patchValue({
         emailUtilisateur: this.email,
         idService: this.serviceId
       });
-  
-     
-     
+
+
+
     });
-  
-  
-  
+
+
+
     this.loadAdresses();
-    this.today.setHours(0, 0, 0, 0); 
-    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1); 
-  
-  
+    this.today.setHours(0, 0, 0, 0);
+    this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
+
+
     this.updateCalendar();
-  
+
   }
-  
-  
+
+
   openModal() {
-  
+
     this.showModal = true;
   }
   closeModal() {
-   
+
     this.showModal = false;
-  }  
+  }
   submitDemande(): void {
     if (this.demandeForm.invalid) {
       return;
@@ -124,21 +124,21 @@ export class DemandecompteComponent {
 
 
     const utilisateur = this.utilisateurs.find(u => u.email === emailUtilisateur);
-const service = this.services.find(s => s.idservice == idService);  
-const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
+    const service = this.services.find(s => s.idservice == idService);
+    const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
 
-  
-  
- 
-  
+
+
+
+
 
     const demande: Demande = {
       description,
       date,
       heureTravail,
-      demandephoto: '',  
+      demandephoto: '',
       servicee: service,
-      adressedemande: adresse, 
+      adressedemande: adresse,
       utilisateur,
       title,
       telephoneNumber
@@ -157,26 +157,26 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
 
   selectTime(hour: number) {
     if (!this.unknownHours) {
-    
+
       this.demandeForm.controls['heureTravail'].setValue(hour);
-      this.selectedTime = hour;  
+      this.selectedTime = hour;
     }
   }
   selectTimee(hour: string) {
     this.selectedTimee = hour;
-  
+
 
     if (this.selectedDate) {
       const selectedDateTime = new Date(this.selectedDate);
-      const [hourValue, minuteValue] = hour.split(":").map(val => parseInt(val));  
-      selectedDateTime.setHours(hourValue, minuteValue);  
+      const [hourValue, minuteValue] = hour.split(":").map(val => parseInt(val));
+      selectedDateTime.setHours(hourValue, minuteValue);
       this.selectedDate = selectedDateTime;
-  
-  
+
+
       this.demandeForm.patchValue({ date: selectedDateTime });
     }
   }
-  
+
   adjustHeure(action: 'increase' | 'decrease') {
     let currentValue = this.demandeForm.controls['heureTravail'].value;
 
@@ -186,42 +186,42 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
       currentValue -= 1;
     }
 
-    this.demandeForm.controls['heureTravail'].setValue(currentValue); 
+    this.demandeForm.controls['heureTravail'].setValue(currentValue);
   }
   toggleUnknownHours() {
     if (this.unknownHours) {
 
       this.demandeForm.controls['heureTravail'].disable();
-      this.demandeForm.controls['heureTravail'].setValue(null);  
+      this.demandeForm.controls['heureTravail'].setValue(null);
     } else {
 
       this.demandeForm.controls['heureTravail'].enable();
-      this.demandeForm.controls['heureTravail'].setValue(4); 
+      this.demandeForm.controls['heureTravail'].setValue(4);
     }
   }
   onFileSelected(event: any, type?: string) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-     
+
     }
   }
-  
 
-    selectDate(date: Date): void {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); 
-      
-      if (date < today) {
-        return; 
-      }
-    
-      this.selectedDate = date;
-      this.demandeForm.controls['date'].setValue(date);
+
+  selectDate(date: Date): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (date < today) {
+      return;
     }
-    
-  
-    
+
+    this.selectedDate = date;
+    this.demandeForm.controls['date'].setValue(date);
+  }
+
+
+
   nextStepe() {
     if (this.step < 3) {
       this.step++;
@@ -234,33 +234,33 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
   updateCalendar() {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
-  
+
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = new Date(year, month, 1).getDay();
     const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-  
+
     this.daysInMonth = [];
-  
+
     for (let i = 0; i < offset; i++) {
       this.daysInMonth.push({ day: 0, date: new Date(year, month, i - offset + 1) });
     }
-  
+
     for (let i = 1; i <= daysInMonth; i++) {
       this.daysInMonth.push({ day: i, date: new Date(year, month, i) });
     }
   }
-  
+
   prevMonth() {
     const prev = new Date(this.currentMonth);
     prev.setMonth(prev.getMonth() - 1);
-  
-    
+
+
     const currentMonthStart = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
-    
+
     if (prev < currentMonthStart) {
-      return; 
+      return;
     }
-  
+
     this.currentMonth = prev;
     this.updateCalendar();
   }
@@ -275,14 +275,14 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
       this.currentMonth.getMonth() === this.today.getMonth()
     );
   }
- 
+
 
   nextStep() {
     this.showCalendar = true;
   }
 
   previousStep() {
-   
+
     this.showCalendar = false;
   }
 
@@ -292,6 +292,6 @@ const adresse = this.adresses.find(a => a.idAdresse === idAdresse);
       this.adresses = data;
     });
   }
-  
+
 }
 

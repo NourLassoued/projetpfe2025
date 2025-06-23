@@ -1,7 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
- 
+
   ElementRef,
   OnInit,
   ViewChild,
@@ -22,29 +22,29 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
   searchNomPrestataire: string = '';
-allPrestataires: any[] = [];
+  allPrestataires: any[] = [];
 
   allUtilisateursParticuliers: any[] = [];
-utilisateursParticuliers: any[] = [];
-pagedUtilisateursParticuliers: any[] = [];
-searchNomUtilisateur: string = '';
-currentPageParticuliers: number = 1;
-pageSizeParticuliers: number = 10;
-totalPagesParticuliers: number = 1;
+  utilisateursParticuliers: any[] = [];
+  pagedUtilisateursParticuliers: any[] = [];
+  searchNomUtilisateur: string = '';
+  currentPageParticuliers: number = 1;
+  pageSizeParticuliers: number = 10;
+  totalPagesParticuliers: number = 1;
 
   earchNomUtilisateur: string = '';
   filteredEntreprises: any[] = [];
 
 
 
-  prestataires: any[] = []; 
-pagedPrestataires: any[] = [];
-currentPage = 1;
-pageSize = 7; 
-totalPages = 0;
-searchNomEntreprise = '';
-pagedEntreprises: any[] = [];
-searchKeyword: string = '';
+  prestataires: any[] = [];
+  pagedPrestataires: any[] = [];
+  currentPage = 1;
+  pageSize = 7;
+  totalPages = 0;
+  searchNomEntreprise = '';
+  pagedEntreprises: any[] = [];
+  searchKeyword: string = '';
 
   @ViewChild('calendarIcon') calendarIcon!: ElementRef;
   entreprises: Utilisateur[] = [];
@@ -55,9 +55,9 @@ searchKeyword: string = '';
   utilisateursEntreprises: Utilisateur[] = [];
 
 
-currentPageEntreprises = 1;
-pageSizeEntreprises = 5;
-totalPagesEntreprises = 0;
+  currentPageEntreprises = 1;
+  pageSizeEntreprises = 5;
+  totalPagesEntreprises = 0;
   image: SafeUrl | null = null;
   sanitizer: any;
 
@@ -67,8 +67,8 @@ totalPagesEntreprises = 0;
 
   constructor(
     private readonly utilisateurService: UtilisateurService,
-    public  readonly dialog: MatDialog,
-    private  readonly fileservice: FileService,
+    public readonly dialog: MatDialog,
+    private readonly fileservice: FileService,
 
     private readonly cdr: ChangeDetectorRef,
     private readonly router: Router
@@ -97,59 +97,53 @@ totalPagesEntreprises = 0;
   }
 
   getAllPrestataires(): void {
-    this.utilisateurService.getPrestataires().subscribe(
-      (data) => {
-        this.prestataires = data.map((prestataire) => ({
-          ...prestataire,
-          disponibilites: prestataire.disponibilite || [],
-          showFullDescription: false,
-          servicesOfferts: prestataire.servicesOfferts
-            ? prestataire.servicesOfferts.map((service) => ({
-              ...service,
-              nomservice: service.nomservice
-                ? service.nomservice.replace(/[\r\n]+/g, '').trim()
-                : '',
-            }))
-            : [],
-          profileImageUrl: null,
-          adresse: prestataire.adressee ? prestataire.adressee.governoate : '',
-          doucument_CIN: prestataire.doucument_CIN,
-          doucument_cv: prestataire.doucument_cv,
-        }));
-        this.allPrestataires = [...this.prestataires];
+   this.utilisateurService.getPrestataires().subscribe({
+  next: (data) => {
+    this.prestataires = data.map((prestataire) => ({
+      ...prestataire,
+      disponibilites: prestataire.disponibilite || [],
+      showFullDescription: false,
+      servicesOfferts: prestataire.servicesOfferts
+        ? prestataire.servicesOfferts.map((service) => ({
+            ...service,
+            nomservice: service.nomservice
+              ? service.nomservice.replace(/[\r\n]+/g, '').trim()
+              : '',
+          }))
+        : [],
+      profileImageUrl: null,
+      adresse: prestataire.adressee ? prestataire.adressee.governoate : '',
+      doucument_CIN: prestataire.doucument_CIN,
+      doucument_cv: prestataire.doucument_cv,
+    }));
+    this.allPrestataires = [...this.prestataires];
 
-     
-         this.prestataires.forEach((prestataire) => {
-          if (prestataire.image) {
-            this.loadProfileImage(prestataire);
-          }
-        });
-                  this.setPage(1)
-
-         this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
-        this.filterPrestatairesByNom();
-      
-
-       
-     
-        this.cdr.detectChanges(); 
-    
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des prestataires', error);
+    this.prestataires.forEach((prestataire) => {
+      if (prestataire.image) {
+        this.loadProfileImage(prestataire);
       }
-    );
+    });
+    this.setPage(1);
+    this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
+    this.filterPrestatairesByNom();
+
+    this.cdr.detectChanges();
+  },
+  error: (error) => {
+    console.error('Erreur lors du chargement des prestataires', error);
   }
-filterPrestatairesByNom(): void {
-  const search = this.searchNomPrestataire.toLowerCase();
+});
+  }
+  filterPrestatairesByNom(): void {
+    const search = this.searchNomPrestataire.toLowerCase();
 
-  this.prestataires = this.allPrestataires.filter(prestataire =>
-    prestataire.nom?.toLowerCase().includes(search)
-  );
+    this.prestataires = this.allPrestataires.filter(prestataire =>
+      prestataire.nom?.toLowerCase().includes(search)
+    );
 
-  this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
-  this.setPage(1);
-}
+    this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
+    this.setPage(1);
+  }
 
 
 
@@ -223,10 +217,10 @@ filterPrestatairesByNom(): void {
         });
         this.totalPagesParticuliers = Math.ceil(this.utilisateursParticuliers.length / this.pageSizeParticuliers);
 
-      this.setPageParticuliers(1);
+        this.setPageParticuliers(1);
         this.allUtilisateursParticuliers = [...this.utilisateursParticuliers];
-        this.filterUtilisateursByNom(); 
-        this.cdr.detectChanges(); 
+        this.filterUtilisateursByNom();
+        this.cdr.detectChanges();
       },
       (error) => {
         console.error('Erreur lors du chargement des particuliers', error);
@@ -234,27 +228,27 @@ filterPrestatairesByNom(): void {
     );
   }
   filterUtilisateursByNom(): void {
-  const search = this.searchNomUtilisateur.toLowerCase();
+    const search = this.searchNomUtilisateur.toLowerCase();
 
-  this.utilisateursParticuliers = this.allUtilisateursParticuliers.filter(utilisateur =>
-    utilisateur.nom?.toLowerCase().includes(search)
-  );
+    this.utilisateursParticuliers = this.allUtilisateursParticuliers.filter(utilisateur =>
+      utilisateur.nom?.toLowerCase().includes(search)
+    );
 
-  this.totalPagesParticuliers = Math.ceil(this.utilisateursParticuliers.length / this.pageSizeParticuliers);
+    this.totalPagesParticuliers = Math.ceil(this.utilisateursParticuliers.length / this.pageSizeParticuliers);
 
-  this.setPageParticuliers(1);
-}
-setPageParticuliers(page: number): void {
-  if (page < 1) page = 1;
-  if (page > this.totalPagesParticuliers) page = this.totalPagesParticuliers;
+    this.setPageParticuliers(1);
+  }
+  setPageParticuliers(page: number): void {
+    if (page < 1) page = 1;
+    if (page > this.totalPagesParticuliers) page = this.totalPagesParticuliers;
 
-  this.currentPageParticuliers = page;
+    this.currentPageParticuliers = page;
 
-  const startIndex = (page - 1) * this.pageSizeParticuliers;
-  const endIndex = startIndex + this.pageSizeParticuliers;
+    const startIndex = (page - 1) * this.pageSizeParticuliers;
+    const endIndex = startIndex + this.pageSizeParticuliers;
 
-  this.pagedUtilisateursParticuliers = this.utilisateursParticuliers.slice(startIndex, endIndex);
-}
+    this.pagedUtilisateursParticuliers = this.utilisateursParticuliers.slice(startIndex, endIndex);
+  }
   getAllEntreprises(): void {
     this.utilisateurService.getAllEntreprises().subscribe(
       (data) => {
@@ -278,13 +272,13 @@ setPageParticuliers(page: number): void {
           if (entreprise.image) {
             this.loadProfileImage(entreprise);
           }
-                this.filterUtilisateursByNom(); 
+          this.filterUtilisateursByNom();
 
         });
-        
+
         this.totalPagesEntreprises = Math.ceil(this.entreprises.length / this.pageSizeEntreprises);
-        this.filteredEntreprises = [...this.entreprises]; 
-      this.setPageEntreprises(1);
+        this.filteredEntreprises = [...this.entreprises];
+        this.setPageEntreprises(1);
 
       },
       (error) => {
@@ -292,17 +286,17 @@ setPageParticuliers(page: number): void {
       }
     );
   }
-filterEntreprisesByNom(): void {
-  const keyword = this.searchNomEntreprise?.toLowerCase().trim() || '';
+  filterEntreprisesByNom(): void {
+    const keyword = this.searchNomEntreprise?.toLowerCase().trim() || '';
 
-  this.filteredEntreprises = this.entreprises.filter((entreprise) => {
-    const nom = (entreprise.nom || '').toLowerCase();
-    return nom.includes(keyword);
-  });
+    this.filteredEntreprises = this.entreprises.filter((entreprise) => {
+      const nom = (entreprise.nom || '').toLowerCase();
+      return nom.includes(keyword);
+    });
 
-  this.totalPagesEntreprises = Math.ceil(this.filteredEntreprises.length / this.pageSizeEntreprises);
-  this.setPageEntreprises(1);
-}
+    this.totalPagesEntreprises = Math.ceil(this.filteredEntreprises.length / this.pageSizeEntreprises);
+    this.setPageEntreprises(1);
+  }
 
 
 
@@ -377,23 +371,30 @@ filterEntreprisesByNom(): void {
   }
 
   setPage(page: number) {
-  if (page < 1) page = 1;
-  if (page > this.totalPages) page = this.totalPages;
+    if (page < 1) page = 1;
+    if (page > this.totalPages) page = this.totalPages;
 
-  this.currentPage = page;
-  const startIndex = (page - 1) * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-  this.pagedPrestataires = this.prestataires.slice(startIndex, endIndex);
-}
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.pagedPrestataires = this.prestataires.slice(startIndex, endIndex);
+  }
 
-setPageEntreprises(page: number): void {
-  this.currentPageEntreprises = page;
-  const start = (page - 1) * this.pageSizeEntreprises;
-  const end = start + this.pageSizeEntreprises;
-  this.pagedEntreprises = this.filteredEntreprises.slice(start, end);
-}
+  setPageEntreprises(page: number): void {
+    this.currentPageEntreprises = page;
+    const start = (page - 1) * this.pageSizeEntreprises;
+    const end = start + this.pageSizeEntreprises;
+    this.pagedEntreprises = this.filteredEntreprises.slice(start, end);
+  }
 
 
+  onKeydownToggle(event: KeyboardEvent): void {
+    event.preventDefault();
+    const target = event.target as HTMLElement | null;
+    if (target) {
+      target.click();
+    }
+  }
 
 
 }

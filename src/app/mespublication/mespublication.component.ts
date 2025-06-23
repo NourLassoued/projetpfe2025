@@ -36,10 +36,10 @@ export class MespublicationComponent {
   currentPage: number = 1;
   itemsPerPage: number = 6;
   constructor(
-    private  readonly fileService: FileService,
+    private readonly fileService: FileService,
     private readonly sanitizer: DomSanitizer,
     private readonly toastr: ToastrService,
-    private  readonly publicationService: PublicationService,
+    private readonly publicationService: PublicationService,
     private readonly router: Router,
     private readonly commaintreservice: CommentaireService,
     private readonly mmessageService: MessageService

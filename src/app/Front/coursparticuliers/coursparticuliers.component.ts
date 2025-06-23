@@ -17,7 +17,7 @@ export class CoursparticuliersComponent {
   searchQuery: string = '';
   categoryName: string = '';
   selectedServiceId!: number;
-  constructor(private  readonly file: FileService,
+  constructor(private readonly file: FileService,
     private readonly service: ServiceeService,
 
     private readonly router: Router,
@@ -134,7 +134,7 @@ export class CoursparticuliersComponent {
   currentPlaceholder: string = "";
   private index: number = 0;
   private charIndex: number = 0;
-  private  readonly typingSpeed: number = 100;
+  private readonly typingSpeed: number = 100;
   private isTyping: boolean = false;
 
 

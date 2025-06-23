@@ -28,8 +28,12 @@
                     <li routerLink="/Historique">📜Mon historique</li>
                     <li routerLink="/Mestransactions">💰 Mes transactions</li>
                     <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
-                    <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-                </ul>
+<li routerLink="/Mesévolutions">⭐Mes évolutions</li>
+<button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0" style="background:none;border:none;padding:0;cursor:pointer;">
+            🚪 Se déconnecter
+          </button>                </ul>
+                
+        
                 
             </ul>
         </aside>

@@ -1,301 +1,294 @@
 <app-navbarcompte></app-navbarcompte>
+
 <body>
-<div class="container">
+  <div class="container">
     <div class="sidebar">
-        <div id="profile-container">
-            <div class="image-wrapper">
-                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
-             
-                <div class="rating-info">
-                    <div>
-                        <strong>{{ avisList.length }}</strong> <span>⭐</span>
-                        <p>Évaluations</p>
-                    </div>
-                    <div >
-                        <strong >{{ getAverageRating() }}</strong> <span>❤️</span>
-                        <p class="rating-text">Note sur 5</p>
-                    </div>
-                   
-                    <div class="experience">
-                      
-                        <strong>🎖️{{ user?.workExperience }} ans</strong>
-                        <p> d'expérience</p>
-                    </div>
-                </div>
+      <div id="profile-container">
+        <div class="image-wrapper">
+          <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
+
+          <div class="rating-info">
+            <div>
+              <strong>{{ avisList.length }}</strong> <span>⭐</span>
+              <p>Évaluations</p>
             </div>
+            <div>
+              <strong>{{ getAverageRating() }}</strong> <span>❤️</span>
+              <p class="rating-text">Note sur 5</p>
+            </div>
+
+            <div class="experience">
+
+              <strong>🎖️{{ user?.workExperience }} ans</strong>
+              <p> d'expérience</p>
+            </div>
+          </div>
         </div>
-       
-        <div class="button-container">
-            <button (click)="afficherNumero()">
-                Contacter
-            </button>
-            <button (click)="ouvrirModal(user)">
-              <i class="fa-solid fa-star"></i> Ajouter un avis
-            </button>
-            
+      </div>
+
+      <div class="button-container">
+        <button (click)="afficherNumero()">
+          Contacter
+        </button>
+        <button (click)="ouvrirModal(user)">
+          <i class="fa-solid fa-star"></i> Ajouter un avis
+        </button>
+
+      </div>
+    </div>
+
+    <div class="modal" [class.show]="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()" (keydown.enter)="closeModal()">&times;</span>
+        <h2>Donner un avis sur {{user?.nomEntreprise}}</h2>
+
+        <label for="note-stars">Note (sur 5) :</label>
+        <div id="note-stars" class="stars flex gap-1" *ngIf="avis?.note !== undefined">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <ng-container *ngIf="star <= avis.note!; else emptyStar">
+
+              <svg (click)="setNote(star)" (keydown.enter)="setNote(star)" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" class="h-6 w-6 text-yellow-400 cursor-pointer" viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.627 1.701-.627 2.002 0l1.11 2.24a1.09 1.09 0 00.818.744l2.47.358c.793.115 1.11 1.09.537 1.652l-1.786 1.738a1.09 1.09 0 00-.314 1.305l.445 2.475c.137.764-.675 1.351-1.37.987l-2.217-1.17a1.09 1.09 0 00-1.072 0l-2.217 1.17c-.695.364-1.507-.223-1.37-.987l.445-2.475a1.09 1.09 0 00-.314-1.305L3.013 7.921c-.573-.562-.256-1.537.537-1.652l2.47-.358a1.09 1.09 0 00.818-.744l1.11-2.24z" />
+              </svg>
+            </ng-container>
+            <ng-template #emptyStar>
+
+              <svg (click)="setNote(star)" (keydown.enter)="setNote(star)" xmlns="http://www.w3.org/2000/svg"
+                fill="none" stroke="currentColor" stroke-width="1.5" class="h-6 w-6 text-gray-400 cursor-pointer"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M11.48 3.499l2.047 4.148a1 1 0 00.753.547l4.605.669a1 1 0 01.554 1.705l-3.33 3.244a1 1 0 00-.287.885l.786 4.58a1 1 0 01-1.451 1.054l-4.11-2.162a1 1 0 00-.932 0l-4.11 2.162a1 1 0 01-1.451-1.054l.786-4.58a1 1 0 00-.287-.885l-3.33-3.244a1 1 0 01.554-1.705l4.605-.669a1 1 0 00.753-.547l2.047-4.148a1 1 0 011.792 0z" />
+              </svg>
+            </ng-template>
+          </ng-container>
         </div>
+
+
+
+
+        <label for="commentaire">Commentaire :</label>
+        <textarea id="commentaire" [(ngModel)]="avis.commentaire"></textarea>
+        <br>
+
+        <button class="btnenvoyer" (click)="envoyerAvis()">✅ Envoyer</button>
+      </div>
     </div>
-       
-<div class="modal" [class.show]="showModal">
-  <div class="modal-content">
-    <span class="close" (click)="closeModal()" (keydown.enter)="closeModal()">&times;</span>
-    <h2>Donner un avis sur {{user?.nomEntreprise}}</h2>
-    
-    <label for="note-stars">Note (sur 5) :</label>
-    <div id="note-stars" class="stars flex gap-1" *ngIf="avis?.note !== undefined">
-      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-        <ng-container *ngIf="star <= avis.note!; else emptyStar">
-         
-          <svg (click)="setNote(star)" (keydown.enter)="setNote(star)" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-            class="h-6 w-6 text-yellow-400 cursor-pointer" viewBox="0 0 20 20">
-            <path
-              d="M9.049 2.927c.3-.627 1.701-.627 2.002 0l1.11 2.24a1.09 1.09 0 00.818.744l2.47.358c.793.115 1.11 1.09.537 1.652l-1.786 1.738a1.09 1.09 0 00-.314 1.305l.445 2.475c.137.764-.675 1.351-1.37.987l-2.217-1.17a1.09 1.09 0 00-1.072 0l-2.217 1.17c-.695.364-1.507-.223-1.37-.987l.445-2.475a1.09 1.09 0 00-.314-1.305L3.013 7.921c-.573-.562-.256-1.537.537-1.652l2.47-.358a1.09 1.09 0 00.818-.744l1.11-2.24z" />
-          </svg>
-        </ng-container>
-        <ng-template #emptyStar>
-         
-          <svg (click)="setNote(star)" (keydown.enter)="setNote(star)" xmlns="http://www.w3.org/2000/svg" fill="none"
-            stroke="currentColor" stroke-width="1.5"
-            class="h-6 w-6 text-gray-400 cursor-pointer" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M11.48 3.499l2.047 4.148a1 1 0 00.753.547l4.605.669a1 1 0 01.554 1.705l-3.33 3.244a1 1 0 00-.287.885l.786 4.58a1 1 0 01-1.451 1.054l-4.11-2.162a1 1 0 00-.932 0l-4.11 2.162a1 1 0 01-1.451-1.054l.786-4.58a1 1 0 00-.287-.885l-3.33-3.244a1 1 0 01.554-1.705l4.605-.669a1 1 0 00.753-.547l2.047-4.148a1 1 0 011.792 0z" />
-          </svg>
-        </ng-template>
-      </ng-container>
-    </div>
-    
-    
-    
 
-    <label for="commentaire">Commentaire :</label>
-    <textarea id="commentaire" [(ngModel)]="avis.commentaire"></textarea>
-<br>
 
-    <button class="btnenvoyer" (click)="envoyerAvis()">✅ Envoyer</button>
-  </div>
-</div>
-
-    
     <div class="notification-box" *ngIf="showNotification">
       <div class="user-card">
-          <div class="profile-container">
-              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic">
-          </div>
-          <div class="user-info">
-              <h3>{{ user?.nom || 'Utilisateur' }}</h3>
-              <p>Pour toutes questions</p>
-          </div>
+        <div class="profile-container">
+          <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-pic">
+        </div>
+        <div class="user-info">
+          <h3>{{ user?.nom || 'Utilisateur' }}</h3>
+          <p>Pour toutes questions</p>
+        </div>
       </div>
-   
-      
+
+
       <div class="contact-buttons">
         <button class="contact-btn message-btn">
-            <i class="fas fa-envelope"></i> Message
+          <i class="fas fa-envelope"></i> Message
         </button>
-        
+
         <a [href]="'tel:' + user?.telephoneNumber" class="contact-btn phone-btn">
-            <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
+          <i class="fas fa-phone-alt"></i> {{ user?.telephoneNumber || 'Non dispo' }}
         </a>
+      </div>
+      <div class="message-form">
+        <textarea [(ngModel)]="contenuMessage" placeholder="📧 Écrivez votre message ici..." rows="3"></textarea>
+        <button class="contact-btn send-btn" (click)="envoyerMessage()">
+          <i class="fas fa-paper-plane"></i> Envoyer
+        </button>
+      </div>
+
+
+      <button class="close-btn" (click)="closeNotification()">Fermer</button>
     </div>
-    <div class="message-form">
-      <textarea [(ngModel)]="contenuMessage" placeholder="📧 Écrivez votre message ici..." rows="3"></textarea>
-      <button class="contact-btn send-btn" (click)="envoyerMessage()">
-        <i class="fas fa-paper-plane"></i> Envoyer
-      </button>
-    </div>
-    
-  
-      <button  class="close-btn" (click)="closeNotification()">Fermer</button>
-  </div>
-  
-  
-    
-    
-  
- 
+
+
+
+
+
+
     <div class="container-profile">
-     
-        <div class="section">
-          <div *ngIf="getAverageRating() >= 4.5" class="badge-container">
-            <h6 class="badgebg-succes">
-              <i class="fas fa-heart me-2"></i> Top Prestataire
-            </h6>
-          </div>
-            <span>{{ user?.nom }}</span>
-           
-            <div class="verification-container">
-                <span class="verification-item">
-                    <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
-                </span>
-                <span class="verification-item">
-                    <i class="fa-solid fa-circle-check"></i> Numéro de téléphone vérifié
-                </span>
-            </div>
+
+      <div class="section">
+        <div *ngIf="getAverageRating() >= 4.5" class="badge-container">
+          <h6 class="badgebg-succes">
+            <i class="fas fa-heart me-2"></i> Top Prestataire
+          </h6>
         </div>
-  
-       
-        <div class="section">
-            <i class="fas fa-map-marker-alt location-icon"></i>
-            {{ user?.adressee?.governoate }}
+        <span>{{ user?.nom }}</span>
+
+        <div class="verification-container">
+          <span class="verification-item">
+            <i class="fa-solid fa-circle-check"></i> Carte d'identité vérifiée
+          </span>
+          <span class="verification-item">
+            <i class="fa-solid fa-circle-check"></i> Numéro de téléphone vérifié
+          </span>
         </div>
-        <div class="section">
+      </div>
+
+
+      <div class="section">
+        <i class="fas fa-map-marker-alt location-icon"></i>
+        {{ user?.adressee?.governoate }}
+      </div>
+      <div class="section">
         <span>{{user?.nomEntreprise}}</span>
       </div>
-   
+
       <div class="section">
-        <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>      </div>
-    
-        
-        <div class="section">
-            <h4>💼 Mes compétences</h4>
-            <div class="competences-container">
-                <div class="competence" *ngFor="let servicee of user?.competence">
-                    <p>{{ servicee }}</p> 
-                
-                </div>
-            </div>
-        </div>
-  <div class="content">
+        <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>
+      </div>
 
-        <div class="section">
-          
-            <h3>À propos de moi</h3>
-            <p>{{ user?.description }}</p>
-        </div>
-  </div>
-        
-      
-        <div class="content">
-            <div class="section">
-              <span class="sectionn">Avis clients</span>
-          
-           
-              <div class="rating">
-                ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
-              </div>
-          
-         
-              <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
-                <span>{{ note }}★</span>
-                <div class="bar">
-                  <div class="bar-fill" [style.width.%]="getRatingPercentage(note)"></div>
-                </div>
-                <span>{{ getRatingCount(note) }}</span>
-              </div>
-          
-            
-              <div class="reviews">
-                <div class="review-card" *ngFor="let avis of avisAffiches">
-                  <img
-                    *ngIf="avis.utilisateur?.image"
-                    [src]="avis.utilisateur?.image"
-                    alt="{{ avis.utilisateur?.nom || 'Client anonyme' }}"
-                    class="user-image"
-                  />
-                  <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
-          
-                  <div class="review-header">
-                    <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
-                  </div>
-          
-               
-                  <div class="starss">
-                    <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
-                      ★
-                    </ng-container>
-                  </div>
-          
-                  <div class="review-text">
-                    {{ avis.commentaire }}
-                  </div>
-                </div>
-              </div>
-          
-              
-              <div class="navigation-buttons">
-                <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
-                <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant ➡</button>
-              </div>
-            </div>
-            
+
+      <div class="section">
+        <h4>💼 Mes compétences</h4>
+        <div class="competences-container">
+          <div class="competence" *ngFor="let servicee of user?.competence">
+            <p>{{ servicee }}</p>
+
           </div>
-          <div class="content">
-            <div class="section">
-              <span class="sectionn">Publications</span>
-          
-              <div *ngFor="let publication of publicationsAffichees" class="publication-card">
-                <h3>{{ publication.titre }}</h3>
-                <p>{{ publication.description }}</p>
-                <small>{{ publication.datePublication | date: 'mediumDate' }}</small>
-          
-                <div class="d-flex justify-content-between text-secondary border-top pt-2 mt-2 action-bar">                 
-       
-          
+        </div>
+      </div>
+      <div class="content">
 
-          <button class="btn d-flex align-items-center" (click)="toggleLike(publication.id)">
-            <i class="fas fa-heart me-1"
-               [ngClass]="{ 'like-red': utilisateurADejaLikeParPublication[publication.id] }"></i>
-            <span>{{ nombreDeLikesParPublication[publication.id] || 0 }}</span> J'aime
-          </button>
-  
-                
-                
-                
-                
-                <button class="btn btn-light d-flex align-items-center" (click)="toggleCommentaire(publication.id)">
-                  <i class="fas fa-comment me-2"></i> Commenter 
-                  <span class="ms-1">{{ commentairesParPublication[publication.id].length || 0 }}</span>
-                </button>
-                 
-                </div>
-          
-               
-                <div *ngIf="commentaireVisible[publication.id]" class="comment-box">
-                  <textarea
-                    [(ngModel)]="nouveauxCommentaires[publication.id]"
-                    placeholder="Écrivez un commentaire..."
-                    rows="2"
-                    class="form-control"
-                  ></textarea>
-                  <button (click)="envoyerCommentaire(publication.id, user.idUtilisateuru)" class="btn btn-success btn-sm mt-2">
-                  
-               
-                                      Publier
-                  </button>
-                  <div *ngIf="commentairesParPublication[publication.id]">
-                    <div *ngFor="let commentaire of commentairesParPublication[publication.id]" class="comment-container">
-                      <img [src]="commentaire.particulier?.image || 'path-to-default-image.jpg'"
-                      alt=""
-                      class="user-image" />
-                 
-                      <strong class="comment-author">{{ commentaire.particulier?.nom }}</strong>
-                      <p class="comment-content">{{ commentaire.contenu }}</p>
-                      <small *ngIf="commentaire.dateCommentaire">
-                        {{ getRelativeTime(commentaire.dateCommentaire) }}
-                      </small>
-                      <button *ngIf="commentaire.particulier?.idUtilisateur === utilisateurConnecteId"
-                      class="delete"
-                      (click)="supprimerCommentaire(commentaire.id!)">
-                      <i class="fas fa-trash-alt"></i>
-              </button> 
-                    </div>
-                  </div>
-                  
-                  
-                </div>
+        <div class="section">
+
+          <h3>À propos de moi</h3>
+          <p>{{ user?.description }}</p>
+        </div>
+      </div>
+
+
+      <div class="content">
+        <div class="section">
+          <span class="sectionn">Avis clients</span>
+
+
+          <div class="rating">
+            ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
+          </div>
+
+
+          <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
+            <span>{{ note }}★</span>
+            <div class="bar">
+              <div class="bar-fill" [style.width.%]="getRatingPercentage(note)"></div>
+            </div>
+            <span>{{ getRatingCount(note) }}</span>
+          </div>
+
+
+          <div class="reviews">
+            <div class="review-card" *ngFor="let avis of avisAffiches">
+              <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image"
+                alt="{{ avis.utilisateur?.nom || 'Client anonyme' }}" class="user-image" />
+              <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
+
+              <div class="review-header">
+                <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
               </div>
-          
-           
-              <button *ngIf="nombreAffiche < publications.length" (click)="voirPlus()" class="btn btn-primary mt-2">
-                Voir plus
+
+
+              <div class="starss">
+                <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
+                  ★
+                </ng-container>
+              </div>
+
+              <div class="review-text">
+                {{ avis.commentaire }}
+              </div>
+            </div>
+          </div>
+
+
+          <div class="navigation-buttons">
+            <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
+            <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant ➡</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="content">
+        <div class="section">
+          <span class="sectionn">Publications</span>
+
+          <div *ngFor="let publication of publicationsAffichees" class="publication-card">
+            <h3>{{ publication.titre }}</h3>
+            <p>{{ publication.description }}</p>
+            <small>{{ publication.datePublication | date: 'mediumDate' }}</small>
+
+            <div class="d-flex justify-content-between text-secondary border-top pt-2 mt-2 action-bar">
+
+
+
+              <button class="btn d-flex align-items-center" (click)="toggleLike(publication.id)">
+                <i class="fas fa-heart me-1"
+                  [ngClass]="{ 'like-red': utilisateurADejaLikeParPublication[publication.id] }"></i>
+                <span>{{ nombreDeLikesParPublication[publication.id] || 0 }}</span> J'aime
               </button>
+
+
+
+
+
+              <button class="btn btn-light d-flex align-items-center" (click)="toggleCommentaire(publication.id)">
+                <i class="fas fa-comment me-2"></i> Commenter
+                <span class="ms-1">{{ commentairesParPublication[publication.id].length || 0 }}</span>
+              </button>
+
+            </div>
+
+
+            <div *ngIf="commentaireVisible[publication.id]" class="comment-box">
+              <textarea [(ngModel)]="nouveauxCommentaires[publication.id]" placeholder="Écrivez un commentaire..."
+                rows="2" class="form-control"></textarea>
+              <button (click)="envoyerCommentaire(publication.id, user.idUtilisateuru)"
+                class="btn btn-success btn-sm mt-2">
+
+
+                Publier
+              </button>
+              <div *ngIf="commentairesParPublication[publication.id]">
+                <div *ngFor="let commentaire of commentairesParPublication[publication.id]" class="comment-container">
+                  <img [src]="commentaire.particulier?.image || 'path-to-default-image.jpg'" alt=""
+                    class="user-image" />
+
+                  <strong class="comment-author">{{ commentaire.particulier?.nom }}</strong>
+                  <p class="comment-content">{{ commentaire.contenu }}</p>
+                  <small *ngIf="commentaire.dateCommentaire">
+                    {{ getRelativeTime(commentaire.dateCommentaire) }}
+                  </small>
+                  <button *ngIf="commentaire.particulier?.idUtilisateur === utilisateurConnecteId" class="delete"
+                    (click)="supprimerCommentaire(commentaire.id!)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+
+
             </div>
           </div>
+
+
+          <button *ngIf="nombreAffiche < publications.length" (click)="voirPlus()" class="btn btn-primary mt-2">
+            Voir plus
+          </button>
+        </div>
+      </div>
     </div>
-    </div>          
-       
-         
-          
-      
+  </div>
+
+
+
+
   <app-footer></app-footer>
-  </body>
+</body>

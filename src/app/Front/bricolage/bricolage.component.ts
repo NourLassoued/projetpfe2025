@@ -19,17 +19,14 @@ export class BricolageComponent {
   searchQuery: string = '';
   categoryName: string = '';
   constructor(private readonly file: FileService,
-         private readonly service: ServiceeService,
+    private readonly service: ServiceeService,
 
     private readonly router: Router,
   ) { }
   ngOnInit(): void {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
+  
 
-    this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');
+    this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');
 
     if (this.categoryName) {
 
@@ -144,7 +141,7 @@ export class BricolageComponent {
   currentPlaceholder: string = "";
   private index: number = 0;
   private charIndex: number = 0;
-  private typingSpeed: number = 100;
+  private  readonly typingSpeed: number = 100;
   private isTyping: boolean = false;
 
 

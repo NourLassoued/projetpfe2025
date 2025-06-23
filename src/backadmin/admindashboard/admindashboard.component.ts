@@ -23,7 +23,7 @@ export class AdmindashboardComponent {
   }
   loadProfileImagee(imagePath: string): void {
     if (!imagePath) {
-      this.profileImageUrl = 'assets/images/user.png'; 
+      this.profileImageUrl = 'assets/images/user.png';
       return;
     }
 

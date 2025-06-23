@@ -13,60 +13,60 @@ import { PaymentService } from '../service/payment.service';
 
 export class MesrevunesComponent {
   currentPage: number = 1;
-itemsPerPage: number = 5;
-  
+  itemsPerPage: number = 5;
+
   payments: any[] = [];
 
-    user: any = null;
-    profileImageUrl: SafeUrl | null = null;
-    userId!: number;
-
-    
-  
-   constructor(
-        private  readonly sanitizer: DomSanitizer,
- private readonly  paymenService :PaymentService,
-   private  readonly fileService: FileService,
-      private readonly router: Router,
-   
-    ) {}
+  user: any = null;
+  profileImageUrl: SafeUrl | null = null;
+  userId!: number;
 
 
 
+  constructor(
+    private readonly sanitizer: DomSanitizer,
+    private readonly paymenService: PaymentService,
+    private readonly fileService: FileService,
+    private readonly router: Router,
 
-      ngOnInit(): void {
-        this.loadUserData();
-        if (this.userId) {
-          this.loadUserPayments(this.userId);  
+  ) { }
+
+
+
+
+  ngOnInit(): void {
+    this.loadUserData();
+    if (this.userId) {
+      this.loadUserPayments(this.userId);
+    } else {
+      console.error('Erreur : ID utilisateur non défini.');
+    }
+  }
+
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        this.user = decodedToken;
+        this.userId = decodedToken.id;
+
+        if (this.user.image) {
+          this.loadProfileImage(this.user.image);
         } else {
-          console.error('Erreur : ID utilisateur non défini.');
-        }  
-       }
-
-      loadUserData(): void {
-        const token = localStorage.getItem('accessToken');
-    
-        if (token) {
-          try {
-            const decodedToken: any = jwtDecode(token);
-            this.user = decodedToken;
-            this.userId = decodedToken.id;
-    
-            if (this.user.image) {
-              this.loadProfileImage(this.user.image);
-            } else {
-              console.warn(' Aucune image trouvée dans le token !');
-            }
-            if (!this.userId) {
-              console.error(' Erreur : ID utilisateur non défini !');
-            }
-          } catch (error) {
-            console.error(' Erreur lors du décodage du token:', error);
-          }
-        } else {
-          console.warn(' Aucun token trouvé dans localStorage !');
+          console.warn(' Aucune image trouvée dans le token !');
         }
+        if (!this.userId) {
+          console.error(' Erreur : ID utilisateur non défini !');
+        }
+      } catch (error) {
+        console.error(' Erreur lors du décodage du token:', error);
       }
+    } else {
+      console.warn(' Aucun token trouvé dans localStorage !');
+    }
+  }
 
 
 
@@ -93,7 +93,7 @@ itemsPerPage: number = 5;
       }
     });
   }
-  
+
 
 
   logout(): void {
@@ -105,7 +105,7 @@ itemsPerPage: number = 5;
     const end = start + this.itemsPerPage;
     return this.payments.slice(start, end);
   }
-  
+
   get totalPages(): number {
     return Math.ceil(this.payments.length / this.itemsPerPage);
   }

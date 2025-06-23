@@ -1,131 +1,142 @@
 <nav class="navbar">
-    <div class="logo">SOS service Tunisie</div>
-    <button  (click)="showSkillModal()" class="middle-btn" *ngIf="userRole === 'PARTICULIER'" ><i class="fa fa-plus"></i> Demander un service</button>
-    <div    (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
-        <div class="modal-content"  >
-          <span class="close" (click)="showModal = false" (keydown.enter)="showModal = false">&times;</span>
-          <h2>Demander un service</h2>
-  
-      
-          <input   type="text" id="search-docs" name="searchdocs"
-          [(ngModel)]="searchQuery"
-          (ngModelChange)="onSearch()"   placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
-      
-          <div class="grid-container">
-            <div class="category-card" *ngFor="let category of filteredCategories; let i = index" (click)="selectCategory(category.nom)" (keydown.enter)="selectCategory(category.nom)">
-              <img  [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
-              <span>{{ category.nom }}</span>
-              <span class="icon">➜</span>
-            </div>
-          
-          </div>
+  <div class="logo">SOS service Tunisie</div>
+  <button (click)="showSkillModal()" class="middle-btn" *ngIf="userRole === 'PARTICULIER'"><i class="fa fa-plus"></i>
+    Demander un service</button>
+  <div (ngSubmit)="onSearch()" class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="showModal = false" (keydown.enter)="showModal = false">&times;</span>
+      <h2>Demander un service</h2>
+
+
+      <input type="text" id="search-docs" name="searchdocs" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()"
+        placeholder="🔍 De quel service avez-vous besoin ?" class="search-bar">
+
+      <div class="grid-container">
+        <div class="category-card" *ngFor="let category of filteredCategories; let i = index"
+          (click)="selectCategory(category.nom)" (keydown.enter)="selectCategory(category.nom)">
+          <img [src]="imageUrls[i]" alt="{{ category.nom }}" *ngIf="imageUrls[i]">
+          <span>{{ category.nom }}</span>
+          <span class="icon">➜</span>
         </div>
-       
+
       </div>
-      <div class="modal" *ngIf="showServiceModal">
-        <div class="modal-content">
-          <span class="close"(click)="closeServiceModal()" >&times;</span>
-          <h2> {{ selectedCategory?.nom }}</h2>
-          <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
-          [(ngModel)]="searchQuery"
-          (input)="filterServices()">
-          
-       <div class="grid-container">
-        
-        <div class="category-card" *ngFor="let service of filteredServices; let i = index" (click)="selectService(service)" (keydown.enter)="selectService(service)">
-            <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
-            <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
-          
-
-              <input 
-                class="iconn" 
-                type="checkbox" 
-                id="service-{{ service.idservice }}" 
-                tabindex="0"
-                >
-          </div>
-          </div>
-        </div>
     </div>
-  
-    
-    <div class="nav-icons">
-      <a [routerLink]="['/Chat']" (click)="resetNewMessageCount()">
-        <i class="fas fa-envelope"></i>
-        <span *ngIf="newMessageCount > 0" class="badge">{{ newMessageCount }}</span>
-      </a>
 
-<div class="notification-container">
-  <a href="#" (click)="toggleNotification()" class="notification-icon" >
-  
-    <i class="fas fa-bell"  [ngClass]="{ 'animate-bell': unreadCount > 0 }"></i>
-    <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
-  </a>
+  </div>
+  <div class="modal" *ngIf="showServiceModal">
+    <div class="modal-content">
+      <span class="close" role="button" tabindex="0" (click)="closeServiceModal()" (keydown.enter)="closeServiceModal()"
+        (keydown.space)="closeServiceModal()" aria-label="Fermer la fenêtre">
+        &times;
+      </span>
+      <h2> {{ selectedCategory?.nom }}</h2>
+      <input type="text" placeholder="🔍 De quel service avez-vous besoin " class="search-bar2"
+        [(ngModel)]="searchQuery" (input)="filterServices()">
 
-  <div *ngIf="showNotification" class="notification-dropdown">
-    <div *ngIf="notifications.length === 0">
-   
-    </div>
-    <ul *ngIf="unseenPublications.length > 0" class="notification-list">
-      <li *ngFor="let publication of unseenPublications" class="notification-item">
-        <div class="notification-card">
-          <div class="notification-icon">
-            <img
-    *ngIf="publication.entreprise?.idUtilisateur"
-    [src]="entrepriseImages[publication.entreprise?.idUtilisateur!]"
+      <div class="grid-container">
 
-    id="profile-icon"
-    alt=""
-    (click)="goToConsulterEntreprise(publication)"
-  />
-          </div>
-          <div class="notification-content">
-            <div class="notification-time" *ngIf="publication.datePublication">
-              {{ getRelativeTime(publication.datePublication) }} •
-            </div>
-            <div class="notification-message">
-             " Nouvelle publication : {{ publication.titre }}" a été publié par {{ publication.entreprise?.nomEntreprise }}
-            </div>
-          </div>
+        <div class="category-card" *ngFor="let service of filteredServices; let i = index"
+          (click)="selectService(service)" (keydown.enter)="selectService(service)">
+          <img *ngIf="imageUrls[i]" [src]="imageUrls[i]" alt="{{ service.nomservice }}" class="service-image">
+          <label for="service-{{ service.idservice }}">{{ service.nomservice }}</label>
+
+
+          <input class="iconn" type="checkbox" id="service-{{ service.idservice }}" tabindex="0">
         </div>
-      </li>
-    </ul>
-    
-    
-    
-    
-    
-    <div *ngFor="let message of notifications"   (click)="goToComptePrestataireAvecMessage(message)" class="notification-item">
-      {{ message }}
+      </div>
     </div>
   </div>
-</div>
 
-        
-        <div id="profile-container">
-            <ng-container *ngIf="profileImageUrl; else defaultIcon">
-                <img [src]="profileImageUrl" alt="" id="profile-icon"/>
-            </ng-container>
-            <ng-template #defaultIcon>
-                <i class="fas fa-user default-icon"></i> 
-            </ng-template>
+
+  <div class="nav-icons">
+    <a [routerLink]="['/Chat']" (click)="resetNewMessageCount()">
+      <i class="fas fa-envelope"></i>
+      <span *ngIf="newMessageCount > 0" class="badge">{{ newMessageCount }}</span>
+    </a>
+
+    <div class="notification-container">
+      <a href="#" (click)="toggleNotification()" class="notification-icon">
+
+        <i class="fas fa-bell" [ngClass]="{ 'animate-bell': unreadCount > 0 }"></i>
+        <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+      </a>
+
+      <div *ngIf="showNotification" class="notification-dropdown">
+        <div *ngIf="notifications.length === 0">
+
         </div>
-
-        <i class="fas fa-bars" id="menu-icon" (click)="toggleMenu()"></i> 
-    </div>
-
-    <div class="profile-menu" id="profile-menu"   [ngClass]="{'active': isMenuOpen}">
-        <ul>
-          <li [routerLink]="userRole === 'PRESTATAIRE' ? '/Compteprestaitre' : userRole === 'ENTREPRISE' ? '/Comptentreprise' : '/Compteparticulier'">
-            📌 Tableau de bord 
+        <ul *ngIf="unseenPublications.length > 0" class="notification-list">
+          <li *ngFor="let publication of unseenPublications" class="notification-item">
+            <div class="notification-card">
+              <div class="notification-icon">
+                <img *ngIf="publication.entreprise?.idUtilisateur"
+                  [src]="entrepriseImages[publication.entreprise?.idUtilisateur!]" id="profile-icon"
+                  alt="Logo de l'entreprise" role="button" tabindex="0" (click)="goToConsulterEntreprise(publication)"
+                  (keydown.enter)="goToConsulterEntreprise(publication)"
+                  (keydown.space)="goToConsulterEntreprise(publication)"
+                  aria-label="Voir les détails de l'entreprise" />
+              </div>
+              <div class="notification-content">
+                <div class="notification-time" *ngIf="publication.datePublication">
+                  {{ getRelativeTime(publication.datePublication) }} •
+                </div>
+                <div class="notification-message">
+                  " Nouvelle publication : {{ publication.titre }}" a été publié par {{
+                  publication.entreprise?.nomEntreprise }}
+                </div>
+              </div>
+            </div>
           </li>
-            <li [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : userRole === 'ENTREPRISE' ? '/Profileentreprise' : '/Profileparticulier'">👤 Voir mon profil</li>
-            <li  [routerLink]="['/Chat']"  >✉️ Mes messages</li>
-            <li [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : (userRole === 'ENTREPRISE' ? '/UpdateEntreprise' : '/Updateparticulier')">
-                ⚙️ Mon compte
-              </li>
-            <li>❓Besoin d'aide?</li>
-            <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
         </ul>
+
+
+
+
+
+        <div *ngFor="let message of notifications" (click)="goToComptePrestataireAvecMessage(message)"
+          (keydown.enter)="goToComptePrestataireAvecMessage(message)"
+          (keydown.space)="goToComptePrestataireAvecMessage(message)" tabindex="0" role="button"
+          aria-label="Voir le compte lié à la notification" class="notification-item">
+          {{ message }}
+        </div>
+      </div>
     </div>
+
+
+    <div id="profile-container">
+      <ng-container *ngIf="profileImageUrl; else defaultIcon">
+        <img [src]="profileImageUrl" alt="" id="profile-icon" />
+      </ng-container>
+      <ng-template #defaultIcon>
+        <i class="fas fa-user default-icon"></i>
+      </ng-template>
+    </div>
+
+    <i class="fas fa-bars" id="menu-icon" (click)="toggleMenu()" (keydown.enter)="toggleMenu()"
+      (keydown.space)="toggleMenu()" tabindex="0" role="button" aria-label="Ouvrir ou fermer le menu"></i>
+  </div>
+
+  <div class="profile-menu" id="profile-menu" [ngClass]="{'active': isMenuOpen}">
+    <ul>
+      <li
+        [routerLink]="userRole === 'PRESTATAIRE' ? '/Compteprestaitre' : userRole === 'ENTREPRISE' ? '/Comptentreprise' : '/Compteparticulier'">
+        📌 Tableau de bord
+      </li>
+      <li
+        [routerLink]="userRole === 'PRESTATAIRE' ? '/ProfileUtilisateur' : userRole === 'ENTREPRISE' ? '/Profileentreprise' : '/Profileparticulier'">
+        👤 Voir mon profil</li>
+      <li [routerLink]="['/Chat']">✉️ Mes messages</li>
+      <li
+        [routerLink]="userRole === 'PRESTATAIRE' ? '/updateprestaitre' : (userRole === 'ENTREPRISE' ? '/UpdateEntreprise' : '/Updateparticulier')">
+        ⚙️ Mon compte
+      </li>
+      <li>❓Besoin d'aide?</li>
+      <li>
+        <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0"
+          style="background:none;border:none;padding:0;cursor:pointer; color:  #66696e;">
+          🚪 Se déconnecter
+        </button>
+      </li>
+    </ul>
+  </div>
 </nav>
