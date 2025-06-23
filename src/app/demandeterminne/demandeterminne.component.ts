@@ -46,7 +46,7 @@ export class DemandeterminneComponent {
 
 
         if (this.user.image) {
-
+          // Si l'image est présente dans le token, on la récupère
 
         } else {
           console.warn(" Aucune image trouvée dans le token !");

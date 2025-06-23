@@ -38,14 +38,14 @@ export class AbonnementComponent {
   currentPage = 1;
   totalPages = 1;
   constructor(
-    private utilisateurService: UtilisateurService,
-    private fileservice: FileService,
-    private abonnementService: AbonmmentserviceService,
+    private readonly utilisateurService: UtilisateurService,
+    private readonly fileservice: FileService,
+    private readonly abonnementService: AbonmmentserviceService,
 
-    private cdr: ChangeDetectorRef,
-    private paymentService: PaymentService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly paymentService: PaymentService,
 
-    private router: Router
+    private readonly router: Router
   ) { }
   logout(): void {
     localStorage.removeItem('accessToken');
@@ -90,10 +90,7 @@ export class AbonnementComponent {
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
-      } else {
-        console.warn('Aucune image trouvée dans le token !');
-      }
+
     } catch (error) {
       console.error('Erreur lors du décodage du token :', error);
     }
@@ -278,5 +275,10 @@ export class AbonnementComponent {
     this.abonnementsExprimerParPage = this.abonnementsExprimer.slice(start, end);
   }
 
-
+  handleDropdownKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      (event.target as HTMLElement).click();
+    }
+  }
 }

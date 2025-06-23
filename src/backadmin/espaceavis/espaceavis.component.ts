@@ -37,11 +37,11 @@ export class EspaceavisComponent {
   user: any;
   profileImageUrl: SafeUrl | null = null;
   constructor(
-    private fileservice: FileService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private avisService: AvisService,
-    private toastr: ToastrService
+    private readonly fileservice: FileService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly avisService: AvisService,
+    private readonly toastr: ToastrService
 
 
   ) {
@@ -67,7 +67,7 @@ export class EspaceavisComponent {
     const end = start + this.pageSize;
     this.paginatedAvis = this.filteredAvisList.slice(start, end);
   }
-  
+
 
   pageChanged(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
@@ -126,9 +126,7 @@ export class EspaceavisComponent {
       if (this.user.image) {
         this.loadProfileImagee(this.user.image);
       }
-      if (this.user.telephoneNumber) {
 
-      }
       else {
         console.warn("Aucune image trouvée dans le token !");
       }
@@ -186,11 +184,14 @@ export class EspaceavisComponent {
       if (aValue == null) return 1;
       if (bValue == null) return -1;
 
-      if (this.sortDirection === 'asc') {
-        return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
-      } else {
-        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+      let result = 0;
+      if (aValue > bValue) {
+        result = 1;
+      } else if (aValue < bValue) {
+        result = -1;
       }
+
+      return this.sortDirection === 'asc' ? result : -result;
     });
   }
 
@@ -202,16 +203,22 @@ export class EspaceavisComponent {
   }
   filterAvis(): void {
     const term = this.searchTerm.trim().toLowerCase();
-    
+
     this.filteredAvisList = this.avisList.filter(avis =>
       avis.utilisateur?.nom?.toLowerCase().includes(term) ||
       avis.avisUtilisateur?.nom?.toLowerCase().includes(term)
     );
-    
+
     this.totalAvisCount = this.filteredAvisList.length;
-    this.pageIndex = 0; 
+    this.pageIndex = 0;
     this.paginate();
   }
-  
-  
+  handleDropdownKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      (event.target as HTMLElement).click();
+    }
+  }
+
+
 }

@@ -67,10 +67,10 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
 
 
   constructor(private readonly fileService: FileService,
-    private  readonly sanitizer: DomSanitizer,
+    private readonly sanitizer: DomSanitizer,
     private readonly authServiceService: AuthServiceService,
-    private readonly categorieService: CategorieService, private  readonly file: FileService,
-    private readonly  service: ServiceeService,
+    private readonly categorieService: CategorieService, private readonly file: FileService,
+    private readonly service: ServiceeService,
     private readonly router: Router,
     private readonly websocketService: WebsocketServiceService,
     private readonly cdr: ChangeDetectorRef,
@@ -182,7 +182,7 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  
+
   loadNotifications() {
     this.notificationserviceparticulier.getUnseenPublications(this.user.id).subscribe(publications => {
       this.unseenPublications = publications;
@@ -206,7 +206,7 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
       return;
     }
 
-  
+
     this.notificationserviceparticulier.markPublicationAsSeen(userId, publicationId).subscribe({
       next: () => {
         this.router.navigate(['/ConsulterEntreprise', entrepriseId]);
@@ -256,9 +256,9 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
     }
     this.bellAnimated = true;
 
-  setTimeout(() => this.bellAnimated = false, 1000);
-}
-  
+    setTimeout(() => this.bellAnimated = false, 1000);
+  }
+
 
 
   redirectBasedOnRole(): void {

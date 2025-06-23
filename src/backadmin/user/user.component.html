@@ -48,7 +48,7 @@
 
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
-									role="button" aria-expanded="false">
+									role="button" aria-expanded="false" (keydown)="handleDropdownKey($event)">
 									<ng-container *ngIf="profileImageUrl; else defaultIcon">
 										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
@@ -220,6 +220,7 @@
 					</ul>
 				</nav>
 
+
 			</div>
 		</div>
 	</header>
@@ -245,17 +246,19 @@
 				</div>
 
 
-			<nav id="orders-table-tab"
-     class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4"
-     role="tablist"
-     aria-label="Filtrer les commandes par type d’utilisateur">
-  <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab"
-     href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
-  <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab"
-     href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Particuliers</a>
-  <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab"
-     href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Entreprise</a>
-</nav>
+				<nav id="orders-table-tab"
+					class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4"
+					aria-label="Filtrer les commandes par type d’utilisateur">
+
+					<a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab"
+						href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
+					<a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab"
+						href="#orders-paid" role="tab" aria-controls="orders-paid"
+						aria-selected="false">Particuliers</a>
+					<a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab"
+						href="#orders-pending" role="tab" aria-controls="orders-pending"
+						aria-selected="false">Entreprise</a>
+				</nav>
 
 
 

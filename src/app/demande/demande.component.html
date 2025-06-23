@@ -1,158 +1,159 @@
-
-
 <body>
   <app-navbar></app-navbar>
   <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()">
-  <div class="container" *ngIf="!showCalendar">
-    <h1>De combien d’heures de service avez-vous besoin ?</h1>
-    <div class="grid">
-      <div class="card" (click)="selectTime(2)" [ngClass]="{'selected': selectedTime === 2}" (keydown)="selectTime(2)">
-        <div class="icon">🕒</div>
-        <div class="title">2h00</div>
-        <div class="subtitle">Court</div>
-        <div class="checkmark">✔</div>
+    <div class="container" *ngIf="!showCalendar">
+      <h1>De combien d’heures de service avez-vous besoin ?</h1>
+      <div class="grid">
+        <div class="card" (click)="selectTime(2)" [ngClass]="{'selected': selectedTime === 2}"
+          (keydown)="selectTime(2)">
+          <div class="icon">🕒</div>
+          <div class="title">2h00</div>
+          <div class="subtitle">Court</div>
+          <div class="checkmark">✔</div>
+        </div>
+        <div class="card" (click)="selectTime(4)" [ngClass]="{'selected': selectedTime === 4}"
+          (keydown)="selectTime(4)">
+          <div class="icon">🕒</div>
+          <div class="title">4h00</div>
+          <div class="subtitle">Classique</div>
+          <div class="popular">⭐ Populaire</div>
+          <div class="checkmark">✔</div>
+        </div>
+        <div class="card" (click)="selectTime(6)" [ngClass]="{'selected': selectedTime === 6}"
+          (keydown)="selectTime(6)">
+          <div class="icon">🕒</div>
+          <div class="title">6h00</div>
+          <div class="subtitle">Long</div>
+          <div class="checkmark">✔</div>
+        </div>
       </div>
-      <div class="card" (click)="selectTime(4)" [ngClass]="{'selected': selectedTime === 4}" (keydown)="selectTime(4)">
-        <div class="icon">🕒</div>
-        <div class="title">4h00</div>
-        <div class="subtitle">Classique</div>
-        <div class="popular">⭐ Populaire</div>
-        <div class="checkmark">✔</div>
-      </div>
-      <div class="card" (click)="selectTime(6)" [ngClass]="{'selected': selectedTime === 6}" (keydown)="selectTime(6)">
-        <div class="icon">🕒</div>
-        <div class="title">6h00</div>
-        <div class="subtitle">Long</div>
-        <div class="checkmark">✔</div>
-      </div>
-    </div>
 
-    <div class="text-center">ou</div>
-    <div class="text-center">Ajuster le nombre d’heures manuellement</div>
-    <div class="flex">
-      <div class="button" (click)="adjustHeure('decrease')" (keydown)="adjustHeure('decrease')">-</div>
-      <div class="time">{{ demandeForm.controls['heureTravail'].value }}h</div>
-      <div class="button" (click)="adjustHeure('increase')" (keydown)="adjustHeure('increase')">+</div>
-    </div>
+      <div class="text-center">ou</div>
+      <div class="text-center">Ajuster le nombre d’heures manuellement</div>
+      <div class="flex">
+        <div class="button" (click)="adjustHeure('decrease')" (keydown)="adjustHeure('decrease')">-</div>
+        <div class="time">{{ demandeForm.controls['heureTravail'].value }}h</div>
+        <div class="button" (click)="adjustHeure('increase')" (keydown)="adjustHeure('increase')">+</div>
+      </div>
 
-    <div class="footer">
-      <button class="link" (click)="previousStep()">Retour</button>
-      <button class="link-button" (click)="nextStep()">Suivant</button>
+      <div class="footer">
+        <button class="link" (click)="previousStep()">Retour</button>
+        <button class="link-button" (click)="nextStep()">Suivant</button>
+      </div>
     </div>
-  </div>
-  <div class="calendar" *ngIf="showCalendar">
-      
+    <div class="calendar" *ngIf="showCalendar">
+
       <div *ngIf="step === 1">
         <h2>Quel jour vous convient le mieux ?</h2>
         <div class="calendar-container">
           <div class="calendar-header">
-            <button mat-icon-button (click)="prevMonth()" [disabled]="isCurrentMonth()" >
+            <button mat-icon-button (click)="prevMonth()" [disabled]="isCurrentMonth()">
               <mat-icon>chevron_left</mat-icon>
             </button>
             <span>{{ currentMonth | date: 'MMMM yyyy' }}</span>
-            
+
             <button mat-icon-button (click)="nextMonth()">
               <mat-icon>chevron_right</mat-icon>
             </button>
           </div>
-    
+
           <div class="calendar-grid">
             <div class="day-name" *ngFor="let day of weekDays">{{ day }}</div>
-            <div class="day"
-            *ngFor="let dayObj of daysInMonth"
-            [ngClass]="{
+            <div class="day" *ngFor="let dayObj of daysInMonth" [ngClass]="{
               'empty': dayObj.day === 0,
               'selected': selectedDate?.getTime() === dayObj.date.getTime(),
               'disabled': dayObj.date < today && dayObj.date.getTime() !== today.getTime(),
               'past-date': dayObj.date < today && dayObj.date.getTime() !== today.getTime(),
               'today': dayObj.date.getTime() === today.getTime() 
-            }"
-            (click)="dayObj.date >= today && selectDate(dayObj.date)"
-            (keydown)="dayObj.date >= today && selectDate(dayObj.date)">
-         {{ dayObj.day !== 0 ? dayObj.day : '' }}
-       </div>
+            }" (click)="dayObj.date >= today && selectDate(dayObj.date)"
+              (keydown)="dayObj.date >= today && selectDate(dayObj.date)">
+              {{ dayObj.day !== 0 ? dayObj.day : '' }}
+            </div>
           </div>
-          <p *ngIf="demandeForm.value.date" class="message">Date sélectionnée : {{ demandeForm.value.date | date: 'dd/MM/yyyy' }}</p>
+          <p *ngIf="demandeForm.value.date" class="message">Date sélectionnée : {{ demandeForm.value.date | date:
+            'dd/MM/yyyy' }}</p>
         </div>
-     
-      <div class="footer">
-        <button class="link" (click)="previousStep()">Retour</button>
-        <button class="link-button" (click)="nextStepe()">Suivant</button>
-      </div>
-    </div>
 
-    <div *ngIf="step === 2">
-      <h1>Quelle heure vous convient le mieux ?</h1>
-      <div class="time-grid">
-         
-          <button *ngFor="let hour of hours"   class="time-gridebutton"
-                  (click)="selectTimee(hour)" 
-                  [ngClass]="{'selected': selectedTimee === hour}">
+        <div class="footer">
+          <button class="link" (click)="previousStep()">Retour</button>
+          <button class="link-button" (click)="nextStepe()">Suivant</button>
+        </div>
+      </div>
+
+      <div *ngIf="step === 2">
+        <h1>Quelle heure vous convient le mieux ?</h1>
+        <div class="time-grid">
+
+          <button *ngFor="let hour of hours" class="time-gridebutton" (click)="selectTimee(hour)"
+            [ngClass]="{'selected': selectedTimee === hour}">
             {{ hour }}
           </button>
-       
-        
- 
-      </div>
-      <p class="message" *ngIf="selectedDate && selectedTimee">
+
+
+
+        </div>
+        <p class="message" *ngIf="selectedDate && selectedTimee">
           Date et heure sélectionnées : {{ selectedDate | date: 'dd/MM/yyyy' }} à {{ selectedTimee }}h
         </p>
 
-      <div class="footer">
-        <button class="link" (click)="previousStepe()">Retour</button>
-        <button class="link-button" (click)="nextStepe()">Suivant</button>
+        <div class="footer">
+          <button class="link" (click)="previousStepe()">Retour</button>
+          <button class="link-button" (click)="nextStepe()">Suivant</button>
+        </div>
       </div>
-    </div>
-    <div *ngIf="step === 3">
-      <div class="additional-info">
+      <div *ngIf="step === 3">
+        <div class="additional-info">
           <h2>Informations complémentaires</h2>
           <label for="title">Titre</label>
           <input id="title" formControlName="title" type="text" placeholder="Entrez un titre" />
-  
+
           <label for="adresse">Adresse :</label>
           <select id="adresse" formControlName="idAdresse">
             <option *ngFor="let adresse of adresses" [value]="adresse.idAdresse">{{ adresse.governoate }}</option>
           </select>
-  
+
           <label for="description">Description :</label>
           <textarea id="description" formControlName="description" rows="3"></textarea>
-  
+
           <label for="photos">Souhaitez-vous ajouter des photos ? (optionnel)</label>
           <input type="file" id="photos" (change)="onFileSelected($event, 'image')">
-  
+
           <label for="phone">À quel numéro de téléphone le prestataire pourra-t-il vous joindre ?</label>
-          <input id="telephoneNumber" formControlName="telephoneNumber" type="text"  placeholder="Entrez un numéro de téléphone" />
-      </div>
-      <div class="footer">
-          <button class="link" (click)="previousStepe()">Retour</button>
-          <button class="link-button"(click)="nextStepe()">Suivant</button>
-      </div>
-  </div>
-  <div *ngIf="step === 4">
-      <div class="additional-info">
-         
-          <h3>Quelle est votre adresse e-mail ?</h3>
-  
-     
-          <label for="email">Adresse Email :</label>
-      <input type="email" id="email" formControlName="emailUtilisateur" placeholder="exemple@email.com" required>
-  
-      <div class="form-group" *ngIf="demandeForm.get('emailUtilisateur')?.value">
-          <label for="password">Mot de Passe :</label>
-          <input type="password" id="password" formControlName="password" placeholder="Entrez votre mot de passe" required>
+          <input id="telephoneNumber" formControlName="telephoneNumber" type="text"
+            placeholder="Entrez un numéro de téléphone" />
         </div>
-        <a   (click)="openModal()" class="forgot-password" *ngIf="demandeForm.get('emailUtilisateur')?.value" href="mailto:support@example.com" class="forgot-password-link">Mot de passe oublié ?</a>
-  
+        <div class="footer">
+          <button class="link" (click)="previousStepe()">Retour</button>
+          <button class="link-button" (click)="nextStepe()">Suivant</button>
+        </div>
       </div>
-      <div class="footer">
+      <div *ngIf="step === 4">
+        <div class="additional-info">
+
+          <h3>Quelle est votre adresse e-mail ?</h3>
+
+
+          <label for="email">Adresse Email :</label>
+          <input type="email" id="email" formControlName="emailUtilisateur" placeholder="exemple@email.com" required>
+
+          <div class="form-group" *ngIf="demandeForm.get('emailUtilisateur')?.value">
+            <label for="password">Mot de Passe :</label>
+            <input type="password" id="password" formControlName="password" placeholder="Entrez votre mot de passe"
+              required>
+          </div>
+          <a (click)="openModal()" class="forgot-password" *ngIf="demandeForm.get('emailUtilisateur')?.value"
+            href="mailto:support@example.com" class="forgot-password-link">Mot de passe oublié ?</a>
+
+        </div>
+        <div class="footer">
           <button class="link" (click)="previousStepe()">Retour</button>
 
-          <button class="link-button"   type="submit" >Voir les prestataires</button>
+          <button class="link-button" type="submit">Voir les prestataires</button>
+        </div>
       </div>
-  </div>
-  
-  
-      </div>
+
+
+    </div>
   </form>
   <div class="modal" *ngIf="showModal">
     <div class="modal-content">
@@ -160,8 +161,8 @@
       <h2>Mot de passe oublié ?</h2>
       <form [formGroup]="resetPasswordForm" (ngSubmit)="verifyAndSendEmail()">
         <input formControlName="email" type="email" id="reset-email" placeholder="📧Votre adresse e-mail" required>
-  
-        <button  type="submit" class="btn-submit">Envoyez-moi les instructions</button>
+
+        <button type="submit" class="btn-submit">Envoyez-moi les instructions</button>
       </form>
     </div>
   </div>

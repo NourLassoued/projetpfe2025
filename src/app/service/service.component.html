@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
 
 
 
 
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-	<link rel="shortcut icon" href="favicon.ico">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-	<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+<link rel="shortcut icon" href="favicon.ico">
 
 
-	<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+
+
+<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
 
 
 
@@ -41,17 +41,16 @@
 						<div class="search-mobile-trigger d-sm-none col">
 							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
 						</div>
-					
+
 
 						<div class="app-utilities col-auto">
-						
-							
+
+
 
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
 									role="button" aria-expanded="false">
-									<ng-container
-										*ngIf="profileImageUrl; else defaultIcon">
+									<ng-container *ngIf="profileImageUrl; else defaultIcon">
 										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
 									<ng-template #defaultIcon>
@@ -77,8 +76,8 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="" class="profile-img"><span
-							class="logo-text">SOS service Tunisie</span></a>
+							[src]="profileImageUrl" alt="" class="profile-img"><span class="logo-text">SOS service
+							Tunisie</span></a>
 
 				</div>
 				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -394,8 +393,7 @@
 							<input type="number" id="tarif" [(ngModel)]="selectedservice.tarif" name="tarif" required>
 
 							<div class="image-preview">
-								<img *ngIf="selectedservice.imageService" [src]="selectedservice.imageService"
-									alt="">
+								<img *ngIf="selectedservice.imageService" [src]="selectedservice.imageService" alt="">
 
 							</div>
 
@@ -482,7 +480,7 @@
 					</div><!--//col-->
 				</div>
 
-				<nav class="app-pagination mt-5">
+				<nav class="app-pagination mt-5" aria-label="Pagination des pages">
 					<ul class="pagination justify-content-center">
 						<!-- Previous Button -->
 						<li class="page-item" [class.disabled]="currentPage === 1">
@@ -546,5 +544,3 @@
 	<script src="assetsadmin/js/app.js"></script>
 
 </body>
-
-</html>

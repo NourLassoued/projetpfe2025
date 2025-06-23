@@ -24,7 +24,7 @@ export class BricolageComponent {
     private readonly router: Router,
   ) { }
   ngOnInit(): void {
-  
+
 
     this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');
 
@@ -141,7 +141,7 @@ export class BricolageComponent {
   currentPlaceholder: string = "";
   private index: number = 0;
   private charIndex: number = 0;
-  private  readonly typingSpeed: number = 100;
+  private readonly typingSpeed: number = 100;
   private isTyping: boolean = false;
 
 

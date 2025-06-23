@@ -12,24 +12,24 @@ import { Utilisateur } from 'src/models/Utilisateur';
 })
 export class FrontprofilComponent {
   scoreMap: { [id: number]: number } = {};
-nombreAvisMap: { [id: number]: number } = {};
+  nombreAvisMap: { [id: number]: number } = {};
 
   prestataires: Utilisateur[] = [];
-    constructor(private  readonly utilisateurService: UtilisateurService,
-      private  readonly fileservice:FileService,
-      private readonly  aviservice:AvisService,
-      private readonly router: Router
-
-      
-    ){}
+  constructor(private readonly utilisateurService: UtilisateurService,
+    private readonly fileservice: FileService,
+    private readonly aviservice: AvisService,
+    private readonly router: Router
 
 
- 
- ngOnInit(): void {
- 
-    this.getAllPrestataires(); 
+  ) { }
 
- 
+
+
+  ngOnInit(): void {
+
+    this.getAllPrestataires();
+
+
   }
 
 
@@ -38,7 +38,7 @@ nombreAvisMap: { [id: number]: number } = {};
   getAllPrestataires(): void {
     this.utilisateurService.getPrestataires().subscribe({
       next: (data) => {
-      
+
         this.prestataires = data
           .slice(0, 8)
           .map(prestataire => ({
@@ -47,48 +47,48 @@ nombreAvisMap: { [id: number]: number } = {};
             showFullDescription: false,
             servicesOfferts: prestataire.servicesOfferts
               ? prestataire.servicesOfferts.map(service => ({
-                  ...service,
-                  nomservice: service.nomservice ? service.nomservice.replace(/[\r\n]+/g, '').trim() : ''
-                }))
+                ...service,
+                nomservice: service.nomservice ? service.nomservice.replace(/[\r\n]+/g, '').trim() : ''
+              }))
               : [],
             profileImageUrl: null,
             adresse: prestataire.adressee ? prestataire.adressee.governoate : '',
           }));
-  
-      
-  
+
+
+
         this.prestataires.forEach(utilisateur => {
-        
+
           if (utilisateur.image) {
             this.loadProfileImage(utilisateur);
           }
-  
-       
+
+
           if (utilisateur.idUtilisateur !== undefined) {
             const idUtilisateur = utilisateur.idUtilisateur;
-  
+
             this.aviservice.getScoreMoyen(idUtilisateur).subscribe({
               next: (score) => {
                 if (score !== undefined && score !== null) {
                   this.scoreMap[idUtilisateur] = score;
-                 
+
                 }
               },
               error: (err) => {
                 console.error(`Erreur lors de la récupération du score pour l'utilisateur ${idUtilisateur}`, err);
               }
             });
-  
+
             this.aviservice.getNombreAvisPourUtilisateur(idUtilisateur).subscribe({
               next: (nombreAvis) => {
                 this.nombreAvisMap[idUtilisateur] = nombreAvis;
-              
+
               },
               error: (err) => {
                 console.error(`Erreur lors de la récupération du nombre d'avis pour l'utilisateur ${idUtilisateur}`, err);
               }
             });
-  
+
           } else {
             console.warn("idUtilisateur est undefined pour l'utilisateur :", utilisateur);
           }
@@ -99,21 +99,21 @@ nombreAvisMap: { [id: number]: number } = {};
       }
     });
   }
-  
-    loadProfileImage(prestataire: any): void {
-      if (prestataire.image) {
-        this.fileservice.getImage(prestataire.image).subscribe({
-          next: (imageBlob) => {
-            const objectURL = URL.createObjectURL(imageBlob);
-            prestataire.image = objectURL; 
-          },
-          error: () => {
-            prestataire.image = 'assets/images/user.png'; 
-          }
-        });
-      }
-  
-  
+
+  loadProfileImage(prestataire: any): void {
+    if (prestataire.image) {
+      this.fileservice.getImage(prestataire.image).subscribe({
+        next: (imageBlob) => {
+          const objectURL = URL.createObjectURL(imageBlob);
+          prestataire.image = objectURL;
+        },
+        error: () => {
+          prestataire.image = 'assets/images/user.png';
+        }
+      });
     }
+
+
+  }
 
 }

@@ -1,4 +1,4 @@
-import {  ChangeDetectorRef, Component,  OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { Avis } from 'src/models/Avis';
 import { Utilisateur } from 'src/models/Utilisateur';
@@ -44,16 +44,16 @@ export class FrontprofilshowComponent implements OnInit {
   contenuMessage: string = '';
   utilisateurConnecte: any;
   score: number = 0;
-  constructor(private  readonly fileService: FileService,
+  constructor(private readonly fileService: FileService,
 
-    private  readonly activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
     private readonly utilisateurservice: UtilisateurService,
     private readonly reservationService: ReservationService,
     private readonly cdr: ChangeDetectorRef,
     private readonly avisService: AvisService,
-    private readonly  toastr: ToastrService,
+    private readonly toastr: ToastrService,
     private readonly aviservice: AvisService,
-  
+
 
 
 
@@ -213,7 +213,7 @@ export class FrontprofilshowComponent implements OnInit {
             this.loadProfileImage(avis.utilisateur.image, index, 'utilisateur');
             this.mettreAJourAffichage();
 
-          } 
+          }
         });
         this.cdr.detectChanges();
       },

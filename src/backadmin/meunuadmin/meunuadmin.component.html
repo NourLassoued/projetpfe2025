@@ -4,21 +4,21 @@
 
 
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-	<link rel="shortcut icon" href="favicon.ico">
+<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+<link rel="shortcut icon" href="favicon.ico">
 
-	<!-- FontAwesome JS-->
-	<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+<!-- FontAwesome JS-->
+<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
 
 
-	<!-- App CSS -->
-	<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+<!-- App CSS -->
+<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
 
 
 
@@ -53,9 +53,16 @@
 
 						<div class="app-utilities col-auto">
 							<div class="app-utility-item app-notifications-dropdown dropdown">
-								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
-									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
-									title="Notifications">
+								<a
+  class="dropdown-toggle no-toggle-arrow"
+  id="notifications-dropdown-toggle"
+  data-bs-toggle="dropdown"
+  href="#"
+  role="button"
+  aria-expanded="false"
+  title="Notifications"
+  (keydown)="handleDropdownKey($event)"
+>
 									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
 										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
@@ -70,10 +77,10 @@
 										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
 									</div><!--//dropdown-menu-title-->
 									<div class="dropdown-menu-content">
-										
-										
-									
-										
+
+
+
+
 									</div><!--//dropdown-menu-content-->
 
 
@@ -94,8 +101,14 @@
 							</div><!--//app-utility-item-->
 
 							<div class="app-utility-item app-user-dropdown dropdown">
-								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
-									role="button" aria-expanded="false"><ng-container
+								<a class="dropdown-toggle"
+   id="user-dropdown-toggle"
+   data-bs-toggle="dropdown"
+   href="#"
+   role="button"
+   aria-expanded="false"
+   (keydown)="handleDropdownKey($event)">
+   <ng-container
 										*ngIf="profileImageUrl; else defaultIcon">
 										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
@@ -122,8 +135,7 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="" class="profile-img"><span
-							class="logo-text">PORTAL</span></a>
+							[src]="profileImageUrl" alt="" class="profile-img"><span class="logo-text">PORTAL</span></a>
 
 				</div><!--//app-branding-->
 
@@ -208,15 +220,15 @@
 								<span class="nav-link-text">Espace Avis</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-						
+
 						<li class="nav-item has-submenu">
-							
+
 							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
 								data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
-								
+
 								<span class="nav-link-text">Reservation</span>
-								
-								
+
+
 							</a><!--//nav-link-->
 							<div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
 								<ul class="submenu-list list-unstyled">
@@ -230,14 +242,14 @@
 						</li><!--//nav-item-->
 
 
-						
+
 					</ul>
 				</nav>
 				<div class="app-sidepanel-footer">
-					<nav class="app-nav app-nav-footer">
+<nav class="app-nav app-nav-footer" aria-labelledby="footer-nav-label">
 						<ul class="app-menu footer-menu list-unstyled">
 							<li class="nav-item">
-								
+
 								<a class="nav-link" href="settings.html">
 									<span class="nav-icon">
 										<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear"

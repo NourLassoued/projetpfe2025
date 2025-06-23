@@ -67,28 +67,22 @@ export class ReservationcoursComponent {
       (reservations) => {
         this.reservationsEnAttente = reservations;
         this.reservationsEnAttente.forEach((reservation, index) => {
-
           if (reservation.demande?.servicee?.imageService) {
             this.getImage(reservation.demande.servicee.imageService, index, 'service');
           }
-
-
           if (reservation.prestataire?.image) {
             this.getImage(reservation.prestataire.image, index, 'prestataire');
-
           }
-
         });
       },
       (error) => {
-
+        // Gérer l’erreur ici si nécessaire
       }
     );
   }
-
   getImage(filename: string, index: number, type: 'service' | 'prestataire'): void {
-    this.fileService.getImage(filename).subscribe(
-      (imageBlob) => {
+    this.fileService.getImage(filename).subscribe({
+      next: (imageBlob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         if (type === 'service') {
           this.serviceImageUrls[index] = imageUrl;
@@ -96,13 +90,11 @@ export class ReservationcoursComponent {
           this.prestataireImageUrls[index] = imageUrl;
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors du chargement de l\'image', error);
-
       }
-    );
+    });
   }
-
   handleDeleteClick(): void {
 
     console.log('Réservation annulée');

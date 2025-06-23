@@ -101,4 +101,11 @@ export class MeunuadminComponent {
   showDetails(avis: any) {
     console.log(avis);
   }
+  handleDropdownKey(event: KeyboardEvent): void {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    (event.target as HTMLElement).click(); 
+  }
+}
+
 }

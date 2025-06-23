@@ -396,5 +396,10 @@ export class UserComponent implements OnInit {
     }
   }
 
-
+ handleDropdownKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      (event.target as HTMLElement).click();
+    }
+  }
 }

@@ -168,7 +168,7 @@ export class JardinageComponent {
 
   selectService(service: any) {
     this.selectedServiceId = service.idservice;
-    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } }); 
+    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });
   }
 }
 

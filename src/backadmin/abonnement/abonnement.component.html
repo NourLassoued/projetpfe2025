@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
 
 
 
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-	<link rel="shortcut icon" href="favicon.ico">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-	<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+<link rel="shortcut icon" href="favicon.ico">
 
 
-	<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
+<script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
+
+
+<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
 
 
 
@@ -40,15 +40,16 @@
 						<div class="search-mobile-trigger d-sm-none col">
 							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
 						</div>
-					
+
 
 						<div class="app-utilities col-auto">
-						
-							
+
+
 
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
-									role="button" aria-expanded="false"><ng-container
+									role="button" aria-expanded="false"
+									(keydown)="handleDropdownKey($event)"><ng-container
 										*ngIf="profileImageUrl; else defaultIcon">
 										<img [src]="profileImageUrl" alt="" class="profile-img">
 									</ng-container>
@@ -75,8 +76,8 @@
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				<div class="app-branding">
 					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="" class="profile-img"><span
-							class="logo-text">SOS service Tunisie</span></a>
+							[src]="profileImageUrl" alt="" class="profile-img"><span class="logo-text">SOS service
+							Tunisie</span></a>
 
 				</div>
 				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -238,8 +239,8 @@
 						<div class="page-utilities">
 							<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 
-								
-								
+
+
 							</div>
 						</div>
 					</div>
@@ -247,16 +248,19 @@
 
 
 				<nav id="orders-table-tab"
-					class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+					class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4"
+					aria-label="Navigation entre les onglets de gestion des abonnements">
+
 					<a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab"
-						href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true"> Prestataires en attente</a>
+						href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true"> Prestataires en
+						attente</a>
 					<a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab"
-						href="#orders-paid" role="tab" aria-controls="orders-paid"
-						aria-selected="false">Abonnements actifs</a>
+						href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Abonnements
+						actifs</a>
 					<a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab"
 						href="#orders-pending" role="tab" aria-controls="orders-pending"
 						aria-selected="false">Abonnements exprimés</a>
-					
+
 				</nav>
 
 
@@ -266,7 +270,7 @@
 						<div class="app-card app-card-orders-table shadow-sm mb-5">
 							<div class="app-card-body">
 								<div class="table-responsive">
-									
+
 
 
 
@@ -279,45 +283,46 @@
 												<th class="cell">Image</th>
 												<th class="cell">Nom</th>
 												<th class="cell">Email</th>
-                                          
+
 
 												<th class="cell">createdAt</th>
 												<th class="cell">Téléphone</th>
 												<th class="cell">Status</th>
 
-												
+
 												<th class="cell">Envoger Email</th>
 
 
 											</tr>
 										</thead>
 										<tbody>
-											  <tr *ngFor="let user of utilisateursEnAttentePage">
-                                                <td class="cell">
-													<img *ngIf="user.image" [src]="user.image"
-														alt="" class="profile-pic">
+											<tr *ngFor="let user of utilisateursEnAttentePage">
+												<td class="cell">
+													<img *ngIf="user.image" [src]="user.image" alt=""
+														class="profile-pic">
 													<i *ngIf="!user.image" class="fa fa-user profile-pic"></i>
 												</td>
 
-    <td class="cell">{{ user.nom }}</td>
+												<td class="cell">{{ user.nom }}</td>
 
-    <td class="cell">{{ user.email }}</td>
+												<td class="cell">{{ user.email }}</td>
 
-  
-    <td class="cell">{{ user.createdAt | date: 'short' }}</td>
 
-    <td class="cell">{{ user.telephoneNumber }}</td>
+												<td class="cell">{{ user.createdAt | date: 'short' }}</td>
 
-    <td class="cell">
-      <span class="badge bg-warning text-dark">{{ user.status }}</span>
-    </td>
+												<td class="cell">{{ user.telephoneNumber }}</td>
 
-    <td class="cell">
-      <button class="btn btn-sm btn-primary" (click)="envoyerEmailBienvenue(user.email)"  >
-        Envoyer Email
-      </button>
-    </td>
-  </tr>
+												<td class="cell">
+													<span class="badge bg-warning text-dark">{{ user.status }}</span>
+												</td>
+
+												<td class="cell">
+													<button class="btn btn-sm btn-primary"
+														(click)="envoyerEmailBienvenue(user.email)">
+														Envoyer Email
+													</button>
+												</td>
+											</tr>
 
 										</tbody>
 									</table>
@@ -327,158 +332,174 @@
 							</div>
 						</div>
 
-						<nav class="app-pagination">
-  <ul class="pagination justify-content-center">
-    <li class="page-item" [class.disabled]="currentPage === 1">
-      <a class="page-link" href="#" (click)="setPage(currentPage - 1); $event.preventDefault()" tabindex="-1">Previous</a>
-    </li>
+						<nav class="app-pagination" aria-label="Pagination navigation">
+							<ul class="pagination justify-content-center">
+								<li class="page-item" [class.disabled]="currentPage === 1">
+									<a class="page-link" href="#"
+										(click)="setPage(currentPage - 1); $event.preventDefault()"
+										tabindex="-1">Previous</a>
+								</li>
 
-    <li class="page-item" *ngFor="let p of [].constructor(totalPages); let i = index" [class.active]="currentPage === i + 1">
-      <a class="page-link" href="#" (click)="setPage(i + 1); $event.preventDefault()">{{ i + 1 }}</a>
-    </li>
+								<li class="page-item" *ngFor="let p of [].constructor(totalPages); let i = index"
+									[class.active]="currentPage === i + 1">
+									<a class="page-link" href="#" (click)="setPage(i + 1); $event.preventDefault()">{{ i
+										+ 1 }}</a>
+								</li>
 
-    <li class="page-item" [class.disabled]="currentPage === totalPages">
-      <a class="page-link" href="#" (click)="setPage(currentPage + 1); $event.preventDefault()">Next</a>
-    </li>
-  </ul>
-</nav>
+								<li class="page-item" [class.disabled]="currentPage === totalPages">
+									<a class="page-link" href="#"
+										(click)="setPage(currentPage + 1); $event.preventDefault()">Next</a>
+								</li>
+							</ul>
+						</nav>
+
 
 
 					</div>
 
-			<div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-  <div class="app-card app-card-orders-table mb-5">
-    <div class="app-card-body">
-      <div class="table-responsive">
-		<select [(ngModel)]="typeFiltre" class="form-select mb-3">
-  <option [ngValue]="null">-- Tous les types --</option>
-  <option *ngFor="let type of typeAbonnementValues" [ngValue]="type">{{ type }}</option>
-</select>
-        <table class="table mb-0 text-left">
-          <thead>
-            <tr>
-				   <th class="cell">Image</th>
-              <th class="cell">Email</th>
-              <th class="cell">Type</th>
-              <th class="cell">Début</th>
-              <th class="cell">Fin</th>
-              <th class="cell">Montant</th>
-              <th class="cell">Auto-Renouvellement</th>
-              <th class="cell">Statut</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let abonnement of abonnementsFiltresPage">
-				 <td class="cell">
-    <img *ngIf="abonnement.utilisateur?.image" [src]="abonnement.utilisateur?.image"
-         alt="" class="profile-pic">
-    <i *ngIf="!abonnement.utilisateur?.image" class="fa fa-user profile-pic"></i>
-				 </td>
-              <td class="cell">{{ abonnement.utilisateur?.email }}</td>
-              <td class="cell">{{ abonnement.typeAbonnement }}</td>
-              <td class="cell">{{ abonnement.dateDebut | date: 'shortDate' }}</td>
-              <td class="cell">{{ abonnement.dateFin | date: 'shortDate' }}</td>
-              <td class="cell">{{ abonnement.montant }}</td>
-              <td class="cell">
-                <span class="badge" [ngClass]="abonnement.autoRenouvellement ? 'bg-success' : 'bg-secondary'">
-                  {{ abonnement.autoRenouvellement ? 'Oui' : 'Non' }}
-                </span>
-              </td>
-              <td class="cell">
-                <span class="badge bg-success">{{ abonnement.statusAbonnement }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <nav class="app-pagination" aria-label="Pagination abonnements">
-  <ul class="pagination justify-content-center">
-    <li class="page-item" [class.disabled]="currentPageAbonnement === 1">
-      <a class="page-link" href="#" 
-         (click)="setPageAbonnement(currentPageAbonnement - 1); $event.preventDefault()"
-         tabindex="-1">Précédent</a>
-    </li>
+					<div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
+						<div class="app-card app-card-orders-table mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+									<select [(ngModel)]="typeFiltre" class="form-select mb-3">
+										<option [ngValue]="null">-- Tous les types --</option>
+										<option *ngFor="let type of typeAbonnementValues" [ngValue]="type">{{ type }}
+										</option>
+									</select>
+									<table class="table mb-0 text-left">
+										<thead>
+											<tr>
+												<th class="cell">Image</th>
+												<th class="cell">Email</th>
+												<th class="cell">Type</th>
+												<th class="cell">Début</th>
+												<th class="cell">Fin</th>
+												<th class="cell">Montant</th>
+												<th class="cell">Auto-Renouvellement</th>
+												<th class="cell">Statut</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let abonnement of abonnementsFiltresPage">
+												<td class="cell">
+													<img *ngIf="abonnement.utilisateur?.image"
+														[src]="abonnement.utilisateur?.image" alt=""
+														class="profile-pic">
+													<i *ngIf="!abonnement.utilisateur?.image"
+														class="fa fa-user profile-pic"></i>
+												</td>
+												<td class="cell">{{ abonnement.utilisateur?.email }}</td>
+												<td class="cell">{{ abonnement.typeAbonnement }}</td>
+												<td class="cell">{{ abonnement.dateDebut | date: 'shortDate' }}</td>
+												<td class="cell">{{ abonnement.dateFin | date: 'shortDate' }}</td>
+												<td class="cell">{{ abonnement.montant }}</td>
+												<td class="cell">
+													<span class="badge"
+														[ngClass]="abonnement.autoRenouvellement ? 'bg-success' : 'bg-secondary'">
+														{{ abonnement.autoRenouvellement ? 'Oui' : 'Non' }}
+													</span>
+												</td>
+												<td class="cell">
+													<span class="badge bg-success">{{ abonnement.statusAbonnement
+														}}</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<nav class="app-pagination" aria-label="Pagination abonnements">
+							<ul class="pagination justify-content-center">
+								<li class="page-item" [class.disabled]="currentPageAbonnement === 1">
+									<a class="page-link" href="#"
+										(click)="setPageAbonnement(currentPageAbonnement - 1); $event.preventDefault()"
+										tabindex="-1">Précédent</a>
+								</li>
 
-    <!-- Boutons numérotés -->
-    <li class="page-item"
-        *ngFor="let page of [].constructor(totalPagesAbonnement); let i = index"
-        [class.active]="currentPageAbonnement === i + 1">
-      <a class="page-link" href="#" 
-         (click)="setPageAbonnement(i + 1); $event.preventDefault()">
-         {{ i + 1 }}
-      </a>
-    </li>
-
-  
-    <li class="page-item" [class.disabled]="currentPageAbonnement === totalPagesAbonnement">
-      <a class="page-link" href="#" 
-         (click)="setPageAbonnement(currentPageAbonnement + 1); $event.preventDefault()">
-         Suivant
-      </a>
-    </li>
-  </ul>
-</nav>
+								<!-- Boutons numérotés -->
+								<li class="page-item"
+									*ngFor="let page of [].constructor(totalPagesAbonnement); let i = index"
+									[class.active]="currentPageAbonnement === i + 1">
+									<a class="page-link" href="#"
+										(click)="setPageAbonnement(i + 1); $event.preventDefault()">
+										{{ i + 1 }}
+									</a>
+								</li>
 
 
-</div>
-
-				<div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-  <div class="app-card app-card-orders-table mb-5">
-    <div class="app-card-body">
-      <div class="table-responsive">
-        
-        <table class="table mb-0 text-left">
-          <thead>
-            <tr>
-              <th class="cell">Image</th>
-              <th class="cell">Email</th>
-              <th class="cell">Type</th>
-              <th class="cell">Début</th>
-              <th class="cell">Fin</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let abonnement of abonnementsExprimerParPage">
-              <td class="cell">
-                <img *ngIf="abonnement.utilisateur?.image" [src]="abonnement.utilisateur?.image"
-                     alt="" class="profile-pic">
-                <i *ngIf="!abonnement.utilisateur?.image" class="fa fa-user profile-pic"></i>
-              </td>
-              <td class="cell">{{ abonnement.utilisateur?.email }}</td>
-              <td class="cell">{{ abonnement.typeAbonnement }}</td>
-              <td class="cell">{{ abonnement.dateDebut | date: 'shortDate' }}</td>
-              <td class="cell">{{ abonnement.dateFin | date: 'shortDate' }}</td>
-              <td class="cell">{{ abonnement.montant }}</td>
-            
-            
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
- <nav class="app-pagination" aria-label="Pagination abonnements exprimés">
-  <ul class="pagination justify-content-center mt-3">
-    <li class="page-item" [class.disabled]="currentPageExprimer === 1">
-      <a class="page-link" href="#" (click)="setPageExprimer(currentPageExprimer - 1); $event.preventDefault()">Précédent</a>
-    </li>
-
-    <li class="page-item"
-        *ngFor="let page of [].constructor(totalPagesExprimer); let i = index"
-        [class.active]="currentPageExprimer === i + 1">
-      <a class="page-link" href="#" (click)="setPageExprimer(i + 1); $event.preventDefault()">{{ i + 1 }}</a>
-    </li>
-
-    <li class="page-item" [class.disabled]="currentPageExprimer === totalPagesExprimer">
-      <a class="page-link" href="#" (click)="setPageExprimer(currentPageExprimer + 1); $event.preventDefault()">Suivant</a>
-    </li>
-  </ul>
-</nav>
+								<li class="page-item" [class.disabled]="currentPageAbonnement === totalPagesAbonnement">
+									<a class="page-link" href="#"
+										(click)="setPageAbonnement(currentPageAbonnement + 1); $event.preventDefault()">
+										Suivant
+									</a>
+								</li>
+							</ul>
+						</nav>
 
 
-</div>
+					</div>
+
+					<div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
+						<div class="app-card app-card-orders-table mb-5">
+							<div class="app-card-body">
+								<div class="table-responsive">
+
+									<table class="table mb-0 text-left">
+										<thead>
+											<tr>
+												<th class="cell">Image</th>
+												<th class="cell">Email</th>
+												<th class="cell">Type</th>
+												<th class="cell">Début</th>
+												<th class="cell">Fin</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let abonnement of abonnementsExprimerParPage">
+												<td class="cell">
+													<img *ngIf="abonnement.utilisateur?.image"
+														[src]="abonnement.utilisateur?.image" alt=""
+														class="profile-pic">
+													<i *ngIf="!abonnement.utilisateur?.image"
+														class="fa fa-user profile-pic"></i>
+												</td>
+												<td class="cell">{{ abonnement.utilisateur?.email }}</td>
+												<td class="cell">{{ abonnement.typeAbonnement }}</td>
+												<td class="cell">{{ abonnement.dateDebut | date: 'shortDate' }}</td>
+												<td class="cell">{{ abonnement.dateFin | date: 'shortDate' }}</td>
+												<td class="cell">{{ abonnement.montant }}</td>
+
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<nav class="app-pagination" aria-label="Pagination abonnements exprimés">
+							<ul class="pagination justify-content-center mt-3">
+								<li class="page-item" [class.disabled]="currentPageExprimer === 1">
+									<a class="page-link" href="#"
+										(click)="setPageExprimer(currentPageExprimer - 1); $event.preventDefault()">Précédent</a>
+								</li>
+
+								<li class="page-item"
+									*ngFor="let page of [].constructor(totalPagesExprimer); let i = index"
+									[class.active]="currentPageExprimer === i + 1">
+									<a class="page-link" href="#"
+										(click)="setPageExprimer(i + 1); $event.preventDefault()">{{ i + 1 }}</a>
+								</li>
+
+								<li class="page-item" [class.disabled]="currentPageExprimer === totalPagesExprimer">
+									<a class="page-link" href="#"
+										(click)="setPageExprimer(currentPageExprimer + 1); $event.preventDefault()">Suivant</a>
+								</li>
+							</ul>
+						</nav>
+
+
+					</div>
 				</div>
 
 
@@ -487,7 +508,7 @@
 
 		<footer class="app-footer">
 			<div class="container text-center py-3">
-			
+
 				<small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"
 						style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com"
 						target="_blank">Xiaoying Riley</a> for developers</small>
@@ -506,5 +527,3 @@
 	<script src="assetsadmin/js/app.js"></script>
 
 </body>
-
-</html>
