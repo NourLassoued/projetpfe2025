@@ -217,8 +217,8 @@ margin-top: 110px;
     font-size: 18px;
   }
   .disabled {
-    opacity: 0.5; /* Rendre visuellement inactive */
-    pointer-events: none; /* Empêche le clic */
+    opacity: 0.5; 
+    pointer-events: none; 
   }
   .past-date {
     opacity: 0.5;
