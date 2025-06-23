@@ -31,7 +31,7 @@ export class ComptepartuculierComponent implements OnInit {
   demandes: Demande[] = [];
   constructor(private readonly fileService: FileService,
     private readonly  sanitizer: DomSanitizer, private  readonly router: Router, private readonly categorieService: CategorieService, 
-    private    service: ServiceeService,
+    private readonly   service: ServiceeService,
     private readonly demandeService: DemandeService) { }
   ngOnInit(): void {
     this.loadUserData();

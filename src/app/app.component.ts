@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { ScrollServiceService } from './service/scroll-service.service';
 
 
 @Component({

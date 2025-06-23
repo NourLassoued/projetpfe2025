@@ -26,7 +26,7 @@ export class ConstructionetGrosoeuvreComponent {
   ) { }
   ngOnInit(): void {
 
-    this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');
+    this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');
 
     if (this.categoryName) {
 

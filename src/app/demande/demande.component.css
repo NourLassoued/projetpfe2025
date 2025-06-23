@@ -1,21 +1,22 @@
 body {
-    
-  
+
+
     display: flex;
     align-items: center;
     justify-content: center;
-  
+
     margin: 0;
-   
+
 }
+
 .container {
-  height: 600px;
+    height: 600px;
     padding: 24px;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 90px;
+    margin-top: 90px;
     width: 700px;
-   
+
 }
 
 .grid {
@@ -24,71 +25,83 @@ body {
     gap: 16px;
     margin-bottom: 24px;
 }
+
 .card {
     border: 1px solid #e5e7eb;
     border-radius: 15px;
     padding: 16px;
     text-align: center;
 }
+
 .card.selected {
-   
+
     position: relative;
     border: 3px solid #007bff;
-   
- 
+
+
 }
+
 .card.selected .checkmark {
     display: block;
 }
+
 .checkmark {
     display: none;
     position: absolute;
     top: 8px;
     right: 8px;
-    background-color:  #007bff; 
+    background-color: #007bff;
     color: #ffffff;
     border-radius: 50%;
     padding: 4px;
 }
+
 .icon {
     font-size: 24px;
     margin-bottom: 8px;
 }
+
 .title {
     font-size: 18px;
     font-weight: 600;
 }
+
 .subtitle {
     font-size: 14px;
     color: #6b7280;
     margin-top: 8px;
 }
+
 .description {
     font-size: 12px;
     color: #9ca3af;
 }
+
 .popular {
     position: absolute;
-margin-top: 110px;
-  margin-left: 45px;
+    margin-top: 110px;
+    margin-left: 45px;
     background-color: #fbbf24;
     font-size: 15px;
     padding: 2px 4px;
     border-radius: 10px;
 }
+
 .text-center {
     text-align: center;
     color: #6b7280;
     margin-bottom: 24px;
 }
+
 .flex {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 24px;
 }
+
 .button {
-    background-color: #007bff; 
+    background-color: #007bff;
     color: #ffffff;
     border-radius: 50%;
     width: 50px;
@@ -98,29 +111,35 @@ margin-top: 110px;
     justify-content: center;
     font-size: 18px;
 }
+
 .time {
     margin: 0 16px;
     font-size: 18px;
     font-weight: 600;
 }
+
 .footer {
     display: flex;
     justify-content: space-between;
 }
+
 .link {
-    color: #007bff; 
+    color: #007bff;
     text-decoration: none;
 }
+
 .link-button {
     background-color: #007bff;
     color: #ffffff;
     padding: 8px 16px;
     border-radius: 8px;
     text-decoration: none;
-}.checkbox-container {
+}
+
+.checkbox-container {
     display: flex;
     align-items: center;
-    gap: 10px;  
+    gap: 10px;
 }
 
 .switch {
@@ -158,72 +177,76 @@ margin-top: 110px;
     transition: .4s;
 }
 
-.switch input:checked + .slider {
+.switch input:checked+.slider {
     background-color: #2196F3;
 }
 
-.switch input:checked + .slider:before {
+.switch input:checked+.slider:before {
     transform: translateX(1.5em);
 }
 
-.switch input:focus + .slider {
+.switch input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
 }
+
 .switch .label-text {
-    margin-left: 10px; 
+    margin-left: 10px;
 }
 
 .calendar-container {
     width: 700px;
     margin-top: 60px;
-   
-   
+
+
     padding: 20px;
     text-align: center;
     font-family: Arial, sans-serif;
-  }
-  
-  .calendar-header {
+}
+
+.calendar-header {
     display: flex;
-  
+
     justify-content: space-between;
     align-items: center;
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
-  }
-  
-  .calendar-grid {
+}
+
+.calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
     text-align: center;
-  }
-  
-  .day-name {
+}
+
+.day-name {
     font-weight: bold;
     color: #2a2929;
-  }
-  
-  .day {
+}
+
+.day {
     padding: 10px;
     font-size: 18px;
     border-radius: 5px;
     color: #141414;
     transition: background 0.3s;
-  }
-  .message{
+}
+
+.message {
     color: #2a2929;
     font-size: 18px;
-  }
-  .disabled {
-    opacity: 0.5; 
-    pointer-events: none; 
-  }
-  .past-date {
+}
+
+.disabled {
     opacity: 0.5;
     pointer-events: none;
-  }
+}
+
+.past-date {
+    opacity: 0.5;
+    pointer-events: none;
+}
 
 .today {
     background-color: #2196F3;
@@ -231,33 +254,37 @@ margin-top: 110px;
     font-weight: bold;
     box-shadow: 0 0 10px #2196F3;
     z-index: 2;
-  }
-  
-  
-  .empty {
-    visibility: hidden; 
-  }
+}
 
-  .day:hover {
+
+.empty {
+    visibility: hidden;
+}
+
+.day:hover {
     background-color: #2196F3;
     color: white;
     cursor: pointer;
-  }
-  .time-grid {
+}
+
+.time-grid {
     margin-top: 100px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 10px;
     justify-content: center;
-   
-   
+
+
 }
-.time-gridebutton{
+
+.time-gridebutton {
     background-color: white;
 }
-.calendar{
+
+.calendar {
     margin-top: 100px;
 }
+
 button {
     background-color: #f0f0f0;
     border: none;
@@ -277,9 +304,11 @@ button.selected {
     color: white;
     font-weight: bold;
 }
-.time-selection{
+
+.time-selection {
     margin-top: 150px;
 }
+
 .additional-info {
     background-color: #ffffff;
     padding: 24px;
@@ -295,6 +324,7 @@ button.selected {
     margin-top: 15px;
     color: #000;
 }
+
 .additional-info input,
 .additional-info textarea,
 .additional-info select {
@@ -371,9 +401,9 @@ button.selected {
     background: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -381,19 +411,19 @@ button.selected {
     height: 300px;
     text-align: center;
     position: relative;
-  }
-  
-  .close {
+}
+
+.close {
     position: absolute;
     top: 10px;
     right: 15px;
     font-size: 24px;
     cursor: pointer;
-  }
-  
- 
-  .btn-submit {
-    background-color:#28a745;
+}
+
+
+.btn-submit {
+    background-color: #28a745;
     color: white;
     padding: 10px;
     border: none;
@@ -401,46 +431,46 @@ button.selected {
     width: 100%;
     margin-top: 30px;
     border-radius: 6px;
-  }
-  
-  .btn-submit:hover {
-    background: #218838;
-  }
- 
+}
 
-  .modal-content h2{
+.btn-submit:hover {
+    background: #218838;
+}
+
+
+.modal-content h2 {
     margin-top: 50px;
     font-weight: blod;
     color: rgb(35, 36, 36);
-  }
+}
 
 
 
 .modal-content input[type="email"] {
     width: 100%;
     padding: 12px;
-   
+
     margin-top: 30px;
     border: 2px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
     outline: none;
     transition: 0.3s;
-  }
-  
-  /* Effet au focus */
-  .modal-content input[type="email"]:focus {
+}
+
+/* Effet au focus */
+.modal-content input[type="email"]:focus {
     background: #f0f4f8;
     box-shadow: 0px 0px 8px rgba(85, 87, 85, 0.6);
-  }
-  
-  /* Style placeholder */
-  .modal-content input[type="email"]::placeholder {
+}
+
+/* Style placeholder */
+.modal-content input[type="email"]::placeholder {
     color: #888;
     font-style: italic;
-  }
-  
-  /* Animation légère */
-  .modal-content input[type="email"]:hover {
-    border-color:rgba(85, 87, 85, 0.6);
-  }
+}
+
+/* Animation légère */
+.modal-content input[type="email"]:hover {
+    border-color: rgba(85, 87, 85, 0.6);
+}

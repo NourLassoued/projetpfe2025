@@ -104,5 +104,14 @@ export class NavbarbackadminComponent {
           }
         });
       }
-  
+  handleDropdownKey(event: KeyboardEvent) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    this.toggleDropdown();
+  }
+}
+  toggleDropdown() {
+    throw new Error('Method not implemented.');
+  }
+
 }

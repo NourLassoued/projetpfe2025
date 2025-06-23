@@ -159,6 +159,19 @@ updatedPostulation: any = {};
     localStorage.removeItem('accessToken')
     this.router.navigate(['/Front']); 
   }
+handleDeleteKey(event: KeyboardEvent, id: number): void {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    this.deletePostulation(id);
+  }
+}
+handleCloseKey(event: KeyboardEvent): void {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    this.closeUpdateModal();
+  }
+}
+
 
 }
 

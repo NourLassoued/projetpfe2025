@@ -191,7 +191,7 @@ export class ChatComponent implements OnInit {
 
     this.messageService.getConversation(this.userId, contactId).subscribe({
       next: (messages) => {
-        this.conversation = messages || [];
+        this.conversation = messages ??[];
         this.conversation.forEach(msg => {
           if (!msg.delivered && msg.receiver.idUtilisateur === this.userId) {
             this.markMessageAsRead(msg.id);

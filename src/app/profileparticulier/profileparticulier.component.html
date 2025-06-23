@@ -1,32 +1,40 @@
 <body>
-    <app-navbarcompte></app-navbarcompte>
-    <div class="container">
-      <div class="profile-wrapper">
-        <div class="profile-image">
-          <div id="profile-container">
-            <div class="image-wrapper">
-              <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
-            </div>
+  <app-navbarcompte></app-navbarcompte>
+  <div class="container">
+    <div class="profile-wrapper">
+      <div class="profile-image">
+        <div id="profile-container">
+          <div class="image-wrapper">
+            <img
+              *ngIf="profileImageUrl"
+              [src]="profileImageUrl"
+              alt=""
+              class="profile-img"
+            />
           </div>
         </div>
-  
-        <div class="user-info">
-          <div class="section">
-            <label>👤 Nom de l'utilisateur</label>
-            <p>{{ user?.nom }}</p>
-          </div>
-  
-          <div class="section">
-            <i class="fas fa-map-marker-alt location-icon"></i>
-            <span>{{user?.adresse?.governoate  }}</span>
-          </div>
-  
-          
-          
+      </div>
+
+      <div class="user-info">
+        <div class="section">
+          <label for="dummyInput">👤 Nom de l'utilisateur</label>
+          <p>{{ user?.nom }}</p>
+          <input
+            type="text"
+            id="dummyInput"
+            style="display: none"
+            tabindex="-1"
+            aria-hidden="true"
+          />
+        </div>
+
+        <div class="section">
+          <i class="fas fa-map-marker-alt location-icon"></i>
+          <span>{{ user?.adresse?.governoate }}</span>
         </div>
       </div>
     </div>
-  
-    <app-footer></app-footer>
-  </body>
-  
+  </div>
+
+  <app-footer></app-footer>
+</body>

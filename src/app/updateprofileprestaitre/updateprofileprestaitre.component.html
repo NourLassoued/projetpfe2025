@@ -1,288 +1,378 @@
 <body>
-   <app-navbarcompte></app-navbarcompte>
-    <div class="container">
-        <div class="sidebar">
-            
-          <div id="profile-container">
-            <div class="image-wrapper" (click)="triggerFileInput()">
-              <img [src]="profileImageUrl" alt="" id="profile-icon"/>
+  <app-navbarcompte></app-navbarcompte>
+  <div class="container">
+    <div class="sidebar">
+      <div id="profile-container">
+        <div class="image-wrapper" (click)="triggerFileInput()">
+          <img [src]="profileImageUrl" alt="" id="profile-icon" />
 
-              <ng-template #defaultIcon>
-                <i class="fas fa-user default-icon"></i>
-              </ng-template>
-            </div>
-        
-            <!-- Champ d'upload caché -->
-            <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none"/>
-            <ng-template #defaultIcon>
-              <i class="fas fa-user default-icon" (click)="triggerFileInput()"></i> 
-            </ng-template>
-      
-            <!-- Champ d'upload caché -->
-           
-
-          </div>
-        
-      
-            <h2>{{ user?.nom }}</h2>
-       
-           
+          <ng-template #defaultIcon>
+            <i class="fas fa-user default-icon"></i>
+          </ng-template>
         </div>
-        <div>
-          
-                <h3>A propos de moi</h3>
-           
-                <div class="content">
-                    <div class="section">
-                      <label>Description</label>
-                      <div class="competence">
-                        <ng-container *ngIf="!isEditing['description']; else editDescription">
-                          <p (click)="startEditing('description', user?.description)">
-                            {{ user?.description || 'Aucune description disponible.' }}
-                          </p>
-                          <button class="edit-btn" (click)="startEditing('description', user?.description)">✏️</button>
-                        </ng-container>
-                  
-                        <ng-template #editDescription>
-                          <div class="edit-container">
-                            <textarea [(ngModel)]="editedValues['description']"></textarea>
-                            <button class="savee-btn" (click)="saveChanges('description')">✔️</button>
-                          </div>
-                        </ng-template>
-                      </div>
-                    </div>
-                  </div>
-                  
-            <div class="content">
-            <div class="section">
-                <label>💼Mes compétences</label>
-                <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
-                    <p *ngIf="servicee?.nomservice">
-                       {{ servicee.nomservice }}
-                    </p>
-                </div>
-                
-            </div>
-            </div>
-            <div class="content">
-              <div class="section">
-                <label>Tarif</label>
-                <div class="competence">
-                  <ng-container *ngIf="!isEditing['tarifs']; else editTarif">
-                    <p (click)="startEditing('tarifs', user?.tarifs)">
-                      {{ user?.tarifs ? (user.tarifs + ' dt') : 'Tarif non renseigné.' }}
-                    </p>
-                    <button class="edit-btn" (click)="startEditing('tarifs', user?.tarifs)">✏️</button>
-                  </ng-container>
-            
-                  <ng-template #editTarif>
-                    <div class="edit-container">
-                      <input type="text" [(ngModel)]="editedValues['tarifs']">
-                      <button class="savee-btn" (click)="saveChanges('tarifs')">✔️</button>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-            
-            
-            <div class="content">
-                <div class="section">
-                    <label>📞 Téléphone</label>
-                    <div class="competence">
-                        <ng-container *ngIf="!isEditing['telephoneNumber']; else editTelephone">
-                            <p (click)="startEditing('telephoneNumber', user?.telephoneNumber)">
-                                {{ user?.telephoneNumber || 'Aucun numéro disponible.' }}
-                            </p>
-                            <button class="edit-btn" (click)="startEditing('telephoneNumber', user?.telephoneNumber)">✏️</button>
-                        </ng-container>
-                    
-                        <ng-template #editTelephone>
-                            <div class="edit-container">
-                                <input type="text" [(ngModel)]="editedValues['telephoneNumber']">
-                                <button class="savee-btn" (click)="saveChanges('telephoneNumber')">✔️</button>
-                            </div>
-                        </ng-template>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-            <div class="content">
-              <div class="section">
-                  <label> Années d'expérience</label>
-                  <div class="competence">
-                      <ng-container *ngIf="!isEditing['workExperience']; else editWork">
-                          <p (click)="startEditing('workExperience', user?.WorkExerience)">
-                              {{ user?.
-                                workExperience
-                                 || 'Aucun workExperience disponible.' }}
-                          </p>
-                          <button class="edit-btn" (click)="startEditing('workExperience', user?.workExperience)">✏️</button>
-                      </ng-container>
-                  
-                      <ng-template #editWork>
-                          <div class="edit-container">
-                              <input type="text" [(ngModel)]="editedValues['workExperience']">
-                              <button class="savee-btn" (click)="saveChanges('workExperience')">✔️</button>
-                          </div>
-                      </ng-template>
-                  </div>
-                  
-                  
-              </div>
-          </div>
-            <div class="content">
-              <div class="section">
-                <label>📍Adresse</label>
-                <div class="competence">
-                  <ng-container *ngIf="!isEditing['adresse']; else editAdresse">
-                    <p (click)="startEditing('adresse', user?.adresse)">
-                      {{ user?.adresse?.governoate || 'Adresse non renseignée.' }}
-                    </p>
-                    <button class="edit-btn" (click)="startEditing('adresse', user?.adresse)">✏️</button>
-                  </ng-container>
-            
-                  <ng-template #editAdresse>
-                    <div class="edit-container">
-                      <select [(ngModel)]="selectedAdresse">
-                        <option *ngFor="let adresse of adresses" [ngValue]="adresse">
-                          {{ adresse.governoate }} 
-                        </option>
-                      </select>
-                      <button class="savee-btn" (click)="saveChanges('adresse')">✔️</button>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-            
-              <div class="content">
-              <div class="section">
-                <label>🔒 Mot de passe</label>
-                <div class="competence">
-                  <ng-container *ngIf="!isEditing['password']; else editPassword">
-                    <p>********</p>
-                    <button class="edit-btn" (click)="startEditing('password', '')">✏️</button>
-                  </ng-container>
-            
-                  <ng-template #editPassword>
-                    <div class="edit-container">
-                      <input type="password" placeholder="Nouveau mot de passe" [(ngModel)]="editedValues['password']">
-                      <input type="password" placeholder="Confirmer mot de passe" [(ngModel)]="editedValues['confirmPassword']">
-                      <button class="savee-btn" (click)="saveChanges('password')">✔️</button>
-                    </div>
-                    <div class="error" *ngIf="passwordError">
-                      <span>⚠️ {{ passwordError }}</span>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-              <div class="content">
-                <!-- Disponibilité -->
-                <div class="section">
-                  <button class="edit-btn" (click)="toggleCalendarView()">📅 Voir calendrier</button>
-                  
-               
-              
-                  <div class="competence">
-                    <ng-container *ngIf="user?.disponibilites?.length > 0; else noDisponibilite">
-                      <ul>
-                        <li *ngFor="let dispo of user.disponibilites">
-                          {{ dispo.jour }} : {{ dispo.heureDebut }} - {{ dispo.heureFin }}
-                          
-                          <button   class="delete-btn"  (click)="supprimerDisponibilite(dispo.id)">🗑️Supprimer</button>
 
-                        </li>
-                      </ul>
-                    </ng-container>
-                    <ng-template #noDisponibilite>
-                      <p>Disponibilité non précisée.</p>
-                    </ng-template>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Fenêtre modale pour afficher le calendrier -->
-              <div class="modal-overlay" *ngIf="calendarVisible">
-                <div class="modal-content" [ngClass]="{'calendar-blur': editionActive}">
-                  <button class="close-calendar-btn" (click)="toggleCalendarView()">❌</button>
-                  <button class="add-disponibilite-btn" (click)="afficherFormulaireAjout()">
-                    ➕ Ajouter disponibilité
-                  </button>
-                  <full-calendar #calendarComponent [options]="calendarOptions"></full-calendar>
-                </div>
-              </div>
-              
-              
+        <!-- Champ d'upload caché -->
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          style="display: none"
+        />
+        <ng-template #defaultIcon>
+          <i class="fas fa-user default-icon" (click)="triggerFileInput()"></i>
+        </ng-template>
 
-<div class="modal-form" *ngIf="editionActive ">
-  <h3>Modifier la disponibilité</h3>
+        <!-- Champ d'upload caché -->
+      </div>
 
-  <label>Jour :</label>
-  <input type="text" [(ngModel)]="disponibiliteSelectionnee.jour" readonly />
-
-  <label>Heure début :</label>
-  <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureDebut" />
-
-  <label>Heure fin :</label>
-  <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureFin" />
-
-  <div class="buttons">
-    <button class="save-btn" (click)="updateDisponibilite()">✅ Sauvegarder</button>
-    <button class="close-btn" (click)="fermerFormulaire()">❌ Annuler</button>
-  </div>
-</div>
-
-<div class="modal-form" *ngIf="ajoutMode">
-  <h3>Ajouter une disponibilité</h3>
- 
-
-  <label>Jour :</label>
-  <select #jour (change)="nouvelleDisponibilite.jour = jour.value">
-    <option value="" disabled selected>Choisir un jour</option>
-
-
-
-
-  
-  
-    <option value="Dimanche">Dimanche</option>
-    <option value="Lundi">Lundi</option>
-    <option value="Mardi">Mardi</option>
-    <option value="Mercredi">Mercredi</option>
-    <option value="Jeudi">Jeudi</option>
-    <option value="Vendredi">Vendredi</option>
-    <option value="Samedi">Samedi</option>
-  </select>
-  <div class="error" *ngIf="erreurs.jour">
-    <span>⚠️ {{ erreurs.jour }}</span>
-  </div>
-  <label>Heure début :</label>
-  <input type="time" #heureDebut (input)="nouvelleDisponibilite.heureDebut = heureDebut.value"/>
-  <div class="error" *ngIf="erreurs.heureDebut">
-    <span>⚠️ {{ erreurs.heureDebut }}</span>
-  </div>
-  <label>Heure fin :</label>
-  <input type="time" #heureFin (input)="nouvelleDisponibilite.heureFin = heureFin.value"/>
-  <div class="error" *ngIf="erreurs.heureFin">
-    <span>⚠️ {{ erreurs.heureFin }}</span>
-  </div>
-  <div class="error" *ngIf="erreurs.general">
-    <span>⚠️ {{ erreurs.general }}</span>
-  </div>
-  
-  <div class="buttons">
-    <button class="save-btn" (click)="ajouterDisponibilite(nouvelleDisponibilite)">✅ Sauvegarder</button>
-    <button class="close-btn" (click)="fermerFormulaire()">❌ Annuler</button>
-  </div>
-</div>
-
-
-                
-           
-        </div>
+      <h2>{{ user?.nom }}</h2>
     </div>
-    <app-footer></app-footer>
+    <div>
+      <h3>A propos de moi</h3>
+
+      <div class="content">
+        <div class="section">
+          <label>Description</label>
+          <div class="competence">
+            <ng-container
+              *ngIf="!isEditing['description']; else editDescription"
+            >
+              <p (click)="startEditing('description', user?.description)">
+                {{ user?.description || "Aucune description disponible." }}
+              </p>
+              <button
+                class="edit-btn"
+                (click)="startEditing('description', user?.description)"
+              >
+                ✏️
+              </button>
+            </ng-container>
+
+            <ng-template #editDescription>
+              <div class="edit-container">
+                <textarea [(ngModel)]="editedValues['description']"></textarea>
+                <button class="savee-btn" (click)="saveChanges('description')">
+                  ✔️
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <label>💼Mes compétences</label>
+          <div
+            class="competence"
+            *ngFor="let servicee of user1?.servicesOfferts"
+          >
+            <p *ngIf="servicee?.nomservice">
+              {{ servicee.nomservice }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="section">
+          <label>Tarif</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['tarifs']; else editTarif">
+              <p (click)="startEditing('tarifs', user?.tarifs)">
+                {{
+                  user?.tarifs ? user.tarifs + " dt" : "Tarif non renseigné."
+                }}
+              </p>
+              <button
+                class="edit-btn"
+                (click)="startEditing('tarifs', user?.tarifs)"
+              >
+                ✏️
+              </button>
+            </ng-container>
+
+            <ng-template #editTarif>
+              <div class="edit-container">
+                <input type="text" [(ngModel)]="editedValues['tarifs']" />
+                <button class="savee-btn" (click)="saveChanges('tarifs')">
+                  ✔️
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <label>📞 Téléphone</label>
+          <div class="competence">
+            <ng-container
+              *ngIf="!isEditing['telephoneNumber']; else editTelephone"
+            >
+              <p
+                (click)="startEditing('telephoneNumber', user?.telephoneNumber)"
+              >
+                {{ user?.telephoneNumber || "Aucun numéro disponible." }}
+              </p>
+              <button
+                class="edit-btn"
+                (click)="startEditing('telephoneNumber', user?.telephoneNumber)"
+              >
+                ✏️
+              </button>
+            </ng-container>
+
+            <ng-template #editTelephone>
+              <div class="edit-container">
+                <input
+                  type="text"
+                  [(ngModel)]="editedValues['telephoneNumber']"
+                />
+                <button
+                  class="savee-btn"
+                  (click)="saveChanges('telephoneNumber')"
+                >
+                  ✔️
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="section">
+          <label> Années d'expérience</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['workExperience']; else editWork">
+              <p (click)="startEditing('workExperience', user?.WorkExerience)">
+                {{ user?.workExperience || "Aucun workExperience disponible." }}
+              </p>
+              <button
+                class="edit-btn"
+                (click)="startEditing('workExperience', user?.workExperience)"
+              >
+                ✏️
+              </button>
+            </ng-container>
+
+            <ng-template #editWork>
+              <div class="edit-container">
+                <input
+                  type="text"
+                  [(ngModel)]="editedValues['workExperience']"
+                />
+                <button
+                  class="savee-btn"
+                  (click)="saveChanges('workExperience')"
+                >
+                  ✔️
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="section">
+          <label>📍Adresse</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['adresse']; else editAdresse">
+              <p (click)="startEditing('adresse', user?.adresse)">
+                {{ user?.adresse?.governoate || "Adresse non renseignée." }}
+              </p>
+              <button
+                class="edit-btn"
+                (click)="startEditing('adresse', user?.adresse)"
+              >
+                ✏️
+              </button>
+            </ng-container>
+
+            <ng-template #editAdresse>
+              <div class="edit-container">
+                <select [(ngModel)]="selectedAdresse">
+                  <option *ngFor="let adresse of adresses" [ngValue]="adresse">
+                    {{ adresse.governoate }}
+                  </option>
+                </select>
+                <button class="savee-btn" (click)="saveChanges('adresse')">
+                  ✔️
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <label>🔒 Mot de passe</label>
+          <div class="competence">
+            <ng-container *ngIf="!isEditing['password']; else editPassword">
+              <p>********</p>
+              <button class="edit-btn" (click)="startEditing('password', '')">
+                ✏️
+              </button>
+            </ng-container>
+
+            <ng-template #editPassword>
+              <div class="edit-container">
+                <input
+                  type="password"
+                  placeholder="Nouveau mot de passe"
+                  [(ngModel)]="editedValues['password']"
+                />
+                <input
+                  type="password"
+                  placeholder="Confirmer mot de passe"
+                  [(ngModel)]="editedValues['confirmPassword']"
+                />
+                <button class="savee-btn" (click)="saveChanges('password')">
+                  ✔️
+                </button>
+              </div>
+              <div class="error" *ngIf="passwordError">
+                <span>⚠️ {{ passwordError }}</span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <!-- Disponibilité -->
+        <div class="section">
+          <button class="edit-btn" (click)="toggleCalendarView()">
+            📅 Voir calendrier
+          </button>
+
+          <div class="competence">
+            <ng-container
+              *ngIf="user?.disponibilites?.length > 0; else noDisponibilite"
+            >
+              <ul>
+                <li *ngFor="let dispo of user.disponibilites">
+                  {{ dispo.jour }} : {{ dispo.heureDebut }} -
+                  {{ dispo.heureFin }}
+
+                  <button
+                    class="delete-btn"
+                    (click)="supprimerDisponibilite(dispo.id)"
+                  >
+                    🗑️Supprimer
+                  </button>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #noDisponibilite>
+              <p>Disponibilité non précisée.</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fenêtre modale pour afficher le calendrier -->
+      <div class="modal-overlay" *ngIf="calendarVisible">
+        <div
+          class="modal-content"
+          [ngClass]="{ 'calendar-blur': editionActive }"
+        >
+          <button class="close-calendar-btn" (click)="toggleCalendarView()">
+            ❌
+          </button>
+          <button
+            class="add-disponibilite-btn"
+            (click)="afficherFormulaireAjout()"
+          >
+            ➕ Ajouter disponibilité
+          </button>
+          <full-calendar
+            #calendarComponent
+            [options]="calendarOptions"
+          ></full-calendar>
+        </div>
+      </div>
+
+      <div class="modal-form" *ngIf="editionActive">
+        <h3>Modifier la disponibilité</h3>
+
+        <label>Jour :</label>
+        <input
+          type="text"
+          [(ngModel)]="disponibiliteSelectionnee.jour"
+          readonly
+        />
+
+        <label>Heure début :</label>
+        <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureDebut" />
+
+        <label>Heure fin :</label>
+        <input type="time" [(ngModel)]="disponibiliteSelectionnee.heureFin" />
+
+        <div class="buttons">
+          <button class="save-btn" (click)="updateDisponibilite()">
+            ✅ Sauvegarder
+          </button>
+          <button class="close-btn" (click)="fermerFormulaire()">
+            ❌ Annuler
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-form" *ngIf="ajoutMode">
+        <h3>Ajouter une disponibilité</h3>
+
+        <label>Jour :</label>
+        <select #jour (change)="nouvelleDisponibilite.jour = jour.value">
+          <option value="" disabled selected>Choisir un jour</option>
+
+          <option value="Dimanche">Dimanche</option>
+          <option value="Lundi">Lundi</option>
+          <option value="Mardi">Mardi</option>
+          <option value="Mercredi">Mercredi</option>
+          <option value="Jeudi">Jeudi</option>
+          <option value="Vendredi">Vendredi</option>
+          <option value="Samedi">Samedi</option>
+        </select>
+        <div class="error" *ngIf="erreurs.jour">
+          <span>⚠️ {{ erreurs.jour }}</span>
+        </div>
+        <label>Heure début :</label>
+        <input
+          type="time"
+          #heureDebut
+          (input)="nouvelleDisponibilite.heureDebut = heureDebut.value"
+        />
+        <div class="error" *ngIf="erreurs.heureDebut">
+          <span>⚠️ {{ erreurs.heureDebut }}</span>
+        </div>
+        <label>Heure fin :</label>
+        <input
+          type="time"
+          #heureFin
+          (input)="nouvelleDisponibilite.heureFin = heureFin.value"
+        />
+        <div class="error" *ngIf="erreurs.heureFin">
+          <span>⚠️ {{ erreurs.heureFin }}</span>
+        </div>
+        <div class="error" *ngIf="erreurs.general">
+          <span>⚠️ {{ erreurs.general }}</span>
+        </div>
+
+        <div class="buttons">
+          <button
+            class="save-btn"
+            (click)="ajouterDisponibilite(nouvelleDisponibilite)"
+          >
+            ✅ Sauvegarder
+          </button>
+          <button class="close-btn" (click)="fermerFormulaire()">
+            ❌ Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
 </body>

@@ -1,104 +1,144 @@
-
 <body>
-<app-navbarcompte></app-navbarcompte>
+  <app-navbarcompte></app-navbarcompte>
 
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <ul>
+          <li routerLink="/Compteparticulier">📌Tableau de bord</li>
+          <li
+            routerLink="/Mesdemandes"
+            (click)="toggleDemandes()"
+            (keydown)="toggleDemandes()"
+          >
+            📋 Mes demandes
+            <span *ngIf="showDemandes">
+              <i class="fa fa-chevron-down"></i>
+              <!-- Icône flèche vers le bas -->
+            </span>
+            <span *ngIf="!showDemandes">
+              <i class="fa fa-chevron-right"></i>
+              <!-- Icône flèche vers la droite -->
+            </span>
+          </li>
+          <ul *ngIf="showDemandes" class="submenu">
+            <li routerLink="/Mesdemandeterminees">
+              Demandes de service clôturées
+            </li>
+            <li routerLink="/Mesdemandesarchivees">Mes Demandes Archivées</li>
+          </ul>
 
+          <li routerLink="/Reservationcours">📅 Réservations en cours</li>
+          <li routerLink="/Historique">📜Mon historique</li>
 
+          <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
+          <li>
+            <button
+              id="logout-btn"
+              (click)="logout()"
+              (keydown)="logout()"
+              tabindex="0"
+              style="
+                background: none;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                color: #66696e;
+              "
+            >
+              🚪 Se déconnecter
+            </button>
+          </li>
+        </ul>
+      </ul>
+    </aside>
 
-   
-    <div class="container">
-        <aside class="sidebar">
-            <ul>
-                <ul>
-                    <li routerLink="/Compteparticulier" >📌Tableau de bord</li>
-                    <li (click)="toggleDemandes()">
-                        📋 Mes demandes
-                        <span *ngIf="showDemandes">
-                            <i class="fa fa-chevron-down"></i> 
-                          </span>
-                          <span *ngIf="!showDemandes">
-                            <i class="fa fa-chevron-right"></i> 
-                          </span>
-                    </li>
-                    <ul *ngIf="showDemandes" class="submenu">
-                        <li routerLink="/Mesdemandeterminees">Demandes de service clôturées</li>
-                        <li routerLink="/Mesdemandesarchivees">Mes Demandes Archivées</li>
-                       
-                    </ul>
-                   
-                    <li routerLink="/Reservationcours">📅 Réservations en cours</li>
-                    <li routerLink="/Historique">📜Mon historique</li>
-            
-                    <li routerLink="/Mesévolutions">⭐Mes évolutions</li>
-                    <li id="logout-btn" (click)="logout()">🚪 Se déconnecter</li>
-                </ul>
-                
-            </ul>
-        </aside>
-  
-        <main class="content">
-          <h2>⭐Mes évolutions</h2>
-          <div *ngIf="avisList.length > 0; else noAvis">
-            <table class="postulation-table">
-              <thead>
-                <tr>
-                  <th>Note</th>
-                  <th>Commentaire</th>
-                  <th>Date</th>
-                  <th>Utilisateur</th>
-                  <th>Supprimer</th>
-                  <th>Mettre à jour</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let avis of avisList">
-                  <td>
-                    <ng-container *ngIf="editModeId === avis.idAvis; else showStars">
-                      <input type="number" [(ngModel)]="editNote" min="1" max="5" />
-                    </ng-container>
-                    <ng-template #showStars>
-                      <span style="color: gold;" class="star" *ngFor="let s of getFullStars(avis.note)">★</span>
-                      <span style="color: lightgray;" class="star" *ngFor="let s of getEmptyStars(avis.note)">☆</span>
-                    </ng-template>
-                  </td>
-                
-                  <td>
-                    <ng-container *ngIf="editModeId === avis.idAvis; else showComment">
-                      <input type="text" [(ngModel)]="editCommentaire" />
-                    </ng-container>
-                    <ng-template #showComment>
-                      {{ avis.commentaire }}
-                    </ng-template>
-                  </td>
-                
-                  <td>{{ avis.dateAvis | date:'short' }}</td>
-                  <td>{{ avis.avisUtilisateur?.nom }}</td>
-                
-                  <td
-                   (click)="deleteAvis(avis.idAvis!)" >🗑️
-                  </td>
-                
-                  <td>
-                    <button *ngIf="editModeId !== avis.idAvis" class="btn btn-primary" (click)="startEdit(avis)">
-                      ✏️ Modifier
-                    </button>
-                    <button *ngIf="editModeId === avis.idAvis" class="btn btn-success" (click)="updateAvis()">
-                      💾 Enregistrer
-                    </button>
-                  </td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-          <ng-template #noAvis>
-            <p>Aucun avis trouvé</p>
-          </ng-template>
-          
-         
-        </main>
+    <main class="content">
+      <h2>⭐Mes évolutions</h2>
+      <div *ngIf="avisList.length > 0; else noAvis">
+        <table class="postulation-table">
+          <thead>
+            <tr>
+              <th>Note</th>
+              <th>Commentaire</th>
+              <th>Date</th>
+              <th>Utilisateur</th>
+              <th>Supprimer</th>
+              <th>Mettre à jour</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let avis of avisList">
+              <td>
+                <ng-container
+                  *ngIf="editModeId === avis.idAvis; else showStars"
+                >
+                  <input type="number" [(ngModel)]="editNote" min="1" max="5" />
+                </ng-container>
+                <ng-template #showStars>
+                  <span
+                    style="color: gold"
+                    class="star"
+                    *ngFor="let s of getFullStars(avis.note)"
+                    >★</span
+                  >
+                  <span
+                    style="color: lightgray"
+                    class="star"
+                    *ngFor="let s of getEmptyStars(avis.note)"
+                    >☆</span
+                  >
+                </ng-template>
+              </td>
+
+              <td>
+                <ng-container
+                  *ngIf="editModeId === avis.idAvis; else showComment"
+                >
+                  <input type="text" [(ngModel)]="editCommentaire" />
+                </ng-container>
+                <ng-template #showComment>
+                  {{ avis.commentaire }}
+                </ng-template>
+              </td>
+
+              <td>{{ avis.dateAvis | date : "short" }}</td>
+              <td>{{ avis.avisUtilisateur?.nom }}</td>
+
+              <td
+                tabindex="0"
+                (click)="deleteAvis(avis.idAvis!)"
+                (keydown)="handleKey($event, avis.idAvis!)"
+                role="button"
+                aria-label="Supprimer l'avis"
+              >
+                🗑️
+              </td>
+
+              <td>
+                <button
+                  *ngIf="editModeId !== avis.idAvis"
+                  class="btn btn-primary"
+                  (click)="startEdit(avis)"
+                >
+                  ✏️ Modifier
+                </button>
+                <button
+                  *ngIf="editModeId === avis.idAvis"
+                  class="btn btn-success"
+                  (click)="updateAvis()"
+                >
+                  💾 Enregistrer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    
 
-    </body> 
+      <ng-template #noAvis>
+        <p>Aucun avis trouvé</p>
+      </ng-template>
+    </main>
+  </div>
+</body>

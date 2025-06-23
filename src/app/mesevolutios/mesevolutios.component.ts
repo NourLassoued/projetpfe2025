@@ -138,5 +138,11 @@ export class MesevolutiosComponent {
   toggleDemandes() {
     this.showDemandes = !this.showDemandes;
   }
+handleKey(event: KeyboardEvent, id: number) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    this.deleteAvis(id);
+    event.preventDefault(); 
+  }
+}
 
 }

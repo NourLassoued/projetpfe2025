@@ -24,7 +24,7 @@ export class DemenagementComponent {
   ) { }
   ngOnInit(): void {
 
-    this.categoryName = JSON.parse(localStorage.getItem('categorieName') || '""');
+    this.categoryName = JSON.parse(localStorage.getItem('categorieName') ?? '""');
 
     if (this.categoryName) {
 
@@ -136,7 +136,7 @@ export class DemenagementComponent {
   currentPlaceholder: string = "";
   private index: number = 0;
   private charIndex: number = 0;
-  private typingSpeed: number = 100;
+  private  readonly typingSpeed: number = 100;
   private isTyping: boolean = false;
 
 
