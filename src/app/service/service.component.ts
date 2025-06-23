@@ -214,11 +214,11 @@ export class ServiceComponent {
 
     formData.append(
       'nomservice',
-      this.registerForm.get('nomservice')?.value || ''
-    ); // Utilise une chaîne vide si la valeur est undefined
+      this.registerForm.get('nomservice')?.value ?? ''
+    ); 
     formData.append(
       'description',
-      this.registerForm.get('description')?.value || ''
+      this.registerForm.get('description')?.value ?? ''
     );
 
     formData.append('tarif', this.registerForm.get('tarif')?.value || '0');

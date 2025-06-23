@@ -106,7 +106,7 @@ modificationMode = false;
     }))};
    
    
-constructor(private readonly  fileService: FileService, private readonly  sanitizer: DomSanitizer, private readonly utilisateurService:UtilisateurService,private cdr: ChangeDetectorRef,
+constructor(private readonly  fileService: FileService, private readonly  sanitizer: DomSanitizer, private readonly utilisateurService:UtilisateurService,private readonly cdr: ChangeDetectorRef,
   private  readonly disponibliteService:DisponibliteService,
   private  readonly cdRef: ChangeDetectorRef,
  private  readonly forgetPasswordService:ForgetPasswordService,
@@ -120,7 +120,6 @@ ngOnInit(): void {
  
     this.loadDisponibilites();
     
-  // Mise à jour de l'URL de l'image du profil si un changement est détecté
     this.fileService.profileImage$.subscribe((newImageUrl) => {
       if (newImageUrl) {
         this.profileImageUrl = this.sanitizer.bypassSecurityTrustUrl(newImageUrl);

@@ -22,7 +22,7 @@ export class BricolageComponent {
     private readonly service: ServiceeService,
 
     private readonly router: Router
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.categoryName = JSON.parse(
       localStorage.getItem('categorieName') ?? '""'
@@ -48,32 +48,29 @@ export class BricolageComponent {
     this.showModal = false;
   }
   filterServices() {
-    if (this.searchQuery.trim() === '') {
-      this.filteredServices = this.services;
-    } else {
-      this.filteredServices = this.services.filter(
-        (service) =>
-          service.nomservice &&
-          service.nomservice
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase())
-      );
-    }
+    const query = this.searchQuery.toLowerCase().trim();
+
+    this.filteredServices =
+      query === ''
+        ? this.services
+        : this.services.filter((service) =>
+            service.nomservice?.toLowerCase().includes(query)
+          );
   }
 
-  getImage(filename: string, index: number) {
-    this.file.getImage(filename).subscribe(
-      (imageBlob) => {
+  getImage(filename: string, index: number): void {
+    this.file.getImage(filename).subscribe({
+      next: (imageBlob: Blob) => {
         const imageUrl = URL.createObjectURL(imageBlob);
         this.imageUrls[index] = imageUrl;
       },
-      (error) => {
+      error: (error) => {
         console.error(
-          ` Erreur lors du chargement de l'image ${filename}`,
+          `Erreur lors du chargement de l'image ${filename}`,
           error
         );
-      }
-    );
+      },
+    });
   }
 
   searchServices() {
@@ -87,8 +84,8 @@ export class BricolageComponent {
   }
 
   getServicesByCategoryName(categorieName: string): void {
-    this.service.getServicesByCategoryName(categorieName).subscribe(
-      (services: Servicee[]) => {
+    this.service.getServicesByCategoryName(categorieName).subscribe({
+      next: (services: Servicee[]) => {
         if (services && services.length > 0) {
           this.services = services;
 
@@ -102,6 +99,7 @@ export class BricolageComponent {
               this.imageUrls[index] = 'assets/default-image.jpg';
             }
           });
+
           this.filterServices();
         } else {
           console.warn(
@@ -110,10 +108,10 @@ export class BricolageComponent {
           );
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la récupération des services:', error);
-      }
-    );
+      },
+    });
   }
 
   placeholders: string[] = [

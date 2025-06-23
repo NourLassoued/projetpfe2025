@@ -1,925 +1,1641 @@
 <!DOCTYPE html>
 
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-
-
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-<link rel="shortcut icon" href="favicon.ico">
-
+<meta
+  name="description"
+  content="Portal - Bootstrap 5 Admin Dashboard Template For Developers"
+/>
+<meta name="author" content="Xiaoying Riley at 3rd Wave Media" />
+<link rel="shortcut icon" href="favicon.ico" />
 
 <script defer src="assetsadmin/plugins/fontawesome/js/all.min.js"></script>
 
-
-<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css">
-
-
+<link id="theme-style" rel="stylesheet" href="/assetsadmin/css/portal.css" />
 
 <body class="app">
-	<header class="app-header fixed-top">
-		<div class="app-header-inner">
-			<div class="container-fluid py-2">
-				<div class="app-header-content">
-					<div class="row justify-content-between align-items-center">
-
-						<div class="col-auto">
-							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
-								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-									role="img">
-									<title>Menu</title>
-									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
-										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
-								</svg>
-							</a>
-						</div>
-						<div class="search-mobile-trigger d-sm-none col">
-							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
-						</div>
-
-
-						<div class="app-utilities col-auto">
-
-
-
-							<div class="app-utility-item app-user-dropdown dropdown">
-								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
-									role="button" aria-expanded="false" (keydown)="handleDropdownKey($event)">
-									<ng-container *ngIf="profileImageUrl; else defaultIcon">
-										<img [src]="profileImageUrl" alt="" class="profile-img">
-									</ng-container>
-									<ng-template #defaultIcon>
-										<i class="fas fa-user-circle profile-icon"></i>
-									</ng-template></a>
-								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-									<li><a class="dropdown-item" href="account.html">Account</a></li>
-									<li><a class="dropdown-item" href="settings.html">Settings</a></li>
-									<li>
-										<hr class="dropdown-divider">
-									</li>
-									<li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="app-sidepanel" class="app-sidepanel">
-			<div id="sidepanel-drop" class="sidepanel-drop"></div>
-			<div class="sidepanel-inner d-flex flex-column">
-				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-				<div class="app-branding">
-					<a class="app-logo" routerLink="/Admindashboard"> <img *ngIf="profileImageUrl"
-							[src]="profileImageUrl" alt="" class="profile-img"><span class="logo-text">SOS service
-							Tunisie</span></a>
-				</div>
-				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
-					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
-
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/Admindashboard">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 20 20">
-										<path fill="currentColor" d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Tableau de bord</span>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/user">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 16 16">
-										<path fill="currentColor"
-											d="M8 0C2.4 0 5.1 7.3 5.1 7.3c.6 1 1.4.8 1.4 1.5c0 .6-.7.8-1.4.9C4 9.7 3 9.5 2 11.3c-.6 1.1-.9 4.7-.9 4.7h13.7s-.3-3.6-.8-4.7c-1-1.9-2-1.6-3.1-1.7c-.7-.1-1.4-.3-1.4-.9s.8-.4 1.4-1.5C10.9 7.3 13.6 0 8 0z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Utilisateurs</span>
-							</a>
-						</li>
-						<li class="nav-item">
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/Abonnement">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 14 14">
-										<g fill="none" stroke="currentColor" stroke-linecap="round"
-											stroke-linejoin="round">
-											<path
-												d="M8.351 5.307a1.166 1.166 0 0 0-1.1-.778h-.903a1.041 1.041 0 0 0-.223 2.059l1.375.3a1.167 1.167 0 0 1-.25 2.307h-.777c-.508 0-.94-.324-1.1-.777m1.489-3.889V3.362m0 7V9.196m-4.864 4.302v-2.5h2.5" />
-											<path
-												d="M13.388 5.804a6.5 6.5 0 0 1-11.39 5.35M.612 8.196a6.5 6.5 0 0 1 11.39-5.35" />
-											<path d="M12.002.502v2.5h-2.5" />
-										</g>
-									</svg>
-								</span>
-								<span class="nav-link-text">Abonnements</span>
-							</a>
-						</li>
-
-
-
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/catogories">
-								<span class="nav-icon">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z" />
-										<path fill-rule="evenodd"
-											d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Catégories</span>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/Service">
-								<span class="nav-icon">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z" />
-										<path fill-rule="evenodd"
-											d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Services</span>
-							</a>
-						</li>
-
-						<li class="nav-item">
-
-							<a class="nav-link active" routerLink="/espaceavis">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 24 24">
-										<path fill="currentColor"
-											d="M17.562 21.56a1.003 1.003 0 0 1-.465-.115L12 18.765l-5.097 2.68a1 1 0 0 1-1.451-1.054l.973-5.676l-4.123-4.02a1 1 0 0 1 .554-1.705l5.699-.828l2.548-5.164a1.042 1.042 0 0 1 1.794 0l2.548 5.164l5.699.828a1 1 0 0 1 .554 1.706l-4.123 4.019l.973 5.676a1 1 0 0 1-.986 1.169Z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Espace Avis</span>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/Scorebadage">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 1024 1024">
-										<path fill="currentColor"
-											d="M1021.06 839.968L833.798 493.664c19.104-43.36 29.792-91.28 29.792-141.696C863.59 157.664 706.07.16 511.782.16c-194.336 0-351.84 157.52-351.84 351.808c0 51.632 11.216 100.624 31.184 144.784L3.03 839.808c-6.065 11.024-5.057 24.624 2.527 34.688c7.6 10.033 20.432 14.752 32.687 11.873l160.624-36.848l54.976 153.12c4.288 11.904 15.152 20.16 27.744 21.088c.817.064 1.6.096 2.368.096a32.002 32.002 0 0 0 28.192-16.88L475.844 701.97a355.152 355.152 0 0 0 35.92 1.808c11.12 0 22.095-.576 32.943-1.6l167.248 305.008a31.984 31.984 0 0 0 30.56 16.527c12.56-1.008 23.376-9.248 27.631-21.088l54.976-153.12l160.624 36.848c12.32 2.975 25.024-1.809 32.624-11.809c7.632-9.984 8.656-23.52 2.688-34.576zm-731.282 73.376L249.52 801.183c-5.504-15.248-21.471-24.128-37.28-20.368l-118.8 27.248l135.41-246.976c44.592 60.24 107.952 105.68 181.44 127.793zm-65.553-561.377c0-158.544 129.009-287.536 287.568-287.536c158.544 0 287.536 128.992 287.536 287.536S670.337 639.535 511.793 639.535c-158.576 0-287.568-129.024-287.568-287.568zm587.52 428.847c-15.872-3.744-31.776 5.12-37.28 20.367l-40.529 112.976l-123.152-224.56c75.44-22.096 140.337-68.735 185.505-130.735L931.137 808.19z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Scores et Badges</span>
-							</a>
-						</li>
-
-						<li class="nav-item">
-
-							<a class="nav-link active" routerLink="/escpacereservation">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 20 20">
-										<path fill="currentColor"
-											d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">Réservation</span>
-							</a>
-						</li>
-
-
-						<li class="nav-item">
-							<a class="nav-link active" routerLink="/Front">
-								<span class="nav-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-										viewBox="0 0 717 672">
-										<path fill="currentColor"
-											d="M0 151v391c0 36 15 68 39 93c24 24 55 37 91 37h196v-81H130c-27 0-48-22-48-49V151c0-27 21-48 48-48h196V21H130c-36 0-67 14-91 38c-24 25-39 56-39 92zm215 118v156c0 18 16 33 34 33h181v123c0 11 6 20 16 25c4 1 8 1 10 1c7 0 13-2 18-7l235-235c11-9 10-27 0-37L474 94c-14-15-44-6-44 18v124H249c-18 0-34 15-34 33z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">logout</span>
-							</a>
-						</li>
-
-
-
-
-
-
-
-
-					</ul>
-				</nav>
-
-
-			</div>
-		</div>
-	</header>
-
-	<div class="app-wrapper">
-
-		<div class="app-content pt-3 p-md-3 p-lg-4">
-			<div class="container-xl">
-
-				<div class="row g-3 mb-4 align-items-center justify-content-between">
-					<div class="col-auto">
-						<h1 class="app-page-title mb-0">liste des utilisateurs</h1>
-					</div>
-					<div class="col-auto">
-						<div class="page-utilities">
-							<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-
-
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-				<nav id="orders-table-tab"
-					class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4"
-					aria-label="Filtrer les commandes par type d’utilisateur">
-
-					<a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab"
-						href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Prestataires</a>
-					<a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab"
-						href="#orders-paid" role="tab" aria-controls="orders-paid"
-						aria-selected="false">Particuliers</a>
-					<a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab"
-						href="#orders-pending" role="tab" aria-controls="orders-pending"
-						aria-selected="false">Entreprise</a>
-				</nav>
-
-
-
-				<div class="tab-content" id="orders-table-tab-content">
-					<div class="tab-pane fade show active" id="orders-all" role="tabpanel"
-						aria-labelledby="orders-all-tab">
-						<div class="app-card app-card-orders-table shadow-sm mb-5">
-							<div class="app-card-body">
-								<div class="table-responsive">
-									<div *ngIf="selectedPrestataire" class="disponibilites-box">
-										<h3>Disponibilités de {{ selectedPrestataire.nom }}:</h3>
-
-										<ul
-											*ngIf="selectedPrestataire.disponibilites && selectedPrestataire.disponibilites.length > 0; else noDisponibilites">
-											<li *ngFor="let dispo of selectedPrestataire.disponibilites">
-												📅 {{ dispo.jour }} - ⏰ {{ dispo.heureDebut }} à {{ dispo.heureFin }}
-											</li>
-										</ul>
-
-										<ng-template #noDisponibilites>
-											<p>Aucune disponibilité</p>
-										</ng-template>
-
-										<button (click)="closeDisponibilites()">Fermer</button>
-									</div>
-
-
-
-
-									<div class="mb-3">
-										<input type="text" class="form-control custom-search-input"
-											placeholder="Rechercher par nom" [(ngModel)]="searchNomPrestataire"
-											(input)="filterPrestatairesByNom()" />
-									</div>
-
-									<table class="table app-table-hover mb-0 text-left">
-
-										<thead>
-
-											<tr>
-												<th class="cell">Image</th>
-												<th class="cell">Nom</th>
-												<th class="cell">Email</th>
-												<th class="cell">password</th>
-												<th class="cell">Téléphone</th>
-												<th class="cell">Status</th>
-
-												<th class="cell">Tarifs</th>
-												<th class="cell">Disponibilité</th>
-												<th class="cell">Description</th>
-												<th class="cell">Solde</th>
-												<th class="cell">Expérience</th>
-												<th class="cell">Services Offerts</th>
-												<th class="cell">Adresse</th>
-												<th class="cell">Cv</th>
-												<th class="cell">CIN</th>
-												<th class="cell">Supprimer</th>
-
-
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let prestataire of pagedPrestataires">
-												<td class="cell">
-													<img *ngIf="prestataire.image" [src]="prestataire.image"
-														alt="{{ prestataire.nom }}" class="profile-pic">
-													<i *ngIf="!prestataire.image" class="fa fa-user profile-pic"></i>
-												</td>
-
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'nom'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null"
-														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'nom', prestataire.nom) : null"
-														tabindex="0" role="button">
-														{{ prestataire.nom }}
-													</span>
-
-													<input
-														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'nom'"
-														[(ngModel)]="prestataire.nom"
-														(blur)="updateUserInTable(prestataire.idUtilisateur, 'nom', prestataire.nom)"
-														placeholder="Nom">
-												</td>
-
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'email'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null"
-														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'email', prestataire.email) : null"
-														tabindex="0" role="button">
-														{{ prestataire.email }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'email'"
-														[(ngModel)]="prestataire.email"
-														(blur)="updateUserInTable(prestataire.idUtilisateur, 'email', prestataire.email)"
-														placeholder="Email">
-												</td>
-												<td class="cell">{{ prestataire.password ? '********' : '' }}</td>
-
-												<td class="cell">
-
-													<span
-														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'telephoneNumber'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null"
-														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber) : null"
-														tabindex="0" role="button">
-														{{ prestataire.telephoneNumber }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'telephoneNumber'"
-														[(ngModel)]="prestataire.telephoneNumber"
-														(blur)="updateUserInTable(prestataire.idUtilisateur, 'telephoneNumber', prestataire.telephoneNumber)"
-														placeholder="telephoneNumber">
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'status'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'status', prestataire.status) : null"
-														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'status', prestataire.status) : null"
-														tabindex="0" role="button" [ngClass]="{
-      'status-accepte': prestataire.status === 'ACCEPTE',
-      'status-refuse': prestataire.status === 'REFUSE',
-      'status-attente': prestataire.status === 'ATTENTE'
-    }">
-														{{ prestataire.status }}
-													</span>
-
-													<select
-														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'status'"
-														[(ngModel)]="prestataire.status"
-														(blur)="updateUserInTable(prestataire.idUtilisateur, 'status', prestataire.status)">
-														<option value="ACCEPTE">Accepte</option>
-														<option value="REFUSE">Refuse</option>
-														<option value="ATTENTE">Attente</option>
-													</select>
-												</td>
-
-
-
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'tarifs'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null"
-														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs) : null"
-														tabindex="0" role="button">
-														{{ prestataire.tarifs }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'tarifs'"
-														[(ngModel)]="prestataire.tarifs"
-														(blur)="updateUserInTable(prestataire.idUtilisateur, 'tarifs', prestataire.tarifs)"
-														placeholder="tarifs">
-												</td>
-
-
-												<td class="cell">
-													<i #calendarIcon class="fas fa-calendar-alt clickable-icon"
-														(click)="showDisponibilites(prestataire)"
-														(keydown.enter)="showDisponibilites(prestataire)" tabindex="0"
-														role="button" aria-label="Afficher les disponibilités">
-													</i>
-												</td>
-
-
-
-												<td class="cell">
-													<div class="description-container">
-														<span>{{ prestataire.description | slice: 0:50 }}</span>
-														<span *ngIf="prestataire.showFullDescription">{{
-															prestataire.description | slice: 50 }}</span>
-														<a *ngIf="prestataire.description && prestataire.description.length > 50"
-															(click)="toggleDescription(prestataire)">
-															{{ prestataire.showFullDescription ? 'Show Less' : 'Show
-															More' }}
-														</a>
-													</div>
-												</td>
-												<td class="cell">{{ prestataire.solde }}dt</td>
-
-
-												<td class="cell">
-
-													<span
-														*ngIf="editRowId !== prestataire.idUtilisateur || editColumn !== 'workExperience'"
-														(click)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null"
-														(keydown.enter)="prestataire.idUtilisateur ? startEditing(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience) : null"
-														tabindex="0" role="button">
-														{{ prestataire.workExperience }}
-													</span>
-
-													<input
-														*ngIf="editRowId === prestataire.idUtilisateur && editColumn === 'workExperience'"
-														[(ngModel)]="prestataire.workExperience"
-														(blur)="updateUserInTable(prestataire.idUtilisateur, 'workExperience', prestataire.workExperience)"
-														placeholder="workExperience">
-												</td>
-
-												<td class="cell">{{ prestataire.competence}} </td>
-
-
-												<td class="cell">{{ prestataire.adressee?.governoate }}</td>
-
-												<td class="cell">
-													<a *ngIf="prestataire.doucument_CIN"
-														(click)="downloadFile(prestataire.doucument_CIN)"
-														class="btn-sm app-btn-secondary">
-														{{ prestataire.doucument_CIN.split('/').pop() }}
-													</a>
-												</td>
-
-												<td class="cell">
-													<a *ngIf="prestataire.doucument_cv"
-														(click)="downloadFile(prestataire.doucument_cv)"
-														class="btn-sm app-btn-secondary">
-														{{ prestataire.doucument_cv.split('/').pop() }}
-													</a>
-												</td>
-
-
-
-												<td class="cell">
-													<a href="#" class="btn-sm btn-danger"
-														(click)="prestataire.idUtilisateur ? supprimerUtilisateur(prestataire.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
-
-
-												</td>
-
-
-
-											</tr>
-
-										</tbody>
-									</table>
-
-								</div>
-
-							</div>
-						</div>
-
-						<nav aria-label="Pagination prestataires" class="mt-3">
-							<ul class="pagination justify-content-center">
-								<li class="page-item" [class.disabled]="currentPage === 1">
-									<button class="page-link" (click)="setPage(currentPage - 1)"
-										[disabled]="currentPage === 1">Précédent</button>
-								</li>
-
-								<li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-									[class.active]="currentPage === i + 1">
-									<button class="page-link" (click)="setPage(i + 1)">{{ i + 1 }}</button>
-								</li>
-
-								<li class="page-item" [class.disabled]="currentPage === totalPages">
-									<button class="page-link" (click)="setPage(currentPage + 1)"
-										[disabled]="currentPage === totalPages">Suivant</button>
-								</li>
-							</ul>
-						</nav>
-
-
-					</div>
-
-					<div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-						<div class="app-card app-card-orders-table mb-5">
-							<div class="app-card-body">
-								<div class="table-responsive">
-									<div class="mb-3">
-										<input type="text" class="form-control custom-search-input"
-											placeholder="Rechercher par nom" [(ngModel)]="searchNomUtilisateur"
-											(input)="filterUtilisateursByNom()" />
-									</div>
-
-									<table class="table mb-0 text-left">
-										<thead>
-											<tr>
-												<th class="cell">Image</th>
-												<th class="cell">Nom</th>
-												<th class="cell">Email</th>
-												<th class="cell">Mot de passe</th>
-
-												<th class="cell">Adresse</th>
-												<th class="cell">Téléphone</th>
-												<th class="cell">Status</th>
-												<th class="cell">supprimer</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr
-												*ngFor="let utilisateur of pagedUtilisateursParticuliers;  let i = index">
-												<td class="cell">
-													<img *ngIf="utilisateur.image" [src]="utilisateur.image" alt=""
-														class="profile-pic">
-													<i *ngIf="!utilisateur.image" class="fa fa-user profile-pic"></i>
-												</td>
-												<td class="cell">{{ utilisateur.nom }}</td>
-												<td class="cell">{{ utilisateur.email }}</td>
-												<td class="cell">{{ utilisateur.password ? '********' : '' }}</td>
-
-												<td class="cell">{{ utilisateur.adressee?.governoate }}</td>
-												<td class="cell">
-
-													<span
-														*ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'telephoneNumber'"
-														(click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null"
-														(keydown.enter)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber) : null"
-														tabindex="0" role="button">
-														{{ utilisateur.telephoneNumber }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'telephoneNumber'"
-														[(ngModel)]="utilisateur.telephoneNumber"
-														(blur)="updateUserInTable(utilisateur.idUtilisateur, 'telephoneNumber', utilisateur.telephoneNumber)"
-														placeholder="telephoneNumber">
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== utilisateur.idUtilisateur || editColumn !== 'status'"
-														(click)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'status', utilisateur.status) : null"
-														(keydown.enter)="utilisateur.idUtilisateur ? startEditing(utilisateur.idUtilisateur, 'status', utilisateur.status) : null"
-														tabindex="0" role="button" [ngClass]="{
-    'status-accepte': utilisateur.status === 'ACCEPTE',
-    'status-refuse': utilisateur.status === 'REFUSE',
-    'status-attente': utilisateur.status === 'ATTENTE'
-  }">
-														{{ utilisateur.status }}
-													</span>
-
-
-													<select
-														*ngIf="editRowId === utilisateur.idUtilisateur && editColumn === 'status'"
-														[(ngModel)]="utilisateur.status"
-														(blur)="updateUserInTable(utilisateur.idUtilisateur, 'status', utilisateur.status)">
-														<option value="ACCEPTE">Accepte</option>
-														<option value="REFUSE">Refuse</option>
-														<option value="ATTENTE">Attente</option>
-													</select>
-												</td>
-												<td class="cell">
-													<a href="#" class="btn-sm btn-danger"
-														(click)="utilisateur.idUtilisateur ? supprimerUtilisateur(utilisateur.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
-
-
-												</td>
-
-											</tr>
-
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<nav aria-label="Pagination utilisateurs particuliers" class="mt-3">
-							<ul class="pagination justify-content-center">
-								<li class="page-item" [class.disabled]="currentPageParticuliers === 1">
-									<button class="page-link" (click)="setPageParticuliers(currentPageParticuliers - 1)"
-										[disabled]="currentPageParticuliers === 1">Précédent</button>
-								</li>
-
-								<li class="page-item"
-									*ngFor="let page of [].constructor(totalPagesParticuliers); let i = index"
-									[class.active]="currentPageParticuliers === i + 1">
-									<button class="page-link" (click)="setPageParticuliers(i + 1)">{{ i + 1 }}</button>
-								</li>
-
-								<li class="page-item"
-									[class.disabled]="currentPageParticuliers === totalPagesParticuliers">
-									<button class="page-link" (click)="setPageParticuliers(currentPageParticuliers + 1)"
-										[disabled]="currentPageParticuliers === totalPagesParticuliers">Suivant</button>
-								</li>
-							</ul>
-						</nav>
-
-					</div>
-
-
-					<div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-						<div class="app-card app-card-orders-table mb-5">
-							<div class="app-card-body">
-								<div class="table-responsive">
-									<div class="mb-3">
-										<input type="text" class="form-control custom-search-input"
-											placeholder="Rechercher par nom" [(ngModel)]="searchNomEntreprise"
-											(input)="filterEntreprisesByNom()" />
-									</div>
-									<table class="table mb-0 text-left">
-
-
-										<thead>
-
-
-
-
-											<tr>
-												<th class="cell">Image</th>
-												<th class="cell">Nom</th>
-												<th class="cell">nomEntreprise</th>
-												<th class="cell">Email</th>
-												<th class="cell">password</th>
-												<th class="cell">Téléphone</th>
-												<th class="cell">Status</th>
-												<th class="cell">Services Offerts</th>
-												<th class="cell">Siret</th>
-												<th class="cell">siteWeb</th>
-												<th class="cell">Description</th>
-												<th class="cell">adressee</th>
-												<th class="cell">Expérience</th>
-
-												<th class="cell">supprimer</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let entreprise of pagedEntreprises">
-
-												<td class="cell">
-													<img *ngIf="entreprise.image" [src]="entreprise.image" alt=""
-														class="profile-pic">
-													<i *ngIf="!entreprise.image" class="fa fa-user profile-pic"></i>
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'nom'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nom', entreprise.nom) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nom', entreprise.nom) : null"
-														tabindex="0" role="button">
-														{{ entreprise.nom }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'nom'"
-														[(ngModel)]="entreprise.nom"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'nom', entreprise.nom)"
-														placeholder="Nom">
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'nomEntreprise'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise) : null"
-														tabindex="0" role="button">
-														{{ entreprise.nomEntreprise }}
-													</span>
-
-													<input
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'nomEntreprise'"
-														[(ngModel)]="entreprise.nomEntreprise"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'nomEntreprise', entreprise.nomEntreprise)"
-														placeholder="nomEntreprise">
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'email'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'email', entreprise.email) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'email', entreprise.email) : null"
-														tabindex="0" role="button">
-														{{ entreprise.email }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'email'"
-														[(ngModel)]="entreprise.email"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'email', entreprise.email)"
-														placeholder="Email">
-												</td>
-												<td class="cell">{{ entreprise.password ? '********' : '' }}</td>
-
-												<td class="cell">
-
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'telephoneNumber'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber) : null"
-														tabindex="0" role="button">
-														{{ entreprise.telephoneNumber }}
-													</span>
-
-
-													<input
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'telephoneNumber'"
-														[(ngModel)]="entreprise.telephoneNumber"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'telephoneNumber', entreprise.telephoneNumber)"
-														placeholder="telephoneNumber">
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'status'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'status', entreprise.status) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'status', entreprise.status) : null"
-														tabindex="0" role="button" [ngClass]="{
-    'status-accepte': entreprise.status === 'ACCEPTE',
-    'status-refuse': entreprise.status === 'REFUSE',
-    'status-attente': entreprise.status === 'ATTENTE'
-  }">
-														{{ entreprise.status }}
-													</span>
-
-
-													<select
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'status'"
-														[(ngModel)]="entreprise.status"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'status', entreprise.status)">
-														<option value="ACCEPTE">Accepte</option>
-														<option value="REFUSE">Refuse</option>
-														<option value="ATTENTE">Attente</option>
-													</select>
-												</td>
-
-												<td class="cell">{{ entreprise.competence}} </td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'siret'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siret', entreprise.siret) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siret', entreprise.siret) : null"
-														tabindex="0" role="button">
-														{{ entreprise.siret }}
-													</span>
-
-												</td>
-												<td class="cell">
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'siteWeb'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siteWeb', entreprise.siteWeb) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'siteWeb', entreprise.siteWeb) : null"
-														tabindex="0" role="button">
-														{{ entreprise.siteWeb }}
-													</span>
-
-
-
-													<input
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'tarifs'"
-														[(ngModel)]="entreprise.tarifs"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'tarifs', entreprise.tarifs)"
-														placeholder="tarifs">
-												</td>
-
-
-
-
-
-
-												<td class="cell">
-													<div class="description-container">
-														<span>{{ entreprise.description | slice: 0:50 }}</span>
-														<span *ngIf="entreprise.showFullDescription">{{
-															entreprise.description | slice: 50 }}</span>
-														<a *ngIf="entreprise.description && entreprise.description.length > 50"
-															(click)="toggleDescription(entreprise)">
-															{{ entreprise.showFullDescription ? 'Show Less' : 'Show
-															More' }}
-														</a>
-													</div>
-												</td>
-												<td class="cell">{{ entreprise.adressee?.governoate }}</td>
-
-
-												<td class="cell">
-
-													<span
-														*ngIf="editRowId !== entreprise.idUtilisateur || editColumn !== 'workExperience'"
-														(click)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience) : null"
-														(keydown.enter)="entreprise.idUtilisateur ? startEditing(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience) : null"
-														tabindex="0" role="button">
-														{{ entreprise.workExperience }}
-													</span>
-
-													<input
-														*ngIf="editRowId === entreprise.idUtilisateur && editColumn === 'workExperience'"
-														[(ngModel)]="entreprise.workExperience"
-														(blur)="updateUserInTable(entreprise.idUtilisateur, 'workExperience', entreprise.workExperience)"
-														placeholder="workExperience">
-												</td>
-
-
-
-
-
-
-
-
-
-
-
-												<td class="cell">
-													<a href="#" class="btn-sm btn-danger"
-														(click)="entreprise.idUtilisateur ? supprimerUtilisateur(entreprise.idUtilisateur) : null; $event.preventDefault()">Supprimer</a>
-
-
-												</td>
-
-
-
-											</tr>
-
-										</tbody>
-									</table>
-								</div>
-								<nav aria-label="Pagination entreprises" class="mt-3">
-									<ul class="pagination justify-content-center">
-										<li class="page-item" [class.disabled]="currentPageEntreprises === 1">
-											<button class="page-link"
-												(click)="setPageEntreprises(currentPageEntreprises - 1)"
-												[disabled]="currentPageEntreprises === 1">Précédent</button>
-										</li>
-
-										<li class="page-item"
-											*ngFor="let page of [].constructor(totalPagesEntreprises); let i = index"
-											[class.active]="currentPageEntreprises === i + 1">
-											<button class="page-link" (click)="setPageEntreprises(i + 1)">{{ i + 1
-												}}</button>
-										</li>
-
-										<li class="page-item"
-											[class.disabled]="currentPageEntreprises === totalPagesEntreprises">
-											<button class="page-link"
-												(click)="setPageEntreprises(currentPageEntreprises + 1)"
-												[disabled]="currentPageEntreprises === totalPagesEntreprises">Suivant</button>
-										</li>
-									</ul>
-								</nav>
-							</div>
-
-						</div>
-					</div>
-
-
-				</div>
-
-
-
-			</div>
-
-		</div>
-
-		<footer class="app-footer">
-			<div class="container text-center py-3">
-				<small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"
-						style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com"
-						target="_blank">Xiaoying Riley</a> for developers</small>
-
-			</div>
-		</footer>
-
-	</div>
-
-
-	<script src="assetsadmin/plugins/popper.min.js"></script>
-	<script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>
-
-
-
-	<script src="assetsadmin/js/app.js"></script>
-
+  <header class="app-header fixed-top">
+    <div class="app-header-inner">
+      <div class="container-fluid py-2">
+        <div class="app-header-content">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-auto">
+              <a
+                id="sidepanel-toggler"
+                class="sidepanel-toggler d-inline-block d-xl-none"
+                href="#"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 30 30"
+                  role="img"
+                >
+                  <title>Menu</title>
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                    d="M4 7h22M4 15h22M4 23h22"
+                  ></path>
+                </svg>
+              </a>
+            </div>
+            <div class="search-mobile-trigger d-sm-none col">
+              <i
+                class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
+
+            <div class="app-utilities col-auto">
+              <div class="app-utility-item app-user-dropdown dropdown">
+                <a
+                  class="dropdown-toggle"
+                  id="user-dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-expanded="false"
+                  (keydown)="handleDropdownKey($event)"
+                >
+                  <ng-container *ngIf="profileImageUrl; else defaultIcon">
+                    <img [src]="profileImageUrl" alt="" class="profile-img" />
+                  </ng-container>
+                  <ng-template #defaultIcon>
+                    <i
+                      class="fas fa-user-circle profile-icon"
+                    ></i> </ng-template
+                ></a>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="user-dropdown-toggle"
+                >
+                  <li>
+                    <a class="dropdown-item" href="account.html">Account</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="settings.html">Settings</a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="logout()">Log Out</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="app-sidepanel" class="app-sidepanel">
+      <div id="sidepanel-drop" class="sidepanel-drop"></div>
+      <div class="sidepanel-inner d-flex flex-column">
+        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none"
+          >&times;</a
+        >
+        <div class="app-branding">
+          <a class="app-logo" routerLink="/Admindashboard">
+            <img
+              *ngIf="profileImageUrl"
+              [src]="profileImageUrl"
+              alt=""
+              class="profile-img"
+            /><span class="logo-text">SOS service Tunisie</span></a
+          >
+        </div>
+        <nav
+          id="app-nav-main"
+          class="app-nav app-nav-main flex-grow-1"
+          aria-label="Menu principal"
+        >
+          <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/Admindashboard">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Tableau de bord</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/user">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M8 0C2.4 0 5.1 7.3 5.1 7.3c.6 1 1.4.8 1.4 1.5c0 .6-.7.8-1.4.9C4 9.7 3 9.5 2 11.3c-.6 1.1-.9 4.7-.9 4.7h13.7s-.3-3.6-.8-4.7c-1-1.9-2-1.6-3.1-1.7c-.7-.1-1.4-.3-1.4-.9s.8-.4 1.4-1.5C10.9 7.3 13.6 0 8 0z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Utilisateurs</span>
+              </a>
+            </li>
+            <li class="nav-item"></li>
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/Abonnement">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 14 14"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M8.351 5.307a1.166 1.166 0 0 0-1.1-.778h-.903a1.041 1.041 0 0 0-.223 2.059l1.375.3a1.167 1.167 0 0 1-.25 2.307h-.777c-.508 0-.94-.324-1.1-.777m1.489-3.889V3.362m0 7V9.196m-4.864 4.302v-2.5h2.5"
+                      />
+                      <path
+                        d="M13.388 5.804a6.5 6.5 0 0 1-11.39 5.35M.612 8.196a6.5 6.5 0 0 1 11.39-5.35"
+                      />
+                      <path d="M12.002.502v2.5h-2.5" />
+                    </g>
+                  </svg>
+                </span>
+                <span class="nav-link-text">Abonnements</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/catogories">
+                <span class="nav-icon">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                    class="bi bi-folder"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Catégories</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/Service">
+                <span class="nav-icon">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                    class="bi bi-folder"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Services</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/espaceavis">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M17.562 21.56a1.003 1.003 0 0 1-.465-.115L12 18.765l-5.097 2.68a1 1 0 0 1-1.451-1.054l.973-5.676l-4.123-4.02a1 1 0 0 1 .554-1.705l5.699-.828l2.548-5.164a1.042 1.042 0 0 1 1.794 0l2.548 5.164l5.699.828a1 1 0 0 1 .554 1.706l-4.123 4.019l.973 5.676a1 1 0 0 1-.986 1.169Z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Espace Avis</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/Scorebadage">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 1024 1024"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M1021.06 839.968L833.798 493.664c19.104-43.36 29.792-91.28 29.792-141.696C863.59 157.664 706.07.16 511.782.16c-194.336 0-351.84 157.52-351.84 351.808c0 51.632 11.216 100.624 31.184 144.784L3.03 839.808c-6.065 11.024-5.057 24.624 2.527 34.688c7.6 10.033 20.432 14.752 32.687 11.873l160.624-36.848l54.976 153.12c4.288 11.904 15.152 20.16 27.744 21.088c.817.064 1.6.096 2.368.096a32.002 32.002 0 0 0 28.192-16.88L475.844 701.97a355.152 355.152 0 0 0 35.92 1.808c11.12 0 22.095-.576 32.943-1.6l167.248 305.008a31.984 31.984 0 0 0 30.56 16.527c12.56-1.008 23.376-9.248 27.631-21.088l54.976-153.12l160.624 36.848c12.32 2.975 25.024-1.809 32.624-11.809c7.632-9.984 8.656-23.52 2.688-34.576zm-731.282 73.376L249.52 801.183c-5.504-15.248-21.471-24.128-37.28-20.368l-118.8 27.248l135.41-246.976c44.592 60.24 107.952 105.68 181.44 127.793zm-65.553-561.377c0-158.544 129.009-287.536 287.568-287.536c158.544 0 287.536 128.992 287.536 287.536S670.337 639.535 511.793 639.535c-158.576 0-287.568-129.024-287.568-287.568zm587.52 428.847c-15.872-3.744-31.776 5.12-37.28 20.367l-40.529 112.976l-123.152-224.56c75.44-22.096 140.337-68.735 185.505-130.735L931.137 808.19z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Scores et Badges</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/escpacereservation">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">Réservation</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/Front">
+                <span class="nav-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.5em"
+                    height="1.5em"
+                    viewBox="0 0 717 672"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M0 151v391c0 36 15 68 39 93c24 24 55 37 91 37h196v-81H130c-27 0-48-22-48-49V151c0-27 21-48 48-48h196V21H130c-36 0-67 14-91 38c-24 25-39 56-39 92zm215 118v156c0 18 16 33 34 33h181v123c0 11 6 20 16 25c4 1 8 1 10 1c7 0 13-2 18-7l235-235c11-9 10-27 0-37L474 94c-14-15-44-6-44 18v124H249c-18 0-34 15-34 33z"
+                    />
+                  </svg>
+                </span>
+                <span class="nav-link-text">logout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+      <div class="container-xl">
+        <div class="row g-3 mb-4 align-items-center justify-content-between">
+          <div class="col-auto">
+            <h1 class="app-page-title mb-0">liste des utilisateurs</h1>
+          </div>
+          <div class="col-auto">
+            <div class="page-utilities">
+              <div
+                class="row g-2 justify-content-start justify-content-md-end align-items-center"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <nav
+          id="orders-table-tab"
+          class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4"
+          aria-label="Filtrer les commandes par type d’utilisateur"
+        >
+          <a
+            class="flex-sm-fill text-sm-center nav-link active"
+            id="orders-all-tab"
+            data-bs-toggle="tab"
+            href="#orders-all"
+            role="tab"
+            aria-controls="orders-all"
+            aria-selected="true"
+            >Prestataires</a
+          >
+          <a
+            class="flex-sm-fill text-sm-center nav-link"
+            id="orders-paid-tab"
+            data-bs-toggle="tab"
+            href="#orders-paid"
+            role="tab"
+            aria-controls="orders-paid"
+            aria-selected="false"
+            >Particuliers</a
+          >
+          <a
+            class="flex-sm-fill text-sm-center nav-link"
+            id="orders-pending-tab"
+            data-bs-toggle="tab"
+            href="#orders-pending"
+            role="tab"
+            aria-controls="orders-pending"
+            aria-selected="false"
+            >Entreprise</a
+          >
+        </nav>
+
+        <div class="tab-content" id="orders-table-tab-content">
+          <div
+            class="tab-pane fade show active"
+            id="orders-all"
+            role="tabpanel"
+            aria-labelledby="orders-all-tab"
+          >
+            <div class="app-card app-card-orders-table shadow-sm mb-5">
+              <div class="app-card-body">
+                <div class="table-responsive">
+                  <div *ngIf="selectedPrestataire" class="disponibilites-box">
+                    <h3>Disponibilités de {{ selectedPrestataire.nom }}:</h3>
+
+                    <ul
+                      *ngIf="
+                        selectedPrestataire.disponibilites &&
+                          selectedPrestataire.disponibilites.length > 0;
+                        else noDisponibilites
+                      "
+                    >
+                      <li
+                        *ngFor="let dispo of selectedPrestataire.disponibilites"
+                      >
+                        📅 {{ dispo.jour }} - ⏰ {{ dispo.heureDebut }} à
+                        {{ dispo.heureFin }}
+                      </li>
+                    </ul>
+
+                    <ng-template #noDisponibilites>
+                      <p>Aucune disponibilité</p>
+                    </ng-template>
+
+                    <button (click)="closeDisponibilites()">Fermer</button>
+                  </div>
+
+                  <div class="mb-3">
+                    <input
+                      type="text"
+                      class="form-control custom-search-input"
+                      placeholder="Rechercher par nom"
+                      [(ngModel)]="searchNomPrestataire"
+                      (input)="filterPrestatairesByNom()"
+                    />
+                  </div>
+
+                  <table class="table app-table-hover mb-0 text-left">
+                    <thead>
+                      <tr>
+                        <th class="cell">Image</th>
+                        <th class="cell">Nom</th>
+                        <th class="cell">Email</th>
+                        <th class="cell">password</th>
+                        <th class="cell">Téléphone</th>
+                        <th class="cell">Status</th>
+
+                        <th class="cell">Tarifs</th>
+                        <th class="cell">Disponibilité</th>
+                        <th class="cell">Description</th>
+                        <th class="cell">Solde</th>
+                        <th class="cell">Expérience</th>
+                        <th class="cell">Services Offerts</th>
+                        <th class="cell">Adresse</th>
+                        <th class="cell">Cv</th>
+                        <th class="cell">CIN</th>
+                        <th class="cell">Supprimer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let prestataire of pagedPrestataires">
+                        <td class="cell">
+                          <img
+                            *ngIf="prestataire.image"
+                            [src]="prestataire.image"
+                            alt="{{ prestataire.nom }}"
+                            class="profile-pic"
+                          />
+                          <i
+                            *ngIf="!prestataire.image"
+                            class="fa fa-user profile-pic"
+                          ></i>
+                        </td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== prestataire.idUtilisateur ||
+                              editColumn !== 'nom'
+                            "
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'nom',
+                                    prestataire.nom
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'nom',
+                                    prestataire.nom
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ prestataire.nom }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === prestataire.idUtilisateur &&
+                              editColumn === 'nom'
+                            "
+                            [(ngModel)]="prestataire.nom"
+                            (blur)="
+                              updateUserInTable(
+                                prestataire.idUtilisateur,
+                                'nom',
+                                prestataire.nom
+                              )
+                            "
+                            placeholder="Nom"
+                          />
+                        </td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== prestataire.idUtilisateur ||
+                              editColumn !== 'email'
+                            "
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'email',
+                                    prestataire.email
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'email',
+                                    prestataire.email
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ prestataire.email }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === prestataire.idUtilisateur &&
+                              editColumn === 'email'
+                            "
+                            [(ngModel)]="prestataire.email"
+                            (blur)="
+                              updateUserInTable(
+                                prestataire.idUtilisateur,
+                                'email',
+                                prestataire.email
+                              )
+                            "
+                            placeholder="Email"
+                          />
+                        </td>
+                        <td class="cell">
+                          {{ prestataire.password ? "********" : "" }}
+                        </td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== prestataire.idUtilisateur ||
+                              editColumn !== 'telephoneNumber'
+                            "
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'telephoneNumber',
+                                    prestataire.telephoneNumber
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'telephoneNumber',
+                                    prestataire.telephoneNumber
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ prestataire.telephoneNumber }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === prestataire.idUtilisateur &&
+                              editColumn === 'telephoneNumber'
+                            "
+                            [(ngModel)]="prestataire.telephoneNumber"
+                            (blur)="
+                              updateUserInTable(
+                                prestataire.idUtilisateur,
+                                'telephoneNumber',
+                                prestataire.telephoneNumber
+                              )
+                            "
+                            placeholder="telephoneNumber"
+                          />
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== prestataire.idUtilisateur ||
+                              editColumn !== 'status'
+                            "
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'status',
+                                    prestataire.status
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'status',
+                                    prestataire.status
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                            [ngClass]="{
+                              'status-accepte':
+                                prestataire.status === 'ACCEPTE',
+                              'status-refuse': prestataire.status === 'REFUSE',
+                              'status-attente': prestataire.status === 'ATTENTE'
+                            }"
+                          >
+                            {{ prestataire.status }}
+                          </span>
+
+                          <select
+                            *ngIf="
+                              editRowId === prestataire.idUtilisateur &&
+                              editColumn === 'status'
+                            "
+                            [(ngModel)]="prestataire.status"
+                            (blur)="
+                              updateUserInTable(
+                                prestataire.idUtilisateur,
+                                'status',
+                                prestataire.status
+                              )
+                            "
+                          >
+                            <option value="ACCEPTE">Accepte</option>
+                            <option value="REFUSE">Refuse</option>
+                            <option value="ATTENTE">Attente</option>
+                          </select>
+                        </td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== prestataire.idUtilisateur ||
+                              editColumn !== 'tarifs'
+                            "
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'tarifs',
+                                    prestataire.tarifs
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'tarifs',
+                                    prestataire.tarifs
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ prestataire.tarifs }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === prestataire.idUtilisateur &&
+                              editColumn === 'tarifs'
+                            "
+                            [(ngModel)]="prestataire.tarifs"
+                            (blur)="
+                              updateUserInTable(
+                                prestataire.idUtilisateur,
+                                'tarifs',
+                                prestataire.tarifs
+                              )
+                            "
+                            placeholder="tarifs"
+                          />
+                        </td>
+
+                        <td class="cell">
+                          <i
+                            #calendarIcon
+                            class="fas fa-calendar-alt clickable-icon"
+                            (click)="showDisponibilites(prestataire)"
+                            (keydown.enter)="showDisponibilites(prestataire)"
+                            tabindex="0"
+                            role="button"
+                            aria-label="Afficher les disponibilités"
+                          >
+                          </i>
+                        </td>
+
+                        <td class="cell">
+                          <div class="description-container">
+                            <span>{{
+                              prestataire.description | slice : 0 : 50
+                            }}</span>
+                            <span *ngIf="prestataire.showFullDescription">{{
+                              prestataire.description | slice : 50
+                            }}</span>
+                            <a
+                              *ngIf="
+                                prestataire.description &&
+                                prestataire.description.length > 50
+                              "
+                              (click)="toggleDescription(prestataire)"
+                            >
+                              {{
+                                prestataire.showFullDescription
+                                  ? "Show Less"
+                                  : "Show
+															More"
+                              }}
+                            </a>
+                          </div>
+                        </td>
+                        <td class="cell">{{ prestataire.solde }}dt</td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== prestataire.idUtilisateur ||
+                              editColumn !== 'workExperience'
+                            "
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'workExperience',
+                                    prestataire.workExperience
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              prestataire.idUtilisateur
+                                ? startEditing(
+                                    prestataire.idUtilisateur,
+                                    'workExperience',
+                                    prestataire.workExperience
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ prestataire.workExperience }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === prestataire.idUtilisateur &&
+                              editColumn === 'workExperience'
+                            "
+                            [(ngModel)]="prestataire.workExperience"
+                            (blur)="
+                              updateUserInTable(
+                                prestataire.idUtilisateur,
+                                'workExperience',
+                                prestataire.workExperience
+                              )
+                            "
+                            placeholder="workExperience"
+                          />
+                        </td>
+
+                        <td class="cell">{{ prestataire.competence }}</td>
+
+                        <td class="cell">
+                          {{ prestataire.adressee?.governoate }}
+                        </td>
+
+                        <td class="cell">
+                          <a
+                            *ngIf="prestataire.doucument_CIN"
+                            (click)="downloadFile(prestataire.doucument_CIN)"
+                            class="btn-sm app-btn-secondary"
+                          >
+                            {{ prestataire.doucument_CIN.split("/").pop() }}
+                          </a>
+                        </td>
+
+                        <td class="cell">
+                          <a
+                            *ngIf="prestataire.doucument_cv"
+                            (click)="downloadFile(prestataire.doucument_cv)"
+                            class="btn-sm app-btn-secondary"
+                          >
+                            {{ prestataire.doucument_cv.split("/").pop() }}
+                          </a>
+                        </td>
+
+                        <td class="cell">
+                          <a
+                            href="#"
+                            class="btn-sm btn-danger"
+                            (click)="
+                              prestataire.idUtilisateur
+                                ? supprimerUtilisateur(
+                                    prestataire.idUtilisateur
+                                  )
+                                : null;
+                              $event.preventDefault()
+                            "
+                            >Supprimer</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <nav aria-label="Pagination prestataires" class="mt-3">
+              <ul class="pagination justify-content-center">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <button
+                    class="page-link"
+                    (click)="setPage(currentPage - 1)"
+                    [disabled]="currentPage === 1"
+                  >
+                    Précédent
+                  </button>
+                </li>
+
+                <li
+                  class="page-item"
+                  *ngFor="let page of [].constructor(totalPages); let i = index"
+                  [class.active]="currentPage === i + 1"
+                >
+                  <button class="page-link" (click)="setPage(i + 1)">
+                    {{ i + 1 }}
+                  </button>
+                </li>
+
+                <li
+                  class="page-item"
+                  [class.disabled]="currentPage === totalPages"
+                >
+                  <button
+                    class="page-link"
+                    (click)="setPage(currentPage + 1)"
+                    [disabled]="currentPage === totalPages"
+                  >
+                    Suivant
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="orders-paid"
+            role="tabpanel"
+            aria-labelledby="orders-paid-tab"
+          >
+            <div class="app-card app-card-orders-table mb-5">
+              <div class="app-card-body">
+                <div class="table-responsive">
+                  <div class="mb-3">
+                    <input
+                      type="text"
+                      class="form-control custom-search-input"
+                      placeholder="Rechercher par nom"
+                      [(ngModel)]="searchNomUtilisateur"
+                      (input)="filterUtilisateursByNom()"
+                    />
+                  </div>
+
+                  <table class="table mb-0 text-left">
+                    <thead>
+                      <tr>
+                        <th class="cell">Image</th>
+                        <th class="cell">Nom</th>
+                        <th class="cell">Email</th>
+                        <th class="cell">Mot de passe</th>
+
+                        <th class="cell">Adresse</th>
+                        <th class="cell">Téléphone</th>
+                        <th class="cell">Status</th>
+                        <th class="cell">supprimer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let utilisateur of pagedUtilisateursParticuliers;
+                          let i = index
+                        "
+                      >
+                        <td class="cell">
+                          <img
+                            *ngIf="utilisateur.image"
+                            [src]="utilisateur.image"
+                            alt=""
+                            class="profile-pic"
+                          />
+                          <i
+                            *ngIf="!utilisateur.image"
+                            class="fa fa-user profile-pic"
+                          ></i>
+                        </td>
+                        <td class="cell">{{ utilisateur.nom }}</td>
+                        <td class="cell">{{ utilisateur.email }}</td>
+                        <td class="cell">
+                          {{ utilisateur.password ? "********" : "" }}
+                        </td>
+
+                        <td class="cell">
+                          {{ utilisateur.adressee?.governoate }}
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== utilisateur.idUtilisateur ||
+                              editColumn !== 'telephoneNumber'
+                            "
+                            (click)="
+                              utilisateur.idUtilisateur
+                                ? startEditing(
+                                    utilisateur.idUtilisateur,
+                                    'telephoneNumber',
+                                    utilisateur.telephoneNumber
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              utilisateur.idUtilisateur
+                                ? startEditing(
+                                    utilisateur.idUtilisateur,
+                                    'telephoneNumber',
+                                    utilisateur.telephoneNumber
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ utilisateur.telephoneNumber }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === utilisateur.idUtilisateur &&
+                              editColumn === 'telephoneNumber'
+                            "
+                            [(ngModel)]="utilisateur.telephoneNumber"
+                            (blur)="
+                              updateUserInTable(
+                                utilisateur.idUtilisateur,
+                                'telephoneNumber',
+                                utilisateur.telephoneNumber
+                              )
+                            "
+                            placeholder="telephoneNumber"
+                          />
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== utilisateur.idUtilisateur ||
+                              editColumn !== 'status'
+                            "
+                            (click)="
+                              utilisateur.idUtilisateur
+                                ? startEditing(
+                                    utilisateur.idUtilisateur,
+                                    'status',
+                                    utilisateur.status
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              utilisateur.idUtilisateur
+                                ? startEditing(
+                                    utilisateur.idUtilisateur,
+                                    'status',
+                                    utilisateur.status
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                            [ngClass]="{
+                              'status-accepte':
+                                utilisateur.status === 'ACCEPTE',
+                              'status-refuse': utilisateur.status === 'REFUSE',
+                              'status-attente': utilisateur.status === 'ATTENTE'
+                            }"
+                          >
+                            {{ utilisateur.status }}
+                          </span>
+
+                          <select
+                            *ngIf="
+                              editRowId === utilisateur.idUtilisateur &&
+                              editColumn === 'status'
+                            "
+                            [(ngModel)]="utilisateur.status"
+                            (blur)="
+                              updateUserInTable(
+                                utilisateur.idUtilisateur,
+                                'status',
+                                utilisateur.status
+                              )
+                            "
+                          >
+                            <option value="ACCEPTE">Accepte</option>
+                            <option value="REFUSE">Refuse</option>
+                            <option value="ATTENTE">Attente</option>
+                          </select>
+                        </td>
+                        <td class="cell">
+                          <a
+                            href="#"
+                            class="btn-sm btn-danger"
+                            (click)="
+                              utilisateur.idUtilisateur
+                                ? supprimerUtilisateur(
+                                    utilisateur.idUtilisateur
+                                  )
+                                : null;
+                              $event.preventDefault()
+                            "
+                            >Supprimer</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <nav aria-label="Pagination utilisateurs particuliers" class="mt-3">
+              <ul class="pagination justify-content-center">
+                <li
+                  class="page-item"
+                  [class.disabled]="currentPageParticuliers === 1"
+                >
+                  <button
+                    class="page-link"
+                    (click)="setPageParticuliers(currentPageParticuliers - 1)"
+                    [disabled]="currentPageParticuliers === 1"
+                  >
+                    Précédent
+                  </button>
+                </li>
+
+                <li
+                  class="page-item"
+                  *ngFor="
+                    let page of [].constructor(totalPagesParticuliers);
+                    let i = index
+                  "
+                  [class.active]="currentPageParticuliers === i + 1"
+                >
+                  <button
+                    class="page-link"
+                    (click)="setPageParticuliers(i + 1)"
+                  >
+                    {{ i + 1 }}
+                  </button>
+                </li>
+
+                <li
+                  class="page-item"
+                  [class.disabled]="
+                    currentPageParticuliers === totalPagesParticuliers
+                  "
+                >
+                  <button
+                    class="page-link"
+                    (click)="setPageParticuliers(currentPageParticuliers + 1)"
+                    [disabled]="
+                      currentPageParticuliers === totalPagesParticuliers
+                    "
+                  >
+                    Suivant
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="orders-pending"
+            role="tabpanel"
+            aria-labelledby="orders-pending-tab"
+          >
+            <div class="app-card app-card-orders-table mb-5">
+              <div class="app-card-body">
+                <div class="table-responsive">
+                  <div class="mb-3">
+                    <input
+                      type="text"
+                      class="form-control custom-search-input"
+                      placeholder="Rechercher par nom"
+                      [(ngModel)]="searchNomEntreprise"
+                      (input)="filterEntreprisesByNom()"
+                    />
+                  </div>
+                  <table class="table mb-0 text-left">
+                    <thead>
+                      <tr>
+                        <th class="cell">Image</th>
+                        <th class="cell">Nom</th>
+                        <th class="cell">nomEntreprise</th>
+                        <th class="cell">Email</th>
+                        <th class="cell">password</th>
+                        <th class="cell">Téléphone</th>
+                        <th class="cell">Status</th>
+                        <th class="cell">Services Offerts</th>
+                        <th class="cell">Siret</th>
+                        <th class="cell">siteWeb</th>
+                        <th class="cell">Description</th>
+                        <th class="cell">adressee</th>
+                        <th class="cell">Expérience</th>
+
+                        <th class="cell">supprimer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let entreprise of pagedEntreprises">
+                        <td class="cell">
+                          <img
+                            *ngIf="entreprise.image"
+                            [src]="entreprise.image"
+                            alt=""
+                            class="profile-pic"
+                          />
+                          <i
+                            *ngIf="!entreprise.image"
+                            class="fa fa-user profile-pic"
+                          ></i>
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'nom'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'nom',
+                                    entreprise.nom
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'nom',
+                                    entreprise.nom
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.nom }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'nom'
+                            "
+                            [(ngModel)]="entreprise.nom"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'nom',
+                                entreprise.nom
+                              )
+                            "
+                            placeholder="Nom"
+                          />
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'nomEntreprise'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'nomEntreprise',
+                                    entreprise.nomEntreprise
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'nomEntreprise',
+                                    entreprise.nomEntreprise
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.nomEntreprise }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'nomEntreprise'
+                            "
+                            [(ngModel)]="entreprise.nomEntreprise"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'nomEntreprise',
+                                entreprise.nomEntreprise
+                              )
+                            "
+                            placeholder="nomEntreprise"
+                          />
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'email'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'email',
+                                    entreprise.email
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'email',
+                                    entreprise.email
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.email }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'email'
+                            "
+                            [(ngModel)]="entreprise.email"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'email',
+                                entreprise.email
+                              )
+                            "
+                            placeholder="Email"
+                          />
+                        </td>
+                        <td class="cell">
+                          {{ entreprise.password ? "********" : "" }}
+                        </td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'telephoneNumber'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'telephoneNumber',
+                                    entreprise.telephoneNumber
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'telephoneNumber',
+                                    entreprise.telephoneNumber
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.telephoneNumber }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'telephoneNumber'
+                            "
+                            [(ngModel)]="entreprise.telephoneNumber"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'telephoneNumber',
+                                entreprise.telephoneNumber
+                              )
+                            "
+                            placeholder="telephoneNumber"
+                          />
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'status'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'status',
+                                    entreprise.status
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'status',
+                                    entreprise.status
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                            [ngClass]="{
+                              'status-accepte': entreprise.status === 'ACCEPTE',
+                              'status-refuse': entreprise.status === 'REFUSE',
+                              'status-attente': entreprise.status === 'ATTENTE'
+                            }"
+                          >
+                            {{ entreprise.status }}
+                          </span>
+
+                          <select
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'status'
+                            "
+                            [(ngModel)]="entreprise.status"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'status',
+                                entreprise.status
+                              )
+                            "
+                          >
+                            <option value="ACCEPTE">Accepte</option>
+                            <option value="REFUSE">Refuse</option>
+                            <option value="ATTENTE">Attente</option>
+                          </select>
+                        </td>
+
+                        <td class="cell">{{ entreprise.competence }}</td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'siret'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'siret',
+                                    entreprise.siret
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'siret',
+                                    entreprise.siret
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.siret }}
+                          </span>
+                        </td>
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'siteWeb'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'siteWeb',
+                                    entreprise.siteWeb
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'siteWeb',
+                                    entreprise.siteWeb
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.siteWeb }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'tarifs'
+                            "
+                            [(ngModel)]="entreprise.tarifs"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'tarifs',
+                                entreprise.tarifs
+                              )
+                            "
+                            placeholder="tarifs"
+                          />
+                        </td>
+
+                        <td class="cell">
+                          <div class="description-container">
+                            <span>{{
+                              entreprise.description | slice : 0 : 50
+                            }}</span>
+                            <span *ngIf="entreprise.showFullDescription">{{
+                              entreprise.description | slice : 50
+                            }}</span>
+                            <a
+                              *ngIf="
+                                entreprise.description &&
+                                entreprise.description.length > 50
+                              "
+                              (click)="toggleDescription(entreprise)"
+                            >
+                              {{
+                                entreprise.showFullDescription
+                                  ? "Show Less"
+                                  : "Show
+															More"
+                              }}
+                            </a>
+                          </div>
+                        </td>
+                        <td class="cell">
+                          {{ entreprise.adressee?.governoate }}
+                        </td>
+
+                        <td class="cell">
+                          <span
+                            *ngIf="
+                              editRowId !== entreprise.idUtilisateur ||
+                              editColumn !== 'workExperience'
+                            "
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'workExperience',
+                                    entreprise.workExperience
+                                  )
+                                : null
+                            "
+                            (keydown.enter)="
+                              entreprise.idUtilisateur
+                                ? startEditing(
+                                    entreprise.idUtilisateur,
+                                    'workExperience',
+                                    entreprise.workExperience
+                                  )
+                                : null
+                            "
+                            tabindex="0"
+                            role="button"
+                          >
+                            {{ entreprise.workExperience }}
+                          </span>
+
+                          <input
+                            *ngIf="
+                              editRowId === entreprise.idUtilisateur &&
+                              editColumn === 'workExperience'
+                            "
+                            [(ngModel)]="entreprise.workExperience"
+                            (blur)="
+                              updateUserInTable(
+                                entreprise.idUtilisateur,
+                                'workExperience',
+                                entreprise.workExperience
+                              )
+                            "
+                            placeholder="workExperience"
+                          />
+                        </td>
+
+                        <td class="cell">
+                          <a
+                            href="#"
+                            class="btn-sm btn-danger"
+                            (click)="
+                              entreprise.idUtilisateur
+                                ? supprimerUtilisateur(entreprise.idUtilisateur)
+                                : null;
+                              $event.preventDefault()
+                            "
+                            >Supprimer</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <nav aria-label="Pagination entreprises" class="mt-3">
+                  <ul class="pagination justify-content-center">
+                    <li
+                      class="page-item"
+                      [class.disabled]="currentPageEntreprises === 1"
+                    >
+                      <button
+                        class="page-link"
+                        (click)="setPageEntreprises(currentPageEntreprises - 1)"
+                        [disabled]="currentPageEntreprises === 1"
+                      >
+                        Précédent
+                      </button>
+                    </li>
+
+                    <li
+                      class="page-item"
+                      *ngFor="
+                        let page of [].constructor(totalPagesEntreprises);
+                        let i = index
+                      "
+                      [class.active]="currentPageEntreprises === i + 1"
+                    >
+                      <button
+                        class="page-link"
+                        (click)="setPageEntreprises(i + 1)"
+                      >
+                        {{ i + 1 }}
+                      </button>
+                    </li>
+
+                    <li
+                      class="page-item"
+                      [class.disabled]="
+                        currentPageEntreprises === totalPagesEntreprises
+                      "
+                    >
+                      <button
+                        class="page-link"
+                        (click)="setPageEntreprises(currentPageEntreprises + 1)"
+                        [disabled]="
+                          currentPageEntreprises === totalPagesEntreprises
+                        "
+                      >
+                        Suivant
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="app-footer">
+      <div class="container text-center py-3">
+        <small class="copyright"
+          >Designed with <span class="sr-only">love</span
+          ><i class="fas fa-heart" style="color: #fb866a"></i> by
+          <a
+            class="app-link"
+            href="http://themes.3rdwavemedia.com"
+            target="_blank"
+            >Xiaoying Riley</a
+          >
+          for developers</small
+        >
+      </div>
+    </footer>
+  </div>
+
+  <script src="assetsadmin/plugins/popper.min.js"></script>
+  <script src="assetsadmin/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="assetsadmin/js/app.js"></script>
 </body>

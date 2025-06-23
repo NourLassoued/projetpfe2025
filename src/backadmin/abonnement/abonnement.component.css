@@ -92,9 +92,7 @@ select {
   cursor: pointer;
 }
 
-input, select {
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-}
+
 .status-accepte {
   background-color: green;
   color: white;

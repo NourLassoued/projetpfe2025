@@ -112,7 +112,13 @@
               *ngIf="!isEditing['telephoneNumber']; else editTelephone"
             >
               <p
+                tabindex="0"
                 (click)="startEditing('telephoneNumber', user?.telephoneNumber)"
+                (keydown)="
+                  ($event.key === 'Enter' || $event.key === ' ') &&
+                    startEditing('telephoneNumber', user?.telephoneNumber)
+                "
+                role="button"
               >
                 {{ user?.telephoneNumber || "Aucun numéro disponible." }}
               </p>

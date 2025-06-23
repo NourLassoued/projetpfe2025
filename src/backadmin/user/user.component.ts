@@ -287,7 +287,7 @@ export class UserComponent implements OnInit {
     );
   }
   filterEntreprisesByNom(): void {
-    const keyword = this.searchNomEntreprise?.toLowerCase().trim() || '';
+    const keyword = this.searchNomEntreprise?.toLowerCase().trim() ?? '';
 
     this.filteredEntreprises = this.entreprises.filter((entreprise) => {
       const nom = (entreprise.nom || '').toLowerCase();
