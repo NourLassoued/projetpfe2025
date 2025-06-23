@@ -91,7 +91,9 @@
       <!-- Compétences -->
 
       <div class="section">
-        <label>💼 Mes compétences</label>
+        <span>💼 Mes compétences</span>
+
+
         <div class="competences-container">
           <div class="competence" *ngFor="let servicee of user1?.servicesOfferts">
             <p *ngIf="servicee?.nomservice">
@@ -127,7 +129,7 @@
       <!-- Avis clients -->
       <div class="content">
         <div class="section">
-          <label class="sectionn">Avis clients</label>
+          <span class="sectionn">Avis clients</span>
 
           <!-- Note moyenne -->
           <div class="rating">
@@ -147,7 +149,7 @@
           <div class="reviews">
             <div class="review-card" *ngFor="let avis of avisAffiches">
               <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image"
-                alt="Photo de {{ avis.utilisateur?.nom || 'Client anonyme' }}" class="user-image" />
+                alt="{{ avis.utilisateur?.nom || 'Client anonyme' }}" class="user-image" />
               <span>{{ avis.utilisateur?.nom || 'Client anonyme' }}</span>
 
               <div class="review-header">
