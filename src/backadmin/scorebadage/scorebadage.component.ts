@@ -205,7 +205,12 @@ export class ScorebadageComponent {
       this.filterUtilisateursByBadge(); 
     }
   }
- 
+   handleDropdownKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      (event.target as HTMLElement).click();
+    }
+  }
   
 
 }
