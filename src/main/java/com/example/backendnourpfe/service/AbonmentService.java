@@ -19,9 +19,7 @@ public class AbonmentService {
         return abonnementRepository.findByTypeAbonnementInAndStatusAbonnement(types, StatusAbonnement.ACTIF);
     }
 
-    public List<Abonnement> getAbonnementsParType(TypeAbonnement type) {
-        return abonnementRepository.findByTypeAbonnement(type);
-    }
+
 
     public List<Abonnement> getAbonnementsExprimer() {
         return abonnementRepository.findByStatusAbonnement(StatusAbonnement.EXPIRE);
