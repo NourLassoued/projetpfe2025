@@ -27,7 +27,7 @@ public class RegisterRequest implements Serializable {
     private Date createdAt = new Date();
 
 
-    private String Certification;
+    private String certification;
     private Integer tarifs;
 
     private String description;

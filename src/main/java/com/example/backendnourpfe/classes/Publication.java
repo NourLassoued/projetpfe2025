@@ -45,6 +45,5 @@ public class Publication {
     )
     private List<Utilisateur> likedByUsers;
 
-    public void setIdPublication(long l) {
-    }
+
 }

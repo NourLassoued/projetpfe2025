@@ -50,8 +50,7 @@ public class DemandeController {
             Demande updatedDemande = demandeService.updateDemande(id, demandeDetails);
             return ResponseEntity.ok(updatedDemande);
         } catch (Exception e) {
-            System.out.println("Erreur : " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);  // Return a bad request status
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 

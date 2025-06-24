@@ -61,7 +61,7 @@ public class DemandeService implements DemandeInterface {
     @Override
     public List<Demande> getAllDemandesByUtilisateurId(Long idUtilisateur) {
         Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvéeee"));
 
         Date today = new Date();
 
@@ -71,7 +71,7 @@ public class DemandeService implements DemandeInterface {
     @Override
     public List<Demande> getAllDemandesByUtilisateurIddDateBefore(Long idUtilisateur) {
         Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé getAllDemandesByUtilisateurIddDateBefore("));
 
         Date today = new Date();
 
@@ -85,7 +85,7 @@ public class DemandeService implements DemandeInterface {
     @Override
     public List<Demande> getAllDemandesByUtilisateurIdTerminees(Long idUtilisateur) {
         Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvee etAllDemandesByUtilisateurIdTerminees("));
 
         Date today = new Date();
 

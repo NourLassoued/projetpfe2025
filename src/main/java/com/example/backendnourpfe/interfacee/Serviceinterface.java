@@ -2,7 +2,6 @@ package com.example.backendnourpfe.interfacee;
 
 import com.example.backendnourpfe.classes.Servicee;
 import com.example.backendnourpfe.classes.Utilisateur;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

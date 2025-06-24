@@ -27,8 +27,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request
-    )throws IOException {
-        System.out.println("user added ! : ");
+    ) {
 
         return ResponseEntity.ok(service.register(request));
     }
@@ -37,8 +36,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationReponse> authenticate(
             @RequestBody AuthenticationRequest request
-    ) throws IOException{
-        System.out.println("Welcome : "+request.getEmail());
+    ) {
         return ResponseEntity.ok(service.autheticate(request));
     }
 

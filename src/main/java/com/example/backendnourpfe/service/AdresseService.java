@@ -34,7 +34,7 @@ public class AdresseService {
         return adresseRepository.findById(id).map(adresse -> {
             adresse.setGovernoate(nouvelleAdresse.getGovernoate());
             adresse.setVille(nouvelleAdresse.getVille());
-           ;
+
             return adresseRepository.save(adresse);
         }).orElseThrow(() -> new RuntimeException("Adresse non trouvée"));
     }

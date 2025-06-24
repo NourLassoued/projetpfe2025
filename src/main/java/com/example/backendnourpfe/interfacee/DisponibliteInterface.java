@@ -1,10 +1,7 @@
 package com.example.backendnourpfe.interfacee;
 
-import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.Disponibilite;
-import com.example.backendnourpfe.classes.Utilisateur;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
 import java.util.Map;

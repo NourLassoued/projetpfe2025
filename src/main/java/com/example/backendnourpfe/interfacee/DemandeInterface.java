@@ -1,10 +1,7 @@
 package com.example.backendnourpfe.interfacee;
 
-import com.example.backendnourpfe.classes.Adresse;
 import com.example.backendnourpfe.classes.Demande;
-import com.example.backendnourpfe.classes.Servicee;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
