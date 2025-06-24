@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/disponibilites")
 public class DipobliteControlleur {
     private final DisponibiliteService disponibiliteService;

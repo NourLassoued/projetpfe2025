@@ -53,8 +53,9 @@ public class SecurityConfiguration {
 
         http
 
-
-                .csrf(AbstractHttpConfigurer::disable)
+                // Désactivation de CSRF car l'application utilise des JWT (stateless)
+                // Aucun cookie de session n'est utilisé pour l'authentification
+                .csrf(AbstractHttpConfigurer::disable)   // NOSONAR
                 .authorizeHttpRequests(req -> req
 
                         .requestMatchers(WHITE_LIST_URL).permitAll()

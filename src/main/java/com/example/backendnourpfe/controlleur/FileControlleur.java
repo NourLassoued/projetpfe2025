@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 @RestController
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/auth")
 
 public class FileControlleur {

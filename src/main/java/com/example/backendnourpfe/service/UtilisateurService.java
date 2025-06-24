@@ -56,33 +56,16 @@ public class UtilisateurService implements UtlisateurInterface {
     }
 
     public List<Utilisateur> getAllParticuliers() {
-        List<Utilisateur> particuliers = utilisateurRepository.findAll().stream()
+        return utilisateurRepository.findAll().stream()
                 .filter(user -> user.getRole() == UserRole.PARTICULIER)
-                .map(user -> {
-                    if (user.getAdressee() != null) {
-
-                    } else {
-
-                    }
-                    return user;
-                })
-                .collect(Collectors.toList());
-        return particuliers;
+                .toList();
     }
     public List<Utilisateur> getAllEntreprises() {
-        List<Utilisateur> entreprises = utilisateurRepository.findAll().stream()
-                .filter(user -> user.getRole() == UserRole.ENTREPRISE) // Filtrer selon le rôle ENTREPRISE
-                .map(user -> {
-                    if (user.getAdressee() != null) {
-
-                    } else {
-
-                    }
-                    return user;
-                })
-                .collect(Collectors.toList());
-        return entreprises;
+        return utilisateurRepository.findAll().stream()
+                .filter(user -> user.getRole() == UserRole.ENTREPRISE)
+                .toList();
     }
+
 
 
     public List<Utilisateur> getAllPrestataires() {
@@ -102,16 +85,7 @@ public class UtilisateurService implements UtlisateurInterface {
         return prestataires;
     }
 
-    public Utilisateur getUtilisateurFromToken(String token) {
-        String email = jwtService.extractUsername(token);
 
-        if (email == null) {
-            throw new RuntimeException("Token invalide ou expiré");
-        }
-
-        return utilisateurRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email: " + email));
-    }
 
 
     @Override

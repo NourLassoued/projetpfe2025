@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/categories")
 
 
