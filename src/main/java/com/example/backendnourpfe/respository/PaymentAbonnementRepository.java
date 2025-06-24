@@ -12,8 +12,6 @@ public interface PaymentAbonnementRepository extends JpaRepository<PaymentAbonne
     PaymentAbonnement findByPaymentId(String paymentId);
 
 
-    PaymentAbonnement findByAbonnement(Abonnement abonnement);
 
 
-    boolean existsByAbonnementIdAbonnement(Long abonnementId);
 }
