@@ -23,20 +23,36 @@ jobs:
           username: ${{ vars.DOCKERHUBNOUR }}
           password: ${{ secrets.DOCKERHUBNOURPFE }}
 
-      - name: Build and push Docker image
+      - name: Build Docker image (without pushing)
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          load: true
+          tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
+
+      - name: Scan image with Trivy before push
+        uses: aquasecurity/trivy-action@v0.16.2
+        with:
+          image-ref: nourlassoued/nourangular:1.1.${{ github.run_number }}
+          format: table
+          exit-code: 1
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+
+      - name: Push Docker image to Docker Hub
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
-      - name: Checkout argocdpfe  repo
+
+      - name: Checkout argocdpfe repo
         uses: actions/checkout@v4
         with:
           repository: NourLassoued/argocdpfe 
           ref: master
-        
           path: argocdpfe 
-          token: ${{ secrets.CHCR_TOKEN}} 
+          token: ${{ secrets.CHCR_TOKEN }} 
 
       - name: Update image tag in angular.yml 
         run: |
