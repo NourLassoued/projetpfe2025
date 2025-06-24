@@ -6,12 +6,12 @@ import com.example.backendnourpfe.classes.Utilisateur;
 import java.util.List;
 
 public interface Serviceinterface {
-    public List<Servicee> getAllServices() ;
-    public Servicee createService(Servicee service) ;
-    public Servicee updateService(Long id, Servicee service) ;
-    public void deleteService(Long id);
-    public Servicee ajouterServiceAuCategorie(Long categorieId, Servicee service);
-    public List<Servicee> getAllServicesByCategorie(Long categorieId);
-    public List<Utilisateur> getUtilisateursByService(Long serviceId);
-    public List<Servicee> rechercherParNom(String nom);
+     List<Servicee> getAllServices() ;
+     Servicee createService(Servicee service) ;
+     Servicee updateService(Long id, Servicee service) ;
+     void deleteService(Long id);
+     Servicee ajouterServiceAuCategorie(Long categorieId, Servicee service);
+     List<Servicee> getAllServicesByCategorie(Long categorieId);
+     List<Utilisateur> getUtilisateursByService(Long serviceId);
+     List<Servicee> rechercherParNom(String nom);
 }

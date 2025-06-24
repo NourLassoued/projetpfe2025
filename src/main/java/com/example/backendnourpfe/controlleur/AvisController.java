@@ -59,7 +59,7 @@ public class AvisController {
 
         Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findById(utilisateurId);
 
-        if (!utilisateurOpt.isPresent()) {
+        if (utilisateurOpt.isEmpty()) {
 
             return null;
         }

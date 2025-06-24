@@ -7,6 +7,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -25,7 +26,7 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${application.security.jwt.refresh-expiration}")
     private long refreshExpiration;
-
+    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -60,7 +61,7 @@ public class JwtService {
                 .orElse(Collections.emptyList())
                 .stream()
                 .map(Servicee::getNomservice)
-                .collect(Collectors.toList()));
+                .toList());
 
         claims.put("cin", Optional.ofNullable(user.getDoucument_CIN()).orElse("Non fourni"));
         claims.put("cv", Optional.ofNullable(user.getDoucument_cv()).orElse("Non fourni"));
@@ -82,11 +83,11 @@ public class JwtService {
                         "heureFin", dispo.getHeureFin().toString()
 
                 ))
-                .collect(Collectors.toList()));
+                .toList());
 
 
         for (Servicee service : user.getServicesOfferts()) {
-            System.out.println("   - " + service.getNomservice());
+            logger.info("   - {}", service.getNomservice());
         }
 
 

@@ -8,11 +8,11 @@ import java.util.Map;
 
 public interface DisponibliteInterface {
 
-   public Map<String, Object> ajouterDisponibilite(Long prestataire_id, Disponibilite disponibilite);
-    public Map<String, Object> modifierDisponibilite(Long disponibiliteId, Disponibilite nouvelleDisponibilite);
+    Map<String, Object> ajouterDisponibilite(Long prestataire_id, Disponibilite disponibilite);
+     Map<String, Object> modifierDisponibilite(Long disponibiliteId, Disponibilite nouvelleDisponibilite);
 
-    public Map<String, Object> supprimerDisponibilite(Long disponibiliteId);
+     Map<String, Object> supprimerDisponibilite(Long disponibiliteId);
 
-    public List<Disponibilite> getDisponibilitesByPrestataire(Long prestataireId);
+     List<Disponibilite> getDisponibilitesByPrestataire(Long prestataireId);
 
 }

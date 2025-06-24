@@ -7,6 +7,8 @@ import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
     private final ReservationService reservationService;
+    private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
 
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
@@ -47,7 +50,7 @@ public class ReservationController {
             try {
                 response.sendRedirect("http://localhost:4200/error");
             } catch (Exception ex) {
-                ex.printStackTrace();
+                logger.error("Erreur lors de la redirection vers la page d'erreur", ex);
             }
         }
     }

@@ -5,15 +5,15 @@ import com.example.backendnourpfe.classes.Categorie;
 import java.util.List;
 
 public interface CategoriesInterface {
-    public List<Categorie> getAll() ;
+     List<Categorie> getAll() ;
 
-    public List<Categorie> searchCategoriesByName(String nom);
-    public Categorie create(Categorie categorie) ;
+     List<Categorie> searchCategoriesByName(String nom);
+     Categorie create(Categorie categorie) ;
 
-    public Categorie update(Long id, Categorie categorie) ;
+     Categorie update(Long id, Categorie categorie) ;
 
 
-    public void deleteCategorie( Long id) ;
+     void deleteCategorie( Long id) ;
 
 
 }

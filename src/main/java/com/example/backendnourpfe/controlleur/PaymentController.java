@@ -5,6 +5,8 @@ import com.example.backendnourpfe.classes.TypeAbonnement;
 import com.example.backendnourpfe.service.FlouciService;
 import jakarta.mail.MessagingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.List;
 public class PaymentController {
 
     private final FlouciService flouciService;
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     public PaymentController(FlouciService flouciService) {
         this.flouciService = flouciService;
@@ -88,8 +91,8 @@ public class PaymentController {
             flouciService.envoyerEmailBienvenue(email);
             return "Email de bienvenue envoyé avec succès à " + email;
         } catch (MessagingException e) {
-            e.printStackTrace();
-            return "Erreur lors de l'envoi de l'email : " + e.getMessage();
+            logger.error("Erreur lors de l'envoi de l'email à {} : {}", email, e.getMessage(), e);
+            return "Erreur lords de l'envoi de l'email : " + e.getMessage();
         }
     }
 

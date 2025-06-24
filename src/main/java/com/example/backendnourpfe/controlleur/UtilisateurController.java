@@ -13,6 +13,8 @@ import com.example.backendnourpfe.service.UtilisateurService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,7 @@ public class UtilisateurController {
     private final PostulationService postulationService;
     private final DemandeService demandeService;
 
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
 
     public UtilisateurController(UtilisateurService utilisateurService,
                                  UtilisateurRepository utilisateurRepository,
@@ -128,7 +131,7 @@ public ResponseEntity<Map<String, Object>> creerDemande(
 
                     response.sendRedirect("http://localhost:4200/login");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("Erreur lors de la redirection vers la page d'erreur");
                 }
 
                 return ResponseEntity.status(HttpStatus.FOUND).build();

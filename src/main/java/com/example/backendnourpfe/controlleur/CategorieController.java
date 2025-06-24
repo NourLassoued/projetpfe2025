@@ -40,7 +40,7 @@ public ResponseEntity<Categorie> createCategorie(
         @RequestParam("tarif") Float tarif,
         @RequestParam(value = "imageCategorie", required = false) MultipartFile imageFile) {
 
-    String imagePath = null;
+        String imagePath = null;
 
 
     if (imageFile != null && !imageFile.isEmpty()) {

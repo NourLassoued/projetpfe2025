@@ -4,7 +4,7 @@ public enum UserRole {
     PRESTATAIRE,
     ADMINISTRATEUR,
     PARTICULIER,
-    ENTREPRISE;
+    ENTREPRISE
 }
 
 

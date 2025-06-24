@@ -6,9 +6,9 @@ import com.example.backendnourpfe.classes.Utilisateur;
 import java.util.List;
 
 public interface AvisInterface {
-    public List<Avis> getAvisParprestatitr(Utilisateur avisUtilisateur);
-    public List<Avis> getAvisParparticulier(Utilisateur utilisateur);
-    public void deleteAvis(Long idAvis) ;
-    public double calculerScoreMoyen(Long utilisateurId);
+     List<Avis> getAvisParprestatitr(Utilisateur avisUtilisateur);
+     List<Avis> getAvisParparticulier(Utilisateur utilisateur);
+     void deleteAvis(Long idAvis) ;
+     double calculerScoreMoyen(Long utilisateurId);
 
 }

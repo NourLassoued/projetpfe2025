@@ -212,7 +212,6 @@ public AuthenticationReponse register(RegisterRequest request) {
                             .refershToken(refreshToken)
                             .build();
 
-                    // Écrire la réponse JSON dans le corps de la réponse HTTP
                     ObjectMapper objectMapper = new ObjectMapper();
                     objectMapper.writeValue(response.getOutputStream(), authResponse);
                 }

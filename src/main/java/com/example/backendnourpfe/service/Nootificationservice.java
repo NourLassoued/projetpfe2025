@@ -24,20 +24,16 @@ public class Nootificationservice {
 
 
     public void markPublicationAsSeen(Long userId, Long publicationId) {
-        // Récupérer l'utilisateur par son ID
         Utilisateur utilisateur = utilisateurRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-        // Récupérer la publication par son ID
         Publication publication = publicationRepository.findById(publicationId)
                 .orElseThrow(() -> new RuntimeException("Publication non trouvée"));
 
-        // Vérifier si la notification existe déjà
         Optional<Notification> notificationOpt = notificationRepository
                 .findByUser_IdUtilisateurAndPublication_Id(userId, publicationId);
 
         if (notificationOpt.isPresent()) {
-            // Si la notification existe déjà, mettre à jour le statut "vue"
             Notification notification = notificationOpt.get();
             notification.setSeen(true);
             notificationRepository.save(notification);
@@ -70,7 +66,7 @@ public class Nootificationservice {
 
         return allPublications.stream()
                 .filter(pub -> !seenPublicationIds.contains(pub.getId()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

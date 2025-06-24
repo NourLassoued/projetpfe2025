@@ -23,20 +23,16 @@ public class ChatbotService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(body, headers);
 
-        // Envoie POST et récupère la réponse JSON sous forme de String brute
         String responseJsonString = restTemplate.postForObject(flaskUrl, request, String.class);
 
         try {
-            // Convertir la String JSON en Map
             Map<String, Object> responseMap = objectMapper.readValue(responseJsonString, Map.class);
 
-            // Extraire la valeur décodée de la clé "response"
             String responseText = (String) responseMap.get("response");
 
             return responseText;
         } catch (Exception e) {
             e.printStackTrace();
-            // En cas d'erreur, retourne la réponse brute
             return responseJsonString;
         }
     }

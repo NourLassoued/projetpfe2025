@@ -94,7 +94,7 @@ public class UtilisateurService implements UtlisateurInterface {
     public Map<String, Object> creerDemande(String emailUtilisateur, Long idService, Long idAdresse, Demande demande) {
 
         Utilisateur utilisateur = utilisateurRepository.findByEmail(emailUtilisateur)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvécreerDemande "));
 
         if (utilisateur.getRole() != UserRole.PARTICULIER) {
             throw new RuntimeException("Seul un utilisateur avec le rôle 'Particulier' peut passer une demande.");
@@ -252,7 +252,6 @@ public class UtilisateurService implements UtlisateurInterface {
                         public final Long idAvis = (Long) avis[0];
                         public final int note = (int) avis[1];
                         public final String commentaire = (String) avis[2];
-                        public final String dateAvis = avis[3].toString();
                         public final String nomParticulier = (String) avis[4]; // Récupération du nom du particulier
                     };
                 })
@@ -291,20 +290,18 @@ public class UtilisateurService implements UtlisateurInterface {
         if (utilisateurDetails.getDoucument_CIN() != null) user.setDoucument_CIN(utilisateurDetails.getDoucument_CIN());
         if (utilisateurDetails.getDisponibilites() != null) {
             for (Disponibilite dispo : utilisateurDetails.getDisponibilites()) {
-                dispo.setPrestataire(user); // Associer à l'utilisateur
+                dispo.setPrestataire(user);
 
                 if (dispo.getId() != null) {
 
                     Optional<Disponibilite> existingDispo = disponibiliteRepository.findById(dispo.getId());
                     if (existingDispo.isPresent()) {
-                        // Mise à jour de la disponibilité existante
                         Disponibilite dispoToUpdate = existingDispo.get();
                         dispoToUpdate.setJour(dispo.getJour());
                         dispoToUpdate.setHeureDebut(dispo.getHeureDebut());
                         dispoToUpdate.setHeureFin(dispo.getHeureFin());
-                        disponibiliteRepository.save(dispoToUpdate); // Enregistrer la mise à jour
+                        disponibiliteRepository.save(dispoToUpdate);
                     } else {
-                        // Si l'ID est donné mais qu'il n'existe pas en base, on l'ajoute comme une nouvelle
                         disponibiliteRepository.save(dispo);
                         user.getDisponibilites().add(dispo);
                     }
