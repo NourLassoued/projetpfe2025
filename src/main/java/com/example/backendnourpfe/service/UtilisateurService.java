@@ -8,10 +8,11 @@ import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class UtilisateurService implements UtlisateurInterface {
     private final PostulationRepository postulationRepository;
 
 
+    private static final Logger logger = LoggerFactory.getLogger(UtilisateurService.class);
 
     @Override
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur) {
@@ -73,12 +75,12 @@ public class UtilisateurService implements UtlisateurInterface {
 
         for (Utilisateur user : prestataires) {
             if (user.getAdressee() != null) {
-                System.out.println("Adresse du prestataire : " + user.getAdressee().getIdAdresse());
+                logger.info("Adresse du prestataire : {}", user.getAdressee().getIdAdresse());
             }
             if (!user.getDisponibilites().isEmpty()) {
-                System.out.println("Disponibilités du prestataire : " + user.getDisponibilites());
+                logger.info("Disponibilités du prestataire : {}", user.getDisponibilites());
             } else {
-                System.out.println("Aucune disponibilité trouvée pour le prestataire : " + user.getIdUtilisateur());
+                logger.info("Aucune disponibilité trouvée pour le prestataire : {}", user.getIdUtilisateur());
             }
         }
 
