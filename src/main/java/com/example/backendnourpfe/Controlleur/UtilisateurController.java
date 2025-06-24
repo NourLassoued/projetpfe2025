@@ -35,16 +35,21 @@ import java.util.*;
 
 public class UtilisateurController {
 
-    @Autowired
-    private UtilisateurService utilisateurService;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-    @Autowired
-    private PostulationService postulationService;
+    private final UtilisateurService utilisateurService;
+    private final UtilisateurRepository utilisateurRepository;
+    private final PostulationService postulationService;
+    private final DemandeService demandeService;
 
 
-@Autowired
-private DemandeService demandeService;
+    public UtilisateurController(UtilisateurService utilisateurService,
+                                 UtilisateurRepository utilisateurRepository,
+                                 PostulationService postulationService,
+                                 DemandeService demandeService) {
+        this.utilisateurService = utilisateurService;
+        this.utilisateurRepository = utilisateurRepository;
+        this.postulationService = postulationService;
+        this.demandeService = demandeService;
+    }
 
     @PostMapping("/ajouter")
     public ResponseEntity<Utilisateur> ajouterUtilisateur(@RequestBody Utilisateur utilisateur) {

@@ -1,12 +1,12 @@
 package com.example.backendnourpfe.Controlleur;
 
 import com.example.backendnourpfe.classes.Reservation;
-import com.example.backendnourpfe.classes.Utilisateur;
+
 import com.example.backendnourpfe.service.ReservationService;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/reservation")
 public class ReservationController {
-    @Autowired
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
+
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
 
     @PostMapping("/reserver/{particulierId}/{prestataireId}/{demandeId}")

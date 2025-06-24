@@ -2,7 +2,7 @@ package com.example.backendnourpfe.Controlleur;
 
 import com.example.backendnourpfe.classes.Commentaire;
 import com.example.backendnourpfe.service.CommentaireService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,11 @@ import java.util.List;
 @RequestMapping("/commentaires")
 @CrossOrigin(origins = "*")
 public class CommentaireController {
+    private final CommentaireService commentaireService;
 
-    @Autowired
-    private CommentaireService commentaireService;
+    public CommentaireController(CommentaireService commentaireService) {
+        this.commentaireService = commentaireService;
+    }
 
 
     @PostMapping("/ajouter/{publicationId}/{utilisateurId}")

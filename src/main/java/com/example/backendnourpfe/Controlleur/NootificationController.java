@@ -4,7 +4,7 @@ import com.example.backendnourpfe.classes.Notification;
 import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.service.Nootificationservice;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +12,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/notification")
 public class NootificationController {
+    private final Nootificationservice nootificationservice;
 
-    @Autowired
-    private Nootificationservice nootificationservice;
+    public NootificationController(Nootificationservice nootificationservice) {
+        this.nootificationservice = nootificationservice;
+    }
 
     @PutMapping("/markAsSeen/{userId}/{publicationId}")
     public void markPublicationAsSeen(@PathVariable Long userId, @PathVariable Long publicationId) {

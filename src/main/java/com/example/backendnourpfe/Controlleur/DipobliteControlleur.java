@@ -2,7 +2,7 @@ package com.example.backendnourpfe.Controlleur;
 
 import com.example.backendnourpfe.classes.Disponibilite;
 import com.example.backendnourpfe.service.DisponibiliteService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +15,12 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 @RequestMapping("/disponibilites")
 public class DipobliteControlleur {
-    @Autowired
-    private  DisponibiliteService disponibiliteService;
+    private final DisponibiliteService disponibiliteService;
+
+    public DipobliteControlleur(DisponibiliteService disponibiliteService) {
+        this.disponibiliteService = disponibiliteService;
+    }
+
 
     @PostMapping("/{prestataire_id}")
     public ResponseEntity<Map<String, Object>> ajouterDisponibilite(

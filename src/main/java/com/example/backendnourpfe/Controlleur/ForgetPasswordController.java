@@ -5,15 +5,13 @@ import com.example.backendnourpfe.Respository.ForgetPasswordRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.ChangePassword;
 import com.example.backendnourpfe.classes.ForgotPassword;
-import com.example.backendnourpfe.classes.MailBody;
+
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.EmailService;
-import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +20,29 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
-import java.util.UUID;
+
 
 @CrossOrigin(origins = "*")
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("/forgetPassword")
 public class ForgetPasswordController {
-    @Autowired
-    private  PasswordEncoder passwordEncoder;
-    @Autowired
-    private UtilisateurRepository utlisateurRepo;
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private ForgetPasswordRepository forgetPasswordRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UtilisateurRepository utlisateurRepo;
+    private final EmailService emailService;
+    private final ForgetPasswordRepository forgetPasswordRepository;
 
+    public ForgetPasswordController(
+            PasswordEncoder passwordEncoder,
+            UtilisateurRepository utlisateurRepo,
+            EmailService emailService,
+            ForgetPasswordRepository forgetPasswordRepository
+    ) {
+        this.passwordEncoder = passwordEncoder;
+        this.utlisateurRepo = utlisateurRepo;
+        this.emailService = emailService;
+        this.forgetPasswordRepository = forgetPasswordRepository;
+    }
 @PostMapping("/verifyMail/{email}")
 public ResponseEntity<String> verifyEmail(@PathVariable String email) {
     try {

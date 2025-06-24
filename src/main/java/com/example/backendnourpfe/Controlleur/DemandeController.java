@@ -1,14 +1,12 @@
 package com.example.backendnourpfe.Controlleur;
 
-import com.example.backendnourpfe.Respository.DemandeRepository;
 import com.example.backendnourpfe.Respository.PostulationRepository;
 import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.Postulation;
 
-import com.example.backendnourpfe.classes.Utilisateur;
+
 import com.example.backendnourpfe.service.DemandeService;
 import com.example.backendnourpfe.service.PostulationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -23,14 +21,18 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RequestMapping("/demandes")
 public class DemandeController {
-    @Autowired
-    private DemandeRepository demandeRepository;
-    @Autowired
-    private DemandeService demandeService;
-    @Autowired
-    private PostulationRepository postulationRepository;
-    @Autowired
-    private PostulationService postulationService;
+    private final DemandeService demandeService;
+    private final PostulationRepository postulationRepository;
+    private final PostulationService postulationService;
+
+    public DemandeController(DemandeService demandeService,
+                             PostulationRepository postulationRepository,
+                             PostulationService postulationService) {
+        this.demandeService = demandeService;
+        this.postulationRepository = postulationRepository;
+        this.postulationService = postulationService;
+    }
+
 
     @DeleteMapping("deleteDemande/{idDemande}")
     public void deleteDemande(@PathVariable Long idDemande) {

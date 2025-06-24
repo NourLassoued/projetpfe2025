@@ -1,10 +1,8 @@
 package com.example.backendnourpfe.Controlleur;
 
-import com.example.backendnourpfe.Respository.CategorieRepository;
 import com.example.backendnourpfe.classes.Categorie;
 import com.example.backendnourpfe.service.CategorieService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +18,15 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/categories")
-@RequiredArgsConstructor
+
 
 
     public class CategorieController {
+    private final CategorieService categorieService;
 
-    @Autowired
-    private CategorieService categorieService;
-@Autowired
-private CategorieRepository categorieRepository;
+    public CategorieController(CategorieService categorieService) {
+        this.categorieService = categorieService;
+    }
 
     @GetMapping("/getAllCategories")
     public List<Categorie> getAllCategories() {

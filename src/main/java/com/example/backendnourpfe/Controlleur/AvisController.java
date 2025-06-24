@@ -6,7 +6,6 @@ import com.example.backendnourpfe.classes.Avis;
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.AvisService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +19,17 @@ import java.util.Optional;
 @RequestMapping("/avis")
 public class AvisController {
 
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-    @Autowired
-    private AvisService avisService;
+    private final UtilisateurRepository utilisateurRepository;
+    private final AvisService avisService;
+    private final AvisRepository avisRepository;
 
-    @Autowired
-    private AvisRepository avisRepository;
+    public AvisController(UtilisateurRepository utilisateurRepository,
+                          AvisService avisService,
+                          AvisRepository avisRepository) {
+        this.utilisateurRepository = utilisateurRepository;
+        this.avisService = avisService;
+        this.avisRepository = avisRepository;
+    }
 
     @GetMapping("/utilisateur/{id}")
     public List<Avis> getAvisParprestatitr(@PathVariable("id") Long utilisateurId) {

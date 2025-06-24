@@ -24,7 +24,7 @@ public class JwtService {
     private String secretKey;
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
-    @Value("604800000")
+    @Value("${application.security.jwt.refresh-expiration}")
     private long refreshExpiration;
 
     public String extractUsername(String token) {
@@ -52,9 +52,8 @@ public class JwtService {
 
         claims.put("adresse", user.getAdressee());
 
-claims.put("Demande",user.getDemandes());
+        claims.put("Demande",user.getDemandes());
         claims.put("tarifs", user.getTarifs());
-        claims.put("telephoneNumber", user.getTelephoneNumber());
         claims.put("description", Optional.ofNullable(user.getDescription()).orElse("no"));
 
 

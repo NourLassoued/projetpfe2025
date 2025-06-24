@@ -1,13 +1,13 @@
 package com.example.backendnourpfe.Controlleur;
 
-import com.example.backendnourpfe.Respository.PostulationRepository;
+
 import com.example.backendnourpfe.Respository.PublicationRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.PublicationService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +21,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/publications")
 @CrossOrigin(origins = "*")
 public class PublicationController {
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final PublicationService publicationService;
+    private final PublicationRepository publicationRepository;
 
-    @Autowired
-    private PublicationService publicationService;
-    @Autowired
-    private PublicationRepository publicationRepository;
-
+    public PublicationController(UtilisateurRepository utilisateurRepository,
+                                 PublicationService publicationService,
+                                 PublicationRepository publicationRepository) {
+        this.utilisateurRepository = utilisateurRepository;
+        this.publicationService = publicationService;
+        this.publicationRepository = publicationRepository;
+    }
 
     @PostMapping("/entreprise/{entrepriseId}")
     public ResponseEntity<Publication> ajouterPublication(

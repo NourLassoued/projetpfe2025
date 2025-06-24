@@ -2,7 +2,7 @@ package com.example.backendnourpfe.Controlleur;
 
 import com.example.backendnourpfe.classes.Postulation;
 import com.example.backendnourpfe.service.PostulationService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,11 @@ import java.util.List;
 @RequestMapping("/postulation")
 public class PostulationController {
 
-    @Autowired
-    private PostulationService postulationService;
+    private final PostulationService postulationService;
+
+    public PostulationController(PostulationService postulationService) {
+        this.postulationService = postulationService;
+    }
 
     @GetMapping("/demande/{demandeId}")
     public ResponseEntity<List<Postulation>> getPostulationsByDemande(@PathVariable Long demandeId) {

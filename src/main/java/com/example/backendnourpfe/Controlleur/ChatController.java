@@ -1,13 +1,9 @@
 package com.example.backendnourpfe.Controlleur;
 
 import com.example.backendnourpfe.Respository.MessageRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Message;
 
-import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.MessageService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,16 +16,20 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/message")
 
-@RequiredArgsConstructor
+
 
 public class ChatController {
-    @Autowired
+    private final MessageService messageService;
+    private final MessageRepository messageRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    private MessageService messageService;
-    @Autowired
-    private MessageRepository messageRepository;
-    @Autowired
-    private  SimpMessagingTemplate messagingTemplate;
+    public ChatController(MessageService messageService,
+                          MessageRepository messageRepository,
+                          SimpMessagingTemplate messagingTemplate) {
+        this.messageService = messageService;
+        this.messageRepository = messageRepository;
+        this.messagingTemplate = messagingTemplate;
+    }
 
 
     @MessageMapping("/chat")

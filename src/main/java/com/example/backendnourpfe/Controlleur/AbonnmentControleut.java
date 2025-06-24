@@ -4,7 +4,6 @@ import com.example.backendnourpfe.Respository.AbonnementRepository;
 import com.example.backendnourpfe.classes.Abonnement;
 import com.example.backendnourpfe.classes.StatusAbonnement;
 import com.example.backendnourpfe.service.AbonmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +14,13 @@ import java.util.List;
 @RequestMapping("/AbonmentS")
 @CrossOrigin("*")
 public class AbonnmentControleut {
-    @Autowired
-    private AbonmentService abonnementService;
-    @Autowired
-    private AbonnementRepository abonnementRepository;
+    private final AbonmentService abonnementService;
+    private final AbonnementRepository abonnementRepository;
+
+    public AbonnmentControleut(AbonmentService abonnementService, AbonnementRepository abonnementRepository) {
+        this.abonnementService = abonnementService;
+        this.abonnementRepository = abonnementRepository;
+    }
 
     @GetMapping("/actifs/mensuel-annuel")
     public List<Abonnement> getMensuelEtAnnuelActifs() {

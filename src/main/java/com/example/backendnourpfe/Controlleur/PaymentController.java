@@ -4,7 +4,6 @@ import com.example.backendnourpfe.classes.Payment;
 import com.example.backendnourpfe.classes.TypeAbonnement;
 import com.example.backendnourpfe.service.FlouciService;
 import jakarta.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,11 @@ import java.util.List;
 
 public class PaymentController {
 
+    private final FlouciService flouciService;
 
-    @Autowired
-    private FlouciService flouciService;
+    public PaymentController(FlouciService flouciService) {
+        this.flouciService = flouciService;
+    }
 
     @PostMapping("/create/{reservationId}")
     public ResponseEntity<String> createPayment(@PathVariable("reservationId") Long reservationId, @RequestParam("amount") Float amount) {

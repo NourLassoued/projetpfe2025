@@ -6,8 +6,7 @@ import com.example.backendnourpfe.classes.Servicee;
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.service.CategorieService;
 import com.example.backendnourpfe.service.ServiService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,25 +23,26 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/services")
-@RequiredArgsConstructor
+
 class ServiceController {
-    @Autowired
-    private ServiService serviceService;
-    @Autowired
-    private CategorieService categorieService;
-    @Autowired
-    private CategorieRepository categorieRepository;
+    private final ServiService serviceService;
+    private final CategorieService categorieService;
+    private final CategorieRepository categorieRepository;
+
+    public ServiceController(ServiService serviceService,
+                             CategorieService categorieService,
+                             CategorieRepository categorieRepository) {
+        this.serviceService = serviceService;
+        this.categorieService = categorieService;
+        this.categorieRepository = categorieRepository;
+    }
 
     @GetMapping
     public List<Servicee> getAll() { return serviceService.getAllServices(); }
 
     @PostMapping
     public Servicee create(@RequestBody Servicee service) { return serviceService.createService(service); }
-/*
-    @PutMapping("/{id}")
-    public Servicee update(@PathVariable Long id, @RequestBody Servicee service) {
-        return serviceService.updateService(id, service);
-    }*/
+
 @PutMapping("/{id}")
 public ResponseEntity<Servicee> updateService(
         @PathVariable Long id,

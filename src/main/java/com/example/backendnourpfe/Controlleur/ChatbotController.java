@@ -1,7 +1,6 @@
 package com.example.backendnourpfe.Controlleur;
 
 import com.example.backendnourpfe.service.ChatbotService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -12,9 +11,11 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class ChatbotController {
 
-    @Autowired
-    private ChatbotService chatbotService;
+    private final ChatbotService chatbotService;
 
+    public ChatbotController(ChatbotService chatbotService) {
+        this.chatbotService = chatbotService;
+    }
     @PostMapping("/chat")
     public Map<String, Object> chat(@RequestBody Map<String, String> payload) {
         String message = payload.get("message");
