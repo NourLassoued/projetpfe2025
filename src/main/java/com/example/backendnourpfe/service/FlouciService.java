@@ -219,7 +219,7 @@ public class FlouciService {
             case ANNUEL -> 120f;
         };
 
-        // Créer un nouvel abonnement
+
         Abonnement abonnement = new Abonnement();
         abonnement.setUtilisateur((user.get()));
         abonnement.setTypeAbonnement(type);

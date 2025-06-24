@@ -4,11 +4,12 @@ package com.example.backendnourpfe.service;
 import com.example.backendnourpfe.classes.MailBody;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class EmailService {
 
@@ -33,7 +34,7 @@ public class EmailService {
 
         helper.setTo(to);
         helper.setSubject(sujet);
-        helper.setText(contenu, true); // Activer le HTML
+        helper.setText(contenu, true);
 
         javaMailSender.send(message);
     }
@@ -53,7 +54,7 @@ public class EmailService {
 
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Erreur lors de l'envoi de l'email à {}", to, e);
         }
     }
 
@@ -98,8 +99,7 @@ public class EmailService {
 
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            log.error("Erreur lors de l'envoi de l'e-mail de vérification à {}", to, e);        }
     }
     public void sendActivationEmailParticulier(String to, String nom) {
         try {
@@ -147,7 +147,8 @@ public class EmailService {
 
             javaMailSender.send(mimeMessage);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Erreur lors de l'envoi de l'e-mail d'activation à {}", to, e);
+
         }
     }
 
