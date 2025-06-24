@@ -1,8 +1,8 @@
 package service;
 
-import com.example.backendnourpfe.Respository.NotificationRepository;
-import com.example.backendnourpfe.Respository.PublicationRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.respository.NotificationRepository;
+import com.example.backendnourpfe.respository.PublicationRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Notification;
 import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.classes.UserRole;

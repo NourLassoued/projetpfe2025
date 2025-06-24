@@ -1,9 +1,9 @@
 package service;
 
 
-import com.example.backendnourpfe.Config.JwtService;
-import com.example.backendnourpfe.Respository.*;
-import com.example.backendnourpfe.Token.TokenRepository;
+import com.example.backendnourpfe.config.JwtService;
+import com.example.backendnourpfe.respository.*;
+import com.example.backendnourpfe.token.TokenRepository;
 import com.example.backendnourpfe.auth.AuthenticationReponse;
 import com.example.backendnourpfe.auth.AuthenticationService;
 import com.example.backendnourpfe.auth.RegisterRequest;
@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

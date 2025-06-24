@@ -4,7 +4,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.backendnourpfe.classes.Categorie;
-import com.example.backendnourpfe.Respository.CategorieRepository;
+import com.example.backendnourpfe.respository.CategorieRepository;
 import com.example.backendnourpfe.service.CategorieService;
 import org.junit.jupiter.api.*;
 import org.mockito.*;

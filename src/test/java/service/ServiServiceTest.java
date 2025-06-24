@@ -2,9 +2,9 @@ package service;
 
 
 
-import com.example.backendnourpfe.Respository.CategorieRepository;
-import com.example.backendnourpfe.Respository.ServiceRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.respository.CategorieRepository;
+import com.example.backendnourpfe.respository.ServiceRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.service.ServiService;
 import org.junit.jupiter.api.BeforeEach;

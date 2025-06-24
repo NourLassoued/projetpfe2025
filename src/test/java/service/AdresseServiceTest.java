@@ -1,6 +1,6 @@
 package service;
 
-import com.example.backendnourpfe.Respository.AdresseRepository;
+import com.example.backendnourpfe.respository.AdresseRepository;
 import com.example.backendnourpfe.classes.Adresse;
 import com.example.backendnourpfe.service.AdresseService;
 import org.junit.jupiter.api.BeforeEach;

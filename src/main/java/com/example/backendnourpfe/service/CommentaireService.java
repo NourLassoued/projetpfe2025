@@ -1,8 +1,8 @@
 package com.example.backendnourpfe.service;
 
-import com.example.backendnourpfe.Respository.CommentaireRepository;
-import com.example.backendnourpfe.Respository.PublicationRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.respository.CommentaireRepository;
+import com.example.backendnourpfe.respository.PublicationRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Commentaire;
 import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.classes.Utilisateur;

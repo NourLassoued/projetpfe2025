@@ -3,9 +3,9 @@ package service;
 
 import com.example.backendnourpfe.service.UtilisateurService;
 import org.mockito.InjectMocks;
-import com.example.backendnourpfe.Respository.*;
+import com.example.backendnourpfe.respository.*;
 import com.example.backendnourpfe.classes.*;
-import com.example.backendnourpfe.Config.JwtService;
+import com.example.backendnourpfe.config.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

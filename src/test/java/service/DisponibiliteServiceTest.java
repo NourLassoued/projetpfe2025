@@ -1,8 +1,8 @@
 package service;
 
-import com.example.backendnourpfe.Config.JwtService;
-import com.example.backendnourpfe.Respository.DisponibiliteRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.config.JwtService;
+import com.example.backendnourpfe.respository.DisponibiliteRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Disponibilite;
 import com.example.backendnourpfe.classes.Utilisateur;
 

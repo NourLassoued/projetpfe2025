@@ -1,6 +1,6 @@
 package com.example.backendnourpfe.service;
 
-import com.example.backendnourpfe.Respository.CategorieRepository;
+import com.example.backendnourpfe.respository.CategorieRepository;
 import com.example.backendnourpfe.classes.Categorie;
 import com.example.backendnourpfe.interfacee.CategoriesInterface;
 import lombok.RequiredArgsConstructor;

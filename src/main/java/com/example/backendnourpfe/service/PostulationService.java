@@ -1,8 +1,8 @@
 package com.example.backendnourpfe.service;
 
-import com.example.backendnourpfe.Respository.DemandeRepository;
-import com.example.backendnourpfe.Respository.PostulationRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.respository.DemandeRepository;
+import com.example.backendnourpfe.respository.PostulationRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.Postulation;
 import com.example.backendnourpfe.classes.UserRole;

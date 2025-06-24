@@ -1,6 +1,6 @@
 package com.example.backendnourpfe.service;
 
-import com.example.backendnourpfe.Respository.AdresseRepository;
+import com.example.backendnourpfe.respository.AdresseRepository;
 import com.example.backendnourpfe.classes.Adresse;
 
 import lombok.RequiredArgsConstructor;

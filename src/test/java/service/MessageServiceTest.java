@@ -1,7 +1,7 @@
 package service;
 
-import com.example.backendnourpfe.Respository.MessageRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
+import com.example.backendnourpfe.respository.MessageRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Message;
 import com.example.backendnourpfe.classes.Utilisateur;
 import  com.example.backendnourpfe.classes.UserRole;

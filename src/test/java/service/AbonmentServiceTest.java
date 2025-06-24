@@ -1,6 +1,6 @@
 package service;
 
-import com.example.backendnourpfe.Respository.AbonnementRepository;
+import com.example.backendnourpfe.respository.AbonnementRepository;
 import com.example.backendnourpfe.classes.Abonnement;
 import com.example.backendnourpfe.classes.StatusAbonnement;
 import com.example.backendnourpfe.classes.TypeAbonnement;

@@ -18,7 +18,6 @@ public class BackendnourpfeApplication {
     @PostConstruct
     public void init() {
         TimeZone.setDefault(TimeZone.getTimeZone("Africa/Tunis"));
-        System.out.println("Timezone configurée sur Africa/Tunis");
     }
 
 }

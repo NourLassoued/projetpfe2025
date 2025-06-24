@@ -1,9 +1,9 @@
 package com.example.backendnourpfe.service;
 
 
-import com.example.backendnourpfe.Config.JwtService;
-import com.example.backendnourpfe.Controlleur.NotificationController;
-import com.example.backendnourpfe.Respository.*;
+import com.example.backendnourpfe.config.JwtService;
+import com.example.backendnourpfe.controlleur.NotificationController;
+import com.example.backendnourpfe.respository.*;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
 

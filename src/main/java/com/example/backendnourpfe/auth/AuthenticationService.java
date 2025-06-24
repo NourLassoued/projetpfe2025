@@ -1,13 +1,13 @@
 package com.example.backendnourpfe.auth;
 
 
-import com.example.backendnourpfe.Config.JwtService;
-import com.example.backendnourpfe.Respository.DisponibiliteRepository;
-import com.example.backendnourpfe.Respository.ServiceRepository;
-import com.example.backendnourpfe.Respository.UtilisateurRepository;
-import com.example.backendnourpfe.Token.Token;
-import com.example.backendnourpfe.Token.TokenRepository;
-import com.example.backendnourpfe.Token.TokenType;
+import com.example.backendnourpfe.config.JwtService;
+import com.example.backendnourpfe.respository.DisponibiliteRepository;
+import com.example.backendnourpfe.respository.ServiceRepository;
+import com.example.backendnourpfe.respository.UtilisateurRepository;
+import com.example.backendnourpfe.token.Token;
+import com.example.backendnourpfe.token.TokenRepository;
+import com.example.backendnourpfe.token.TokenType;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.service.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
