@@ -4,7 +4,7 @@ version: 2
 
 tunnels:
   sonar:
-    addr: host.docker.internal:9001
+    addr: localhost:9001
     proto: http
     schemes:
       - https
