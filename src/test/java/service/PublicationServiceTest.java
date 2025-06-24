@@ -33,10 +33,8 @@ public class PublicationServiceTest {
         utilisateurRepository = mock(UtilisateurRepository.class);
         emailService = mock(EmailService.class);
 
-        publicationService = new PublicationService();
-        publicationService.publicationRepository = publicationRepository;
-        publicationService.utilisateurRepository = utilisateurRepository;
-        publicationService.emailService = emailService;
+        publicationService = new PublicationService(publicationRepository, utilisateurRepository, emailService);
+
     }
 
     @Test

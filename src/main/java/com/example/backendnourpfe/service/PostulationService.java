@@ -7,24 +7,20 @@ import com.example.backendnourpfe.classes.Demande;
 import com.example.backendnourpfe.classes.Postulation;
 import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class PostulationService {
 
-    @Autowired
-    public PostulationRepository postulationRepository;
-
-    @Autowired
-    public DemandeRepository demandeRepository;
-
-    @Autowired
-    public UtilisateurRepository utilisateurRepository;
+    private final PostulationRepository postulationRepository;
+    private final DemandeRepository demandeRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
 
     public Postulation postuler(Long demandeId, Long utilisateurId, Postulation postulation) {
@@ -95,15 +91,7 @@ public class PostulationService {
             throw new RuntimeException("Postulation non trouvée avec l'id: " + id);
         }
     }
-    /*
-    public void deletePostulation(Long id) {
-        Optional<Postulation> postulation = postulationRepository.findById(id);
-        if (postulation.isPresent()) {
-            postulationRepository.delete(postulation.get());
-        } else {
-            throw new RuntimeException("Postulation non trouvée avec l'id: " + id);
-        }
-    }*/
+
     public void deletePostulation(Long id) {
         Optional<Postulation> postulationOpt = postulationRepository.findById(id);
         if (postulationOpt.isPresent()) {

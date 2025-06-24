@@ -31,10 +31,11 @@ class PostulationServiceTest {
         demandeRepository = mock(DemandeRepository.class);
         utilisateurRepository = mock(UtilisateurRepository.class);
 
-        postulationService = new PostulationService();
-        postulationService.postulationRepository = postulationRepository;
-        postulationService.demandeRepository = demandeRepository;
-        postulationService.utilisateurRepository = utilisateurRepository;
+        postulationService = new PostulationService(
+                postulationRepository,
+                demandeRepository,
+                utilisateurRepository
+        );
     }
 
     @Test

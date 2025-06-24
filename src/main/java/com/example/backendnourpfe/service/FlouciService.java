@@ -211,7 +211,7 @@ public class FlouciService {
     public String createPaymentForAbonnement(String email, TypeAbonnement type) throws IOException {
 
         Optional<Utilisateur> user = utilisateurRepository.findByEmail(email);
-        if (user == null) return "Utilisation introuvable";
+        if (user.isEmpty()) return "Utilisateur introuvable";
 
         Float montant = switch (type) {
             case GRATUIT -> 0f;

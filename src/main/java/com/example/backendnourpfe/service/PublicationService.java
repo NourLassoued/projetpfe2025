@@ -6,23 +6,20 @@ import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
 import jakarta.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class PublicationService {
 
-    @Autowired
-    public PublicationRepository publicationRepository;
-
-    @Autowired
-    public UtilisateurRepository utilisateurRepository;
-    @Autowired
-    public EmailService emailService;
+    private final PublicationRepository publicationRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final EmailService emailService;
 
 
     public Publication ajouterPublication(Publication publication, Long entrepriseId) {
