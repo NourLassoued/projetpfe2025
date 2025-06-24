@@ -33,7 +33,7 @@ jobs:
       - name: Scan image with Trivy (JSON output)
         id: trivy_scan
         continue-on-error: true
-        uses: aquasecurity/trivy-action@v0.63.0
+        uses: aquasecurity/trivy-action@v0.0.6
         with:
           image-ref: nourlassoued/nourangular:1.1.${{ github.run_number }}
           format: json
