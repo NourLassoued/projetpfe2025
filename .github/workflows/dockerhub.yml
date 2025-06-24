@@ -29,6 +29,33 @@ jobs:
           context: .
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
+
+      - name: Scan image with Trivy (JSON output)
+        id: trivy_scan
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@v0.16.2
+        with:
+          image-ref: nourlassoued/nourangular:1.1.${{ github.run_number }}
+          format: json
+          output: trivy-report.json
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH,MEDIUM,LOW
+
+      - name: Résumé des vulnérabilités (Score)
+        run: |
+          echo "Résultat du scan Trivy (extrait du JSON):"
+          CRITICAL=$(jq '[.[] | .Vulnerabilities[]? | select(.Severity == "CRITICAL")] | length' trivy-report.json)
+          HIGH=$(jq '[.[] | .Vulnerabilities[]? | select(.Severity == "HIGH")] | length' trivy-report.json)
+          MEDIUM=$(jq '[.[] | .Vulnerabilities[]? | select(.Severity == "MEDIUM")] | length' trivy-report.json)
+          LOW=$(jq '[.[] | .Vulnerabilities[]? | select(.Severity == "LOW")] | length' trivy-report.json)
+
+          echo "🛑 CRITICAL : $CRITICAL"
+          echo "🚨 HIGH     : $HIGH"
+          echo "⚠️  MEDIUM   : $MEDIUM"
+          echo "ℹ️  LOW      : $LOW"
+        shell: bash
+
+          
       - name: Checkout argocdpfe  repo
         uses: actions/checkout@v4
         with:
