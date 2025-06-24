@@ -3,16 +3,16 @@ package com.example.backendnourpfe.service;
 import com.example.backendnourpfe.Respository.AdresseRepository;
 import com.example.backendnourpfe.classes.Adresse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class AdresseService {
-    @Autowired
-    private AdresseRepository adresseRepository;
+    private final AdresseRepository adresseRepository;
+
 
 
     public Adresse ajouterAdresse(Adresse adresse) {

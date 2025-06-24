@@ -6,7 +6,6 @@ import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.Serviceinterface;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +14,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ServiService implements Serviceinterface {
-    @Autowired
-    private ServiceRepository serviceRepository;
-    @Autowired
-    private CategorieRepository categorieRepository;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final ServiceRepository serviceRepository;
+    private final CategorieRepository categorieRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
     @Override
     public List<Servicee> getAllServices() {

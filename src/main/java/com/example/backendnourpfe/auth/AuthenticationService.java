@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,12 +37,9 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private ServiceRepository serviceRepository;
-    @Autowired
-    private DisponibiliteRepository disponibiliteRepository;
+    private final EmailService emailService;
+    private final ServiceRepository serviceRepository;
+    private final DisponibiliteRepository disponibiliteRepository;
 
 
 

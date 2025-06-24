@@ -6,23 +6,21 @@ import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Disponibilite;
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.interfacee.DisponibliteInterface;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@RequiredArgsConstructor
 @Service
 public class DisponibiliteService implements DisponibliteInterface {
-    @Autowired
-    private DisponibiliteRepository disponibiliteRepository;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-    @Autowired
-    private JwtService jwtService;
+    private final DisponibiliteRepository disponibiliteRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final JwtService jwtService;
+
 
 
     @Override

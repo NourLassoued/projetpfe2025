@@ -5,7 +5,7 @@ import com.example.backendnourpfe.Respository.PostulationRepository;
 import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.DemandeInterface;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
@@ -15,19 +15,14 @@ import java.time.ZoneId;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+@RequiredArgsConstructor
 @Service
 public class DemandeService implements DemandeInterface {
-    @Autowired
+    private final DemandeRepository demandeRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final PostulationRepository postulationRepository;
+    private final AvisService avisService;
 
-    private DemandeRepository demandeRepository;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-@Autowired
-private PostulationRepository postulationRepository;
-
-    @Autowired
-    private AvisService avisService;
 
     @Override
     public void deleteDemande(Long idDemande) {

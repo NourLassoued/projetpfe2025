@@ -6,22 +6,19 @@ import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Message;
 
 import com.example.backendnourpfe.classes.Utilisateur;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class MessageService {
-    @Autowired
-    private MessageRepository messageRepository;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final MessageRepository messageRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     public List<Message> getUndeliveredMessages(Long receiverId) {
         List<Message> messages = messageRepository.findByReceiverIdUtilisateurAndDeliveredFalse(receiverId);

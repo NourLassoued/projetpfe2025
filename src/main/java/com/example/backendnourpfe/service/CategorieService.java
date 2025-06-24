@@ -3,16 +3,15 @@ package com.example.backendnourpfe.service;
 import com.example.backendnourpfe.Respository.CategorieRepository;
 import com.example.backendnourpfe.classes.Categorie;
 import com.example.backendnourpfe.interfacee.CategoriesInterface;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class CategorieService implements CategoriesInterface {
-@Autowired
-    private CategorieRepository categorieRepository;
+    private final CategorieRepository categorieRepository;
 
     @Override
     public List<Categorie> getAll() {

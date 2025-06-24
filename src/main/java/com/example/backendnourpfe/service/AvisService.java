@@ -6,17 +6,17 @@ import com.example.backendnourpfe.classes.Avis;
 import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
 import com.example.backendnourpfe.interfacee.AvisInterface;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
+@RequiredArgsConstructor
 @Service
 public class AvisService  implements AvisInterface {
-    @Autowired
-    private AvisRepository avisRepository;
-    @Autowired
-    private  UtilisateurRepository utilisateurRepository;
+    private final AvisRepository avisRepository;
+    private final UtilisateurRepository utilisateurRepository;
+
+
 
 
 

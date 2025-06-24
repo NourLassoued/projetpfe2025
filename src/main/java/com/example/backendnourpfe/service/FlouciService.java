@@ -9,9 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.mail.MessagingException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -24,28 +23,21 @@ import java.time.ZoneId;
 import java.util.*;
 
 import okhttp3.*;
+@RequiredArgsConstructor
 @Service
 public class FlouciService {
 
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-    @Autowired
-    private PaymentRepository paymentRepository;
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final EmailService emailService;
+    private final UtilisateurRepository utilisateurRepository;
+    private final PaymentRepository paymentRepository;
+    private final ReservationRepository reservationRepository;
+    private final PaymentAbonnementRepository paymentAbonnementRepository;
+    private final AbonnementRepository abonnementRepository;
     @Value("${flouci.public-token}")
     public String publicToken;
 
     @Value("${flouci.private-token}")
     public String privateToken;
-    @Autowired
-    private PaymentAbonnementRepository paymentAbonnementRepository;
-
-    @Autowired
-    private AbonnementRepository abonnementRepository;
-
 
     public String createPaymentForReservation(Float amount, Long reservationId) throws IOException {
 

@@ -7,7 +7,7 @@ import com.example.backendnourpfe.classes.Notification;
 import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.classes.UserRole;
 import com.example.backendnourpfe.classes.Utilisateur;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -15,15 +15,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@RequiredArgsConstructor
 @Service
 public class Nootificationservice {
-  @Autowired
-  private PublicationRepository publicationRepository;
-  @Autowired
-  private UtilisateurRepository utilisateurRepository;
-    @Autowired
-    private NotificationRepository notificationRepository;
+    private final PublicationRepository publicationRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final NotificationRepository notificationRepository;
+
 
     public void markPublicationAsSeen(Long userId, Long publicationId) {
         // Récupérer l'utilisateur par son ID

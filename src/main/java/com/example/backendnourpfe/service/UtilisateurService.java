@@ -7,7 +7,7 @@ import com.example.backendnourpfe.Respository.*;
 import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.UtlisateurInterface;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -25,32 +25,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-
+@RequiredArgsConstructor
 public class UtilisateurService implements UtlisateurInterface {
-    @Autowired
-    private NotificationController notificationController;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-
-    @Autowired
-    private DemandeRepository demandeRepository;
-    @Autowired
-    private ServiceRepository serviceRepository;
-    @Autowired
-    private AvisRepository avisRepository;
-
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private  DisponibiliteRepository disponibiliteRepository;
-
-    @Autowired
-    private AdresseRepository adresseRepository;
-    @Autowired
-    private
-    PostulationRepository postulationRepository;
+    private final NotificationController notificationController;
+    private final UtilisateurRepository utilisateurRepository;
+    private final DemandeRepository demandeRepository;
+    private final ServiceRepository serviceRepository;
+    private final AvisRepository avisRepository;
+    private final EmailService emailService;
+    private final JwtService jwtService;
+    private final DisponibiliteRepository disponibiliteRepository;
+    private final AdresseRepository adresseRepository;
+    private final PostulationRepository postulationRepository;
 
 
 

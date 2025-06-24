@@ -7,25 +7,22 @@ import com.example.backendnourpfe.classes.*;
 import com.example.backendnourpfe.interfacee.ReservationInterface;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class ReservationService implements ReservationInterface {
-    @Autowired
-    private ReservationRepository reservationRepository;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final ReservationRepository reservationRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final DemandeRepository demandeRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    private DemandeRepository demandeRepository;
-    @Autowired
-    private EmailService emailService;
+
 
     @Transactional
     public Reservation creerReservation(Long idParticulier, Long idPrestataire, Long idDemande, Reservation reservation) throws MessagingException {

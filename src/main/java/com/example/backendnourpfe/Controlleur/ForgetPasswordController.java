@@ -141,8 +141,5 @@ public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable
         }
     }
 
-    private Integer OtpGenrator(){
-        Random random =new Random();
-        return random.nextInt(100_000,999_999);
-    }
+
 }

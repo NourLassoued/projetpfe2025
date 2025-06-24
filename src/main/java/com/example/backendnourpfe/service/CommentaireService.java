@@ -6,24 +6,21 @@ import com.example.backendnourpfe.Respository.UtilisateurRepository;
 import com.example.backendnourpfe.classes.Commentaire;
 import com.example.backendnourpfe.classes.Publication;
 import com.example.backendnourpfe.classes.Utilisateur;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class CommentaireService {
 
-    @Autowired
-    private CommentaireRepository commentaireRepository;
+    private final CommentaireRepository commentaireRepository;
+    private final PublicationRepository publicationRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    @Autowired
-    private PublicationRepository publicationRepository;
 
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
 
     public Commentaire ajouterCommentaire(Long publicationId, Long particulierId, Commentaire commentaire) {
         Optional<Publication> publicationOpt = publicationRepository.findById(publicationId);
