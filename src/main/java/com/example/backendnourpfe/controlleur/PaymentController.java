@@ -76,7 +76,7 @@ public class PaymentController {
     ) {
         try {
             String redirectUrl = flouciService.createPaymentForAbonnement(email, type);
-            return ResponseEntity.ok(redirectUrl); // Retourne l'URL pour rediriger l'utilisateur vers Flouci
+            return ResponseEntity.ok(redirectUrl);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Erreur lors de la création du paiement : " + e.getMessage());
         }
