@@ -24,13 +24,25 @@ jobs:
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
           
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: nourlassoued/nourangular:1.1.${{ github.run_number }}
-          format: table
-          exit-code: 0
-          ignore-unfixed: true
+      - name: Install jq and Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Scan Docker image with Trivy and extract numbers
+        run: |
+          trivy image nourlassoued/nourangular:1.1.${{ github.run_number }} --format json --ignore-unfixed -o trivy-result.json
+
+          CRITICAL=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="CRITICAL")] | length' trivy-result.json)
+          HIGH=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="HIGH")] | length' trivy-result.json)
+          MEDIUM=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="MEDIUM")] | length' trivy-result.json)
+          LOW=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="LOW")] | length' trivy-result.json)
+
+          echo "CRITICAL=$CRITICAL" >> $GITHUB_ENV
+          echo "HIGH=$HIGH" >> $GITHUB_ENV
+          echo "MEDIUM=$MEDIUM" >> $GITHUB_ENV
+          echo "LOW=$LOW" >> $GITHUB_ENV
       - name: Checkout argocdpfe  repo
         uses: actions/checkout@v4
         with:
@@ -65,3 +77,29 @@ jobs:
             git commit -m "Update Docker image tag to 1.1.${{ github.run_number }}"
             git push
           fi
+
+
+      - name: Send Email Notification with Vulnerability Counts
+        uses: mattnotmitt/send-email@v1
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "📊 Scan Trivy – Résumé vulnérabilités Docker image nourangular:1.1.${{ github.run_number }}"
+          body: |
+            Bonjour,
+
+            Résultat du scan de sécurité Trivy :
+
+            🔴 Critiques : ${{ env.CRITICAL }}
+            🟠 Hautes    : ${{ env.HIGH }}
+            🟡 Moyennes : ${{ env.MEDIUM }}
+            🔵 Faibles   : ${{ env.LOW }}
+
+            Image scannée : nourangular:1.1.${{ github.run_number }}
+
+            Cordialement,
+            GitHub Actions Bot
+          to: nourlass50@gmail.com
+          from: "CI Scanner <nourlass50@gmail.com>
