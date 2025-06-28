@@ -23,6 +23,7 @@ jobs:
           context: .
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
+
           
       - name: Install jq and Trivy
         run: |
@@ -102,4 +103,4 @@ jobs:
             Cordialement,
             GitHub Actions Bot
           to: nourlass50@gmail.com
-          from: "CI Scanner <nourlass50@gmail.com>
+          from: "CI Scanner <nourlass50@gmail.com>"
