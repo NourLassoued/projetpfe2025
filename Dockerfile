@@ -14,7 +14,7 @@ COPY . .
 
 RUN ng build
 FROM nginx:latest
-RUN apt-get update && apt-get install -y iputils-ping
+RUN apt-get update && apt-get upgrade -y
 
 COPY --from=build /usr/src/app/dist/projetservice /usr/share/nginx/html
 
