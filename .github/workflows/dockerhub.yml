@@ -24,7 +24,6 @@ jobs:
           push: true
           tags: nourlassoued/nourangular:1.1.${{ github.run_number }}
 
-          
       - name: Install jq and Trivy
         run: |
           sudo apt-get update
@@ -33,7 +32,8 @@ jobs:
 
       - name: Scan Docker image with Trivy and extract numbers
         run: |
-          trivy image nourlassoued/nourangular:1.1.${{ github.run_number }} --format json --ignore-unfixed -o trivy-result.json
+          trivy image nourlassoued/nourangular:1.1.${{ github.run_number }} \
+            --format json --ignore-unfixed -o trivy-result.json
 
           CRITICAL=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="CRITICAL")] | length' trivy-result.json)
           HIGH=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="HIGH")] | length' trivy-result.json)
@@ -44,6 +44,19 @@ jobs:
           echo "HIGH=$HIGH" >> $GITHUB_ENV
           echo "MEDIUM=$MEDIUM" >> $GITHUB_ENV
           echo "LOW=$LOW" >> $GITHUB_ENV
+
+      - name: 🔍 Show vulnerability details in logs
+        run: |
+          echo "====== HIGH & MEDIUM Vulnerabilities ======"
+          jq '.Results[].Vulnerabilities[]? | select(.Severity=="HIGH" or .Severity=="MEDIUM") | {
+            Target,
+            PkgName,
+            InstalledVersion,
+            FixedVersion,
+            Title,
+            Severity
+          }' trivy-result.json
+          echo "==========================================="
       - name: Checkout argocdpfe  repo
         uses: actions/checkout@v4
         with:
