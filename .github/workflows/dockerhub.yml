@@ -45,7 +45,7 @@ jobs:
           echo "MEDIUM=$MEDIUM" >> $GITHUB_ENV
           echo "LOW=$LOW" >> $GITHUB_ENV
 
-      - name: 🔍 Show vulnerability details in logs
+      - name: Show vulnerability details in logs
         run: |
           echo "====== HIGH & MEDIUM Vulnerabilities ======"
           jq '.Results[].Vulnerabilities[]? | select(.Severity=="HIGH" or .Severity=="MEDIUM") | {
@@ -57,6 +57,31 @@ jobs:
             Severity
           }' trivy-result.json
           echo "==========================================="
+   
+      - name: Send Email Notification with Vulnerability Counts
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "📊 Scan Trivy – Résumé vulnérabilités Docker image nourangular:1.1.${{ github.run_number }}"
+          body: |
+            Bonjour,
+
+            Résultat du scan de sécurité Trivy :
+
+            🔴 Critiques : ${{ env.CRITICAL }}
+            🟠 Hautes    : ${{ env.HIGH }}
+            🟡 Moyennes : ${{ env.MEDIUM }}
+            🔵 Faibles   : ${{ env.LOW }}
+
+            Image scannée : nourangular:1.1.${{ github.run_number }}
+
+            Cordialement,
+            GitHub Actions Bot
+          to: nourlass50@gmail.com
+          from: "CI Scanner <nourlass50@gmail.com>"
       - name: Checkout argocdpfe  repo
         uses: actions/checkout@v4
         with:
@@ -92,28 +117,3 @@ jobs:
             git push
           fi
 
-
-      - name: Send Email Notification with Vulnerability Counts
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "📊 Scan Trivy – Résumé vulnérabilités Docker image nourangular:1.1.${{ github.run_number }}"
-          body: |
-            Bonjour,
-
-            Résultat du scan de sécurité Trivy :
-
-            🔴 Critiques : ${{ env.CRITICAL }}
-            🟠 Hautes    : ${{ env.HIGH }}
-            🟡 Moyennes : ${{ env.MEDIUM }}
-            🔵 Faibles   : ${{ env.LOW }}
-
-            Image scannée : nourangular:1.1.${{ github.run_number }}
-
-            Cordialement,
-            GitHub Actions Bot
-          to: nourlass50@gmail.com
-          from: "CI Scanner <nourlass50@gmail.com>"
