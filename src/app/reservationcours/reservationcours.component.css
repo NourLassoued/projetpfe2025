@@ -173,7 +173,6 @@ h1 {
   margin-right: 5px;
 }
 
-/* Conteneur de la carte */
 .card.task-card {
   margin-bottom: 20px;
   border: 1px solid #ddd;
@@ -183,23 +182,20 @@ h1 {
   overflow: hidden;
 }
 
-/* Conteneur interne en flex pour aligner les deux parties */
 .reservation-item {
  
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap; /* Pour que ça s'adapte sur petit écran */
+  flex-wrap: wrap; 
 }
 
-/* Détails réservation */
 .reservation-details {
   flex: 1;
   min-width: 280px;
 }
 
-/* Infos du prestataire */
 .prestataire-info {
   width: 300px;
   background-color: #f7f7f7;
