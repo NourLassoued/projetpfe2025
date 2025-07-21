@@ -15,7 +15,7 @@ COPY . .
 RUN ng build
 FROM nginx:latest
 RUN apt-get update && apt-get upgrade -y
-
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/dist/projetservice /usr/share/nginx/html
 
 EXPOSE 80
