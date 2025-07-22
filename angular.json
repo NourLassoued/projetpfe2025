@@ -83,7 +83,13 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            }
+            },
+   "local": {
+      "main": "src/main.ts"
+    },
+    "dynamic": {
+      "main": "src/main.port.ts"
+    }
           },
           "defaultConfiguration": "production"
         },
