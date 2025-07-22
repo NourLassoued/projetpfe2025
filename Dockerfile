@@ -12,7 +12,8 @@ RUN npm install --force
 
 COPY . . 
 COPY src/main.prod.ts src/main.ts
-RUN npm run build -- --configuration=dynamic
+ng build 
+
 FROM nginx:latest
 RUN apt-get update && apt-get upgrade -y
 COPY nginx.conf /etc/nginx/conf.d/default.conf
