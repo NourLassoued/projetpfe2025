@@ -1,6 +1,11 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
+import { environment } from './app/environment.prod';
+import { enableProdMode } from '@angular/core';
 
+if (environment.production) {
+  enableProdMode();
+}
 fetch('/assets/config/config.json')
   .then(res => res.json())
   .then(config => {

@@ -9,7 +9,9 @@ import { environment } from '../environment';
 export class CategorieService {
 
 
-  private readonly apiUrl = `${environment.apiUrl}/categories`;
+  //private readonly apiUrl = `${environment.apiUrl}/categories`;
+  private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/categories`;
+
 
   constructor(private  readonly http: HttpClient) {}
 
