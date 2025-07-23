@@ -23,5 +23,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/dist/projetservice /usr/share/nginx/html
 
 COPY src/assets/config/config.json /usr/share/nginx/html/assets/config/config.json
-
 EXPOSE 80
