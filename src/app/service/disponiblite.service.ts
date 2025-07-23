@@ -8,7 +8,8 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class DisponibliteService {
-  private readonly  apiUrl = `${environment.apiUrl}/disponibilites`;
+ // private readonly  apiUrl = `${environment.apiUrl}/disponibilites`;
+  private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/disponibilites`;
 
   constructor(private readonly http: HttpClient) {}
 

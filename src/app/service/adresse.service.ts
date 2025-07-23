@@ -8,7 +8,10 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class AdresseService {
-  private  readonly apiUrl = `${environment.apiUrl}/adresses`;
+ // private  readonly apiUrl = `${environment.apiUrl}/adresses`;
+    private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/adresses`;
+
+
 
 
   constructor(private  readonly http: HttpClient) {}

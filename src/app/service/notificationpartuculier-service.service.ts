@@ -8,7 +8,8 @@ import { Publication } from 'src/models/Publication';
   providedIn: 'root'
 })
 export class NotificationpartuculierServiceService {
-   private  readonly apiUrl = `${environment.apiUrl}/notification`;
+  // private  readonly apiUrl = `${environment.apiUrl}/notification`;
+  private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/notification`;
 
  
 

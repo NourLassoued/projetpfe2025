@@ -11,7 +11,8 @@ export class FileService {
   private readonly profileImageSubject = new BehaviorSubject<string | null>(null);
   profileImage$ = this.profileImageSubject.asObservable();
 
-   private  readonly apiUrl = `${environment.apiUrl}/api/v1/auth`;
+   //private  readonly apiUrl = `${environment.apiUrl}/api/v1/auth`;
+  private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/api/v1/auth`;
 
 
   constructor(private readonly http: HttpClient) {}
