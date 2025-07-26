@@ -48,60 +48,19 @@ public class FileControlleur {
         }
     }
 
-    /*
+
+
     @GetMapping("/get-image/{filename:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
-            Path file = Paths.get(UPLOAD_DIR).resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
+            String actualDir = UPLOAD_DIR;
 
-            if (!resource.exists() || !resource.isReadable()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-
-            String contentType = Files.probeContentType(file);
-
-            // Si le type n'est pas détecté, vérifier manuellement l'extension
-            if (contentType == null) {
-                if (filename.toLowerCase().endsWith(".pdf")) {
-                    contentType = "application/pdf";
-                } else if (filename.toLowerCase().endsWith(".jpg") || filename.toLowerCase().endsWith(".jpeg")) {
-                    contentType = "image/jpeg";
-                } else if (filename.toLowerCase().endsWith(".png")) {
-                    contentType = "image/png";
-                } else {
-                    contentType = "application/octet-stream"; // Type par défaut pour les fichiers inconnus
-                }
-            }
-
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .body(resource);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-}*/
-    @GetMapping("/get-image/{filename:.+}")
-    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
-        try {
-            // On récupère le chemin configuré dans application.properties
-            String configuredDir = UPLOAD_DIR; // ex: "C:/xampppidev/htdocs/img/"
-
-            String actualDir;
-
-            // Si on est sous Linux (ex: dans conteneur), on remplace la racine Windows par /C
-            if (System.getProperty("os.name").toLowerCase().contains("linux") && configuredDir.startsWith("C:/")) {
-                actualDir = configuredDir.replace("C:", "");
-                actualDir = actualDir.replace("\\", "/"); // Juste pour être sûr
-                // actualDir = "/C/xampppidev/htdocs/img/"
-            } else {
-                // sinon on garde le chemin Windows (local dev)
-                actualDir = configuredDir;
+            if (!System.getProperty("os.name").toLowerCase().contains("windows")
+                    && UPLOAD_DIR.startsWith("C:/")) {
+                actualDir = UPLOAD_DIR.replace("C:", "/C").replace("\\", "/");
             }
 
             Path file = Paths.get(actualDir).resolve(filename);
-
             Resource resource = new UrlResource(file.toUri());
 
             if (!resource.exists() || !resource.isReadable()) {
@@ -109,7 +68,6 @@ public class FileControlleur {
             }
 
             String contentType = Files.probeContentType(file);
-
             if (contentType == null) {
                 if (filename.toLowerCase().endsWith(".pdf")) {
                     contentType = "application/pdf";
