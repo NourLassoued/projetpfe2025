@@ -53,9 +53,8 @@ public class SecurityConfiguration {
 
         http
 
-                // Désactivation de CSRF car l'application utilise des JWT (stateless)
-                // Aucun cookie de session n'est utilisé pour l'authentification
-                .csrf(AbstractHttpConfigurer::disable)   // NOSONAR
+
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
 
                         .requestMatchers(WHITE_LIST_URL).permitAll()
@@ -67,7 +66,12 @@ public class SecurityConfiguration {
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
                        .anyRequest().authenticated()
-             //  .anyRequest().permitAll()
+                        /*
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().authenticated()
+
+             //  .anyRequest().permitAll()*/
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
