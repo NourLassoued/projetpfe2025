@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/publications")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class PublicationController {
     private final UtilisateurRepository utilisateurRepository;
     private final PublicationService publicationService;

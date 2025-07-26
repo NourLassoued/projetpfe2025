@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Objects;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/forgetPassword")
