@@ -134,7 +134,6 @@ export class GererdemandeComponent {
 
 
         if (this.user.image) {
-          // L'image de l'utilisateur est présente dans le token.
         } else {
           console.warn(" Aucune image trouvée dans le token !");
         }
@@ -145,6 +144,7 @@ export class GererdemandeComponent {
       console.warn(" Aucun token trouvé dans localStorage !");
     }
   }
+  
   getTempsEcoule(date?: Date): string {
     if (!date) {
       return 'Date inconnue';

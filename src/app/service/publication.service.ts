@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PublicationService {
-   // private  readonly apiUrl = `${environment.apiUrl}/publications`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/publications`;
   
 

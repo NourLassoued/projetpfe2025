@@ -88,9 +88,7 @@ export class InscriptionProfessionnelComponent {
       );
     };
   }
-
-
-  showSkillModal() {
+showSkillModal() {
 
     this.getAllCategories();
 

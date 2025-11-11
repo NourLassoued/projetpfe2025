@@ -10,7 +10,6 @@ import { environment } from '../environment';
 export class MessageService {
   [x: string]: any;
  
- //  private  readonly apiUrl = `${environment.apiUrl}/message`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/message`;
 
   constructor(private  readonly http: HttpClient) {}

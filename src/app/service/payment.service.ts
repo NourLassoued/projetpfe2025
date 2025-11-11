@@ -7,7 +7,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PaymentService {
- // private  readonly apiUrl = `${environment.apiUrl}/payment`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/payment`;
   constructor(private  readonly http: HttpClient) { }
 

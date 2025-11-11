@@ -28,7 +28,6 @@
         </div>
       </div>
 
-      <!-- Boutons de contact -->
       <div class="button-container">
         <button (click)="afficherNumero()">
           Contacter
@@ -65,9 +64,7 @@
 
 
 
-    <!-- Contenu du profil -->
     <div class="container-profile">
-      <!-- Nom et vérifications -->
       <div class="section">
         <h2>{{ user?.nom }}</h2>
         <div class="verification-container">
@@ -80,7 +77,6 @@
         </div>
       </div>
 
-      <!-- Localisation -->
       <div class="section">
         <i class="fas fa-map-marker-alt location-icon"></i>
         {{ user.adresse?.governoate }}
@@ -88,7 +84,6 @@
 
 
 
-      <!-- Compétences -->
 
       <div class="section">
         <span>💼 Mes compétences</span>
@@ -103,14 +98,12 @@
         </div>
       </div>
       <div class="content">
-        <!-- À propos -->
         <div class="section">
 
           <h3>À propos de moi</h3>
           <p>{{ user?.description }}</p>
         </div>
       </div>
-      <!-- Disponibilités -->
       <div class="content">
         <div class="section">
           <ng-container *ngIf="user?.disponibilites?.length > 0">
@@ -124,19 +117,15 @@
           </ng-container>
         </div>
       </div>
-      <!-- Avis clients -->
-      <!-- Avis clients -->
-      <!-- Avis clients -->
+
       <div class="content">
         <div class="section">
           <span class="sectionn">Avis clients</span>
 
-          <!-- Note moyenne -->
           <div class="rating">
             ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
           </div>
 
-          <!-- Barres de répartition des notes -->
           <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
             <span>{{ note }}★</span>
             <div class="bar">
@@ -145,7 +134,6 @@
             <span>{{ getRatingCount(note) }}</span>
           </div>
 
-          <!-- Liste des avis (pagination) -->
           <div class="reviews">
             <div class="review-card" *ngFor="let avis of avisAffiches">
               <img *ngIf="avis.utilisateur?.image" [src]="avis.utilisateur?.image"
@@ -156,7 +144,6 @@
                 <span class="time">({{ getTempsEcoule(avis.dateAvis) }})</span>
               </div>
 
-              <!-- Affichage des étoiles -->
               <div class="stars">
                 <ng-container *ngFor="let star of [].constructor(avis.note ?? 0)">
                   ★
@@ -169,7 +156,6 @@
             </div>
           </div>
 
-          <!-- Boutons de navigation -->
           <div class="navigation-buttons">
             <button (click)="precedent()" [disabled]="indexDebut === 0">⬅ Précédent</button>
             <button (click)="suivant()" [disabled]="indexDebut + avisParPage >= avisList.length">Suivant ➡</button>
@@ -178,6 +164,5 @@
       </div>
     </div>
   </div>
-  <!-- Pied de page -->
   <app-footer></app-footer>
 </body>

@@ -49,7 +49,6 @@ export class DemandecompletedComponent {
 
 
         if (this.user.image) {
-          // L'image de l'utilisateur est présente dans le token.
         } else {
           console.warn(" Aucune image trouvée dans le token !");
         }
@@ -117,7 +116,7 @@ export class DemandecompletedComponent {
   getPostulationsByDemande(idDemande: number): void {
     this.demandeService.getPostulationsByDemande(idDemande).subscribe({
       next: (postulationsData) => {
-        this.demandesAvecPostulations[idDemande] = postulationsData.length; // Stocke le nombre de postulations
+        this.demandesAvecPostulations[idDemande] = postulationsData.length;
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);

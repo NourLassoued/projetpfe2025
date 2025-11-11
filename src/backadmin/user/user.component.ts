@@ -97,42 +97,42 @@ export class UserComponent implements OnInit {
   }
 
   getAllPrestataires(): void {
-   this.utilisateurService.getPrestataires().subscribe({
-  next: (data) => {
-    this.prestataires = data.map((prestataire) => ({
-      ...prestataire,
-      disponibilites: prestataire.disponibilite || [],
-      showFullDescription: false,
-      servicesOfferts: prestataire.servicesOfferts
-        ? prestataire.servicesOfferts.map((service) => ({
-            ...service,
-            nomservice: service.nomservice
-              ? service.nomservice.replace(/[\r\n]+/g, '').trim()
-              : '',
-          }))
-        : [],
-      profileImageUrl: null,
-      adresse: prestataire.adressee ? prestataire.adressee.governoate : '',
-      doucument_CIN: prestataire.doucument_CIN,
-      doucument_cv: prestataire.doucument_cv,
-    }));
-    this.allPrestataires = [...this.prestataires];
+    this.utilisateurService.getPrestataires().subscribe({
+      next: (data) => {
+        this.prestataires = data.map((prestataire) => ({
+          ...prestataire,
+          disponibilites: prestataire.disponibilite || [],
+          showFullDescription: false,
+          servicesOfferts: prestataire.servicesOfferts
+            ? prestataire.servicesOfferts.map((service) => ({
+              ...service,
+              nomservice: service.nomservice
+                ? service.nomservice.replace(/[\r\n]+/g, '').trim()
+                : '',
+            }))
+            : [],
+          profileImageUrl: null,
+          adresse: prestataire.adressee ? prestataire.adressee.governoate : '',
+          doucument_CIN: prestataire.doucument_CIN,
+          doucument_cv: prestataire.doucument_cv,
+        }));
+        this.allPrestataires = [...this.prestataires];
 
-    this.prestataires.forEach((prestataire) => {
-      if (prestataire.image) {
-        this.loadProfileImage(prestataire);
+        this.prestataires.forEach((prestataire) => {
+          if (prestataire.image) {
+            this.loadProfileImage(prestataire);
+          }
+        });
+        this.setPage(1);
+        this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
+        this.filterPrestatairesByNom();
+
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des prestataires', error);
       }
     });
-    this.setPage(1);
-    this.totalPages = Math.ceil(this.prestataires.length / this.pageSize);
-    this.filterPrestatairesByNom();
-
-    this.cdr.detectChanges();
-  },
-  error: (error) => {
-    console.error('Erreur lors du chargement des prestataires', error);
-  }
-});
   }
   filterPrestatairesByNom(): void {
     const search = this.searchNomPrestataire.toLowerCase();
@@ -396,7 +396,7 @@ export class UserComponent implements OnInit {
     }
   }
 
- handleDropdownKey(event: KeyboardEvent): void {
+  handleDropdownKey(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       (event.target as HTMLElement).click();

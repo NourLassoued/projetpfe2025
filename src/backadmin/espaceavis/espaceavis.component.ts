@@ -1,16 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-
 import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import { AvisService } from 'src/app/service/avis.service';
-
 import { FileService } from 'src/app/service/file.service';
-
 import { Avis } from 'src/models/Avis';
 import { PageEvent } from '@angular/material/paginator';
-
 @Component({
   selector: 'app-espaceavis',
   templateUrl: './espaceavis.component.html',
@@ -54,7 +50,7 @@ export class EspaceavisComponent {
       this.avisList = data;
       this.totalAvisCount = this.avisList.length;
       this.totalPages = Math.ceil(this.totalAvisCount / this.itemsPerPage);
-      this.filteredAvisList = this.avisList; // au début, pas de filtre
+      this.filteredAvisList = this.avisList;
 
 
       this.paginate();

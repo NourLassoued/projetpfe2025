@@ -63,15 +63,7 @@ export class FrontprofilshowComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-
-
-
-
-
-
-
-    this.activatedRoute.paramMap.subscribe(params => {
+this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
         this.prestataireId = +id;

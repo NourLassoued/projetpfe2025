@@ -233,7 +233,7 @@
               <button class="btn d-flex align-items-center" (click)="toggleLike(publication.id)">
                 <i class="fas fa-heart me-1"
                   [ngClass]="{ 'like-red': utilisateurADejaLikeParPublication[publication.id] }"></i>
-                <span>{{ nombreDeLikesParPublication[publication.id] || 0 }}</span> J'aime
+                <span>{{ nombreDeLikesParPublication[publication.id] }}</span> J'aime
               </button>
 
 
@@ -242,7 +242,7 @@
 
               <button class="btn btn-light d-flex align-items-center" (click)="toggleCommentaire(publication.id)">
                 <i class="fas fa-comment me-2"></i> Commenter
-                <span class="ms-1">{{ commentairesParPublication[publication.id].length || 0 }}</span>
+                <span class="ms-1">{{ commentairesParPublication[publication.id].length  }}</span>
               </button>
 
             </div>

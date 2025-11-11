@@ -79,7 +79,7 @@ export class ConsulterentrpriseComponent implements OnInit {
     private readonly  activatedRoute: ActivatedRoute,
     private readonly utilisateurservice: UtilisateurService,
     private readonly publicationService: PublicationService,
-    private  readonly cdr: ChangeDetectorRef,
+    private readonly cdr: ChangeDetectorRef,
     private readonly  avisService: AvisService,
     private readonly  toastr: ToastrService,
     private readonly commentaireService: CommentaireService,
@@ -509,14 +509,7 @@ export class ConsulterentrpriseComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.toastr.success('Avis envoyé avec succès !');
-
-
-
-
-
-
-
-          this.showModal = false;
+         this.showModal = false;
         },
         error: (error) => {
           this.toastr.error("Erreur lors de l'envoi de l'avis !");
@@ -571,7 +564,6 @@ export class ConsulterentrpriseComponent implements OnInit {
         this.user = decodedToken;
 
         if (this.user && this.user.id) {
-          // L'utilisateur a un ID valide dans le token
         } else {
           console.warn('L\'ID de l\'utilisateur est introuvable dans le token');
         }

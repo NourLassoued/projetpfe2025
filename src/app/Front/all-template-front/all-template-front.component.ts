@@ -57,19 +57,28 @@ export class AllTemplateFrontComponent {
   }
 
   ngOnInit(): void {
-    const paymentId = this.route.snapshot.queryParamMap.get('payment_id');
-    if (paymentId) {
+  
+
+const paymentId = this.route.snapshot.queryParamMap.get('payment_id');
+
+if (paymentId) {
+  this.paymentService.verifyPayment(paymentId).subscribe({
+    next: res => {
+      this.toastr.success("Paiement de réservation validé avec succès !", "Succès");
+    },
+    error: err => {
       this.paymentService.verifyAbonnementPayment(paymentId).subscribe({
         next: res => {
-          this.toastr.success("Paiement validé avec succès !", "Succès");
+          this.toastr.success("Paiement d’abonnement validé avec succès !", "Succès");
         },
-        error: err => {
+        error: err2 => {
           this.toastr.error("Erreur lors de la vérification du paiement.", "Erreur");
-
-          console.error("Erreur vérification paiement", err);
+          console.error("Erreur vérification paiement (abonnement aussi échoué)", err2);
         }
       });
     }
+  });
+}
 
     this.getAllCategories();
     this.getAllCategoriess();
@@ -295,7 +304,7 @@ export class AllTemplateFrontComponent {
     }
   }
   navigateToCategory(categorieName: string) {
-    const selectedCategory = this.categories.find(category => category.nom === categorieName);  // Chercher par nom
+    const selectedCategory = this.categories.find(category => category.nom === categorieName);  
     if (!selectedCategory) {
       console.error('Catégorie non trouvée pour le nom:', categorieName);
       return;
@@ -332,7 +341,7 @@ export class AllTemplateFrontComponent {
   }
   selectService(service: any) {
     this.selectedServiceId = service.idservice;
-    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
+    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  
   }
 
 

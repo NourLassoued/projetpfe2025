@@ -10,7 +10,6 @@ import { environment } from '../environment';
 export class DemandeService {
 
 
-    //private  readonly apiUrl = `${environment.apiUrl}/demandes`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/demandes`;
 
   constructor(private readonly http: HttpClient) {}

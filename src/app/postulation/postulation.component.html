@@ -14,19 +14,13 @@
           <li routerLink="/Mesevolutions">⭐Mes évolutions</li>
           <li routerLink="/Mesrevunes">💰 Mes revenus</li>
           <li>
-            <button
-              id="logout-btn"
-              (click)="logout()"
-              (keydown)="logout()"
-              tabindex="0"
-              style="
+            <button id="logout-btn" (click)="logout()" (keydown)="logout()" tabindex="0" style="
                 background: none;
                 border: none;
                 padding: 0;
                 cursor: pointer;
                 color: #66696e;
-              "
-            >
+              ">
               🚪 Se déconnecter
             </button>
           </li>
@@ -57,15 +51,8 @@
             <td>{{ p.datePostulation | date : "short" }}</td>
             <td>{{ p.demande?.title }}</td>
             <td>{{ p.demande?.utilisateur?.nom }}</td>
-            <td
-              role="button"
-              tabindex="0"
-              aria-label="Supprimer la postulation"
-              (click)="deletePostulation(p.id)"
-              (keydown)="handleDeleteKey($event, p.id!)"
-              title="Supprimer"
-              class="delete-btn"
-            >
+            <td role="button" tabindex="0" aria-label="Supprimer la postulation" (click)="deletePostulation(p.id)"
+              (keydown)="handleDeleteKey($event, p.id!)" title="Supprimer" class="delete-btn">
               🗑️
             </td>
             <td>
@@ -82,14 +69,8 @@
       </div>
       <div *ngIf="isUpdateModalOpen" class="modal">
         <div class="modal-content">
-          <span
-            class="close"
-            role="button"
-            tabindex="0"
-            aria-label="Fermer la fenêtre"
-            (click)="closeUpdateModal()"
-            (keydown)="handleCloseKey($event)"
-          >
+          <span class="close" role="button" tabindex="0" aria-label="Fermer la fenêtre" (click)="closeUpdateModal()"
+            (keydown)="handleCloseKey($event)">
             &times;
           </span>
           <h3>Modifier la Postulation</h3>
@@ -97,12 +78,8 @@
           <form (ngSubmit)="submitUpdatePostulation()">
             <div>
               <label for="commentaire">Commentaire</label>
-              <textarea
-                id="commentaire"
-                [(ngModel)]="updatedPostulation.commentaire"
-                name="commentaire"
-                required
-              ></textarea>
+              <textarea id="commentaire" [(ngModel)]="updatedPostulation.commentaire" name="commentaire"
+                required></textarea>
             </div>
 
             <button type="submit">Mettre à jour</button>

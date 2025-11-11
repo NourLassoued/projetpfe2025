@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChatbotServiceService {
-  //private readonly apiUrl = `${environment.apiUrl}/chatbot/chat`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/chatbot/chat`;
 
 

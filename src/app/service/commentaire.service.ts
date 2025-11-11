@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommentaireService {
-    //private readonly apiUrl = `${environment.apiUrl}/commentaires`;
     private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/commentaires`;
   
   constructor(private readonly  http: HttpClient) {}

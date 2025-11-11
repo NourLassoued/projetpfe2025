@@ -47,21 +47,19 @@ export class ReservationprestaitreComponent {
       console.warn("Aucun token trouvé dans localStorage !");
     }
   }
-  annulerReservation(reservationId: number): void {
-    if (confirm('Voulez-vous vraiment annuler cette réservation ?')) {
-      this.reservationservice.annulerReservation(reservationId, this.userId).subscribe({
-        next: () => {
-          this.toastr.success('Réservation annulée avec succès !');
-          this.loadReservations(this.userId);
-        },
-        error: (error) => {
-          this.toastr.error('Erreur lors de l\'annulation');
-          console.error(error);
-        }
-      });
-    }
-  }
 
+annulerReservation(reservationId: number): void {
+  this.reservationservice.annulerReservation(reservationId, this.userId).subscribe({
+    next: () => {
+      this.toastr.success('Réservation annulée avec succès !');
+      this.loadReservations(this.userId);
+    },
+    error: (error) => {
+      this.toastr.error('Erreur lors de l\'annulation');
+      console.error(error);
+    }
+  });
+}
 
   loadReservations(prestataireId: number): void {
     this.reservationservice.getReservationsConfirmées(prestataireId).subscribe({

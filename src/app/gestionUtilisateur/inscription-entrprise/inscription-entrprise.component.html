@@ -78,16 +78,13 @@
 
 
 
-    <!-- Modal des catégories -->
     <div class="modal" *ngIf="showModal">
       <div class="modal-content">
         <span class="close" (click)="showModal = false" (keydown.enter)="showModal = false">&times;</span>
         <h2>Choisissez les services que vous souhaitez proposer</h2>
 
-        <!-- Barre de recherche -->
         <input type="text" placeholder="🔍  Recherchez votre domaine de service" class="search-bar">
 
-        <!-- Affichage des catégories en grille -->
         <div class="grid-container">
         <div class="category-card category-btn" *ngFor="let category of categories; let i = index"
              (click)="selectCategory(category.nom)"
@@ -101,7 +98,6 @@
       </div>
     </div>
 
-    <!-- Modal des services -->
     <div class="modal" *ngIf="showServiceModal">
       <div class="modal-content">
         <span class="close" (click)="closeServiceModal()" (keydown.enter)="closeServiceModal()">&times;</span>

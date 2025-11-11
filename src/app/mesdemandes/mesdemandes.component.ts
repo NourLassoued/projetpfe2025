@@ -47,7 +47,6 @@ export class MesdemandesComponent {
 
 
         if (this.user.image) {
-          // L'utilisateur a une image, vous pouvez traiter ici si nécessaire
         } else {
           console.warn(" Aucune image trouvée dans le token !");
         }

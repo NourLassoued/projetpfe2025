@@ -13,7 +13,6 @@ import { environment } from '../environment';
 })
 export class UtilisateurService {
 
- //  private  readonly apiUrl = `${environment.apiUrl}/utilisateurss`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/utilisateurss`;
   constructor(private readonly http: HttpClient) {}
 

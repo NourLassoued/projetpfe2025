@@ -175,14 +175,32 @@ export class ReservationComponent {
       console.error('ID utilisateur non trouvé');
     }
   }
-
+/*
   getDaysRemaining(dateDemande: string): number {
     const today = new Date();
     const demandeDate = new Date(dateDemande);
     const timeDiff = demandeDate.getTime() - today.getTime();
     const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return daysRemaining;
+  }*/
+getDaysRemainingText(dateDemande: string): string {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const demandeDate = new Date(dateDemande);
+  demandeDate.setHours(0, 0, 0, 0);
+
+  const timeDiff = demandeDate.getTime() - today.getTime();
+  const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+  if (daysRemaining <= 0) {
+    return "Aujourd'hui";
   }
+
+  return `${daysRemaining} jour${daysRemaining > 1 ? 's' : ''}`;
+}
+
+
   goToProfile(userId?: number) {
 
     if (userId) {

@@ -30,16 +30,13 @@
       <p>Profitez de votre temps libre grâce à nos jobbers</p>
   
   
-      <!-- Formulaire d'inscription -->
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         
-        <!-- Nom -->
         <input type="text" formControlName="nom" placeholder="👤 Nom">
         <div *ngIf="registerForm.get('nom')?.invalid && registerForm.get('nom')?.touched">
           ⚠️ Le nom est obligatoire.
         </div>
   
-        <!-- Email -->
         <input type="email" formControlName="email" placeholder="📧 Adresse e-mail">
         <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
           ⚠️ Veuillez entrer une adresse email valide (@gmail.com uniquement).
@@ -48,19 +45,16 @@
           <small class="text-danger">⚠️L'email existe déjà ! Veuillez en choisir un autre.</small>
         </div>
   
-        <!-- Numéro de téléphone -->
         <input type="text" formControlName="telephoneNumber" placeholder="📞 Numéro de téléphone">
         <div *ngIf="registerForm.get('telephoneNumber')?.invalid && registerForm.get('telephoneNumber')?.touched">
           ⚠️ Veuillez entrer un numéro valide (8 chiffres).
         </div>
   
-        <!-- Mot de passe -->
         <input type="password" formControlName="password" placeholder="🔑 Mot de passe">
         <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
           ⚠️ Le mot de passe doit contenir au moins 8 caractères.
         </div>
   
-        <!-- Upload de fichier -->
         <input type="file" (change)="onFileSelected($event)" accept="image/*">
         
     
@@ -77,6 +71,5 @@
     </div>
   </div>
   
-  <!-- Pied de page -->
   <app-footer></app-footer>
   

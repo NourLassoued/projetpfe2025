@@ -274,7 +274,6 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
         this.imageUrls[index] = imageUrl;
       },
       error: (error) => {
-        // handle error if needed
       }
     });
   }
@@ -288,7 +287,6 @@ export class NavbarcompteComponent implements OnInit, AfterViewInit {
         this.user = decodedToken;
 
         if (this.user?.id) {
-          // L'utilisateur a un ID, aucune action supplémentaire requise ici.
         } else {
           console.warn('L\'ID de l\'utilisateur est introuvable dans le token');
         }

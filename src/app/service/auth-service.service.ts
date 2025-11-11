@@ -14,7 +14,6 @@ export class AuthServiceService {
   public user: Observable<Utilisateur | null>;
   isconn: any=false;
 
-//private  readonly baseUrl = `${environment.apiUrl}/api/v1/auth`
 private readonly baseUrl = `${(window as any).apiUrl || environment.apiUrl}/api/v1/auth`;
 
 

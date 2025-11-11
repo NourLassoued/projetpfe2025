@@ -85,7 +85,6 @@ export class HistoriqueComponent {
 
           if (reservation.prestataire?.image) {
             this.getImage(reservation.prestataire.image, index, 'prestataire');
-            console.log(reservation.prestataire.image);
           }
         });
       },

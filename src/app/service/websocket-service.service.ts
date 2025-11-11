@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { Client, IMessage } from '@stomp/stompjs';  // Utilise @stomp/stompjs
+import { Client, IMessage } from '@stomp/stompjs'; 
 
 import { AuthServiceService } from './auth-service.service';
 import { jwtDecode } from 'jwt-decode';
@@ -57,7 +57,6 @@ export class WebsocketServiceService {
           this.notificationsSubject.next(message.body);
         });
   
-        // 2️Récupération des anciennes notifications
         this.http.get<string[]>(`http://localhost:8088/nour/notifications/${userId}`)
        
           .subscribe(oldMessages => {
@@ -67,7 +66,6 @@ export class WebsocketServiceService {
           });
 
           this.client.subscribe(`/topic/messages/${userId}`, (message: IMessage) => {
-            // Envoi du message reçu au sujet messagesSubject
             this.messagesSubject.next(message);
           });
           
@@ -91,7 +89,7 @@ export class WebsocketServiceService {
   
   disconnect(): void {
     if (this.client?.connected) {
-      this.client.deactivate(); // Arrêter la connexion
+      this.client.deactivate(); 
      
     }
   }
@@ -119,7 +117,7 @@ export class WebsocketServiceService {
           clearInterval(interval);
           callback();
         }
-      }, 200); // essaie toutes les 200ms
+      }, 200);
     }
   }
   

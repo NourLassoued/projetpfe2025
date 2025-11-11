@@ -3,7 +3,7 @@ name: Build and Push on GitHub Packages
 on:
   push:
     tags:
-      - "*v*.*.*"  # exemple: v1.0.0, v2.5.3
+      - "*v*.*.*"  
 
 jobs:
   build_push_github_packages:

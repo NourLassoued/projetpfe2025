@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AbonmmentserviceService {
- // private readonly apiUrl = `${environment.apiUrl}/AbonmentS`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/AbonmentS`;
 
   

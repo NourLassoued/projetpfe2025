@@ -199,7 +199,7 @@ export class UpdateparticulierComponent {
   checkEmail() {
     this.utilisateurService.checkEmailExists(this.email).subscribe({
       next: (exists: boolean) => {
-        this.emailExists = exists;  // Met à jour l'état en fonction de la réponse
+        this.emailExists = exists;  
         if (this.emailExists) {
           this.emailError = "L'email existe déjà ! Veuillez en choisir un autre.";
         } else {

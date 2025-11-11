@@ -11,7 +11,7 @@ export class DisponibiliteDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DisponibiliteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+){}
 
   closeDialog(): void {
     this.dialogRef.close();

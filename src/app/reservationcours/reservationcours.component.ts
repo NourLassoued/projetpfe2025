@@ -76,7 +76,6 @@ export class ReservationcoursComponent {
         });
       },
       (error) => {
-        // Gérer l’erreur ici si nécessaire
       }
     );
   }

@@ -28,7 +28,6 @@
     <main class="content">
       <div class="profile-wrapper">
         <span class="user-name">Bonjour {{ user?.nom }}</span>
-        <!-- Affichage dynamique du nom -->
 
         <div class="profile-alert">
           <div class="job-content">
@@ -42,7 +41,6 @@
               </ng-container>
               <ng-template #defaultIcon>
                 <i class="fas fa-user default-icon"></i>
-                <!-- Icône utilisateur par défaut -->
               </ng-template>
             </div>
             <div class="job-text">
@@ -75,7 +73,6 @@
                 >
               </p>
 
-              <!-- Affichage des détails uniquement pour la demande cliquée -->
               <div
                 *ngIf="
                   demande.idDemande !== undefined &&

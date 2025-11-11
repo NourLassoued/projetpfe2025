@@ -125,7 +125,7 @@ export class LoginComponent {
         this.router.navigate(['/Compteparticulier']);
         break;
       case 'ADMINISTRATEUR':
-        this.router.navigate(['/Admindashboard']);
+        this.router.navigate(['/user']);
         break;
       case 'ENTREPRISE':
         this.router.navigate(['/Comptentreprise']);

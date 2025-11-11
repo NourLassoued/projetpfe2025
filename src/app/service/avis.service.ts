@@ -10,7 +10,6 @@ import { environment } from '../environment';
 export class AvisService {
 
 
-//private  readonly apiUrl = `${environment.apiUrl}/avis`;
 private  readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/avis`;
   constructor(private  readonly http: HttpClient) {}
   getAvisParUtilisateur(id: number): Observable<Avis[]> {

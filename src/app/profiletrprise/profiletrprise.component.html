@@ -1,13 +1,11 @@
 <body>
   <app-navbarcompte></app-navbarcompte>
   <div class="container">
-    <!-- Sidebar contenant l'image de profil -->
     <div class="sidebar">
       <div id="profile-container">
         <div class="image-wrapper">
           <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="" class="profile-img">
 
-          <!-- Bloc des informations de notation -->
           <div class="rating-info">
             <div>
               <strong>{{ avisList.length }}</strong> <span>⭐</span>
@@ -27,7 +25,6 @@
         </div>
       </div>
 
-      <!-- Boutons de contact -->
       <div class="button-container">
         <button (click)="afficherNumero()">
           Contacter
@@ -64,9 +61,7 @@
 
 
 
-    <!-- Contenu du profil -->
     <div class="container-profile">
-      <!-- Nom et vérifications -->
       <div class="section">
         <label for="nomEntreprise">{{ user?.nomEntreprise }}</label>
         <input id="nomEntreprise" type="text" [value]="user?.nomEntreprise" readonly style="display:none;" />
@@ -84,7 +79,6 @@
         <a href="{{ user.siteWeb }}" target="_blank">{{ user.siteWeb }}</a>
       </div>
 
-      <!-- Localisation -->
       <div class="section">
         <i class="fas fa-map-marker-alt location-icon"></i>
         {{ user.adresse?.governoate }}
@@ -92,7 +86,6 @@
 
 
 
-      <!-- Compétences -->
 
       <div class="section">
         <label for="servicesOfferts"><i class="fa-solid fa-briefcase"></i> Notre service</label>
@@ -112,19 +105,15 @@
           <p>{{ user?.description }}</p>
         </div>
       </div>
-      <!-- Disponibilités -->
 
-      <!-- Avis clients -->
       <div class="content">
         <div class="section">
           <span class="sectionn">Avis clients</span>
 
-          <!-- Note moyenne -->
           <div class="rating">
             ★ {{ getAverageRating() }} ({{ avisList.length }} avis)
           </div>
 
-          <!-- Barres de répartition des notes -->
           <div class="bar-container" *ngFor="let note of [5, 4, 3, 2, 1]">
             <span>{{ note }}★</span>
             <div class="bar">

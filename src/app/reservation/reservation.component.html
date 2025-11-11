@@ -7,14 +7,13 @@
         <i class="fas fa-arrow-left"></i> Retour
       </a>
       <h1>Réservation de {{ reservations[0]?.prestataire?.nom }}</h1>
-      <h4>📅 Jours restants : -{{ getDaysRemaining(reservations[0]?.demande?.date) }} jours</h4>
+      <h4>📅 Jours restants : -{{ getDaysRemainingText(reservations[0]?.demande?.date) }} </h4>
     </div>
   </div>
 
 
   <div class="container">
     <div class="content-wrapper">
-      <!-- Carte de la demande -->
       <div *ngIf="reservations.length > 0" class="task-card">
         <img *ngIf="serviceImageUrls[0]" [src]="serviceImageUrls[0]"
           alt="{{ reservations[0]?.demande?.servicee?.nomservice }}" class="service-image">
@@ -37,7 +36,6 @@
 
       </div>
 
-      <!-- Section des prestataires -->
       <div class="public-discussion">
 
         <h3>🧑‍💼 Prestataire</h3>

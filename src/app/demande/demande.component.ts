@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-
-
-
 import { Adresse } from 'src/models/Adresse';
 import { Utilisateur } from 'src/models/Utilisateur';
 import { Servicee } from 'src/models/Servicee';
@@ -13,6 +10,7 @@ import { Demande } from 'src/models/Demande';
 import { AuthServiceService } from '../service/auth-service.service';
 import { jwtDecode } from 'jwt-decode';
 import { ForgetPasswordService } from '../service/forget-password.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-demande',
   templateUrl: './demande.component.html',
@@ -63,7 +61,7 @@ export class DemandeComponent {
   constructor(private readonly fb: FormBuilder,
     private readonly utilisateurservice: UtilisateurService,
     private readonly adresse: AdresseService,
-
+private toastr: ToastrService,
     private readonly route: ActivatedRoute,
     private readonly authService: AuthServiceService,
     private readonly router: Router,
@@ -74,7 +72,6 @@ export class DemandeComponent {
   ngOnInit() {
     this.today.setHours(0, 0, 0, 0);
     this.currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
-    console.log("Mois actuel : ", this.currentMonth);
 
     this.updateCalendar();
 
@@ -86,8 +83,10 @@ export class DemandeComponent {
       idService: ['', Validators.required],
       idAdresse: ['', Validators.required],
       title: ['', Validators.required],
-      telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      telephoneNumber: ['', [
+  Validators.required,
+  Validators.pattern(/^[0-9]{8}$/) 
+]],      password: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.route.queryParams.subscribe(params => {
       const idService = params['idservice'];
@@ -126,7 +125,6 @@ export class DemandeComponent {
   submitDemande() {
 
     if (this.demandeForm.invalid) {
-      console.warn(" Formulaire invalide", this.demandeForm.value);
       return;
 
     }
@@ -136,7 +134,8 @@ export class DemandeComponent {
     const idAdresse = this.demandeForm.value.idAdresse;
     const description = this.demandeForm.value.description;
     const password = this.demandeForm.value.password;
-    const date = this.demandeForm.value.date;
+   // const date = this.demandeForm.value.date;
+  const date: Date = new Date(this.demandeForm.value.date);
     const heureTravail = this.demandeForm.value.heureTravail;
     const title = this.demandeForm.value.title;
     const telephoneNumber = this.demandeForm.value.telephoneNumber;
@@ -152,7 +151,7 @@ export class DemandeComponent {
 
         const demande: Demande = {
           description: description,
-          date: date,
+         date,
           heureTravail: heureTravail,
           demandephoto: this.selectedFile ? this.selectedFile.name : undefined,
           servicee: service,
@@ -164,19 +163,21 @@ export class DemandeComponent {
 
         this.utilisateurservice.creerDemande(emailUtilisateur, idService, idAdresse, demande).subscribe({
           next: (response) => {
+          this.toastr.success("✅ Demande créée avec succès !");
+
             if (decodedToken.role === 'PARTICULIER') {
               this.router.navigate(['/Compteparticulier']);
             }
           },
           error: (error) => {
             console.log("Erreur lors de la création de la demande :", error);
-            if (error.status === 400) {
-              alert("Données invalides !");
-            } else if (error.status === 500) {
-              alert("Erreur serveur, réessayez plus tard !");
-            } else {
-              alert("Une erreur est survenue, veuillez réessayer.");
-            }
+           if (error.status === 400) {
+    this.toastr.warning("Données invalides !");
+  } else if (error.status === 500) {
+    this.toastr.error("Erreur serveur, réessayez plus tard !");
+  } else {
+    this.toastr.info("Une erreur est survenue, veuillez réessayer.");
+  }
           }
         });
       },

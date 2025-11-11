@@ -11,7 +11,6 @@
           </ng-template>
         </div>
 
-        <!-- Champ d'upload caché -->
         <input
           type="file"
           #fileInput
@@ -23,7 +22,6 @@
           <i class="fas fa-user default-icon" (click)="triggerFileInput()"></i>
         </ng-template>
 
-        <!-- Champ d'upload caché -->
       </div>
 
       <h2>{{ user?.nom }}</h2>
@@ -247,7 +245,6 @@
         </div>
       </div>
       <div class="content">
-        <!-- Disponibilité -->
         <div class="section">
           <button class="edit-btn" (click)="toggleCalendarView()">
             📅 Voir calendrier
@@ -278,7 +275,6 @@
         </div>
       </div>
 
-      <!-- Fenêtre modale pour afficher le calendrier -->
       <div class="modal-overlay" *ngIf="calendarVisible">
         <div
           class="modal-content"

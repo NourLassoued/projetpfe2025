@@ -9,7 +9,6 @@ import { environment } from '../environment';
 })
 export class ReservationService {
 
- // private  readonly apiUrl = `${environment.apiUrl}/reservation`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/reservation`;
  
 

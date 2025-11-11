@@ -13,103 +13,103 @@ import { jwtDecode } from 'jwt-decode';
 export class NavbarbackadminComponent {
 
 
-    profileImage: string | null = null; 
-    user: any;
-      profileImageUrl: SafeUrl | null = null; 
-  
-  
-    image: SafeUrl | null = null; 
-    sanitizer: any;
-   
-    
+  profileImage: string | null = null;
+  user: any;
+  profileImageUrl: SafeUrl | null = null;
 
 
-   constructor( public dialog: MatDialog,
-    private  readonly fileservice:FileService, 
-    
-       private readonly cdr: ChangeDetectorRef,
-      private readonly  router :Router ) {}
+  image: SafeUrl | null = null;
+  sanitizer: any;
 
 
 
-        logout(): void {
-        
-          localStorage.removeItem('accessToken')
-          this.router.navigate(['/Front']); 
-        }
-        ngOnInit(): void {
-          const token = localStorage.getItem('accessToken');
-          if (token) {
-            const decodedToken: any = jwtDecode(token);
-            this.user = decodedToken;
-            if (this.user.image) {
-              this.loadProfileImagee(this.user.image);
-              console.log(this.user.image);
-            }
-          } else {
-            console.warn("Aucun token trouvé !");
-          }
-         
-          this.loadUserData();
-        }
-      
 
-    loadUserData(): void {
-        const token = localStorage.getItem('accessToken'); 
-    
-        if (!token) {
-          console.error("Aucun token trouvé !");
-          return;
-        }
-    
-        try {
-          const decodedToken: any = jwtDecode(token); 
-    
-          if (!decodedToken.id) {
-            console.error("L'ID utilisateur est introuvable dans le token !");
-            return;
-          }
-    
-          this.user = decodedToken;
-          if (this.user.image) {
-            this.loadProfileImagee(this.user.image);
-          } 
-         
-          else {
-            console.warn("Aucune image trouvée dans le token !");
-          }
-    
-    
-          
-    
-        } catch (error) {
-          console.error("Erreur lors du décodage du token :", error);
-        }
-      }
-      loadProfileImagee(imagePath: string): void {
-        if (!imagePath) {
-          this.profileImageUrl = 'assets/images/user.png'; // Image par défaut
-          return;
-        }
-      
-        this.fileservice.getImage(imagePath).subscribe({
-          next: (imageBlob) => {
-            const objectURL = URL.createObjectURL(imageBlob);
-            this.profileImageUrl = objectURL; // Met à jour l'URL de l'image
-            this.cdr.detectChanges(); // Force Angular à détecter le changement
-          },
-          error: (err) => {
-            console.error("Erreur lors du chargement de l'image :", err);
-            this.profileImageUrl = 'assets/images/user.png'; // Fallback
-          }
-        });
-      }
-  handleDropdownKey(event: KeyboardEvent) {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    this.toggleDropdown();
+  constructor(public dialog: MatDialog,
+    private readonly fileservice: FileService,
+
+    private readonly cdr: ChangeDetectorRef,
+    private readonly router: Router) { }
+
+
+
+  logout(): void {
+
+    localStorage.removeItem('accessToken')
+    this.router.navigate(['/Front']);
   }
-}
+  ngOnInit(): void {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      this.user = decodedToken;
+      if (this.user.image) {
+        this.loadProfileImagee(this.user.image);
+        console.log(this.user.image);
+      }
+    } else {
+      console.warn("Aucun token trouvé !");
+    }
+
+    this.loadUserData();
+  }
+
+
+  loadUserData(): void {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      console.error("Aucun token trouvé !");
+      return;
+    }
+
+    try {
+      const decodedToken: any = jwtDecode(token);
+
+      if (!decodedToken.id) {
+        console.error("L'ID utilisateur est introuvable dans le token !");
+        return;
+      }
+
+      this.user = decodedToken;
+      if (this.user.image) {
+        this.loadProfileImagee(this.user.image);
+      }
+
+      else {
+        console.warn("Aucune image trouvée dans le token !");
+      }
+
+
+
+
+    } catch (error) {
+      console.error("Erreur lors du décodage du token :", error);
+    }
+  }
+  loadProfileImagee(imagePath: string): void {
+    if (!imagePath) {
+      this.profileImageUrl = 'assets/images/user.png'; 
+      return;
+    }
+
+    this.fileservice.getImage(imagePath).subscribe({
+      next: (imageBlob) => {
+        const objectURL = URL.createObjectURL(imageBlob);
+        this.profileImageUrl = objectURL;
+        this.cdr.detectChanges(); 
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement de l'image :", err);
+        this.profileImageUrl = 'assets/images/user.png';
+      }
+    });
+  }
+  handleDropdownKey(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.toggleDropdown();
+    }
+  }
   toggleDropdown() {
     throw new Error('Method not implemented.');
   }

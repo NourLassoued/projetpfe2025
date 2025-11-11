@@ -305,7 +305,6 @@
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
 
-		<!-- Pagination -->
 		<mat-paginator [length]="totalAvisCount" [pageSize]="pageSize" [pageIndex]="pageIndex"
 			(page)="pageChanged($event)">
 		</mat-paginator>

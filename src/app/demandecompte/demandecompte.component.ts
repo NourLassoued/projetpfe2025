@@ -71,8 +71,10 @@ export class DemandecompteComponent {
       idAdresse: ['', Validators.required],
       title: ['', Validators.required],
       emailUtilisateur: ['', [Validators.required, Validators.email]],
-      telephoneNumber: ['', [Validators.required, Validators.pattern(/^[0-8]+$/)]],
-    });
+telephoneNumber: ['', [
+  Validators.required,
+  Validators.pattern(/^[0-9]{8}$/) 
+]],          });
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -117,7 +119,7 @@ export class DemandecompteComponent {
     const idService = this.demandeForm.value.idService;
     const idAdresse = this.demandeForm.value.idAdresse;
     const description = this.demandeForm.value.description;
-    const date = this.demandeForm.value.date;
+  const date: Date = new Date(this.demandeForm.value.date);
     const heureTravail = this.demandeForm.value.heureTravail;
     const title = this.demandeForm.value.title;
     const telephoneNumber = this.demandeForm.value.telephoneNumber;

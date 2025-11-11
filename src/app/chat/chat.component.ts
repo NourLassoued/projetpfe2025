@@ -51,7 +51,6 @@ export class ChatComponent implements OnInit {
 
 
 
-        // Ajout des messages reçus à la conversation en cours
         if (
           received.sender.idUtilisateur === this.selectedContactId ||
           received.receiver.idUtilisateur === this.selectedContactId
@@ -62,7 +61,6 @@ export class ChatComponent implements OnInit {
 
         }
 
-        // Jouer un son si le message n'est pas de l'utilisateur actuel
         if (received.sender.idUtilisateur !== this.userId) {
           this.playNotificationSound();
         }
@@ -125,7 +123,6 @@ export class ChatComponent implements OnInit {
 
 
         this.lastMessages.forEach(message => {
-          // Si l'utilisateur connecté est le sender, on récupère l'image du receiver
           const contact = message.sender.idUtilisateur === this.userId ? message.receiver : message.sender;
 
           if (contact?.idUtilisateur && contact?.image) {
@@ -163,7 +160,6 @@ export class ChatComponent implements OnInit {
       msg.sender.idUtilisateur === contactId || msg.receiver.idUtilisateur === contactId
     );
 
-    // Détermine le bon objet "utilisateur" pour afficher son nom et image
     this.selectedContact = contactMessage?.sender.idUtilisateur === this.userId
       ? contactMessage?.receiver
       : contactMessage?.sender;
@@ -216,7 +212,6 @@ export class ChatComponent implements OnInit {
       timestamp: new Date()
     };
 
-    // Vérifie que la connexion WebSocket est prête
     this.websocketService.waitUntilConnected(() => {
       this.websocketService.sendMessagetempsreel(message);
     });

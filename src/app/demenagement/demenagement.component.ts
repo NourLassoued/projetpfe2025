@@ -173,7 +173,7 @@ export class DemenagementComponent {
   }
   selectService(service: any) {
     this.selectedServiceId = service.idservice;
-    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  // ✅ Naviguer vers /demande avec l'ID
+    this.router.navigate(['/Demande'], { queryParams: { idservice: this.selectedServiceId } });  
   }
 }
 

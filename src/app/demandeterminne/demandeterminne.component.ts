@@ -46,7 +46,6 @@ export class DemandeterminneComponent {
 
 
         if (this.user.image) {
-          // Si l'image est présente dans le token, on la récupère
 
         } else {
           console.warn(" Aucune image trouvée dans le token !");
@@ -102,7 +101,7 @@ export class DemandeterminneComponent {
   getPostulationsByDemande(idDemande: number): void {
     this.demandeService.getPostulationsByDemande(idDemande).subscribe(
       (postulationsData) => {
-        this.demandesAvecPostulations[idDemande] = postulationsData.length; // Stocke le nombre de postulations
+        this.demandesAvecPostulations[idDemande] = postulationsData.length; 
       },
       (error) => {
         console.error('Erreur lors de la récupération des postulations pour la demande ' + idDemande + ':', error);

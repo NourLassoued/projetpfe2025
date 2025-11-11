@@ -40,7 +40,6 @@ export class CompteprestaitreComponent implements OnInit {
     this.getDemandesDisponibles();
     this.route.queryParams.subscribe((params) => {
       this.notifMessage = params['notif'];
-      // You can handle notifMessage here if needed
     });
   }
   loadUserData(): void {

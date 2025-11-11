@@ -2,7 +2,7 @@ import { Utilisateur } from "./Utilisateur";
 
 export class Message {
     id?: number;
-    sender?: Utilisateur;  // Vous pouvez préciser le type si vous avez une classe Utilisateur en Angular
+    sender?: Utilisateur;  
     receiver?: Utilisateur;
     content?: string;
     timestamp?: Date;

@@ -7,7 +7,6 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class ForgetPasswordService {
- //  private  readonly apiUrl = `${environment.apiUrl}/forgetPassword`;
   private readonly apiUrl = `${(window as any).apiUrl || environment.apiUrl}/forgetPassword`;
   
   constructor(private readonly  http: HttpClient) {}
