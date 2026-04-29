@@ -2,7 +2,7 @@
 # 🏠 Home Services Platform
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Angular](https://img.shields.io/badge/Angular-17-red.svg)](https://angular.io/)
+[![Angular](https://img.shields.io/badge/Angular-16-red.svg)](https://angular.io/)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28-blue.svg)](https://kubernetes.io/)
 [![Coverage](https://img.shields.io/badge/Coverage-75%25-success.svg)](https://sonarqube.io)
 
