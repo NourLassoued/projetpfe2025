@@ -120,7 +120,7 @@ kubectl apply -f k8s/argocd/application.yaml
 ✅ **DevOps Complet** : Pipeline CI/CD automatisé  
 ✅ **Qualité Rigoureuse** : 1350+ tests · 75% coverage  
 ✅ **Sécurité** : JWT · 0 vulnérabilités  
-✅ **Scalable** : Microservices · Auto-scaling  
+✅ **Scalable** :   Auto-scaling  
 ✅ **IA** : Chatbot NLP en production  
 ✅ **GitOps** : Déploiement automatique ArgoCD
 
