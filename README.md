@@ -23,7 +23,7 @@ Plateforme web Full-Stack de mise en relation clients/prestataires de services �
 ## 💼 Stack Technique
 
 **Backend** : Spring Boot 3.2 · Spring Security 6 · JWT · MySQL · Redis  
-**Frontend** : Angular 17 · TypeScript · Material Design · RxJS  
+**Frontend** : Angular 16 · TypeScript · Material Design · RxJS  
 **IA** : Flask · Python · NLP multilingue (FR/EN/AR)  
 **DevOps** : Docker · Kubernetes (kubeadm) · ArgoCD · Jenkins · SonarQube · Trivy · Prometheus · Grafana
 
